@@ -1,0 +1,28 @@
+project:
+  type: website
+
+website:
+  title: "Tyler Hillery"
+  site-url: https://www.tylerhillery.com
+  description: "Tyler Hillery's Writings"
+  navbar:
+    left:
+      - href: projects.qmd
+        text: Projects
+      - href: now.qmd
+        text: Now
+      - href: about.qmd
+        text: About
+    right:
+      - icon: github
+        href: https://github.com/
+      - icon: linkedin
+        href: https://twitter.com
+      - icon: mastodon
+        href: https://twitter.com
+      - icon: twitter
+        href: https://twitter.com
+format:
+  html:
+    theme: custom.scss
+    css: styles.css

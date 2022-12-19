@@ -1,0 +1,29 @@
+---
+title: About
+format:
+  html:
+    toc: true
+---
+<img src="assets/images/profile2.jpg" style="border-radius: 5%" align="right">
+*Data practitioner* & *Lifelong learner* with interests in data infrastructure, engineering, distributed systems, programming, analytics, OSS, data processing & storage.
+
+I'm currently working at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engineering](https://www.getdbt.com/what-is-analytics-engineering/) focusing on customer facing analytics. 
+
+My ambition is to help build systems, infrastructure and technology that makes data more accessible.
+
+Before pursing a career in data, I wanted to work in investment management. I graduated Dec 2019 with major in Finance without writing a single line of code. 
+
+My first job out of college was in the investment management department of a fortune 650 insurance company. It wasn't till after I passed the [CFA](https://www.cfainstitute.org/en/programs/cfa/charter) level 1 exam that I knew this wasn't the career for me. What I did discover was my interest in data and technology. 
+
+I started working on my technical skills through various resources (MOOCs, Books, YouTube, Side Projects). I went from Data Analyst --> BI Developer --> Analytics Engineer all within one year. I have found the Analytics Engineer role really fits me as a [purple person](https://www.getdbt.com/blog/we-the-purple-people/) and [generalist](https://www.youtube.com/watch?v=wB0ulHmvU7E). 
+
+Although... I have this desire to continue climbing this fictional technical job hierarchy I have created in my head. This stems from my natural curiosity to understand how things work. 
+
+Outside of data and technology: 
+
+- I have a beautiful fiance who has a passion for bodybuilding
+- I have a twin brother 
+- Currently live in Wisconsin 
+- Big fan of the Milwaukee Bucks #BucksIn6
+- Occasional CrossFitter
+- I co-authored a paper [Inside the hiring process: how managers assess employability based on grit, the big five, and other factors ](https://www.researchgate.net/publication/335182644_Inside_the_hiring_process_how_managers_assess_employability_based_on_grit_the_big_five_and_other_factors)
