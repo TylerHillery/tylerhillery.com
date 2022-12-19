@@ -1,0 +1,7 @@
+---
+title: "Stock Market Data Pipeline"
+author: "Tyler Hillery"
+date: "2022-03-30"
+categories: [Data Engineering]
+image: "../../assets/images/stock-market-data-pipeline.png"
+---

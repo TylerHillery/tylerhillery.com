@@ -11,13 +11,13 @@ I'm currently working at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engi
 
 My ambition is to help build systems, infrastructure and technology that makes data more accessible.
 
-Before pursing a career in data, I wanted to work in investment management. I graduated Dec 2019 with major in Finance without writing a single line of code. 
+Before pursing a career in data, I wanted to work in investment management. I graduated Dec 2019 with major in Finance. I didn't learn how to code until Summer 2020. 
 
 My first job out of college was in the investment management department of a fortune 650 insurance company. It wasn't till after I passed the [CFA](https://www.cfainstitute.org/en/programs/cfa/charter) level 1 exam that I knew this wasn't the career for me. What I did discover was my interest in data and technology. 
 
 I started working on my technical skills through various resources (MOOCs, Books, YouTube, Side Projects). I went from Data Analyst --> BI Developer --> Analytics Engineer all within one year. I have found the Analytics Engineer role really fits me as a [purple person](https://www.getdbt.com/blog/we-the-purple-people/) and [generalist](https://www.youtube.com/watch?v=wB0ulHmvU7E). 
 
-Although... I have this desire to continue climbing this fictional technical job hierarchy I have created in my head. This stems from my natural curiosity to understand how things work. 
+Currently learning more about data infra, programming & software engineering.
 
 Outside of data and technology: 
 

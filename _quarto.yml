@@ -4,13 +4,14 @@ project:
 website:
   title: "Tyler Hillery"
   site-url: https://www.tylerhillery.com
-  description: "Tyler Hillery's Writings"
+  favicon: assets/images/favicon.ico
+  image: assets/images/profile2.jpg
+  repo-url: https://github.com/quarto-dev/quarto-demo
+  repo-actions: [edit, issue]
   navbar:
     left:
       - href: projects.qmd
         text: Projects
-      - href: now.qmd
-        text: Now
       - href: about.qmd
         text: About
     right:
