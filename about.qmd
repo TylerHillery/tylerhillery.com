@@ -4,9 +4,9 @@ format:
   html:
     toc: true
 ---
-<img src="assets/images/profile2.jpg" style="border-radius: 5%" align="right">
-*Data practitioner* & *Lifelong learner* with interests in data infrastructure, engineering, distributed systems, programming, analytics, OSS, data processing & storage.
+<img src="assets/images/profile2.jpg" style="border-radius: 5%; margin-left:15px; overflow: hidden; margin-top: 5px" align="right">
 
+*Data practitioner* & *Lifelong learner* with interests in data infrastructure, engineering, distributed systems, programming, analytics, OSS, data processing & storage. 
 I'm currently working at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engineering](https://www.getdbt.com/what-is-analytics-engineering/) focusing on customer facing analytics. 
 
 My ambition is to help build systems, infrastructure and technology that makes data more accessible.
