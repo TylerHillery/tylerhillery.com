@@ -1,4 +1,4 @@
 .vscode/
-
 assets/
-
+/.quarto/
+_site/
