@@ -3,7 +3,7 @@ title: "Why and How I Made My First Open Source Contribution"
 description: My experience on why and how I made my first open source contribution and why you should too. 
 author: "Tyler Hillery"
 date: "2022-07-12"
-categories: [Blog]
+categories: [Open Source, dbt, duckdb]
 image: "../../assets/images/Open-Source-Software.png"
 ---
 

@@ -3,7 +3,7 @@ title: "Stock Market Data Pipeline"
 description: I wrote about my experience on setting up a data pipeline to help extract, ingest, store, transform and visualize stock market data using open source technologies such as Airbyte, Dagster, dbt & Preset.
 author: "Tyler Hillery"
 date: "2022-03-30"
-categories: [Blog]
+categories: [Projects, dbt, Airbyte, Preset, Google Cloud, Data Engineering, Python]
 image: "../../assets/images/stock-market-data-pipeline.png"
 ---
 

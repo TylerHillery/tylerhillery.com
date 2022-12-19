@@ -3,7 +3,7 @@ title: "Make a Public Commitment to Learn"
 description: Making your learning public can help you stick to your goals. Find ways to communicate to others what your learning about. That is why I built the learning log.
 author: "Tyler Hillery"
 date: "2022-05-31"
-categories: [Blog]
+categories: [Projects, Streamlit, Data Apps, Self Taught]
 image: "../../assets/images/learning-log.jpg"
 ---
 
