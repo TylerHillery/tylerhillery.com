@@ -4,5 +4,5 @@ description: Cool things that you can do with Quarto that I want to be able to r
 author: "Tyler Hillery"
 date: "2022-012-25"
 categories: [Quarto]
-image: "../../assets/images/Open-Source-Software.png"
+image: "../../assets/images/quarto-logo.jpg"
 ---
