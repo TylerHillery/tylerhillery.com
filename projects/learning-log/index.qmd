@@ -4,5 +4,7 @@ author: "Tyler Hillery"
 date: "2022-05-31"
 categories: [Data Apps]
 image: "../../assets/images/learning-log.jpg"
-href: https://github.com/TylerHillery/learning-log
+code: 
+  url: https://github.com/TylerHillery/learning-log
+  text: GitHub
 ---

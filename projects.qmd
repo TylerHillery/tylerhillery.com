@@ -4,11 +4,11 @@ format:
   html:
     toc: false
 listing:
+    template: listing-grid.ejs
     contents: projects
     sort: "date desc"
-    type: grid
     categories: true
-    sort-ui: true
+    sort-ui: false
     filter-ui: true
 ---
 
