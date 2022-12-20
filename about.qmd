@@ -1,12 +1,23 @@
 ---
-title: About
-format:
-  html:
-    toc: true
+title: "Tyler Hillery"
+about:
+  template: trestles
+  image: "assets/images/profile.jpg" 
+  links:
+    - icon: github
+      href: https://github.com/TylerHillery
+      text: GitHub
+    - icon: linkedin
+      href: https://www.linkedin.com/in/tylerhillery/
+      text: LinkedIn
+    - icon: mastodon
+      href: https://twitter.com/_TylerHillery
+      text: Mastodon
+    - icon: twitter
+      href: https://data-folks.masto.host/@TylerHillery
+      text: Twitter
 ---
-<img src="assets/images/profile2.jpg" style="border-radius: 5%; margin-left:15px; overflow: hidden; margin-top: 5px" align="right">
-
-I'm a self proclaimed *Data practitioner* & *Lifelong learner* with interests in data infrastructure, engineering, distributed systems, programming, analytics, OSS, data processing & storage. 
+*Data practitioner* & *Lifelong learner* with interests in data infrastructure, engineering, distributed systems, programming, analytics, OSS, data processing & storage. 
 
 I currently work at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engineering](https://www.getdbt.com/what-is-analytics-engineering/) focusing on customer facing analytics. 
 
@@ -18,7 +29,7 @@ My first job out of college was in the investment management department of a for
 
 I started working on my technical skills through various resources (MOOCs, Books, YouTube, Side Projects). I went from Data Analyst --> BI Developer --> Analytics Engineer all within one year. I have found the Analytics Engineer role really fits me as a [purple person](https://www.getdbt.com/blog/we-the-purple-people/) and [generalist](https://www.youtube.com/watch?v=wB0ulHmvU7E). 
 
-I spend most of free time filling in my knowledge gaps about core Computer Science topics. As a finance major I have a lot of catching up to do 🙂
+I spend most of free time filling in my knowledge gaps about core Computer Science topics.
 
 Outside of data and technology: 
 
