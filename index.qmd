@@ -20,6 +20,8 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
+
+
 ## Blog
 
 :::{#blog}

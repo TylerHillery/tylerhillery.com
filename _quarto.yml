@@ -28,5 +28,7 @@ format:
     theme: custom.scss
     css: styles.css
     toc: true
+    toc-location: left
+    smooth-scroll: true
 execute:
   freeze: auto

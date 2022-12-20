@@ -5,25 +5,8 @@ author: "Tyler Hillery"
 date: "2022-012-25"
 categories: [Quarto]
 image: "../../assets/images/quarto-logo.jpg"
-output:
-  html_document:
-    toc: true
-    theme: united
+jupyter: python3
 ---
-
-# Markdown Basics
-- [Text Formatting](#text-formatting)
-- [Headings](#headings)
-- [Links \& Images](#links--images)
-- [Lists](#lists)
-- [Tables](#tables)
-- [Source Code](#source-code)
-- [Equations](#equations)
-- [Diagrams](#diagrams)
-- [Videos](#videos)
-- [Page Breaks](#page-breaks)
-- [Callout Blocks](#callout-blocks)
-
 
 ## Text Formatting
 
@@ -131,14 +114,37 @@ output:
 |   123 | 123  | 123     |  123   |
 |     1 | 1    | 1       |   1    |
 
+### Table Cross Reference
+
+For tables produced by executable code cells, include a label with a tbl- prefix to make them cross-referenceable. For example:
+
+```{python}
+#| label: tbl-planets
+#| tbl-cap: "Planets"
+#| echo: fenced
+#| tbl-column: margin
+from IPython.display import Markdown
+from tabulate import tabulate
+table = [["Sun",696000,1989100000],
+         ["Earth",6371,5973.6],
+         ["Moon",1737,73.5],
+         ["Mars",3390,641.85]]
+Markdown(tabulate(
+  table, 
+  headers=["Planet","R (km)", "mass (x 10^29 kg)"]
+))
+```
+
 ## Source Code
 
 Use ```` ``` ```` to delimit blocks of source code:
 
+````` markdown
 ```python
 a_string = "hello world"
 print(a_string)
 ```
+`````
 
 ## Equations
 
@@ -173,9 +179,9 @@ flowchart LR
 
 You can include videos in documents using the `{{{< video >}}}` shortcode. For example, here we embed a YouTube video:
 
-{{< video https://www.youtube.com/embed/88yZaex5L24 >}}
+{{< video https://www.youtube.com/embed/88yZaex5L24 aspect-ratio="4x3"  start="14"  >}}
 
-Videos can refer to video files (e.g. MPEG) or can be links to videos published on YouTube, Vimeo, or BrightCove. Learn more in the article on [Videos](videos.qmd).
+Videos can refer to video files (e.g. MPEG) or can be links to videos published on YouTube, Vimeo, or BrightCove.
 
 ## Page Breaks
 
@@ -202,6 +208,42 @@ Note that there are five types of callouts, including:
 
 #### Output
 
-::: callout-note
-Note that there are five types of callouts, including `note`, `tip`, `warning`, `caution`, and `important`.
+::: {.callout-note appearance="default" collapse=false}
+Note that there are five types of callouts, including `note`, `tip`, `warning`, `caution`, and `important`. There are 3 different styles `simple`,`minimal`,`default`. 
 :::
+
+## Code Blocks
+
+For a demonstration of a line plot on a polar axis, see @fig-polar.
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+#| code-fold: show
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
+
+### Inline Code
+To include executable expressions within markdown in a Python notebook, you use [`IPython.display.Markdown`](https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html) to dynamically generate markdown from within an ordinary code cell. For example, if we have a variable `radius` we can use it within markdown as follows:
+
+```{python}
+#| echo: true
+#| code-fold: show
+radius = 10
+from IPython.display import display, Markdown
+display(Markdown(f"""
+The radius of the circle is {radius}.
+"""))
+```
