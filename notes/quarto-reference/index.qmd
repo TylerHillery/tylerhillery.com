@@ -8,6 +8,7 @@ image: "../../assets/images/quarto-logo.jpg"
 jupyter: python3
 ---
 
+
 ## Text Formatting
 
 +-----------------------------------+-------------------------------+
@@ -220,6 +221,7 @@ For a demonstration of a line plot on a polar axis, see @fig-polar.
 #| label: fig-polar
 #| fig-cap: "A line plot on a polar axis"
 #| code-fold: show
+#| code-tools: true
 
 import numpy as np
 import matplotlib.pyplot as plt

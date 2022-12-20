@@ -30,5 +30,6 @@ format:
     toc: true
     toc-location: left
     smooth-scroll: true
+    code-line-numbers: true
 execute:
   freeze: auto
