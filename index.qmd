@@ -1,5 +1,4 @@
 ---
-title: "Writings"
 listing:
   - id: blog
     contents: blog
