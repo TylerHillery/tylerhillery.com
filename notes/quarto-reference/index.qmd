@@ -1,0 +1,207 @@
+---
+title: "Quarto Reference Notes"
+description: Cool things that you can do with Quarto that I want to be able to reference back to
+author: "Tyler Hillery"
+date: "2022-012-25"
+categories: [Quarto]
+image: "../../assets/images/quarto-logo.jpg"
+output:
+  html_document:
+    toc: true
+    theme: united
+---
+
+# Markdown Basics
+- [Text Formatting](#text-formatting)
+- [Headings](#headings)
+- [Links \& Images](#links--images)
+- [Lists](#lists)
+- [Tables](#tables)
+- [Source Code](#source-code)
+- [Equations](#equations)
+- [Diagrams](#diagrams)
+- [Videos](#videos)
+- [Page Breaks](#page-breaks)
+- [Callout Blocks](#callout-blocks)
+
+
+## Text Formatting
+
++-----------------------------------+-------------------------------+
+| Markdown Syntax                   | Output                        |
++===================================+===============================+
+|     *italics* and **bold**        | *italics* and **bold**        |
++-----------------------------------+-------------------------------+
+|     superscript^2^ / subscript~2~ | superscript^2^ / subscript~2~ |
++-----------------------------------+-------------------------------+
+|     ~~strikethrough~~             | ~~strikethrough~~             |
++-----------------------------------+-------------------------------+
+|     `verbatim code`               | `verbatim code`               |
++-----------------------------------+-------------------------------+
+|     >quote block                  | > quote block                 |
++-----------------------------------+-------------------------------+
+
+## Headings
+
++---------------------+-----------------------------------+
+| Markdown Syntax     | Output                            |
++=====================+===================================+
+|     # Header 1      | # Header 1 {.heading-output}      |
++---------------------+-----------------------------------+
+|     ## Header 2     | ## Header 2 {.heading-output}     |
++---------------------+-----------------------------------+
+|     ### Header 3    | ### Header 3 {.heading-output}    |
++---------------------+-----------------------------------+
+|     #### Header 4   | #### Header 4 {.heading-output}   |
++---------------------+-----------------------------------+
+|     ##### Header 5  | ##### Header 5 {.heading-output}  |
++---------------------+-----------------------------------+
+|     ###### Header 6 | ###### Header 6 {.heading-output} |
++---------------------+-----------------------------------+
+
+## Links & Images
+
++------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
+| Markdown Syntax                                                  | Output                                                                                                 |
++==================================================================+========================================================================================================+
+|     <https://quarto.org>                                         | <https://quarto.org>                                                                                   |
++------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
+|     [Quarto](https://quarto.org)                                 | [Quarto](https://quarto.org)                                                                           |
++------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
+|     ![Caption](elephant.png)                                     | ![Caption](elephant.png){fig-alt="A line drawing of an elephant."}                                     |
++------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
+|     [![Caption](elephant.png)](https://quarto.org)               | [![Caption](elephant.png)](https://quarto.org)                                                         |
++------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
+|     [![Caption](elephant.png)](https://quarto.org "An elephant") | [![Caption](elephant.png "An elephant"){fig-alt="A line drawing of an elephant."}](https://quarto.org) |
++------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
+|     [![](elephant.png){fig-alt="Alt text"}](https://quarto.org)  | [![](elephant.png){fig-alt="A line drawing of an elephant."}](https://quarto.org)                      |
++------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
+
+## Lists
+
++-------------------------------------+---------------------------------+
+| Markdown Syntax                     | Output                          |
++=====================================+=================================+
+|     * unordered list                | -   unordered list              |
+|         + sub-item 1                |                                 |
+|         + sub-item 2                |     -   sub-item 1              |
+|             - sub-sub-item 1        |                                 |
+|                                     |     -   sub-item 2              |
+|                                     |                                 |
+|                                     |         -   sub-sub-item 1      |
++-------------------------------------+---------------------------------+
+|     *   item 2                      | -   item 2                      |
+|                                     |                                 |
+|         Continued (indent 4 spaces) |     Continued (indent 4 spaces) |
++-------------------------------------+---------------------------------+
+|     1. ordered list                 | 1.  ordered list                |
+|     2. item 2                       |                                 |
+|         i) sub-item 1               | 2.  item 2                      |
+|              A.  sub-sub-item 1     |                                 |
+|                                     |     i)  sub-item 1              |
+|                                     |                                 |
+|                                     |         A.  sub-sub-item 1      |
++-------------------------------------+---------------------------------+
+|     (@)  A list whose numbering     | (1) A list whose numbering      |
+|                                     |                                 |
+|     continues after                 | continues after                 |
+|                                     |                                 |
+|     (@)  an interruption            | (2) an interruption             |
++-------------------------------------+---------------------------------+
+|     term                            | term                            |
+|     : definition                    |                                 |
+|                                     | :   definition                  |
++-------------------------------------+---------------------------------+
+
+## Tables
+
+**Markdown Syntax**
+
+    | Right | Left | Default | Center |
+    |------:|:-----|---------|:------:|
+    |   12  |  12  |    12   |    12  |
+    |  123  |  123 |   123   |   123  |
+    |    1  |    1 |     1   |     1  |
+
+**Output**
+
+| Right | Left | Default | Center |
+|------:|:-----|---------|:------:|
+|    12 | 12   | 12      |   12   |
+|   123 | 123  | 123     |  123   |
+|     1 | 1    | 1       |   1    |
+
+## Source Code
+
+Use ```` ``` ```` to delimit blocks of source code:
+
+```python
+a_string = "hello world"
+print(a_string)
+```
+
+## Equations
+
+Use `$` delimiters for inline math and `$$` delimiters for display math. For example:
+
++-------------------------------+-------------------------+
+| Markdown Syntax               | Output                  |
++===============================+=========================+
+|     inline math: $E = mc^{2}$ | inline math: $E=mc^{2}$ |
++-------------------------------+-------------------------+
+|     display math:             | display math:\          |
+|                               | $$E = mc^{2}$$          |
+|     $$E = mc^{2}$$            |                         |
++-------------------------------+-------------------------+
+
+## Diagrams
+
+Quarto has native support for embedding [Mermaid](https://mermaid-js.github.io/mermaid/#/) and [Graphviz](https://graphviz.org/) diagrams. This enables you to create flowcharts, sequence diagrams, state diagrams, gnatt charts, and more using a plain text syntax inspired by markdown.
+
+For example, here we embed a flowchart created using Mermaid:
+
+```{mermaid}
+%%| echo: fenced
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
+
+## Videos
+
+You can include videos in documents using the `{{{< video >}}}` shortcode. For example, here we embed a YouTube video:
+
+{{< video https://www.youtube.com/embed/88yZaex5L24 >}}
+
+Videos can refer to video files (e.g. MPEG) or can be links to videos published on YouTube, Vimeo, or BrightCove. Learn more in the article on [Videos](videos.qmd).
+
+## Page Breaks
+
+The `pagebreak` shortcode enables you to insert a native pagebreak into a document (.e.g in LaTeX this would be a `\newpage`, in MS Word a docx-native pagebreak, in HTML a `page-break-after: always` CSS directive, etc.):
+
+```{.markdown shortcodes="false"}
+page 1
+{{< pagebreak >}}
+page 2
+```
+
+Native pagebreaks are supported for HTML, LaTeX, Context, MS Word, Open Document, and ePub (for other formats a form-feed character `\f` is inserted).
+
+## Callout Blocks
+
+#### Markdown Syntax
+
+``` markdown
+:::{.callout-note}
+Note that there are five types of callouts, including: 
+`note`, `tip`, `warning`, `caution`, and `important`.
+:::
+```
+
+#### Output
+
+::: callout-note
+Note that there are five types of callouts, including `note`, `tip`, `warning`, `caution`, and `important`.
+:::
