@@ -5,6 +5,19 @@ author: "Tyler Hillery"
 date: "2022-05-31"
 categories: [Projects, Streamlit, Data Apps, Self Taught]
 image: "../../assets/images/learning-log.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/learning-log/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
 ---
 
 I have heard one of the biggest drops of cognitive ability happens after graduating college. It is crucial that if someone wants to continue to learn and improve their knowledge they need to set up deliberate time to learn even after schooling. A lot of people think that once schooling is over that the learning stops and the working starts. This could not be further from the truth. One of my favorite quotes about this is by Mark Twain 

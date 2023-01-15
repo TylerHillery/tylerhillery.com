@@ -5,6 +5,19 @@ author: "Tyler Hillery"
 date: "2022-03-30"
 categories: [Projects, dbt, Airbyte, Preset, Google Cloud, Data Engineering, Python]
 image: "../../assets/images/stock-market-data-pipeline.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/stock-market-data-pipeline/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
 ---
 
 #### **Project Overview**

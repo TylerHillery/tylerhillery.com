@@ -5,6 +5,19 @@ author: "Tyler Hillery"
 date: "2022-07-12"
 categories: [Open Source, dbt, duckdb]
 image: "../../assets/images/Open-Source-Software.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/getting-started-in-os/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
 ---
 
 ## **Start With Why**
