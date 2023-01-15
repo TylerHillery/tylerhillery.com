@@ -3,6 +3,7 @@ title: "Projects"
 format:
   html:
     toc: false
+comments: false
 listing:
     template: listing-grid.ejs
     contents: projects

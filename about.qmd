@@ -1,5 +1,6 @@
 ---
 title: "Tyler Hillery"
+comments: false
 about:
   template: trestles
   image: "assets/images/profile.jpg" 
