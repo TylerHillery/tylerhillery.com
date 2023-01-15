@@ -6,8 +6,11 @@ website:
   site-url: https://www.tylerhillery.com
   favicon: assets/images/favicon.ico
   image: assets/images/profile2.jpg
-  repo-url: https://github.com/quarto-dev/quarto-demo
+  repo-url: https://github.com/TylerHillery/TylerHillery.github.io
   repo-actions: [edit, issue]
+  comments:
+    giscus:
+      repo: quarto-dev/quarto-web
   navbar:
     left:
       - href: projects.qmd
