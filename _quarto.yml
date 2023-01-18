@@ -24,9 +24,9 @@ website:
         href: https://github.com/TylerHillery
       - icon: linkedin
         href: https://www.linkedin.com/in/tylerhillery/
-      - icon: mastodon
-        href: https://twitter.com/_TylerHillery
       - icon: twitter
+        href: https://twitter.com/_TylerHillery
+      - icon: mastodon
         href: https://data-folks.masto.host/@TylerHillery
 format:
   html:

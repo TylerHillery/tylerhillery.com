@@ -11,10 +11,10 @@ about:
     - icon: linkedin
       href: https://www.linkedin.com/in/tylerhillery/
       text: LinkedIn
-    - icon: mastodon
+    - icon: twitter
       href: https://twitter.com/_TylerHillery
       text: Mastodon
-    - icon: twitter
+    - icon: mastodon
       href: https://data-folks.masto.host/@TylerHillery
       text: Twitter
 ---
