@@ -1,0 +1,50 @@
+---
+title: "Now Page"
+date: "2023-01-18"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/now"
+  description: Tyler's Now Page
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+---
+
+This is my [now page](https://nownownow.com/about). If you want to know __what I'm focused on right now in my life__ you've come to the right place. This is different then my [about me](about.qmd) as that describes more of my background. I will update the published date anytime I make changes to this page.  
+
+## **What I am doing now**
+Currently living in Stevens Point, Wisconsin though my fiancé and I are considering about moving somewhere warming (Arizona, Nevada, Texas). If you have any recommendations I'm all ears. 
+
+Speaking of fiancé, I will be getting married in late summer of 2023 so I spend some of my time wedding planning. I will admit that my fiancé my has been doing most of the work, and I'm very grateful for her ❤️.
+
+## **Life long learner 🧠**
+Outside of work I spend a lot of time learning. I started a course on 01/17/2023 through Oakton Community College called [CSC 155: Computer Science 1 in C++](https://catalog.oakton.edu/course-descriptions/course-descriptions-discipline/csc/). My plan is take some pre-requisite courses so I can apply to the [masters in computer science program at UIUC](https://cs.illinois.edu/academics/graduate/professional-mcs/online-master-computer-science). 
+
+My purpose of pursing the computer science masters is because I want to transition into a software engineer. I graduated with a finance degree so most my technical knowledge is self taught. I recommend checking out my [notion page](https://tylerhillery.notion.site/Education-Hub-c7f23bdea3314977818c9400fa95a060) if you want to know more about my self learning journey. 
+
+I am all for self taught education and believe you don't need a computer science a degree to be a great software engineer. For me personally I tend to work better in a more structured environment and my employer is helping fund most of the cost so it's a win win.  
+
+Two other courses that I will be taking are [Advanced SQL](https://corise.com/course/advanced-sql) starting on 01/30/23 and [AWS Cloud Project Bootcamp](https://youtu.be/dHaDS41z3RY) starting on 02/11/2023. Both of these courses are unrelated to my college pre-requisites but I will be taking them for fun. They were both free to me so why not!
+
+Some computer science topics that I really like learning about are database development (actually building databases), data streaming, data infrastructure, API development, distributed systems, cloud technology, programming languages and backend engineering.
+
+## Open Source Development ⚙️
+I would also like to be more involved with open-source development. The open source community and people's willingness to release free publicly available software to empower others is nothing short of amazing to me. I have made some small PRs and I got this feeling I was contributing to this greater purpose which felt amazing.
+
+Keep an eye out on my [GitHub profile](https://github.com/TylerHillery/TylerHillery.github.io) to see my activity. I am going to really work towards being more active in open source now and for the foreseeable future.
+
+## Job 👔
+My job takes up most of my time. I work as an Analytics Engineer at Nasdaq on the ETF listings product team where our main goal is to get issuers like Vanguard, Fidelity, Blackrock to list their ETFs on our exchange. 
+
+My current project is focused on building an embedding analytics platform for our customers to provide a more enhance reporting experience. The tools I use day to day involve SQL, dbt, Redshift, and QuickSight. My time is split between 70% data transformation and modeling work, 20% Data Visualizations and figuring out the embedding portion, the last 10% is prod support for ad-hoc requests or when our current reporting platform goes kaputs. 
+
+## Fitness 🏋🏻‍♂️
+Recently I have been taking my fitness more seriously. I have always been off and on with fitness although the last 3 years since college I have been far more consistent. I primarily lift weights, and walk but I dabble in crossfit, biking, hiking, running, snowshoeing and cross country skiing. 
+
+My fiancé owns a business [Team Champion Physiques](https://www.teamchampionphysiques.com/home) where she provides nutrition and fitness coaching. She currently has me on a program that involves lifting 4 times a week and cardio 4 times a week with an average heart rate of 115+ bpm. My goal is to get a physique where I would feel comfortable sharing my before and after transformation pictures on her website to help promote her business. 

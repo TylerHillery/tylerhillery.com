@@ -17,6 +17,8 @@ website:
         text: Projects
       - href: about.qmd
         text: About
+      - href: now.qmd
+        text: Now
     right:
       - icon: github
         href: https://github.com/TylerHillery
