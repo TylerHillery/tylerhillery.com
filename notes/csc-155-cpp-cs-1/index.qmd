@@ -1,0 +1,23 @@
+---
+title: "Computer Science I in C++"
+description: These are my notes for [CSC 155 Computer Science 1 in C++](https://catalog.oakton.edu/course-descriptions/course-descriptions-discipline/csc/) through Oakton Community College. The course uses the book [C++ Programming From Problem Analysis to Program Design](https://www.amazon.com/Programming-Problem-Analysis-Program-Design-dp-1337102083/dp/1337102083/ref=dp_ob_title_bk). 
+author: "Tyler Hillery"
+date: "2023-01-17"
+image: "./csc_155.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/getting-started-in-os/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Computer Science, C++, Programming]
+---
+
+For now I am taking my notes in [Notion](https://tylerhillery.notion.site/Computer-Science-I-in-C-bd8b627aeea54c2396cd77a34f9b2c10) show check out my notes there! In the future I might convert everything over to a qmd file. 

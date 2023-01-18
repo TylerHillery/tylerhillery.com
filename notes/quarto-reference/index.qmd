@@ -2,10 +2,24 @@
 title: "Quarto Reference Notes"
 description: Cool things that you can do with Quarto that I want to be able to reference back to
 author: "Tyler Hillery"
-date: "2022-012-25"
+date: "2022-12-25"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/getting-started-in-os/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
 categories: [Quarto]
 image: "../../assets/images/quarto-logo.jpg"
 jupyter: python3
+
 ---
 
 
