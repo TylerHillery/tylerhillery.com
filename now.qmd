@@ -30,7 +30,7 @@ My purpose of pursing a computer science masters is because I want to transition
 
 I am all for self taught education and believe you don't need a computer science a degree to be a great software engineer. For me personally I tend to work better in a more structured environment and my employer has tuition reimbursement so it's a win win.  
 
-Two other courses that I will be taking are [Advanced SQL](https://corise.com/course/advanced-sql) starting on 01/30/23 and [AWS Cloud Project Bootcamp](https://youtu.be/dHaDS41z3RY) starting on 02/11/2023. Both of these courses are unrelated to my college pre-requisites but I will be taking them for fun. They were both free to me so why not!
+Two other courses that I will be taking are [Advanced SQL](https://corise.com/course/advanced-sql) starting on 01/30/23 and [AWS Cloud Project Bootcamp](https://youtu.be/dHaDS41z3RY) starting on 02/11/2023. Both of these courses are unrelated to my college pre-requisites but I will be taking them for personal enjoyment. 
 
 Some computer science topics that I'm interested in are database internals, data streaming, data infra, APIs, distributed systems, cloud technology, programming languages and open source software.
 
@@ -42,7 +42,7 @@ Keep an eye out on my [GitHub profile](https://github.com/TylerHillery/TylerHill
 ## Job 👔
 My job takes up most of my time. I work as an Analytics Engineer at Nasdaq on the ETF listings product team where our main goal is to get issuers like Vanguard, Fidelity, Blackrock to list their ETFs on our exchange. If you would like to see the impact of my work checkout our team's [2022 year in review](https://www.nasdaq.com/solutions/always-on-the-leading-edge-etf-listings) that our marketing team put together. Most of the metrics on this site were developed by me. 
 
-My current project is focused on building an embedding analytics platform for our customers to provide a more enhance reporting experience. The tools I use day to day involve SQL, dbt, Redshift, and QuickSight. My time is split between 70% data transformation and modeling work, 20% Data Visualizations and figuring out the embedding portion, the last 10% is prod support for ad-hoc requests or when our current reporting platform goes down. 
+My current project is focused on building an embedded analytics platform for our customers to provide a more enhance reporting experience. The tools I use day to day involve SQL, dbt, Redshift, and QuickSight. My time is split between 70% data transformation and modeling work, 20% Data Visualizations and figuring out the embedding portion, the last 10% is prod support for ad-hoc requests or when our current reporting platform goes down. 
 
 ## Fitness 🏋🏻‍♂️
 Recently I have been taking my fitness more seriously. I have always been off and on with fitness although the last 3 years since college I have been far more consistent. I primarily lift weights, and walk but I dabble in crossfit, biking, hiking, running, snowshoeing and cross country skiing. 

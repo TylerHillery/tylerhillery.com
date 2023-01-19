@@ -13,10 +13,10 @@ about:
       text: LinkedIn
     - icon: twitter
       href: https://twitter.com/_TylerHillery
-      text: Mastodon
+      text: Twitter
     - icon: mastodon
       href: https://data-folks.masto.host/@TylerHillery
-      text: Twitter
+      text: Mastodon
 ---
 ### **About Me**
 *Data practitioner* & *Lifelong learner* with interests in database internals, data streaming, data infra, APIs, distributed systems, cloud technology, programming languages and open source software. 
