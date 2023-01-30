@@ -1,0 +1,23 @@
+---
+title: "Advanced SQL"
+description: These are my notes for [Advanced SQL](https://corise.com/course/advanced-sql) through CoRise. 
+author: "Tyler Hillery"
+date: "2023-01-30"
+image: "./advanced_sql.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/getting-started-in-os/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [SQL]
+---
+
+For now I am taking my notes in [Notion](https://tylerhillery.notion.site/Advanced-SQL-fd959eac24464e99bb3ad353f3e6f352) show check out my notes there! In the future I might convert everything over to a qmd file. 
