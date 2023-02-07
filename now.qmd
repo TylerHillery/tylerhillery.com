@@ -1,6 +1,6 @@
 ---
 title: "Now Page"
-date: "2023-01-30"
+date: "2023-02-07"
 filters:
   - social-share
 share:
@@ -37,12 +37,12 @@ Some computer science topics that I'm interested in are database internals, data
 ## Open Source Development ⚙️
 I would also like to be more involved with open-source development. The open source community and people's willingness to release free publicly available software to empower others is nothing short of amazing to me. I have made some small PRs and I got this feeling I was contributing to this greater purpose which felt amazing.
 
-Keep an eye out on my [GitHub profile](https://github.com/TylerHillery/TylerHillery.github.io) to see my activity. I am going to really work towards being more active in open source now and for the foreseeable future.
+Keep an eye out on my [GitHub profile](https://github.com/TylerHillery) to see my activity. Currently, I have been focused on building [RePort](https://github.com/TylerHillery/RePort) ⚖️ a portfolio rebalancing tool for investors.
 
 ## Job 👔
 My job takes up most of my time. I work as an Analytics Engineer at Nasdaq on the ETF listings product team where our main goal is to get issuers like Vanguard, Fidelity, Blackrock to list their ETFs on our exchange. If you would like to see the impact of my work checkout our team's [2022 year in review](https://www.nasdaq.com/solutions/always-on-the-leading-edge-etf-listings) that our marketing team put together. Most of the metrics on this site were developed by me. 
 
-My current project is focused on building an embedded analytics platform for our customers to provide a more enhance reporting experience. The tools I use day to day involve SQL, dbt, Redshift, and QuickSight. My time is split between 70% data transformation and modeling work, 20% Data Visualizations and figuring out the embedding portion, the last 10% is prod support for ad-hoc requests or when our current reporting platform goes down. 
+My current project is focused on building an embedded analytics platform for our customers to provide a more enhance reporting experience. The tools I use day to day involve SQL, dbt, Redshift, and QuickSight. My time is split between 80% data transformation and modeling work, 10% Data Visualizations and figuring out the embedding portion, the last 10% is prod support for ad-hoc requests or when our current reporting platform goes down. 
 
 ## Fitness 🏋🏻‍♂️
 Recently I have been taking my fitness more seriously. I primarily lift weights and walk but I dabble in crossfit, biking, hiking, running, snowshoeing and cross country skiing. 
