@@ -7,7 +7,7 @@ image: "./csc_155.png"
 filters:
   - social-share
 share:
-  permalink: "https://tylerhillery.com/blog/getting-started-in-os/"
+  permalink: "https://tylerhillery.com/blog/csc-155-cpp-cs-1/"
   description:
   twitter: true
   facebook: false
@@ -20,4 +20,4 @@ share:
 categories: [Computer Science, C++, Programming]
 ---
 
-For now I am taking my notes in [Notion](https://tylerhillery.notion.site/Computer-Science-I-in-C-bd8b627aeea54c2396cd77a34f9b2c10) show check out my notes there! In the future I might convert everything over to a qmd file. 
+For now I am taking my notes in [Notion](https://tylerhillery.notion.site/Computer-Science-I-in-C-bd8b627aeea54c2396cd77a34f9b2c10) so check out my notes there! In the future I might convert everything over to a qmd file. 
