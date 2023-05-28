@@ -4,7 +4,7 @@ description: My data cabin is a personal data lakehouse for me to go explore new
 author: "Tyler Hillery"
 date: "2023-05-25"
 categories: [Data Lakehouse, Iceberg]
-image: "../../assets/images/DataLakeHouse.svg"
+image: "../../assets/images/data-cabin.png"
 filters:
   - social-share
 share:
@@ -152,4 +152,4 @@ These are several BI tools that interest me and I would like to build at least o
 - [Streamlit](https://streamlit.io/)
 
 ## Conclusion 
-Now that we have a blueprint created it's time to start building the data cabin! In my next post I will be writing about my experience on setting up Tabluar with some sample data and running our first queries on our data cabin. 
+Now that we have a blueprint created it's time to start building the data cabin! In my next post I will be writing about my experience on setting up Tabluar with some sample data and running our first queries.
