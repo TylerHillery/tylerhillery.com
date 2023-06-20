@@ -1,6 +1,6 @@
 ---
 title: "Code: The Hidden Language of Computer Hardware and Software"
-description: These are my notes for the book [Code The Hidden Language of Computer Hardware and Software](https://www.codehiddenlanguage.com/) by Charles Petzold.
+description: My short review of the book [Code The Hidden Language of Computer Hardware and Software](https://www.codehiddenlanguage.com/) by Charles Petzold.
 author: "Tyler Hillery"
 date: "2023-04-24"
 image: "./Code2Cover.jpg"

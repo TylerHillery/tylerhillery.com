@@ -1,0 +1,31 @@
+---
+title: "Fundamentals of Data Engineering"
+description: My short review of the book [Fundamentals of Data Engineering](https://www.codehiddenlanguage.com/) by Joe Reis & Matt Housley.
+author: "Tyler Hillery"
+date: "2023-06-03"
+image: "./de_fund.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/de-fundamentals/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Data Engineering]
+---
+
+
+
+## Summary
+
+**Rating**: ⭐⭐⭐⭐⭐
+
+My tweet sums up how I felt about this book. Now that I have finished the whole thing, I would say it's a must read for anyone in this data space. 
+
+{{< tweet _TylerHillery 1664680077815054345 >}}
