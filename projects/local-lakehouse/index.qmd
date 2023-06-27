@@ -1,0 +1,10 @@
+---
+title: "Local (Data) Lakehouse"
+author: "Tyler Hillery"
+date: "2023-06-27"
+categories: [Data Lakehouse]
+image: "../../assets/images/local-lakehouse.png"
+code: 
+  url: https://github.com/TylerHillery/local-lakehouse
+  text: GitHub
+---
