@@ -8,6 +8,7 @@ website:
   image: assets/images/profile2.jpg
   repo-url: https://github.com/TylerHillery/TylerHillery.github.io
   repo-actions: [edit, issue]
+
   comments:
     giscus:
       repo: quarto-dev/quarto-web
@@ -35,3 +36,5 @@ format:
     code-line-numbers: true
 execute:
   freeze: auto
+resources:
+  - CNAME
