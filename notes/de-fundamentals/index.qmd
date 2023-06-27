@@ -26,6 +26,6 @@ categories: [Data Engineering]
 
 **Rating**: ⭐⭐⭐⭐⭐
 
-My tweet sums up how I felt about this book. Now that I have finished the whole thing, I would say it's a must read for anyone in this data space. 
+My tweet sums up how I felt about this book. Now that I have finished the whole thing, I would say it's a must read for anyone in the data space. 
 
 {{< tweet _TylerHillery 1664680077815054345 >}}
