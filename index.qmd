@@ -1,33 +1,55 @@
 ---
-listing:
-  - id: blog
-    contents: blog
-    sort: "date desc"
-    type: default
-    categories: false
-    sort-ui: true
-    filter-ui: true
-    page-size: 5
-  - id: notes
-    contents: notes
-    sort: "date desc"
-    type: default
-    categories: false
-    sort-ui: true
-    filter-ui: true
-    page-size: 5
-page-layout: full
+title: "Tyler Hillery"
 comments: false
-title-block-banner: true
+about:
+  template: trestles
+  image: "assets/images/profile.jpg" 
+  links:
+    - icon: github
+      href: https://github.com/TylerHillery
+      text: GitHub
+    - icon: linkedin
+      href: https://www.linkedin.com/in/tylerhillery/
+      text: LinkedIn
+    - icon: twitter
+      href: https://twitter.com/_TylerHillery
+      text: Twitter
+    - icon: mastodon
+      href: https://data-folks.masto.host/@TylerHillery
+      text: Mastodon
 ---
+### **About Me**
+*Data professional* & *Lifelong learner* with interests in database internals, data infrastructure, data streaming, analytics, data apps, distributed systems, programming languages & open source software.
 
+I currently work at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engineer](https://www.getdbt.com/what-is-analytics-engineering/) focusing on our ETF listing business.
 
-## Blog 
+My ambition is to help build systems, infrastructure and technology that empowers others.
 
-:::{#blog}
-:::
+I'm driven by gratitude.
 
-## Notes
+### **Background**
+Before pursing a career in data, I wanted to work in investment management. I graduated Dec 2019 with a B.S. in Finance.
 
-:::{#notes}
-:::
+My first job out of college was in the investment management department of a fortune 650 insurance company. It wasn't till after I passed the [CFA](https://www.cfainstitute.org/en/programs/cfa/charter) level 1 exam that I knew this wasn't the career for me. What I did discover was my interest in computer science, data and technology. 
+
+I started working on my technical skills through various resources (MOOCs, Books, YouTube, Side Projects). I went from Data Analyst --> BI Developer --> Analytics Engineer all within one year.
+
+I spend most of free time filling in my knowledge gaps about core computer science topics. I am really interested in system internals and have been taking a bottom up approach to learning about computer science. 
+
+My current career goal is to work as a software engineer focused in one of following areas:
+
+- Data Platform
+- Data Infrastructure
+- Data Applications
+- Data Streaming 
+- Database Development
+- Distributed Systems
+- Cloud Infrastructure
+
+Outside of data and technology: 
+
+- I have a beautiful fiance who has a passion for bodybuilding
+- I have a twin brother 
+- Currently live in Wisconsin 
+- Big fan of the Milwaukee Bucks #BucksIn6
+- I co-authored a paper [Inside the hiring process: how managers assess employability based on grit, the big five, and other factors ](https://www.researchgate.net/publication/335182644_Inside_the_hiring_process_how_managers_assess_employability_based_on_grit_the_big_five_and_other_factors)

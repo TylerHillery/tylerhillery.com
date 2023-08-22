@@ -1,0 +1,33 @@
+---
+listing:
+  - id: blog
+    contents: blog
+    sort: "date desc"
+    type: default
+    categories: false
+    sort-ui: true
+    filter-ui: true
+    page-size: 5
+  - id: notes
+    contents: notes
+    sort: "date desc"
+    type: default
+    categories: false
+    sort-ui: true
+    filter-ui: true
+    page-size: 5
+page-layout: full
+comments: false
+title-block-banner: true
+---
+
+
+## Blog 
+
+:::{#blog}
+:::
+
+## Notes
+
+:::{#notes}
+:::
