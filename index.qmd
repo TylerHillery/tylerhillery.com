@@ -1,9 +1,12 @@
 ---
 title: "Tyler Hillery"
 comments: false
+toc: false
 about:
-  template: trestles
-  image: "assets/images/profile.jpg" 
+  template: solana
+  image: "assets/images/profile.jpg"
+  image-width: 15em
+  image-shape: round
   links:
     - icon: github
       href: https://github.com/TylerHillery
@@ -14,9 +17,6 @@ about:
     - icon: twitter
       href: https://twitter.com/_TylerHillery
       text: Twitter
-    - icon: mastodon
-      href: https://data-folks.masto.host/@TylerHillery
-      text: Mastodon
 ---
 ### **About Me**
 *Data professional* & *Lifelong learner* with interests in database internals, data infrastructure, data streaming, analytics, data apps, distributed systems, programming languages & open source software.
