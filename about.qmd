@@ -19,7 +19,7 @@ about:
       text: Mastodon
 ---
 ### **About Me**
-*Data practitioner* & *Lifelong learner* with interests in database internals, data infrastructure, data streaming, analytics, data apps, distributed systems, programming languages & open source software.
+*Data professional* & *Lifelong learner* with interests in database internals, data infrastructure, data streaming, analytics, data apps, distributed systems, programming languages & open source software.
 
 I currently work at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engineer](https://www.getdbt.com/what-is-analytics-engineering/) focusing on our ETF listing business.
 
