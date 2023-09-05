@@ -1,6 +1,6 @@
 ---
 title: "Fundamentals of Data Engineering"
-description: My short review of the book [Fundamentals of Data Engineering](https://www.codehiddenlanguage.com/) by Joe Reis & Matt Housley.
+description: My short review of the book [Fundamentals of Data Engineering](https://a.co/d/hNfukbx) by Joe Reis & Matt Housley.
 author: "Tyler Hillery"
 date: "2023-06-03"
 image: "./de_fund.jpg"

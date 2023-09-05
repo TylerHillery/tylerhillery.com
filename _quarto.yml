@@ -16,10 +16,10 @@ website:
     left:
       - href: blog.qmd
         text: Blog
+      - href: notes.qmd
+        text: Notes
       - href: projects.qmd
         text: Projects
-      - href: resume.qmd
-        text: Resume
     right:
       - icon: github
         href: https://github.com/TylerHillery

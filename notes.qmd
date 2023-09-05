@@ -1,7 +1,7 @@
 ---
 listing:
-  - id: blog
-    contents: blog
+  - id: notes
+    contents: notes
     sort: "date desc"
     type: default
     categories: false
@@ -13,7 +13,7 @@ comments: false
 title-block-banner: true
 ---
 
-## Blog 
+## Notes
 
-:::{#blog}
+:::{#notes}
 :::

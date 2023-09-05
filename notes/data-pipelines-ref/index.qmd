@@ -1,0 +1,41 @@
+---
+title: "Data Pipelines Pocket Reference"
+description: My short review of the book [Data Pipelines Pocket Reference](https://a.co/d/7azt10z) by James Densmore.
+author: "Tyler Hillery"
+date: "2023-09-05"
+image: "./data_pipelines_ref.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/data_pipelines_ref/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Data Engineering]
+---
+
+## Summary
+
+**Rating**: ⭐⭐⭐⭐⭐
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### My original review
+This book does a great job of providing real world examples of data pipeline work. I can already see myself referring back to it in the future when I am looking for examples of how certain things are done. The author does a great job outlining reusable patterns that can be applied broadly. Very quick read and a book I would definitely recommend to other data professionals or those that want a better idea of day to day data engineering work. 
+:::
+
+::: {.column width="50%"}
+### ChatGPT Revision
+This book excels at demystifying the intricacies of data pipelines with a wealth of real-world examples. Its practicality shines as it becomes a future reference for understanding how various tasks are accomplished. A swift and insightful read, I highly recommend this book to both data professionals and anyone interested in gaining a clearer insight into the day-to-day world of data engineering.
+:::
+
+::::
+
+
