@@ -4,6 +4,7 @@ project:
 website:
   title: "Tyler Hillery"
   site-url: https://www.tylerhillery.com
+  description: "Personal website where I share my thoughts, ideas and projects."
   favicon: assets/images/favicon.ico
   image: assets/images/profile2.jpg
   repo-url: https://github.com/TylerHillery/TylerHillery.github.io
@@ -27,6 +28,8 @@ website:
         href: https://www.linkedin.com/in/tylerhillery/
       - icon: twitter
         href: https://twitter.com/_TylerHillery
+      - icon: rss
+        href: blog.xml
 format:
   html:
     theme: custom.scss

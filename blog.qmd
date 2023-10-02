@@ -8,6 +8,7 @@ listing:
     sort-ui: true
     filter-ui: true
     page-size: 10
+    feed: true
 page-layout: full
 comments: false
 title-block-banner: true

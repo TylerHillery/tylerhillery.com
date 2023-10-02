@@ -1,0 +1,10 @@
+---
+title: "Real-Time Coinbase Orderbook Pipeline"
+author: "Tyler Hillery"
+date: "2023-10-01"
+categories: [Real-Time Data, Data Apps, Data Engineering]
+image: "../../assets/images/streamlit_app_coinbase.png"
+code: 
+  url: https://github.com/TylerHillery/coinbase-order-book-pipeline
+  text: GitHub
+---

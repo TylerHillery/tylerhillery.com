@@ -4,7 +4,7 @@ comments: false
 toc: false
 about:
   template: solana
-  image: "assets/images/profile.jpg"
+  image: "assets/images/bald_pfp_square.jpg"
   image-width: 15em
   image-shape: round
   links:
@@ -19,9 +19,9 @@ about:
       text: Twitter
 ---
 ### **About Me**
-*Data professional* & *Lifelong learner* with interests in database internals, data infrastructure, data streaming, analytics, data apps, programming languages & open source software.
+*Data professional* & *Lifelong learner* with interests in databases, data infrastructure, data streaming, analytics, data apps and open-source software.
 
-I currently work at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engineer](https://www.getdbt.com/what-is-analytics-engineering/) focusing on our ETF listing business.
+I currently work at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engineer](https://www.getdbt.com/what-is-analytics-engineering/) focusing on our ETF listings business.
 
 My ambition is to help build systems, infrastructure and technology that empowers others.
 
