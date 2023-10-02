@@ -26,11 +26,11 @@ share:
 
 ## Introducing "Tyler Tries"
 
-This blog kicks off a new series I am calling "Tyler Tries" where I write about the topics I am learning about. We are going to kick off the series off with my experience building a real-time data pipeline to visualize Coinbase order book depth
+This blog kicks off a new series I am calling "Tyler Tries" where I write about the topics I am learning about. We are going to start the series off with my experience building a real-time data pipeline to visualize Coinbase order book depth.
 
 ## TL;DR
 
-I built a real-time dashboard that visualizes Coinbase order book depth powered by [Redpanda](https://redpanda.com/) + [Materialize](https://materialize.com/) + [dbt](https://www.getdbt.com/) + [Streamlit](https://streamlit.io/) you can view the code [here](https://github.com/TylerHillery/coinbase-order-book-pipeline). The data comes from the free Coinbase WebSocket feed using the [level2_batch channel](https://docs.cloud.coinbase.com/exchange/docs/websocket-channels#level2-batch-channel)
+I built a real-time dashboard that visualizes Coinbase order book depth powered by [Redpanda](https://redpanda.com/) + [Materialize](https://materialize.com/) + [dbt](https://www.getdbt.com/) + [Streamlit](https://streamlit.io/) you can view the code [here](https://github.com/TylerHillery/coinbase-order-book-pipeline). The data comes from the free Coinbase WebSocket feed using the [level2_batch channel](https://docs.cloud.coinbase.com/exchange/docs/websocket-channels#level2-batch-channel).
 
 <iframe src="https://drive.google.com/file/d/1yCz9NxpN5zCXPRSVosNWmkhWPnQeniP6/preview" width="100%" height="480" allow="autoplay">
 
@@ -40,7 +40,7 @@ I built a real-time dashboard that visualizes Coinbase order book depth powered 
 
 I posted the above video on Twitter/X and several people requested a blog post about how it all works. It may come as a bit of a surprise but it wasn't all too difficult. This is coming from someone without any prior experience dealing with real-time data and who has never used Redpanda or Materialize before. Funny enough, the part I struggled with most was pandas dataframe styling and creating an unstacked area chart (it turns out most python plotting libraries assume your area chart will be stacked).
 
-Historically, real-time data was hard to manage. We've come a long way since then. If you look at the various components of the [modern streaming stack](https://medium.com/event-driven-utopia/unbundling-the-modern-streaming-stack-451f75eaf1d) the biggest thing slowing people down from building real-time data pipelines are the sources. Besides CDC feeds, very rarely there are [event-driven APIs](https://medium.com/event-driven-utopia/event-driven-apis-understanding-the-principles-c3208308d4b2) that allow for the consumption of the source data in real time.
+Historically, real-time data was hard to manage. We've come a long way since then. If you look at the various components of the [modern streaming stack](https://medium.com/event-driven-utopia/unbundling-the-modern-streaming-stack-451f75eaf1d) the biggest thing slowing people down from building real-time data pipelines are the sources. Besides CDC feeds, very rarely are there [event-driven APIs](https://medium.com/event-driven-utopia/event-driven-apis-understanding-the-principles-c3208308d4b2) that allow for the consumption of the source data in real time.
 
 This is why I got so excited when I came across this guide from bytewax: [Real-Time Financial Exchange Order Book](https://bytewax.io/guides/real-time-financial-exchange-order-book-application?utm_source=pocket_saves). It's how I discovered the free Coinbase WebSocket feed which displays their level 2 order book data. Using this data I thought it would be fun to recreate a common visual to display exchange depth.
 
@@ -234,7 +234,7 @@ The console helped me identify a bug in my original code. The unique key I was m
 
 The next step in our pipeline entails processing and storing the real-time data. Materialize is a streaming database that allows for just that. It has integrations with Kafka and since Redpanda is compatible with Kafka APIs, Materialize and Redpanda work together out of the box.
 
-A key thing to understand about Materialize is how it handles materialized views. Their MVs are incrementally maintained so as the underlying data changes the MV automatically updates. This is why when you use Materialize and dbt together you'll typically set up dbt to only run in a CI/CD pipeline which is kicked off when changes occur to the dbt models. If you want to learn more about how this works I highly recommend checking out this video on [Materialize+dbt Streaming for the Modern Data Stack](https://youtu.be/yofTRM9WpwQ?si=9fdqDtII_GbH5dxG.)
+A key thing to understand about Materialize is how it handles materialized views. Their MVs are incrementally maintained so as the underlying data changes the MV automatically updates. This is why when you use Materialize and dbt together you'll typically set up dbt to only run in a CI/CD pipeline which is kicked off when changes occur to the dbt models. If you want to learn more about how this works I highly recommend checking out this video on [Materialize+dbt Streaming for the Modern Data Stack](https://youtu.be/yofTRM9WpwQ?si=9fdqDtII_GbH5dxG.).
 
 Most of the code for this project mimics what I found in the [Materialize + Redpanda + dbt Hack Day](https://github.com/MaterializeInc/mz-hack-day-2022). 
 
@@ -254,7 +254,7 @@ The `ENVELOPE UPSERT` treats all records as having a key and a value, and suppor
 - If the key matches a preexisting record and the value is non-null, Materialize updates the existing record with the new value.
 - If the key matches a preexisting record and the value is null, Materialize deletes the record.
 
-Our staging model does some light transformations to get the data into a more usable form.
+The staging model does some light transformations to get the data into a more usable form.
 
 ```{python}
 #| code-fold: true
@@ -311,7 +311,7 @@ final as (
 select * from final
 ```
 
-Because Materialize does not handle [window functions](https://materialize.com/docs/transform-data/patterns/window-functions/#:~:text=Window%20functions%20compute%20results%20based,consecutive%20rows%20in%20each%20partition.) very well they provided some alternative approaches in their docs. I referenced the [Materialize Top K by group](https://materialize.com/docs/transform-data/patterns/top-k/#top-1-using-distinct-on) that allowed me to return the top bid and ask record for each product id. The highest bid and lowest ask is referred to as the national best bid and off (NBBO).
+Because Materialize does not handle [window functions](https://materialize.com/docs/transform-data/patterns/window-functions/#:~:text=Window%20functions%20compute%20results%20based,consecutive%20rows%20in%20each%20partition.) very well they provided some alternative approaches in their docs. I referenced the [Materialize Top K by group](https://materialize.com/docs/transform-data/patterns/top-k/#top-1-using-distinct-on) that allowed me to return the top bid and ask record for each product id. The highest bid and lowest ask is referred to as the national best bid and offer (NBBO).
 
 ```{python}
 #| code-fold: true
