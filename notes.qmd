@@ -4,7 +4,7 @@ listing:
     contents: notes
     sort: "date desc"
     type: default
-    categories: false
+    categories: True
     sort-ui: true
     filter-ui: true
     page-size: 10
@@ -13,7 +13,7 @@ comments: false
 title-block-banner: true
 ---
 
-## Notes
+
 
 :::{#notes}
 :::

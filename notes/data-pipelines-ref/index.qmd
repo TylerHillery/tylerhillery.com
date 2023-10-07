@@ -7,7 +7,7 @@ image: "./data_pipelines_ref.jpg"
 filters:
   - social-share
 share:
-  permalink: "https://tylerhillery.com/blog/data_pipelines_ref/"
+  permalink: "https://tylerhillery.com/blog/data-pipelines-ref/"
   description:
   twitter: true
   facebook: false
@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Data Engineering]
+categories: [Nonfiction Technical Book]
 ---
 
 ## Summary

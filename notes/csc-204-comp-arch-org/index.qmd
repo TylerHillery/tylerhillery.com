@@ -7,7 +7,7 @@ image: "./csc204.jpg"
 filters:
   - social-share
 share:
-  permalink: "https://tylerhillery.com/blog/csc-204-comp-arch-org/"
+  permalink: "https://tylerhillery.com/notes/csc-204-comp-arch-org/"
   description:
   twitter: true
   facebook: false
@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Computer Science]
+categories: [Course]
 ---
 
 For now I am taking my notes in [Notion](https://tylerhillery.notion.site/Computer-Architecture-and-Organization-85c8c382473e4d3593e37bf46564f06a?pvs=4) so check out my notes there! In the future I might convert everything over to a qmd file. 

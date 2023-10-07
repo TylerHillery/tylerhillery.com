@@ -17,6 +17,9 @@ about:
     - icon: twitter
       href: https://twitter.com/_TylerHillery
       text: Twitter
+    - icon: book-fill
+      href: https://twitter.com/_TylerHillery
+      text: Goodreads
 ---
 ### **About Me**
 *Data professional* & *Lifelong learner* with interests in databases, data infrastructure, data streaming, analytics, data apps and open-source software.
@@ -32,7 +35,7 @@ Before pursing a career in data, I wanted to work in investment management. I gr
 
 My first job out of college was in the investment management department of a fortune 650 insurance company. It wasn't till after I passed the [CFA](https://www.cfainstitute.org/en/programs/cfa/charter) level 1 exam that I knew this wasn't the career for me. What I did discover was my interest in computer science, data and technology. 
 
-I started working on my technical skills through various resources (MOOCs, Books, YouTube, Side Projects). I went from Data Analyst --> BI Developer --> Analytics Engineer all within one year.
+I started working on my technical skills through various resources (MOOCs, Books, YouTube, Side Projects). I went from Data Analyst ➡️ BI Developer ➡️ Analytics Engineer all within one year.
 
 I spend most of free time filling in my knowledge gaps about core computer science topics. I am really interested in system internals and have been taking a bottom up approach to learning about computer science. 
 

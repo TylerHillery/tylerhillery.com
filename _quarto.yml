@@ -30,6 +30,8 @@ website:
         href: https://twitter.com/_TylerHillery
       - icon: rss
         href: blog.xml
+      - icon: book
+        href: https://www.goodreads.com/user/show/150025597-tyler-hillery
 format:
   html:
     theme: custom.scss

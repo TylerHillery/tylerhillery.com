@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Computer Science, Programming]
+categories: [Nonfiction Technical Book]
 ---
 
 

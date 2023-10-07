@@ -6,7 +6,7 @@ date: "2022-12-25"
 filters:
   - social-share
 share:
-  permalink: "https://tylerhillery.com/blog/getting-started-in-os/"
+  permalink: "https://tylerhillery.com/notes/quarto-reference/"
   description:
   twitter: true
   facebook: false
@@ -16,8 +16,8 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Quarto]
-image: "../../assets/images/quarto-logo.jpg"
+categories: [Reference]
+image: "./quarto_logo.png"
 jupyter: python3
 
 ---

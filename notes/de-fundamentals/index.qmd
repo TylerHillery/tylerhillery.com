@@ -7,7 +7,7 @@ image: "./de_fund.jpg"
 filters:
   - social-share
 share:
-  permalink: "https://tylerhillery.com/blog/de-fundamentals/"
+  permalink: "https://tylerhillery.com/notes/de-fundamentals/"
   description:
   twitter: true
   facebook: false
@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Data Engineering]
+categories: [Nonfiction Technical Book]
 ---
 
 

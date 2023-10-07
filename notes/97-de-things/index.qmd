@@ -1,0 +1,27 @@
+---
+title: "97 Things Every Data Engineer Should Know: Collective Wisdom from the Experts"
+description: "*My short review of the book [97 Things Every Data Engineer Should Know: Collective Wisdom from the Experts](https://a.co/d/0mNHibZ) by Tobias Macey."
+author: "Tyler Hillery"
+date: "2023-10-07"
+image: "./97_things_cover.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/97-de-things/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Nonfiction Technical Book]
+---
+
+## Summary
+
+**Rating**: ⭐⭐
+
+Personally I wasn't the biggest fan of this format of short snippets from various data professionals. That's not to say I didn't learn anything, there were definitely some value tidbits in this book. Overall though I thought a lot of the material was repeated from various folks. I probably wont be recommending this book to anyone. 
