@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Nonfiction Technical Book]
+categories: [Technical Books]
 ---
 
 

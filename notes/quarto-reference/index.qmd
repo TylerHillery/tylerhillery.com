@@ -16,7 +16,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Reference]
+categories: [References]
 image: "./quarto_logo.png"
 jupyter: python3
 

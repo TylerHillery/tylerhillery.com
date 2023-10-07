@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Course]
+categories: [Courses]
 ---
 
 For now I am taking my notes in [Notion](https://tylerhillery.notion.site/Computer-Science-I-in-C-bd8b627aeea54c2396cd77a34f9b2c10) so check out my notes there! In the future I might convert everything over to a qmd file. 

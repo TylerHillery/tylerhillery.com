@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Course]
+categories: [Courses]
 ---
 
 For now I am taking my notes in [Notion](https://tylerhillery.notion.site/Computer-Architecture-and-Organization-85c8c382473e4d3593e37bf46564f06a?pvs=4) so check out my notes there! In the future I might convert everything over to a qmd file. 
