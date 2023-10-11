@@ -18,7 +18,7 @@ about:
       href: https://twitter.com/_TylerHillery
       text: Twitter
     - icon: book-fill
-      href: https://twitter.com/_TylerHillery
+      href: https://www.goodreads.com/user/show/150025597-tyler-hillery
       text: Goodreads
 ---
 ### **About Me**
