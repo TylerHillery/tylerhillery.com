@@ -1,0 +1,172 @@
+---
+title: "Designing Data-Intensive Applications"
+description: My notes on [Designing Data-Intensive Applications](https://a.co/d/7r8FaLD) by Martin Kleppmann.
+author: "Tyler Hillery"
+date: "2023-10-14"
+image: "./ddia.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/ddia/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+___
+
+I am going to try something new while reading this book. After every reading session I have I will journal my raw thoughts and ideas I have, unfiltered and unedited. This books comes highly regarded and I want to be able to capture my experience during my first reading. 
+
+# Reading Session 01
+- **date**: Tue 10/10/2023
+- **time**: 7:05PM-7:15PM (10 min)
+- **chapter**: Preface  
+- **pages**: 5-18 (15 pages)
+
+The preface sets the stage for the book describing the scope, who should read the book, and the outline of the book. Based on the preface alone I have feeling I am going to really enjoy it. The preface emphasizes the focus of the book to be on the principals of designing data intensive applications. We first learn also what does a data intensive application is:
+
+> We call an application ***data-intensive*** if the data is its primary challenge—the quantity of data, the complexity of data, or the speed at which it is changing—as opposed to ***compute-intensive***, where CPU cycles are the bottleneck.
+
+I personally identified with “*the people who have natural curiosity for the way things work*” as my reasoning for reading this book. My reasoning goes along with this point as well:
+
+> You will, however, develop a good intuition for what your systems are doing under the hood so that you can reason about their behavior, make good design decisions, and track down any problems that may arise.
+
+For me it’s nice to be able to have the high level mental model of how some of these systems works so I can mentally connect the dots even though I may not be working on these underlying systems directly. Although one day I would like to 😉
+
+I am looking forward to reading the rest of the book!
+
+___
+
+# Reading Session 02
+- **date**: Wed 10/11/2023
+- **time**: 4:00AM-4:45AM (45 min) 
+- **chapter**: Ch 01 - Reliability 
+- **pages**: 18-31 (13 pages)
+
+## Notes
+I like the concept of *data systems* even today we are still seeing the lines get blurred further and further between messaging systems and databases. For example Redpanda recently announced that they plan on adding iceberg support for the tiered storage. This would me any query engine that can read the Iceberg table format should be able to query the data. Does this make Redpanda a database? I think so. 
+
+Many of us may be data system designers without even realizing it. Figure 1.1. does a great job showing how one application could be interacting with an in memory cache database, a primary db, a full-text index and a message queue all at once. all glued together through the application code with the implementation details hidden from clients. I think this book is more wildly applicable than people realize. 
+
+Three key terms:
+
+> ***Reliability***: The system should continue to work correctly (performing the correct function at the desired level of performance) even in the face of adversity (hardware or software faults, and even human error).
+
+> ***Reliability***: As the system grows (in data volume, traffic volume, or complexity), there should be reasonable ways of dealing with that growth
+
+> ***Maintainability***: Over time, many different people will work on the system (engineering and operations, both maintaining current behavior and adapting the system to new use cases), and they should all be able to work on it productively.
+
+> The things that can go wrong are called *faults*, and systems that anticipate faults can cope with them are called **fault-tolerant** or **resilient**.
+
+::: {.callout-important appearance="default" collapse=false title="TODO"}
+Look into the **Netflix Chaos Monkey** (something about purposely introducing faults to test the system)
+:::
+
+::: {.callout-important appearance="default" collapse=false title="TODO"}
+Look up **RAID** configuration, I remember learning about this in my computer org. and arch. class
+:::
+
+Interesting to hear how handling reliability is now less focuses on making the hardware more redundant and instead having the software handle it. This was largely due to the cause of cloud platforms like AWS which have a focus more on flexibility and elastic over single-machine reliability.
+
+When the author was giving example of software faults and how they can lie dormant for a long time until they are triggered by an unusual set of circumstances. It reminded me of a bug I encountered yesterday for our dim_calendar table which had a column called is_holiday. My assumption when using this table was than when is_holiday was `true` that would also mean the stock markets would be close. Well in the case of 10/09/2023, Columbus day is a federal holiday but the markets are still open. Lucky enough I had some dbt tests that notified me there was something wrong with some downstream dependencies of this table. I was able to quickly search through the DAG and noticed that the is_holiday column was based on a python UDF that used `from [pandas.tseries.holiday](http://pandas.tseries.holiday) import USFederalHolidayCalendar` . I was able to modify the function to only use holidays observed by the stock market and open PR to fix this.
+
+## Reading session summary
+My first thought is this book is going to take forever if I continue taking these detailed notes and journaling about thoughts as I read. I expect other sessions to be less detailed but I am going to try to stick with it. It was nice to learn more about what reliability means and how to handle it. I believe this is an area of mine and that I need to work on. Most of the work I do is more reactive (testing) to faults that can cause me to go into a panic trying to debug what is wrong. It would be better if I could be more proactive. It reminds me of a pattern used in data engineering called Write-Audit-Publish (WAP) wow, this acronym is forever ruined by Cardi B. In essence WAP involves:
+
+1. Write the data to a staging area (a non-production env so the data is isolated)
+2. Audit the data to validate the data and solve any quality issues (NULL values, duplicates etc.)
+3. publish data to production
+        
+Table formats like Iceberg even have special functionality to help implement this pattern like the older version `WAP.id` or the newer method with branching `WAP.branch` . More about this can be found here [Streamlining Data Quality in Apache Iceberg with write-audit-publish & branching](https://www.dremio.com/blog/streamlining-data-quality-in-apache-iceberg-with-write-audit-publish-branching/#:~:text=Write%2DAudit%2DPublish%20(WAP)%20is%20a%20data%20quality,data%20to%20the%20production%20tables)
+
+This pattern reminds me of version control. Where step one is like creating your own local branch, step two is the CI/CD process that runs testing your changes. Once passed step three happens where changes are deployed to production.
+
+___
+
+# Reading Session 03
+- **date**: Thu 10/12/2023
+- **time**: 6:45PM-7:00PM (15 min)
+- **chapter**: Ch 01 - Scalability
+- **pages**: 31-39 (8 pages)
+
+## Notes
+I like the author phrase how it’s not just good enough to say this systems scales, we have to ask “*what are our options for coping with growth*”
+
+Load can be described with load parameters
+- requests per second to a web server
+- ratio of reads to writes to a db
+- number if simultaneously active users in a chat room
+- hit rate on a cache
+
+Interesting to hear that Twitter’s scaling challenge is due to fan-out where each user follows many people and each user is followed by many people.
+
+Love the inside joke on just setting up my twttr.
+
+> ***Throughput***: The number of records we can process per second, or the total time it takes to run a job on a dataset of a certain size.
+
+> ***Response time***: What the client sees: besides the actual time to process the request (the service time), it includes network delays and queueing delays. 
+
+> ***Latency***: Duration that a request is waiting to be handled
+
+Response time can vary greatly to it’s best to measure as a distribution of values.
+
+ Another good tidbit, mean is not good measure for “*typical*” response time, because it doesn’t tell you how many users actually experience delay. It’s better to use percentiles and use the *median* aka the *50th percentile*.
+
+## Reading Session Summary
+I’ll be honest I didn’t want to read today but I currently have my longest reading streak in the kindle app (6 days) and I didn’t want to break it. My original plan was to read just one page but it’s surprising once you start something you don’t want to stop. Author poses some many great questions to ask when comes to scalability of systems and really starts to question key terms I have heard of better could never define or put into words if you asked me, like what is *load* or *load parameters*.
+
+___
+
+# Reading Session 04
+- **date**: Fri 10/13/2023
+- **time**: 4:05AM-4:20AM (15 min)  
+- **chapter**: Ch 01 - Scalability
+- **pages**: 39-46 (7 pages)
+
+## Reading Session Summary
+Couple things that I came to mind as I finished up the scalability portion. I like how the author started with first describing load and metrics for measure for performance before jumping straight into “*how to maintain good performance even when load parameters increase by some amount?*” I believe this is a thoughtful exercise to do before trying to optimize for scalability because it forces you to think about what it is you are actually trying to optimizer for. This deep thinking will help avoid any pitfalls of optimizing for the wrong thing, the author even calls out “*An architecture that scales well for particular application is built around assumptions of which operations will be common and which will be are — the load parameters*”
+
+I am familiar will some of the common techniques mentioned in this chapter with ways dealing scalability such as vertical and horizontal scaling and shared-nothing architecture. The author makes the correct call that distributed data systems have become the default choice. In fact I think as of today people choose distributed systems far tool quickly as the default the choice when tackling data problems. I recently came across a post on r/dataengineering where an engineer was helping out a local floral shop and they set them up with BigQuery, Mage, dbt etc. It wasn’t clear to me the size of data they were dealing, and with but the technology choices they recommended just seemed absurd. Just thinking about my local floral and setting them up with this tech, who the heck is going to maintain it? Also the problem didn’t really call for all these tools, they simply needed a more automated way of cross referencing data from SQL server and manually downloaded sales information. This sounds like something a spreadsheet could do. The pendulum has shifted too far as making these distributed systems the default choice. In recent times with the rise of tools like DuckDB, I believe people are going to second guess themselves before instinctively setting up a spark cluster to do some simple ELT/ELT work. 
+
+___
+
+# Reading Session 05
+- **date**: Fri 10/13/2023
+- **time**: 4:05AM-4:20AM (15 min)
+- **chapter**: Ch 01 - Maintainability & Ch 02 - Data Models
+- **pages**: 39-46 (7 pages)
+
+## Notes
+
+3 design principals of **Maintainability**
+
+> ***Simplicity***: Make it easy for new engineers to understand the system, by removing as much complexity as possible from the system. 
+
+- This can be tough finding the right level of abstraction, author actually goes into detail about abstraction and relates it to high-level programming languages with how they abstract away having to write machine code. There is some foreshadowing by the author implying we will learn some techniques into how to find the right layer of abstraction.
+
+> ***Operability***: Make it easy for operations team to keep the system running smoothly
+
+> ***Simplicity***:  Make it easy for engineers to make changes to the system in the future, adapting for unanticipated use cases as requirements change.   
+
+Don’t create *big balls of mud*. 
+
+## Reading Session Summary
+Finishing up chapter 1 I learned what it means to create maintainable software. I have personally been there, working on some code and thinking to myself “*who wrote this awful code?*” Only to check the commit history to see it was me… Refactoring code honestly feels like a majority of the work I have done in my career, it always feels like no matter what company I worked for or what role I was in I was taking old code and making it better or migrating it to another platform. These personal experiences just reiterate the point of how crucial it is to create maintainable systems and I liked how the author broke down maintainable into 3 design principals. Overall, Chapter 1 did a great job on laying the foundation and principles that go into thinking about data-intensive applications
+
+When I read the title of Chapter 2. Data Models and Query Languages I got excited. This is a particular interest of mine. The author makes a bold claim about data models
+
+> Data Models are perhaps the most important part of developing software because they have such a profound effect: not only on how the software is written, but also on how we *think about the problem* that we solving
+
+I have long had this belief that all software can be distilled down to taking data in, manipulating it and producing data as a result. I am something of a self proclaimed **data extremist**.  This is why I am so fascinated by databases and data systems as a whole. Now I come from a analytics background and what a lot people think I am describing here is a data pipeline but I also think this pattern is just as applicable to all domains in tech; front-end engineering, back-end engineering, data engineering, systems engineering. Everyone at the end of the no matter what they are building are taking data in, and doing something with the data and producing some sort of output which is also data. Front-end engineer gets JSON data from an API, transforms it into HTML (which is textual data) and renders it on the client. It’s the data models and the ways we represent & interact with the data that separate these engineers into these domains.
+
+I like the way the author phrases how applications are really built by layering one data model on top of another which really get be thought of as an abstraction layer IMO. I think it’s important at whatever layer you are operating at to try learning the skills and tools commonly used one layer up and below as it will make you that much more knowledgeable about operating at the layer you normally work in. This is part of the reason that of why I am learning about lower level systems and how databases actually work. As an analytics engineering my main reasonability is to best figure out how to best model our data to enable down stream uses cases like machine learning & reporting, commonly implemented by using SQL. Understanding how databases work will give me better insight into writing more optimize and performant queries even if I never actually have to build a database.
+
+It was interesting to hear that databases back in the day made application developers think about the internal representation of the data in the database. Could imagine actually having to worry about how the data is being physically stored on disked opposed to just writing `create table` and `insert values`? Wow what a time to be alive.
+
+Also I never knew of the terms: ***business data processing***, ***network model*** and ***hierarchical model***. Just goes to show how the ***relational model*** has stood the test of time & appears to have made some of these other models obsolete.
