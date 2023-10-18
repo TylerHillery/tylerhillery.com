@@ -242,5 +242,20 @@ ___
 - **chapter**: Ch 03 Storage and Retrieval & Ch 04 Encoding and Evolution
 - **pages**: 169-184 (15 pages)
 
-# Summary
+## Summary
 Finished up chapter 03 and started ch 04. I am looking towards learning about REST and RPC communication protocols as I frequently come across these terms but don't have much knowledge about them.
+
+___
+
+# Reading Session 09
+- **date**: Wed 10/18/2023
+- **time**: 8:00AM:8:05AM (5 min)
+- **chapter**: Ch 04 Encoding and Evolution
+- **pages**: 184-188 (4 pages)
+
+## Notes
+
+*encoding* and *serialization* are the same thing.
+
+## Summary
+I never heard of some of these language specific formats like `pickle` for python for encoding in-memory byte sequences into byte sequences. Briefly touched on other formats like XML,CSV & JSON with JSON being the most popular. I wonder if later in this chapter we will get to learn about gRPC. 
