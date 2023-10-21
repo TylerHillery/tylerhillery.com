@@ -21,7 +21,7 @@ categories: [Technical Books]
 ---
 ___
 
-I am going to try something new while reading this book. After every reading session I have I will journal my raw thoughts and ideas I have, unfiltered and unedited. This books comes highly regarded and I want to be able to capture my experience during my first reading. 
+I am going to try something new while reading this book. After every reading session I will journal any thoughts and ideas I have, unfiltered and unedited. This book comes highly regarded and I want to be able to capture my experience during my first read through. 
 
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 These notes are a work in progress and may have several typos!
@@ -218,7 +218,7 @@ One of the main reasons I am reading this book:
 
 I never realized how powerful an append only log is.
 
-Not many people realize this about columar stores
+Not many people realize this about columnar stores
 
 > Note that it wouldn't make sense to sort each column independently, because then we would no longer know which items in the columns belong to the same row. We can only reconstruct a row because we know that the *k*th item in one column belongs to the same row as the *k*th item in another column.
 >
@@ -238,7 +238,7 @@ ___
 
 # Reading Session 08
 - **date**: Tue 10/17/2023
-- **time**: 5:50AM:6:00AM (10 min)
+- **time**: 5:50AM-6:00AM (10 min)
 - **chapter**: Ch 03 Storage and Retrieval & Ch 04 Encoding and Evolution
 - **pages**: 169-184 (15 pages)
 
@@ -249,7 +249,7 @@ ___
 
 # Reading Session 09
 - **date**: Wed 10/18/2023
-- **time**: 8:00AM:8:05AM (5 min)
+- **time**: 8:00AM-8:05AM (5 min)
 - **chapter**: Ch 04 Encoding and Evolution
 - **pages**: 184-188 (4 pages)
 
@@ -259,3 +259,49 @@ ___
 
 ## Summary
 I never heard of some of these language specific formats like `pickle` for python for encoding in-memory byte sequences into byte sequences. Briefly touched on other formats like XML,CSV & JSON with JSON being the most popular. I wonder if later in this chapter we will get to learn about gRPC. 
+
+___
+
+# Reading Session 10
+- **date**: Thu 10/19/2023
+- **time**: 9:00PM-9:03PM (3 min)
+- **chapter**: Ch 04 Encoding and Evolution
+- **pages**: 190-191 (2 pages)
+
+
+## Summary
+Read two pages to keep the streak alive. Learned a little about binary encoding.
+___
+
+# Reading Session 11
+- **date**: Fri 10/20/2023
+- **time**: 10:00AM-10:05AM (5 min)
+- **chapter**: Ch 04 Encoding and Evolution
+- **pages**: 191-197 (6 pages)
+
+
+## Summary
+Another short reading session where I learned a little about Thrift and Protocol buffers. This is an interesting topic to me because I've heard of a thrift server before when I worked on spark for a little bit. I wonder if these two are the same thing. I also know protocol buffers are used in gRPC. It will be nice to actually understand what these technologies actually are.
+
+___
+
+# Reading Session 12
+- **date**: Sat 10/21/2023
+- **time**: 4:20PM-4:40PM (20 min)
+- **chapter**: Ch 04 Encoding and Evolution
+- **pages**: 197-209 (12 pages)
+
+## Notes
+Protocol Buffers do not have a `list` or `array` datatype, but instead has a `repeated` marker for fields. Thrift has a dedicated `list` datatype but it does not allow the same evolution from single-valued to multi-valued as Protocol Buffers does but it has the advantage of supporting nested lists.
+
+::: {.callout-important appearance="default" collapse=false title="TODO"}
+Follow up to check if Avro is used for schema definition in Apache Kafka topics.
+:::
+
+JSON, CSV, XML are *textual* formats while Protocol Buffers, Thrift and Avro are *binary* formats.
+
+Interesting to learn that Thrift and Protocol Buffers have dynamic code generation which is helpful for statically typed languages. The author points out the dynamically typed languages there is no benefit in code generation since there is no compile-time type checker. I wonder now that python has type hints if there could be an advantage. I also think it could be helpful in generating schemas for libraries [Pydantic](https://docs.pydantic.dev/latest/) which help with run time data validation. 
+
+## Summary
+
+This part of the book reminds of this project called [Recap](https://recap.build/) which provides the ability to transpile schema definitions in various formats. Before reading this chapter I wasn't aware of all the different schema formats so I am now seeing how someone could benefit from this tool.
