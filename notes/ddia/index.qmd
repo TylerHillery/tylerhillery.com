@@ -316,17 +316,20 @@ ___
 
 ## Notes
 
-> *REST* is not a protocol, but rather a design philosophy that builds upon the principles of HTTP... An API designed according to the principles of REST is called *RESTful*.
+> ***REST*** is not a protocol, but rather a design philosophy that builds upon the principles of HTTP... An API designed according to the principles of REST is called *RESTful*.
 
-> *SOAP* is an XML-based protocol for making network API requests...aims to be independent from HTTP and avoids using most HTTP features.
+> ***SOAP*** is an XML-based protocol for making network API requests...aims to be independent from HTTP and avoids using most HTTP features.
 
-## Summary
-Finished chapter 04 covering many different ways of how data flows through services. The main methods discussed were:
+The main methods discussed were:
+
 - **Databases**: writing encodes the data and reading decodes it
 - **RPC and REST APIs**: client encodes a request, server decodes it and encodes a response and client decodes the response.
+
   ::: {.callout-important appearance="default" collapse=false title="TODO"}
   When is it best to use gRPC vs REST APIs? My understanding was gRPC is used when you want to invoke a function from another service as if it were like a function in your own service. I recall though a customer of ours was requesting for data to delivered via gRPC opposed to a RESTful API. To me that wouldn't make sense.
   :::
-- **Asynchronous Messaging Passing**: Nodes communicate by sending each other messages that are encoded by the send and decoded by the recipient. 
+  
+- **Asynchronous Messaging Passing**: Nodes communicate by sending each other messages that are encoded by the send and decoded by the recipient.
 
-So far this book feels like lego blocks with each chapter putting together the foundational pieces that common distributed systems are built upon. I really enjoy this approach because it's too common that we except the norm for what it is without truly understanding the many layers of abstraction we are building upon. 
+## Summary
+Finished chapter 04 covering many different ways of how data flows through services. So far this book feels like lego blocks with each chapter putting together the foundational pieces common distributed systems are built upon. I really enjoy this approach because it's too common nowadays to except the norm for what it is without truly understanding the many layers of abstraction we are building upon.
