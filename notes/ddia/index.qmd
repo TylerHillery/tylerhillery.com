@@ -2,7 +2,7 @@
 title: "Designing Data-Intensive Applications"
 description: My notes on [Designing Data-Intensive Applications](https://a.co/d/7r8FaLD) by Martin Kleppmann.
 author: "Tyler Hillery"
-date: "2023-10-14"
+date: "2023-10-23"
 image: "./ddia.jpg"
 filters:
   - social-share
@@ -305,3 +305,28 @@ Interesting to learn that Thrift and Protocol Buffers have dynamic code generati
 ## Summary
 
 This part of the book reminds of this project called [Recap](https://recap.build/) which provides the ability to transpile schema definitions in various formats. Before reading this chapter I wasn't aware of all the different schema formats so I am now seeing how someone could benefit from this tool.
+
+___
+
+# Reading Session 13
+- **date**: Sun 10/22/2023
+- **time**: 1:32PM-1:50PM (18 min)
+- **chapter**: Ch 04 Encoding and Evolution
+- **pages**: 209-234 (25 pages)
+
+## Notes
+
+> *REST* is not a protocol, but rather a design philosophy that builds upon the principles of HTTP... An API designed according to the principles of REST is called *RESTful*.
+
+> *SOAP* is an XML-based protocol for making network API requests...aims to be independent from HTTP and avoids using most HTTP features.
+
+## Summary
+Finished chapter 04 covering many different ways of how data flows through services. The main methods discussed were:
+- **Databases**: writing encodes the data and reading decodes it
+- **RPC and REST APIs**: client encodes a request, server decodes it and encodes a response and client decodes the response.
+  ::: {.callout-important appearance="default" collapse=false title="TODO"}
+  When is it best to use gRPC vs REST APIs? My understanding was gRPC is used when you want to invoke a function from another service as if it were like a function in your own service. I recall though a customer of ours was requesting for data to delivered via gRPC opposed to a RESTful API. To me that wouldn't make sense.
+  :::
+- **Asynchronous Messaging Passing**: Nodes communicate by sending each other messages that are encoded by the send and decoded by the recipient. 
+
+So far this book feels like lego blocks with each chapter putting together the foundational pieces that common distributed systems are built upon. I really enjoy this approach because it's too common that we except the norm for what it is without truly understanding the many layers of abstraction we are building upon. 
