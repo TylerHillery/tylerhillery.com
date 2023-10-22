@@ -1,0 +1,32 @@
+---
+title: "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones"
+description: My short review of the book [Atomic Habits An Easy & Proven Way to Build Good Habits & Break Bad Ones](https://a.co/d/fuVtmAC) by James Clear.
+author: "Tyler Hillery"
+date: "2023-10-21"
+image: "./atomic_habits.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/atomic-habits/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Self-Help Books]
+---
+___
+
+## Summary
+
+**Rating**: ⭐⭐⭐⭐⭐
+
+Wow. This is up there as one of my favorite nonfiction books. It reminds me a lot of the book *Power of Habit* by Charles Duhigg which I read 6 years ago. Many times throughout this book I found myself going backing and highlighting these great phrases. I have too many to put them all here and I honestly don't want to spoil them for others as I believe having that moment of "Oh I want to save this" is really special. I read through this book with Kindle's *immersion reading* feature where the audio book plays while highlighting the words over the ebook. The narrator of the book is also the author and I really enjoy that because I feel at times the author intends for you to read the book in a certain way. 
+
+Habits truly fascinate me. The way the humans behave without even having to think about it. Habits are so crucial for humans to live or else we would be burden with the mental load of constantly making decisions. I spend a lot of time in my life in automating and developing habits to remove myself from having to make so many decisions throughout the day. This frees up my mind for critical thinking for when I need it like when I read, study or work on problems at my job. 
+
+Habits can be good or bad & learning how to harness the good and contain the bad can set yourself up for success. This book lays out the many ways in doing just that. I highly recommend it.  
