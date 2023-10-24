@@ -355,3 +355,21 @@ ___
 
 ## Summary
 Wow I had no idea about all the complexities one has to deal when you move from a single node systems to a distributed systems. 
+
+___
+
+# Reading Session 16
+- **date**: Tue 10/24/2023
+- **time**: 2:40PM-3:00PM (20 min)
+- **chapter**: Ch 05 Replication
+- **pages**: 267-291 (24 pages)
+
+## Summary
+3 methods for replicating changes between nodes
+
+- ***single-leader***
+- ***multi-leader***
+- ***leaderless***
+
+## Summary
+When you start using replication methods that involve writes to multiple nodes it introduces ***conflicts***. The best way to deal with *conflicts* is to avoid them 🙂
