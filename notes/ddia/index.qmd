@@ -333,3 +333,25 @@ The main methods discussed were:
 
 ## Summary
 Finished chapter 04 covering many different ways of how data flows through services. So far this book feels like lego blocks with each chapter putting together the foundational pieces common distributed systems are built upon. I really enjoy this approach because it's too common nowadays to except the norm for what it is without truly understanding the many layers of abstraction we are building upon.
+
+___
+
+# Reading Session 14
+- **date**: Mon 10/23/2023
+- **time**: 6:38PM-6:50PM (12 min)
+- **chapter**: Ch 05 Replication
+- **pages**: 234-247 (13 pages)
+
+## Summary
+Starting to learn about distributed systems and how data can be replicated across nodes. 
+
+___
+
+# Reading Session 15
+- **date**: Tue 10/24/2023
+- **time**: 5:10AM-5:32AM (22 min)
+- **chapter**: Ch 05 Replication
+- **pages**: 247-267 (20 pages)
+
+## Summary
+Wow I had no idea about all the complexities one has to deal when you move from a single node systems to a distributed systems. 
