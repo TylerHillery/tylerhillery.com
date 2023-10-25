@@ -373,6 +373,7 @@ ___
 
 ## Summary
 When you start using replication methods that involve writes to multiple nodes it introduces ***conflicts***. The best way to deal with *conflicts* is to avoid them 🙂
+
 ___
 
 # Reading Session 17
@@ -382,4 +383,19 @@ ___
 - **pages**: 291-294 (3 pages)
 
 ## Summary
-Handle conflicts can be hard because writes are *concurrent* so their is no natural order them. An arbitrary order needs to be applied to determine the last write when using the *last write wins* approach for conflict resolution. 
+Handling conflicts can be hard because writes are *concurrent* so their is no natural order them. An arbitrary order needs to be applied to determine the last write when using the *last write wins* approach for conflict resolution. 
+
+___
+
+# Reading Session 18
+- **date**: Thu 10/26/2023
+- **time**: 4:15AM-4:30M (15 min)
+- **chapter**: Ch 05 Replication
+- **pages**: 294-314 (20 pages)
+
+## Notes
+
+> For defining concurrency, exact time doesn't matter: we simply call two operations concurrent if they are both unaware of each other, regardless of the physical time at which they occurred.
+
+## Summary
+I'll be honest there were parts of this chapter where a lot of the information went over my head 😅. It's good for me to be generally aware of some of thing concepts but it will definitely require me to build something that implements these concepts for the information to truly settle in. 
