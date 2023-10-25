@@ -39,12 +39,12 @@ I started working on my technical skills through various resources (MOOCs, Books
 
 I spend most of free time filling in my knowledge gaps about core computer science topics. I am really interested in system internals and have been taking a bottom up approach to learning about computer science. 
 
-My current career goal is to work as a software engineer focused in one of following areas:
+My current career goal is to work as a software engineer focused in one of the following areas:
 
 - Data Platform
 - Data Infrastructure
-- Data Applications
 - Data Streaming 
+- Data Applications
 - Database Development
 
 Outside of data and technology: 

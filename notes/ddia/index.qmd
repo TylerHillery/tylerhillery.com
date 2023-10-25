@@ -2,7 +2,7 @@
 title: "Designing Data-Intensive Applications"
 description: My notes on [Designing Data-Intensive Applications](https://a.co/d/7r8FaLD) by Martin Kleppmann.
 author: "Tyler Hillery"
-date: "2023-10-23"
+date: "2023-10-27"
 image: "./ddia.jpg"
 filters:
   - social-share
@@ -389,7 +389,7 @@ ___
 
 # Reading Session 18
 - **date**: Thu 10/26/2023
-- **time**: 4:15AM-4:30M (15 min)
+- **time**: 4:15AM-4:30PM (15 min)
 - **chapter**: Ch 05 Replication
 - **pages**: 294-314 (20 pages)
 
@@ -398,4 +398,26 @@ ___
 > For defining concurrency, exact time doesn't matter: we simply call two operations concurrent if they are both unaware of each other, regardless of the physical time at which they occurred.
 
 ## Summary
-I'll be honest there were parts of this chapter where a lot of the information went over my head 😅. It's good for me to be generally aware of some of thing concepts but it will definitely require me to build something that implements these concepts for the information to truly settle in. 
+I'll be honest there were parts of this chapter where a lot of the information went over my head 😅. It's good for me to be generally aware of some of these concepts but it will definitely require me to build something where I implement them for the information to truly settle in. 
+___
+
+# Reading Session 19
+- **date**: Fri 10/27/2023
+- **time**: 7:00PM-7:05PM (5 min)
+- **chapter**: Ch 06 Partitioning
+- **pages**: 314-319 (5 pages)
+
+## Notes
+
+> If the partitioning is unfair, so that some partitions have more data or queries than others, we call it *skewed*.
+
+> A partition with disproportionately high load is called a *hot spot*
+
+## Summary
+The beginning of the chapter reminds me about some of the query optimization work I do at my current role. At Nasdaq we use Redshift as our data warehouse. Couple things you can define for your tables is define a *distribution key* and *sort key*. The distribution key tells the leader node which worker node to send the data to. Each worker nodes stores the data into blocks called *zone maps*. The zone maps store the `min` and `max` values of the sort key allowing the worker node to prune the zone maps without having to read the data. 
+
+The idea behind the distribution key is to *co-locate* joins to minimize the impact of the redistribution step. Make sure to pick a key that evenly distributes the data across nodes. This can be challenging at Nasdaq because many stocks can skew the data because they trade a lot more than others. 
+
+::: {.callout-important appearance="default" collapse=false title="TODO"}
+If I specify a `DISTKEY` how does will Redshift still try to ensure the data is evenly distributed across nodes? For example, lets say there is a dataset with 3 symbols and we have two worker nodes. 1 symbol makes up 50% of the data and the other two make up the other 50%. Will Redshift know to distribute the symbol with more data on one node and the other two symbols on the other node?
+:::
