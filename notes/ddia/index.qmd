@@ -399,6 +399,7 @@ ___
 
 ## Summary
 I'll be honest there were parts of this chapter where a lot of the information went over my head 😅. It's good for me to be generally aware of some of these concepts but it will definitely require me to build something where I implement them for the information to truly settle in. 
+
 ___
 
 # Reading Session 19
@@ -421,3 +422,37 @@ The idea behind the distribution key is to *co-locate* joins to minimize the imp
 ::: {.callout-important appearance="default" collapse=false title="TODO"}
 If I specify a `DISTKEY` how does will Redshift still try to ensure the data is evenly distributed across nodes? For example, lets say there is a dataset with 3 symbols and we have two worker nodes. 1 symbol makes up 50% of the data and the other two make up the other 50%. Will Redshift know to distribute the symbol with more data on one node and the other two symbols on the other node?
 :::
+
+___
+
+# Reading Session 20
+- **date**: Sat 10/28/2023
+- **time**: 6:31PM-6:34PM (3 min)
+- **chapter**: Ch 06 Partitioning
+- **pages**: 319-321 (2 pages)
+
+## Summary
+Learned about some hashing techniques to help evenly distribute data across nodes to reduce the risk of a hot spot.
+___
+
+# Reading Session 21
+- **date**: Sun 10/29/2023
+- **time**: 7:17PM-7:22PM (5 min)
+- **chapter**: Ch 06 Partitioning
+- **pages**: 321-327 (6 pages)
+
+## Summary
+Secondary Indexes can introduce additional complexity when partitioning data and usually results in having to read in all the partitions. This approach is called *scatter/gather*. 
+___
+
+# Reading Session 22
+- **date**: Mon 10/30/2023
+- **time**: 4:17AM-4:38AM (21 min)
+- **chapter**: Ch 06 Partitioning
+- **pages**: 327-347 (20 pages)
+
+## Notes
+I have heard of ZooKeeper before (mainly from Kafka) but never knew what role it had in the Kafka ecosystem. I now know that ZooKeeper can be used as a way to keep track of cluster metadata and maintains the mapping of partitions to nodes. It's often used by the "routing tier" which is a partition-aware load balancer. The routing tier can query ZooKeeper to determine where to route the request to.
+
+## Summary
+Wrapped up chapter 06 by learning more about how partitions can be rebalanced to different nodes. As a result, we also need techniques to keep track of partitions and the nodes they are assigned to so queries can be efficiently routed to the right node. 
