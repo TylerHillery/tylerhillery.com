@@ -509,3 +509,36 @@ Surprising to hear that this part of ACID is actually a property of the applicat
 
 ## Summary
 My take away from this part of the book is don't take ACID at face value. ACID means different things between databases and even *consistency* falls part on the application not just the database. It'll be interesting to learn more about how databases handle isolation in more detail as that appears to be the most complicated part of the db has to handle for ACID transactions. 
+
+___
+
+# Reading Session 25
+- **date**: Thu 11/02/2023
+- **time**: 8:00PM-8:01PM (1 min)
+- **chapter**: Ch 07 Transactions
+- **pages**: 367-368 (1 pages)
+
+## Summary
+Read one page to keep by kindle reading streak alive, we are at a record high of 28 days 🔥
+
+___
+
+# Reading Session 26
+- **date**: Fri 11/03/2023
+- **time**: 7:40PM-8:00PM (20 min)
+- **chapter**: Ch 07 Transactions
+- **pages**: 368-389 (21 pages)
+
+## Summary
+Isolation is hard.
+
+___
+
+# Reading Session 27
+- **date**: Sat 11/04/2023
+- **time**: 1:16-1:41 (25 min)
+- **chapter**: Ch 07 Transactions
+- **pages**: 389-426 (37 pages)
+
+## Summary
+Finished the section on transactions. Will probably need to revisit this chapter again to be able to fully digest the information. To summarize, transactions deal with a lot of complexity so your application doesn't have to. Most of the complexity appears to come from *concurrency* and by that I mean what should the database due when there are multiple requests to read or write happening at the same time. 
