@@ -536,9 +536,31 @@ ___
 
 # Reading Session 27
 - **date**: Sat 11/04/2023
-- **time**: 1:16-1:41 (25 min)
+- **time**: 1:16PM-1:41PM (25 min)
 - **chapter**: Ch 07 Transactions
 - **pages**: 389-426 (37 pages)
 
 ## Summary
-Finished the section on transactions. Will probably need to revisit this chapter again to be able to fully digest the information. To summarize, transactions deal with a lot of complexity so your application doesn't have to. Most of the complexity appears to come from *concurrency* and by that I mean what should the database due when there are multiple requests to read or write happening at the same time. 
+Finished the section on transactions. Will probably need to revisit this chapter again to be able to fully digest the information. To summarize, transactions deal with a lot of complexity so your application doesn't have to. Most of the complexity appears to come from *concurrency* and by that I mean what should the database due when there are multiple requests to read or write happening at the same time.
+
+___
+
+# Reading Session 28
+- **date**: Sun 11/05/2023
+- **time**: 8:18PM-8:19PM (1 min)
+- **chapter**: Ch 08 The Trouble with Distributed Systems 
+- **pages**: 426-427 (1 page)
+
+## Summary
+Read one page again to keep that streak alive.ead one page again to keep that streak alive.
+
+___
+
+# Reading Session 29
+- **date**: 11/05/2023
+- **time**: 5:18PM-5:19PM (1 min)
+- **chapter**: Ch 08 The Trouble with Distributed Systems 
+- **pages**: 427-428 (1 page)
+
+## Summary
+Honeymoon starts tomorrow so last couple of days I haven't had as much time to read as I would like to.
