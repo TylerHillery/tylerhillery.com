@@ -557,10 +557,22 @@ Read one page again to keep that streak alive.ead one page again to keep that st
 ___
 
 # Reading Session 29
-- **date**: 11/05/2023
+- **date**: Mon 11/06/2023
 - **time**: 5:18PM-5:19PM (1 min)
 - **chapter**: Ch 08 The Trouble with Distributed Systems 
 - **pages**: 427-428 (1 page)
 
 ## Summary
 Honeymoon starts tomorrow so last couple of days I haven't had as much time to read as I would like to.
+
+___
+
+# Reading Session 30
+- **date**: Tue 11/07/2023
+- **time**: 5:49AM-5:57AM (8 min)
+- **chapter**: Ch 08 The Trouble with Distributed Systems 
+- **pages**: 428-441 (13 pages)
+
+## Summary
+Computer networking is very important and who knew how hard it would be to detect
+a partial failure in a distributed system.
