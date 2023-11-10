@@ -576,3 +576,39 @@ ___
 ## Summary
 Computer networking is very important and who knew how hard it would be to detect
 a partial failure in a distributed system.
+
+___
+
+# Reading Session 31 
+- **date**: Wed 11/08/2023
+- **time**: 8:20PM-8:41PM (21 min)
+- **chapter**: Ch 08 The Trouble with Distributed Systems 
+- **pages**: 441-461 (20 pages)
+
+## Summary
+I am shocked that any distributed systems work with how many problems and edge
+cases they have to deal with such as not being able to rely on the clocks within 
+each node.
+
+___
+
+# Reading Session 32
+- **date**: Thu 11/09/2023
+- **time**: 7:47AM-8:51AM (64 min)
+- **chapter**: Ch 09 Consistency and Consensus 
+- **pages**: 461-530 (69 pages)
+
+## Summary
+Starting to learn more about the algortihms that help us deal with many of the 
+challenges that distributed systems face.
+
+___
+
+# Reading Session 33
+- **date**: Fri 11/10/2023
+- **time**: 10:55AM-10:58AM (3 min)
+- **chapter**: Ch 09 Consistency and Consensus 
+- **pages**: 530-534 (4 pages)
+
+## Summary
+Concurrency is hard and that is why many systems will impose an order on the events.
