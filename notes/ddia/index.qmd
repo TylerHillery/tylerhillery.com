@@ -612,3 +612,52 @@ ___
 
 ## Summary
 Concurrency is hard and that is why many systems will impose an order on the events.
+
+___
+
+# Reading Session 34
+- **date**: Sat 11/11/2023
+- **time**: 3:40PM-3:45PM (5 min)
+- **chapter**: Ch 09 Consistency and Consensus 
+- **pages**: 534-543 (9 pages)
+
+## Summary
+Retroactivley adding these reading sessions so don't really have any thoughts or
+ideas to share about these specifc pages.
+
+___
+
+# Reading Session 35
+- **date**: Sun 11/12/2023 
+- **time**: 5:26AM-5:36AM (10 min)
+- **chapter**: Ch 09 Consistency and Consensus 
+- **pages**: 543-551 (6 pages)
+
+## Summary
+Retroactivley adding these reading sessions so don't really have any thoughts or
+ideas to share about these specifc pages.
+
+___
+
+# Reading Session 36
+- **date**: Mon 11/13/2023
+- **time**: 6:25AM-7:45AM (90 min)
+- **chapter**: Ch 10 Batch Proccesing 
+- **pages**: 551-647 (96 pages) 
+
+## Summary
+Retroactivley adding these reading sessions so don't really have any thoughts or
+ideas to share about these specifc pages.
+
+___
+
+# Reading Session 37
+- **date**: Tue 11/14/2023
+- **time**: 6:30PM-6:35PM (5 min) 
+- **chapter**: Ch 10 Batch Proccesing 
+- **pages**: 647-652 (5 pages)
+
+## Summary
+Retroactivley adding these reading sessions so don't really have any thoughts or
+ideas to share about these specifc pages.
+
