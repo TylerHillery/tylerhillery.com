@@ -2,7 +2,7 @@
 title: "Designing Data-Intensive Applications"
 description: My notes on [Designing Data-Intensive Applications](https://a.co/d/7r8FaLD) by Martin Kleppmann.
 author: "Tyler Hillery"
-date: "2023-10-27"
+date: "2023-11-18"
 image: "./ddia.jpg"
 filters:
   - social-share
@@ -701,3 +701,42 @@ who were initially built on MapReduce like Spark (I don't think it is anymore)
 has its new photon engine for running SQL workloads. You also have MPP databases
 that although the ability to query files directly on S3 vs having to store it
 in their proprietary storage format.
+
+___
+
+# Reading Session 41
+- **date**: Sat 11/18/2023
+- **time**: 12:00PM-2:40PM (160 min) 
+- **chapter**: Ch 11 Stream Processing & Ch 12 The Future of Data Systems
+- **pages**: 682-850 (172 pages)
+
+## Summary
+Who knew the append only log could be so powerful. I like the idea of changing
+the way we think about building apps from stateless to stateful so we can create
+a complete end to end dataflow without the need for polling. 
+
+There is something about event driven architecture, data streaming, immutable data,
+functional programming, append only logs that really identify with my way of thinking.
+It's an area that I really want to explore more and specialize in.
+
+# Recap
+Just a mental recap for me of all the different topics and chapters of this book
+
+- Part 1: Foundations of Data Systems
+  - Reliable, Scalable, and Maintainable Applications
+  - Data Models and Query Languages
+  - Storage and Retrieval 
+  - Encoding and Evolution 
+- Part 2: Distributed Data
+  - Replication
+  - Partitioning
+  - Transactions
+  - The Trouble with Distributed Systems
+  - Consistency and Consensus 
+- Part 3: Derived Data
+  - Batch Processing
+  - Stream Processing
+  - The Future of Data Systems
+  - Summary
+
+

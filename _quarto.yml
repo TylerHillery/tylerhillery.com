@@ -12,7 +12,7 @@ website:
 
   comments:
     giscus:
-      repo: quarto-dev/quarto-web
+      repo: TylerHillery/TylerHillery.github.io 
   navbar:
     left:
       - href: blog.qmd
