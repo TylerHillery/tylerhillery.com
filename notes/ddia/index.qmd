@@ -599,7 +599,7 @@ ___
 - **pages**: 461-530 (69 pages)
 
 ## Summary
-Starting to learn more about the algortihms that help us deal with many of the 
+Starting to learn more about the algorithms that help us deal with many of the 
 challenges that distributed systems face.
 
 ___
@@ -622,8 +622,8 @@ ___
 - **pages**: 534-543 (9 pages)
 
 ## Summary
-Retroactivley adding these reading sessions so don't really have any thoughts or
-ideas to share about these specifc pages.
+Retroactively adding these reading sessions so don't really have any thoughts or
+ideas to share about these specific pages.
 
 ___
 
@@ -634,30 +634,70 @@ ___
 - **pages**: 543-551 (6 pages)
 
 ## Summary
-Retroactivley adding these reading sessions so don't really have any thoughts or
-ideas to share about these specifc pages.
+Retroactively adding these reading sessions so don't really have any thoughts or
+ideas to share about these specific pages.
 
 ___
 
 # Reading Session 36
 - **date**: Mon 11/13/2023
 - **time**: 6:25AM-7:45AM (90 min)
-- **chapter**: Ch 10 Batch Proccesing 
+- **chapter**: Ch 10 Batch Processing 
 - **pages**: 551-647 (96 pages) 
 
 ## Summary
-Retroactivley adding these reading sessions so don't really have any thoughts or
-ideas to share about these specifc pages.
+Retroactively adding these reading sessions so don't really have any thoughts or
+ideas to share about these specific pages.
 
 ___
 
 # Reading Session 37
 - **date**: Tue 11/14/2023
 - **time**: 6:30PM-6:35PM (5 min) 
-- **chapter**: Ch 10 Batch Proccesing 
+- **chapter**: Ch 10 Batch Processing 
 - **pages**: 647-652 (5 pages)
 
 ## Summary
-Retroactivley adding these reading sessions so don't really have any thoughts or
-ideas to share about these specifc pages.
+Retroactively adding these reading sessions so don't really have any thoughts or
+ideas to share about these specific pages.
 
+___
+
+# Reading Session 38
+- **date**: Wed 11/15/2023
+- **time**: 7:30PM-7:33PM (3 min)
+- **chapter**: Ch 10 Batch Processing 
+- **pages**: 652-654 (2 pages)
+
+## Summary
+Retroactively adding these reading sessions so don't really have any thoughts or
+ideas to share about these specific pages.
+
+___
+
+# Reading Session 39
+- **date**: Thu 11/16/2023
+- **time**: 8:33PM-8:34PM (1 min)
+- **chapter**: Ch 10 Batch Processing 
+- **pages**: 652-653 (1 pages)
+
+## Summary
+The kindle streak is alive! Almost forgot to read today 😅     
+
+___
+
+# Reading Session 40 
+- **date**: Fri 11/17/2023
+- **time**: 3:30PM-3:48PM (18 min)
+- **chapter**: Ch 10 Batch Processing 
+- **pages**: 653-682 (29 pages)
+
+## Summary
+Finished the batch processing job chapter. The author correctly predicts the
+convergence of MPP databases and batch processing frameworks. Batch processing
+frameworks like MapReduce where a lot more flexible in the sense MapReduce jobs
+could call arbitrary code while MPP databases usually used SQL. Now we see frameworks
+who were initially built on MapReduce like Spark (I don't think it is anymore) 
+has its new photon engine for running SQL workloads. You also have MPP databases
+that although the ability to query files directly on S3 vs having to store it
+in their proprietary storage format.
