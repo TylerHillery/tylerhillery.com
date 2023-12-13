@@ -1,0 +1,260 @@
+---
+title: "Zero to Py"
+description: My notes on [Zero to Py](https://leanpub.com/zero-to-py) by Michael Green.
+author: "Tyler Hillery"
+date: "2023-12-14"
+image: "./zero_to_py.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/zero-to-py/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+execute:
+  echo: true
+  error: true
+jupyter: python3
+---
+
+------------------------------------------------------------------------
+
+# Part 1: A Whirlwind Tour
+
+## Chapter 0: System Setup
+
+Skipping this section as I have a working instance of python install and feel comfortable using it.
+
+## Chapter 1: Fundamental Data Types
+
+### Variables
+
+To reference a given value in python you do so by assigning values to variables using the ***assignment operator =***. Variables are references to values and the data type of the var is the determined by the value it is assigned to.
+
+```{python}
+x = "Hello World!"
+print(x)
+print(type(x))
+```
+
+#### Variable Naming Rules
+- Can only contain letters, numbers and underscores no specials characters such
+as `!, @, #, $`
+- Must begin with a letter or underscore 
+- Names are case-sensitive so `x` is different than `X`
+- Python has some reserved words that cannot be used for names such as `False`,
+`True`, `None` 
+
+```{python}
+# get the full list of reserved key words 
+print(__import__("keyword").kwlist)
+```
+
+In python there is no concept of *constants* meaning that variables can be reassigned
+whenever changing the value they reference. A common naming convention for vars
+that are suppose to be constant is to name the var in all caps `PI = 3.14`
+  
+> ***Strongly Typed Language***: Operations which you can do on variables are 
+dependent on the variable's type. 
+
+```{python}
+x = list()
+y = int()
+x + y
+```
+
+> ***Primitive Data Types***: also referred to as scalar data types, represent
+a single value and are indivisible. Examples include `bool`, `int`, `float`.
+
+> ***Container Data Types***: also known as non-scalar data types, represent
+multiple values, and are divisible. Examples include `list`, `tuple`, `set`, `dict`.
+
+`str` is a special data type that has properties of both primitive and container
+data types. 
+
+> ***Mutability***: refers to the ability to be able to modify the value after 
+they are created. 
+
+For example, a `list` in python is a mutable data type where you add, remove or
+change elements in a list after it is created. On the other hand a `tuple` is an
+***immutable*** data type, so you cannot modify anything about it after it is created.
+
+`tuple` immutable ordered collection of items `(1, 2, 3)`
+
+`list` mutable order collection of items `[1, 2, 3]` 
+
+`set` mutable unordered collection of unique items `{1, 2, 3}`. You can use `frozenset(my_set)`
+to create a immutable set. 
+
+### Objects
+
+Everything in python is an object, which means that each element in the language
+is an ***instance*** of a specific ***class**. This includes built in data types
+such as `str`, `int`, `list`. 
+
+> When a variable is assigned a value in Python, that value is a reference to an
+object in memory. This reason for this is because the standard implementation of
+Python is built in C-based infrastructure, where the basic unit of memory that
+holds the value of a python object is a C structure called a `PyObject*`. This 
+`struct` contains information about the object's type, its reference count, and
+the actual value. `PyObject*` is a pointer to `PyObject` and it can be used as an 
+opaque handle to the python object, allowing the implementation to abstract the
+details of these objects and providing python developers a consistent way to
+interact with any kind of python object, regardless of its type. 
+
+Each object in python has its own unique id assigned to it when created. You can
+use the built in id() function to find out what the id is for a particular object
+
+```{python}
+x = 42
+y = 42 
+print(id(x))
+print(id(y))
+```
+
+This is interesting, I thought these two values would have the same id. I then 
+read the next paragraph which calls out specific values in Python that are
+***singletons*** meaning there will only ever be a single instance of this object.
+The integers `-5` through `256` are singletons along with `None`, `True`, `False`.
+
+```{python}
+x = 257
+y = 257
+print(id(x))
+print(id(y))
+```
+
+#### References to Objects
+In python, variables are references to objects meaning when you create a 
+variable and assign a value to it, the variable does not store the value directly,
+instead stores a reference to the object that contains that value. It is important
+to note when working with immutable data types if you assign the value through a
+second variable both variables reference the same mutable object in memory. 
+
+```{python}
+x = 257
+y = x
+x = 300
+print(x)
+print(y)
+
+x = {}
+y = x 
+y["fizz"] = "buzz"
+print(x)
+print(y)
+```
+
+## Chapter 2: Operators
+>***Operators***: Special symbols in Python that carry out various operations.
+
+>***Operand***: The value a given operator operates on. For example: `4 + 5 = 9`
+`4` and `5` would be the operands.
+
+Python supports various types of operators: arithmetic, assignment, comparison,
+logical, membership, bitwise, and identity.
+
+### Arithmetic 
+- Used to perform mathematical operations. 
+- The order of these operators follow the same rules in math PEMDAS.
+  - It is recommended though to use parentheses to make the code more readable.
+
+The most common arithmetic operators:
+
+- `+`  addition 
+- `-`  subtraction 
+- `*`  multiplication
+- `/`  division
+- `//` floor division
+- `%`  modulation 
+- `**` exponentiation  
+
+- Python unpacking operators unpack a sequence into multiple arguments
+```{python}
+my_tuple = (1,2)
+
+print([0, *my_tuple, 3, 4])
+
+dict_one = {"fizz": "buzz"}
+dict_two = {"foo": "bar"}
+print({**dict_one, **dict_two})
+```
+
+- Falsy objects: `False`, `None`, `0`, `0.0`, Empty collections i.e. `[]`, `()`,
+`{}`, `set()`
+
+- The identity operator is used to compare the memory address of two objects to
+determine if they are same object or not:
+
+```{python}
+x = 42
+y = 42 
+print(x is y)
+
+x = 500
+y = 500
+print(x is y)
+
+y = x
+print(x is y)
+
+x = [1,2,3]
+y = [1,2,3]
+print(x is y) # better to use == to see they contain the same values
+
+y = x 
+print(x is y)
+```
+
+## Chapter 3: Lexical Structure 
+> ***Lexical Structure***: The smallest units of code that the language is made
+up of, and the rules for combining these units into larger structures. In other
+words, it is the set of rules that define the syntax and grammar of the language
+and they determine how programs written by developers will be interpreted.
+
+### Line Structure
+- Each logic line is represented by a `NEWLINE` token.
+- A logical line is created by combining one or more "physical" lines (the lines
+in a file you create by hitting the "enter" key.)
+- Two or more physical lines in python can be joined into a single logical line
+using the backslash character `\`
+
+```{python}
+greeting =  "Hello " \
+            "World"
+print(greeting)
+
+# trying to remember how to split up large nums in python for readability
+my_bank_account = 1_000_000 
+print(my_bank_account)
+```
+
+## Chapter 4: Control Flow
+> ***iterable***: Any object which has the potential to sequentially yield items
+per-iteration. e.g. container types (`[]`, `()`, `{}`)
+
+- Interesting, you can have a `for/else` where the `else` only gets executed if
+the for loop doesn't exit early from a `break` statement. (very uncommon to do
+this and can be replaced by a simple `if` statement after the `for` loop)
+- Exceptions can be raised which will modify the control flow of the program.
+Exceptions can be caught using an exception handler `try` `except` `else` `finally`.
+- Python now has `match`
+
+```{python}
+coordinate = (0, 1)
+
+match coordinate:
+  case (x, 0): # x here means it can be any value
+    print(f"coordinate is on the y axis, x={x}")
+  case (0, y): # y here means it can be any value
+    print(f"coordinate is on the x axis, y={y}")
+  case _: # _ here is a catch all if it doesn't match any above patterns
+    print(f"coordinate is on neither axis")
+```
