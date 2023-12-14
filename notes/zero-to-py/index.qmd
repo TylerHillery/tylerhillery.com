@@ -258,3 +258,38 @@ match coordinate:
   case _: # _ here is a catch all if it doesn't match any above patterns
     print(f"coordinate is on neither axis")
 ```
+
+- Interesting to learn about how match works with array types and how you can use
+unpacking 
+
+```{python}
+location = {
+  "city": "Scottsdale",
+  "state": "Arizona",
+  "country": "US"
+}
+
+match location:
+  case {"country": "US", **rest}:
+    print(f"The city {rest['city']}, {rest['state']} is in the US.")
+```
+
+- Matching based on types and values
+
+```{python}
+item = 1
+match item:
+  case int(0 | -1):
+    print(f"{item} is either 0 or -1")
+  case int():
+    print(f"{item} is an int, not zero or -1")
+  case _:
+    print("This is a catch all")
+```
+
+> ***guards***: Additional conditions for pattern matching can be included with
+guard statements. Is an `if` statement contained in the case which checks the
+truthiness of an expression. `case (0, y) if y == 1` 
+
+- The ***pipe*** operator can be use to match multiple patterns `|`
+- 
