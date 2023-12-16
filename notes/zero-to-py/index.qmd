@@ -292,4 +292,85 @@ guard statements. Is an `if` statement contained in the case which checks the
 truthiness of an expression. `case (0, y) if y == 1` 
 
 - The ***pipe*** operator can be use to match multiple patterns `|`
-- 
+
+## Chapter 5: Functions
+- ***Function Signature*** is the combination of the function's name and its
+input parameters.
+- ***Positional Argument*** is a function argument which is assigned a name in
+accordance to the order which the names are defined in the function signature.
+- ***Keyword Argument*** is an argument which is explicitly assigned to a specific
+name using `key=value`.
+- Positional arguments must be listed first before keyword arguments.
+- When assigning default values to a function it is recommended not to use a
+mutable data type because the same object is used in every function call which
+effectively creates shared state across all function calls.
+- ***Local Scope*** or ***namespace*** is best explain by an example where variables
+that are defined in a function block are only accessible within that function 
+block and **can't** be referred to outside of the block. The more formal definition
+is *the space where a given variable name is assigned*.
+- Block scopes can be nested. Any nested block scope can read variables from scopes
+which enclose the nested scope.
+- ***LEGB*** rule stands for Local, Enclosing, Global and Build-In. This is the 
+order the interpreter searches for a variable reference in a nested rule for searching
+scopes.
+- ***Closures** are functions which have access to variables in an enclosing scope
+even when the function is invoked outside that scope. This allows the function to
+"remember" the values of variables from its enclosing scope, and to continue to
+access them, even after the enclosing scope has exited. This is useful for callbacks,
+decorators, and encapsulating state.
+
+::: {.callout-important appearance="default" collapse=false title="TODO"}
+Closures are not really clicking for me. Come back and spend some more time
+understanding them.
+:::
+
+```{python}
+def outer_function(message):
+  def inner_function():
+    print(message)
+  return inner_function # what why would I return a function?
+
+my_closure = outer_function("Hello")
+my_closure()
+
+# I really do not understand this pattern and why you would do something like this
+def make_counter():
+  count = 0
+  def counter():
+    nonlocal count
+    count += 1 
+    return count
+  return counter
+
+my_counter = make_counter()
+print(my_counter())
+print(my_counter())
+```
+
+- Closures are ultimately a mechanism for exposing functionality without (easily)
+exposing state.
+- ***Decorator*** takes the original function as an argument and returns a new
+function that will replace the original function. They are a way to modify the
+behavior of an object by wrapping it within a function. 
+
+```{python}
+def my_decorator(fn):
+  def wrapper():
+    print("Entering the function...")
+    fn()
+    print("Exiting the function...")
+
+  return wrapper
+
+@my_decorator
+def my_function():
+  print("Inside the function...")
+
+my_function()
+```
+
+- Decorators are typically 2 or 3 functions deep. Instances of 3-deep functions
+allow you to configure the context of the decorator `@my_decorator("this")` by wrapping
+the decorator in another function (a closure) and returning the decorator function.
+
+## Chapter 6: Classes 
