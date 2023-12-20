@@ -373,4 +373,78 @@ my_function()
 allow you to configure the context of the decorator `@my_decorator("this")` by wrapping
 the decorator in another function (a closure) and returning the decorator function.
 
-## Chapter 6: Classes 
+# Rest Of Book
+I ended up reading the rest of the book while I was traveling for the holidays
+so I didn't really have a good way to take notes. Here are some highlights I made
+in Kindle while reading. 
+
+> ***Polymorphism***: Feature of object oriented programming that allows objects 
+of different classes to be treated as objects of a common superclass... Python is
+a dynamically-typed language, which allows for a more flexible approach to Polymorphism,
+know as "*duck typing*" which is based on the idea of "if it quacks like a duck, it's a duck."
+
+- I am not a fan of explaining duck typing with that quote I much prefer the explaination
+the author gave in the next paragraph
+
+> In other words, the type of the object is irrelevant to the execution of your
+program, so long as you can operate on an object through an expected interface, 
+your code will execute.
+
+> The `str.casefold()` method is a more powerful version of the str.lower() method
+that is specifically designed for case-insensitive string comparisons.
+
+- I was not aware of `str.casefold()`!
+
+- The `__main__.py` will run when you use `python -m my_package`. This must be how
+venv works e.g. `python -m venv .venv` 
+
+- Multithreading is best used for IO-bound and high-level structured network code,
+while multiprocessing is used for CPU-bound and low-level code. 
+
+> ***Thread**: Is a separate execution flow that runs in parallel with the main 
+program. Threads share the same memory space as the same program, which allows 
+them to access and share data.
+
+- Threads use a preemptive task scheduling model, where the interpreter schedules
+and switches between threads. 
+
+- The interpreter can interrupt a running thread at any time, in order to give 
+another thread to chance to run. Python use a ***Global Interpreter Lock*** to 
+achieve this: only the thread which has acquired the GIL may execute. 
+
+> ***Process***: Is a separate execution environment, with its own memory space 
+and Python interpreter. This allows the ability to take advantage of multiple cores
+on a machine, and to work around the GIL that prevents multiple threads from executing
+Python code simultaneously. 
+
+- Processes run in their own execution environment which means its difficult to 
+share data between them. You have to establish an interprocess communication, 
+using IPC mechanisms to send and receive data.
+
+- `asyncio` library is a redesign how to use threading in python 
+to handle I/O and network related tasks. One of the differences is `asyncio` relies
+on ***cooperative task switching*** paradigm where tasks voluntarily yield control 
+to the scheduler. Each tasks is responsible for releasing control back to the scheduler.
+
+> ***coroutines***: Tasks in the `asnycio` library which use an `await` keyword 
+to yield control to the event loop. The event loop schedules the execution of 
+coroutines and switches between them based on their current states and the 
+availability of resources. 
+
+- Cooperative task switching is more efficient and less error-prone than preemptive 
+task switching, because it allows tasks to run for as they need without interruption.
+The downside is it requires more explicit coordination between tasks, and it can 
+lead to issues such as **deadlocks** and **livelocks** if not implemented correctly. 
+Preemptive task switching can be more complex to implement and it can lead to race 
+conditions and other synchronization issues, but it can also prevent tasks from 
+monopolizing resources.
+
+> ***Profiling***: The process of measuring the performance of your code to help 
+identify bottlenecks.
+
+# Summary 
+Zero to Py was good read and it felt like a more digestible way to read 
+through the python documentation. Some areas that I really like that I was less
+familiar with were: pattern matching, type hinting, multithreading, multiprocessing,
+async and how to build python c extensions. Without a doubt I will be referencing 
+this book in the future. 
