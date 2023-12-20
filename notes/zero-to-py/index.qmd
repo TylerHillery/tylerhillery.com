@@ -2,7 +2,7 @@
 title: "Zero to Py"
 description: My notes on [Zero to Py](https://leanpub.com/zero-to-py) by Michael Green.
 author: "Tyler Hillery"
-date: "2023-12-14"
+date: "2023-12-19"
 image: "./zero_to_py.png"
 filters:
   - social-share

@@ -1,0 +1,87 @@
+---
+title: "The Pragmatic Programmer"
+description: My notes on [The Pragmatic Programmer](https://a.co/d/0BcSwpH) by David Thomas and Andrew Hunt. 
+author: "Tyler Hillery"
+date: "2023-12-20"
+image: "./pragmatic_programmer.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/pragmatic-programmer/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+> This is where pragmatism comes in. You shouldn't be wedded to any particular technology, but have a broad enough background and experience based to all you to choose good solutions in particular situations
+
+- This preface was so good. I could tell right off the bat that this book was going 
+to be one of my favorites
+
+- I really identify with some of the traits of a Pragmatic Programmer:
+    - Early adopter / Fast adopter
+        - Instinct for new tech
+        - Love to try things out
+        - Grasp new things quickly and can integrate it with the rest of your knowledge
+        - Confidence is born from experience
+    - Inquisitive
+        - Tends to ask questions
+        - Pack rat for little facts, each of which may affect some decisions years from now
+    - Critical Thinker
+        - Rarely take things as given without first getting the facts
+        - When people say "because that's the way things are done" you smell a challenge 
+    - Realistic
+        - Try to understand the underlying nature of each problem you face
+        - The realism gives you a good feel for how difficult things ares, and how long things with take
+        - Deeply understanding that a process should be difficult or will take a while to complete gives you the stamina to keep at it.
+    - Jack of all Trades
+        - Be familiar with a broad range of tech
+        - Your current role may require you to be a specialist but you'll always be able to move on to new areas and new challenges
+
+::: {.callout-tip icon="false" title="💡Tip 1"}
+Care about your craft
+:::
+
+::: {.callout-tip icon="false" title="💡Tip 2"}
+Think! About your work
+:::
+
+- The metaphor of the “broken window” is such a great example of how bad code can further lead to a bad project. “All the rest of the code is crap, I’ll just follow suit” 
+
+- The example of how the firefighters went to put out a fire at a fancy house but place down a mat so they didn't ruin the carpet and how that equates to a project where the code is pristine you will take extra care not to mess it up. 
+
+> Don't be afraid to make stone soup. Start with a POC that you can reasonably ask for then show people and let them marvel. Then say “of course… it would be better if we add..” 
+
+> The early bird gets the worm but what happens to the early worm?
+
+> Two or more things are orthogonal if changes in one do not affect any of the others
+
+> Tracer code advantage: Developers build a structure to work in. The most daunting piece of paper is the one with nothing written on it. If you have worked out all the end-to-end interactions of your application and have embodied them in your code then your team won't need to pull as much out of thin air. 
+
+> Think of prototyping as the reconnaissance and intelligence gathering that takes place before a single tracer is fired.
+
+:::{.callout-important }
+Come back to page 64-65 and do exercises 4-7
+:::
+
+> As a bonus at the end of this section we’ll reveal the single correct answer to give whenever anyone asks you for an estimate
+
+- My guess is that it's “it depends”. (I was wrong it was "*I'll Get back to you.*")
+
+> Each tool will have its own personality and quirks, and will need its own special handling. Each must be sharpened in a unique way, or held just so. Over time, each will wear according to use, until the grip looks like a mold of the woodworker's hands and the cutting surface aligns perfectly with the angle at which the tool is held. **At this point, the tools become conduits from the maker's brain to the finished product--they have become extensions of their hands.
+
+> At some point you'll be surprised to discover your fingers moving ove the keyboard manipulating text without conscious thought. 
+
+- I crave this feeling. I am not there yet but I have been working on my typing speed, vim and shortcuts in my editor. I have gone from 35wpm will proper typing form to 65wpm. I use a site called [typing.io](typing.io) to practice typing lines of code because programming usually involves characters that are not as common in normal typing like brackets, slashes etc. 
+
+# Review
