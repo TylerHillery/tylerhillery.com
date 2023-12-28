@@ -5,6 +5,6 @@ date: "2022-03-30"
 categories: [Data Engineering]
 image: "../../assets/images/stock-market-data-pipeline.png"
 code: 
-  url: https://github.com/TylerHillery/Stock-Market-Data
-  text: GitHub
+  - url: https://github.com/TylerHillery/Stock-Market-Data
+    text: GitHub
 ---

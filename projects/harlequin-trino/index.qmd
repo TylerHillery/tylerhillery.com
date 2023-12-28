@@ -1,0 +1,12 @@
+---
+title: "Harelquin Trino Adapter"
+author: "Tyler Hillery"
+date: "2023-12-28"
+categories: [Data Tools]
+image: "../../assets/images/harlequin-trino.svg"
+code: 
+  - url: https://github.com/TylerHillery/harlequin-trino
+    text: GitHub
+  - url: https://pypi.org/project/harlequin_trino/
+    text: PyPI
+---
