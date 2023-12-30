@@ -7,4 +7,6 @@ image: "../../assets/images/streamlit_app_coinbase.png"
 code: 
   - url: https://github.com/TylerHillery/coinbase-order-book-pipeline
     text: GitHub
+  - url: https://www.tylerhillery.com/blog/tyler-tries-real-time-data
+    text: Blog
 ---

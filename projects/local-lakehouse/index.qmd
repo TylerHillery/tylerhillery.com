@@ -7,4 +7,6 @@ image: "../../assets/images/local-lakehouse.png"
 code: 
   - url: https://github.com/TylerHillery/local-lakehouse
     text: GitHub
+  - url: https://www.tylerhillery.com/blog/local-lakehouse/
+    text: Blog
 ---

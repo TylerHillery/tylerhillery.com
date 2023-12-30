@@ -7,4 +7,6 @@ image: "../../assets/images/learning-log.jpg"
 code: 
   - url: https://github.com/TylerHillery/learning-log
     text: GitHub
+  - url: https://www.tylerhillery.com/blog/learning-log/
+    text: Blog
 ---

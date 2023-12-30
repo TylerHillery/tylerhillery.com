@@ -7,6 +7,8 @@ image: "../../assets/images/harlequin-trino.svg"
 code: 
   - url: https://github.com/TylerHillery/harlequin-trino
     text: GitHub
+  - url: https://www.tylerhillery.com/blog/tyler-tries-publishing-py-pack
+    text: Blog
   - url: https://pypi.org/project/harlequin_trino/
     text: PyPI
 ---
