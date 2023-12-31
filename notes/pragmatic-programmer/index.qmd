@@ -2,7 +2,7 @@
 title: "The Pragmatic Programmer"
 description: My notes on [The Pragmatic Programmer](https://a.co/d/0BcSwpH) by David Thomas and Andrew Hunt. 
 author: "Tyler Hillery"
-date: "2023-12-20"
+date: "2023-12-31"
 image: "./pragmatic_programmer.jpg"
 filters:
   - social-share
@@ -18,6 +18,9 @@ share:
   email: true
   mastodon: true
 categories: [Technical Books]
+execute:
+  echo: true
+jupyter: python3
 ---
 
 ------------------------------------------------------------------------
@@ -84,4 +87,105 @@ Come back to page 64-65 and do exercises 4-7
 
 - I crave this feeling. I am not there yet but I have been working on my typing speed, vim and shortcuts in my editor. I have gone from 35wpm will proper typing form to 65wpm. I use a site called [typing.io](typing.io) to practice typing lines of code because programming usually involves characters that are not as common in normal typing like brackets, slashes etc. 
 
+::: {.callout-tip icon="false" title="💡Tip 46"}
+Don't Chain Method Calls
+:::
+
+- I am not sure how I feel about this tip. I am huge fan of chaining method calls and I often feel it reads better. Also I am pretty sure earlier in this book the author mentions how create the pipe system is in bash with all the different utilities you can use together. How is method chaining any different?
+
+- The author does point this out in the next section **Chains and Pipelines** but it's still not clear to me how the author views these two as different things...
+
+- One thing that I find interesting about **Reactive Programming, Streams and Events** is how it applies to so many different domains. The mindset of thinking about the world as a stream of events is a powerful one. The author even points out the influence this has had in web dev with frameworks like React. My background is in data and streaming platforms are commonly used in to handle real time data use cases. Usually they are paired with a stream processor that allows for real time transformations. Once you start to see it, it's hard to unsee the world this way. This is one strong belief I have about tech, the other is every software problem is a data problem. The author even makes a similar point 
+
+    - > All programs transform data, converting an input into an output
+
+::: {.callout-tip icon="false" title="💡Tip 49"}
+Programming Is About Code, But Programs Are About Data
+:::
+
+- WOW, I love tip 49. I couldn't agree more.
+
+> ***Concurrency*** is when the execution of two or more pieces of code act as if they run at the same time. ***Parallelism*** is when they *do* run at the same time.
+
+> $O(1)$ Constant (access element in array, simple statements)
+>
+> $O(lg\ n)$ Logarithmic (binary search). The base of the logarithm doesn't matter, so this is 
+>
+> $O(n)$ Linear (sequential search)
+>
+> $O(n\ lg\ n)$ Worse than linear, but not much worse (Average runtime of quicksort, heapsort) 
+>
+> $O(n^2)$ Square law (selection and insertion sorts)
+>
+> $O(n^3)$ Cubic (multiplication of two $n*n$ matrices) 
+> 
+> $O(C^n)$ Exponential (traveling salesman problem. set partitioning)
+
+> Think of code that needs refactoring as "a growth." Removing it requires invasive surgery. You can go in now, and take it out while it is still small. Or, you could wait while it grows and spreads--but removing it then will be both more expensive and more dangerous. Wait even longer, and you may lose the patient entirely.
+
+::: {.callout-tip icon="false" title="💡Tip 61"}
+Listen to Your Inner Lizard
+:::
+
+- The inner lizard is all about your *human instinct*, listen to them. When coding and you feel yourself struggling, take a step back and ask yourself why?
+
+::: {.callout-tip icon="false" title="💡Tip 62"}
+Don't Program by Coincidence
+:::
+
+- Program deliberately
+
+> Some language communities prefer `camelCase`, with embedded capital letters, while others prefer `snake_case` with embedded underscores to separate words. The languages themselves will of course accept either, but that doesn't make it right. Honor the local culture.
+
+- I love that last sentence *honor the local culture*. One of the many things I love about different programming languages is the culture around them is often unique. 
+
+::: {.callout-tip icon="false" title="💡Tip 76"}
+Programmers Help People Understand What They Want
+:::
+
+::: {.callout-tip icon="false" title="💡Tip 81"}
+Don't Think Outside the Box--*Find* the Box
+:::
+
+- Understand the degrees of freedom and limitations of the problem before going to solve it. Be like Alexander the Great and chop the know to bits.
+
+- Some of the most productive and impactful work I have done if my career has happened during pair and mob programming. I think it's a very underrated exercise.
+
+::: {.callout-tip icon="false" title="💡Tip 85"}
+Schedule It to Make It Happen
+:::
+
+> **Automation**: A great way to ensure both consistency and accuracy is to automate everything the team does. WHy struggle with code formatting standards when your editor or IDE can do it for you automatically? Why do manual testing when the continuous build can rust test automatically? Why deploy by hand when automation can do it the same every time, repeatably and reliably? 
+
+- 🙌 Say it louder so the people in the back can here. AUTOMATE EVERYTHING. EVEN YOUR JOB AWAY.
+
+- The *Pragmatic Start Kit* 
+  - Version Control
+  - Regression Testing
+  - Full Automation
+
+::: {.callout-tip icon="false" title="💡Tip 89"}
+Use Version Control to Drive Builds, Tests, and Releases
+:::
+
+::: {.callout-tip icon="false" title="💡Tip 96"}
+Delight Users, Don't Just Deliver Code
+:::
+
+::: {.callout-tip icon="false" title="💡Tip 100"}
+It's Your Life.
+
+
+Share it. Celebrate it. Build it.
+
+
+AND HAVE FUN! 
+:::
+
+:::{.callout-important title="TODO" }
+I admittedly didn't do the most important thing in this book and which was the exercises. I had a hard time putting the book down to take the time and do them. I want to come back and work through them.
+:::
+
 # Review
+
+I finished this book on 12/31/2023 and what a way to end the year. At the end of this book I was ready to run through a brick wall. There are very few books I have read in my life that have made me feel this way. I don't know how to put it into words but this book deeply resonated with me. I for one feel so grateful as someone who is so early into their programmer career to get to reap the knowledge of these authors who have distilled their wisdom, that they've gain over 45 years, down to under 300 pages. This book is a must read for any programmer or programming adjacent role. I am glad I got the hard copy of this book because I am going to keep it on my desk as a reminder who I strive to be, **A Pragmatic Programmer**.
