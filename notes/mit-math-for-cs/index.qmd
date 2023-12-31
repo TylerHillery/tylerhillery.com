@@ -2,7 +2,7 @@
 title: "MIT 6.042J Mathematics for Computer Science"
 description: My notes on [MIT 6.042J Mathematics for Computer Science](https://openlearninglibrary.mit.edu/courses/course-v1:OCW+6.042J+2T2019/about) taught by professors Albert Meyer and Adam Chlipala.
 author: "Tyler Hillery"
-date: "2023-12-21"
+date: "2024-01-01"
 image: "./MiT_math_for_cs.png"
 filters:
   - social-share
@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Courses]
+categories: [Courses, In Progress]
 ---
 
 ------------------------------------------------------------------------

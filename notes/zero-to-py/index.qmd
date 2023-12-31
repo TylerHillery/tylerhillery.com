@@ -401,7 +401,7 @@ venv works e.g. `python -m venv .venv`
 - Multithreading is best used for IO-bound and high-level structured network code,
 while multiprocessing is used for CPU-bound and low-level code. 
 
-> ***Thread**: Is a separate execution flow that runs in parallel with the main 
+> ***Thread***: Is a separate execution flow that runs in parallel with the main 
 program. Threads share the same memory space as the same program, which allows 
 them to access and share data.
 
