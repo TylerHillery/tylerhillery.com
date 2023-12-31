@@ -1,0 +1,29 @@
+---
+title: "Discrete Mathematics"
+description: These are my notes for [MAT 144 Discrete Mathematics](https://catalog.oakton.edu/course-descriptions/course-descriptions-discipline/mat/) through Oakton Community College. The course uses the book [Discrete Mathematics with Applications](https://a.co/d/89Hg3Ae). 
+author: "Tyler Hillery"
+date: "2024-01-14"
+image: "./mat-144.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/mat-144-discrete-mathematics/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Courses, In Progress]
+---
+------------------------------------------------------------------------
+
+# Course Description
+Course introduces mathematical induction and recursion; set theory; relations and functions; logic, combinatorics, graph theory and trees; Boolean Algebra, probability, matrices and analysis of algorithms.
+
+:::{.callout-note collapse="true" title="Syllabus"}
+
+:::

@@ -1,0 +1,27 @@
+---
+title: "Zero to Py"
+description: My notes on [Python Distilled](https://a.co/d/3SvbZtY) by David Beazley.
+author: "Tyler Hillery"
+date: "2024-01-01"
+image: "./python_distilled.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/python-distilled/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books, In Progress]
+execute:
+  echo: true
+  error: true
+jupyter: python3
+---
+
+------------------------------------------------------------------------

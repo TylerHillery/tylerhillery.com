@@ -1,0 +1,11 @@
+{
+  "hash": "6235bab75849c9a7060f8c9886860f27",
+  "result": {
+    "markdown": "---\ntitle: Zero to Py\ndescription: 'My notes on [Python Distilled](https://a.co/d/3SvbZtY) by David Beazley.'\nauthor: Tyler Hillery\ndate: '2024-01-01'\nimage: ./python_distilled.jpg\nfilters:\n  - social-share\nshare:\n  permalink: 'https://tylerhillery.com/notes/python-distilled/'\n  description: null\n  twitter: true\n  facebook: false\n  reddit: true\n  stumble: false\n  tumblr: false\n  linkedin: true\n  email: true\n  mastodon: true\ncategories:\n  - Technical Books\n  - In Progress\nexecute:\n  echo: true\n  error: true\n---\n\n------------------------------------------------------------------------\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
