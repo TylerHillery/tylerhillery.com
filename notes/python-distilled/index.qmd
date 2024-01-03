@@ -235,3 +235,104 @@ jupyter: python3
 
 - > Closures and nested functions are useful when you write code based on the concept of lazy or delayed evaluation. The `after()` function is an illustration of this. It receives a function that is not evaluated right away--that only happens at some later point.
 
+- To solve the issue of not being able to pass arguments to function callbacks, we need to think about ***function composition***, "*when functions are mixed together in various ways, you need to think about how function inputs and outputs connect together*"
+
+- > ***Thunk*** a smmall zero-argument function `after(10, lambda: add(2,3))`. It's an expression that will be evaluated later when it's eventually called as a zero-argument function. 
+
+- You can use `partial()` instead of a lambda with the key difference being that `partial()` the arguments are evaluated and bound at the time the partial function is first defined. With a zero-argument `lambda` the arguments are evaluated and bound when the `lambda` function actually executes later
+
+- > ***Currying*** is a functional programming technique where a multiple-argument function is expressed as a chain of nested single-argument functions:
+
+  ```{python}
+  # three argument function
+  def f(x, y, z):
+    return x + y + z
+
+  # curried version
+  def fc(x):
+    return lambda y: (lambda z: x + y + z) # okay this makes no sense to me 
+  
+  # example use
+  a = f(2, 3, 4)
+  b = fc(2)(3)(4)
+  ```
+
+- LOL this part of the book about currying has me dying 😂
+
+  > This is not a common Python programming style and there are few practical reasons for doing it. However, sometimes you'll hear the word "*currying*" thrown about in conversations with coders who've spent too much time warping their brains with things like `lambda` calculus. This technique of handling multiple arguments is named in honor of the famous logician Haskell Curry. Knowing what it is might be useful--should you stumble into a group of functional programmers having a heated flamewar at a social event.
+
+- Some issues arise when return callback function results. Mainly from the fact that it can be hard to distinguish when where an error is coming from, the original function or the callback function. Here are some techniques to handle this:
+
+  ```{python}
+  # Chained Exceptions
+  class CallbackError(Exception):
+    pass
+
+  def after(seconds, func, *args):
+    time.sleep(seconds)
+    try:
+      return func(*args)
+    except Exception as err:
+      raise CallbackError("Callback function failed") from err
+  ```
+
+  ```{python}
+  # isolates errors from the supplied callback into its own exception category
+  try:
+    r = after(delay, add, x, y)
+  except CallbackError as err:
+    print("It failed. Reason", err.__cause__)
+  ```
+
+  ```{python}
+  # package the result of the callback function into some kind of result instance
+  # that holds both a value and an error.
+  def add(x,y):
+    return x + y
+
+  class Result:
+    def __init__(self, value=None, exc=None):
+      self._value = value
+      self._exc = exc
+    
+    def result(self):
+      if self._exc:
+        raise self._exc
+      else:
+        return self._value
+
+  def after(seconds, func, *args):
+    time.sleep(seconds)
+    try:
+      return Result(value=func(*args))
+    except Exception as err:
+      return Result(exc=err)
+    
+  # example use
+  r = after(1, add, 2, 3)
+  print(r.result())
+
+  # s = after("1", add, 2, 3) raises Type Error
+
+  t = after(1, add, "2", 3)
+
+  print(t.result()) # raises type error
+
+  ```
+
+- This style of boxing a result into a special instance to be unwrapped later is common pattern in modern programming languages. One reason is the function is fully defined with type checking as after will always return `Result` type `def after(seconds, func, *args) -> Result` 
+
+- > This pattern is not as common in Python code but it does arise when working with concurrency primitives such as threads and processes. For example, instances of so-called `Future` behave like this when working with thread pools. For example:
+
+  ```{python}
+  from concurrent.futures import ThreadPoolExecutor
+
+  pool = ThreadPoolExecutor(16)
+  r = pool.submit(add, 2, 3)
+  print(r.result())
+
+  ```
+
+- Calling an async function doesn't execute at all instead you get an instance of a coroutine object in return. It must run under supervision of other code. A common option is `asyncio` `asyncio.run(gretting("Tyler"))`
+
+# Chapter 6. Generators
