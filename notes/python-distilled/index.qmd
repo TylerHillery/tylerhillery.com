@@ -1,5 +1,5 @@
 ---
-title: "Zero to Py"
+title: "Python Distilled"
 description: My notes on [Python Distilled](https://a.co/d/3SvbZtY) by David Beazley.
 author: "Tyler Hillery"
 date: "2024-01-01"
