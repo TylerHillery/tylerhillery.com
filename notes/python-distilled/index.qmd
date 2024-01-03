@@ -25,3 +25,213 @@ jupyter: python3
 ---
 
 ------------------------------------------------------------------------
+
+# Preface
+- Book is focused on presenting a modern yet curated core of the language.
+
+- I like the author's opinion about **not** using python for large scale projects, ones with millions and millions of code. 
+
+- This book is written during python 3.9 so it doesn't not include some of the newer language features. Current version of python as of me reading this book is 3.12. 
+
+# Chapter 1. Python Basics
+
+- > ***REPL*** stands for read-evaluation-print-loop
+
+- The author brings up how he uses it as their desktop which I found funny because the first time I saw someone use python as their calculator was on Tsoding's twitch stream. I remember thinking that was so odd but I guess it's a lot more common than I think!
+
+- You can add type hinting to variable assignment by doing `x: int = 42`
+
+- With f-strings I did not know you could align them like `print(f'{year:>3d} {principal:0.2f}')`
+
+- Didn't know `divmod(x,y)` which returns `(x // y, x % y)` existed. I could see this being handy.
+
+- Remember falsy values include `False`, `None`, `0`, or empty
+
+- Python ternary expression `a if a > b else b`
+
+- If you have a large file you can read it in chunks like so:
+
+  ```python
+  with open('data.txt') as file:
+    while (chunk := file.read(10000)):
+      print(chunk, end='')
+  ```
+
+- Common Python project structure
+  - tutorial-project/
+    - tutorial/
+      - __init__.py
+      - other_files.py
+  - tests/
+    - test_file.py
+  - examples/
+    - example.py
+  - doc/
+    - tutorial.txt
+
+# Chapter 2. Operators, Expressions, and Data Manipulation
+
+- Helpful tip I always forget about, you can use a `_` to visual separate digits: `123_456_789`
+
+- Interesting "truthiness" bug
+
+  ```{python}
+  def foo(x, items=None):
+    if not items: # should use if items is None otherwise a new list gets created
+      items = []
+    items.append(x)
+
+  a = []
+
+  foo(3,a) # nothing happens to a
+
+  print(a)
+  ```
+
+- I did not realize you could have multiple starred variables when unpacking more complex data structures
+
+  ```{python}
+  datetime = ((5,19,2008), (10,30, "am"))
+
+  (month, *_), (hour, *_) = datetime
+
+  print(month)
+  print(hour)
+  ```
+
+- I never heard of this way to unpack variables in assignment as *splatting*
+  ```{python}
+  items = [1,2,3]
+  a = [10, *items, 11]
+  print(a)  
+  ```
+
+- Be careful when assigning variables to other variables that are mutable data types such as list. What is really happening is now both variables have the same reference to the value (e.g. a list). If either variable mutates the list then the other variable with also see that change.
+
+- > A ***generator expression*** is an object that carries out the same computation as a list comprehension but produces the result iteratively. You can only iterate over a generator expression once.  
+
+  ```{python}
+  nums = [1,2,3,4]
+  squares = (x*x for x in nums)
+  print(squares)
+  next(squares)
+  ``` 
+
+- The main difference between the generator vs list comprehensions is generator expressions merely know how to produce the data on demand while list comprehensions creates a list that contains the resulting data.
+
+# Chapter 3. Program Structure and Control Flow
+
+- `break` and `continue` statements apply only to the innermost loop being executed.
+
+- `else` clause of a loop only executes if the loop runs to completion
+
+- > You should only catch exceptions from which your code can actually recover. If recovery is not possible, it's often better to let the exception propagate.
+
+- Exceptions are organized into a hierarchy. Instead of trying to defend against every exceptions look to see if there is a higher exception that you can handle. 
+
+- These are the only exceptions that alter control flow: `SystemsExit`, `KeyboardInterrupt`, `StopIteration`
+
+- > Exceptions have an associated stack traceback that provides information about where an error occurred. The traceback is stored in the `__traceback__` attribute of an exception. You can use the `traceback` module to produce the traceback message yourself, which is helpful for reporting or debugging
+
+  ```{python}
+  import traceback
+
+  try:
+    spam()
+  except Exception as e:
+    tblines = traceback.format_exception(type(e), e, e.__traceback__)
+    tbmsg = ''.join(tblines)
+    print("It Failed:")
+    print(tbmsg)
+  ```
+
+# Chapter 4. Objects, Types and Protocols
+
+- Identity is the is a number representing the values location in memory
+
+- All objects are reference-counted
+
+- An object's reference count is increased whenever it's assigned to a new name or placed in a container such as a list, tuple or dictionary. The current reference count of an object can be obtained by using `sys.getrefcount()` function.
+
+- Once an object's reference count reaches zero, it is garbage-collected.
+
+- `None` is stored as a singleton so it best to test against none with the `is` or `is not` operator instead of `==`.
+
+- ***Object Protocols*** is another term to describe ***dunder methods***
+
+- Using in place operators like `+=` or `-+` might be able to provide performance optimizations when the object is not shared because it can modify in place without allocating a newly created object for the result.
+
+# Chapter 5. Functions
+
+- Only use immutable objects for default argument values because default arguments are evaluated once when the function is first defined, not each time the function is called.
+
+- It's possible to force the use of keyword arguments by listing parameters after a `*` argument in the definition `def read_data(filename, *, debug=False)` this would make it so `read_data('data.csv', True)` would not work and you have to write `read_date('data.csv', debug=True)`
+
+- > ***Side Effects*** occur when functions mutate their input values, or change the state of other parts of the program behind the scenes. 
+
+- Functions that do have side effects tend to return `None`
+
+- `NamedTuple` allows you to reference the returned values using named attributes:
+  
+  ```{python}
+  from typing import NamedTuple
+
+  class ParseResult(NamedTuple):
+    name: str
+    value: str
+
+  def parse_value(text):
+    """
+    Split text of the form name=val into (name, val)
+    """
+    parts = text.split("=", 1)
+    return ParseResult(parts[0].strip(), parts[1].strip())
+
+  r = parse_value("url=http://www.python.org")
+  print(r.name, r.value)
+  ```
+
+  :::{.callout-important title="Revist" }
+  I don't quite understand this late binding example for `lambda` expressions.
+  :::
+
+  ```{python}
+  x = 2 
+  f = lambda y: x*y
+  x = 3
+  g = lambda y: x*y
+  print(f(10))
+  print(g(10))
+
+  x = 2 
+  f = lambda y, x=x: x*y
+  x = 3
+  g = lambda y, x=x: x*y
+  print(f(10))
+  print(g(10))
+  ```
+
+- > ***Higher-order Functions*** mean functions can be passed as arguments to other functions, placed in data structures, and returned as a result... Said to be *first-class objects*
+
+- > ***Callback Function*** when a functions "call back" another function. 
+
+- > ***Closure*** a function with an environment containing all the variables needed to execute the function body
+
+  ```{python}
+  import time
+
+  def after(seconds, func):
+    time.sleep(seconds)
+    func()
+  
+  def main():
+    name = "Tyler"
+    def greeting():
+      print("Hello", name)
+    after(3, greeting) # the function remembers its env, an uses the value of name (closure)
+  
+  main()
+  ```
+
+- > Closures and nested functions are useful when you write code based on the concept of lazy or delayed evaluation. The `after()` function is an illustration of this. It receives a function that is not evaluated right away--that only happens at some later point.
+

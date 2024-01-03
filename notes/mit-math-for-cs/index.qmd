@@ -18,6 +18,7 @@ share:
   email: true
   mastodon: true
 categories: [Courses, In Progress]
+draft: true 
 ---
 
 ------------------------------------------------------------------------
@@ -75,3 +76,19 @@ At the end of this course, students will be able to:
 6.042J is taught as a “flipped” class: Students prepare by doing assigned reading and answering online questions before class. Class meeting time is then devoted almost entirely to problem solving in teams of 6 to 8 students sitting around a table with a nearby whiteboard where a team can write their solutions. Participation in team sessions counts for 25% of the final grade.
 
 :::
+
+# Reading Chapter 1.1-1.6 Introduction to Proofs
+
+## 1.1 Propositions
+
+> A *proposition* is a statement that is either true or false. 
+
+- Here are two examples were the first is true and the second is false
+
+$$ 
+\begin{aligned}
+2 + 3 &= 5 \\ 
+1 + 1 &= 3
+\end{aligned} 
+$$
+
