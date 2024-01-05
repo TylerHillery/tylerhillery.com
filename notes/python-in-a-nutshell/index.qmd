@@ -1,0 +1,73 @@
+---
+title: "Python in a Nutshell"
+description: My notes on [Python in a Nutshell](https://a.co/d/crDbxOD) by Alex Martelli, Anna Martelli Ravenscroft, Steven Holden, Paul McGuire.
+author: "Tyler Hillery"
+date: "2024-01-06"
+image: "./python_in_a_nutshell.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/python-in-a-nutshell/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books, In Progress]
+execute:
+  echo: true
+  error: true
+jupyter: python3
+---
+
+------------------------------------------------------------------------
+
+# Preface
+
+- > While you can read this volume linearly from the beginning, we also aim for it to be a useful reference for the working programmer. You may choose to index to locate items of interest, or to read specific chapters for coverage their particular topics.
+
+  I don't plan on reading this book from start finish. Below are the chapters I plan on reading
+
+  - Part II, Core Python Language and Built-ins
+    - Chapter 5, "Type Annotations"
+  - All of Part III, Python Library and Extension Modules
+  - All of Part IV, Network and Web Programming
+  - All of Part V, Extending, Distributing, and Version Upgrade and Migration
+
+# Part II, Core Python Language and Built-ins
+
+## Chapter 5. Type Annotations
+
+- Type annotations are *not* enforced at runtime.
+
+- > ***PEP*** stands for Python Enhancement Proposal, a design document describing a new feature for python
+
+- > The `typing` module defines several `protocols`, which are similar to what some other languages call "interfaces". Protocols are abstract base classes intended to concisely express constraints on a type, ensuring it contains certain methods. 
+
+  :::{.callout-caution title="Use `cast` with Caution" collapse="true"}
+  > `cast` is a way of overriding any interfaces or prior annotations that may be present at particular place in your code. It may hide actual type errors in your code, rendering the type-checking pass incomplete or inaccurate.
+  :::
+
+- > ***Generics*** are types that define a template for classes that can adapt the type annotations of their method signatures based on one or more parameters.
+
+- I like this general rule of thumb on when and now to add type annotations to new code
+
+  > the Two Function Rule: as soon as your script contains two functions or methods, go back and add type annotations to the method signatures, and any shared variables or types as necessary. Use `TypeDict` to annotate any `dict` structures that are used in place of classes, so that `dict` keys get clearly defined up front or get documented as you go; use `NamedTuples`(or `dataclasses`: some of the book's authors *strongly* prefer the later option) to define the specific attributes for those data "bundles"
+
+# Part III, Python Library and Extension Modules
+
+## Chapter 11. File and Text Operations
+
+- ***File Buffering*** is where data can be temporarily held in memory on the way to or from the file.
+
+- ***Random Access*** files allows moving forward and back within the file, or jumping to read or write at a particular location in the file.
+
+## Chapter 12. Persistence and Databases
+
+- > Python supplies several modules to ***serialize*** (save) Python objects to various kinds of byte streams and ***deserialize*** (load and re-create) Python objects back from streams. Serialization is also known as ***marshaling***, which means formatting for ***data interchange***
+
+- 
