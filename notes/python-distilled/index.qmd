@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 execute:
   echo: true
   error: true
@@ -336,3 +336,193 @@ jupyter: python3
 - Calling an async function doesn't execute at all instead you get an instance of a coroutine object in return. It must run under supervision of other code. A common option is `asyncio` `asyncio.run(gretting("Tyler"))`
 
 # Chapter 6. Generators
+
+  > Generators allows you to alter the spacetime dimensions of normal function evaluation. 
+
+- So by using generators I become Loki?
+
+# Chapter 7. Classes and Object-Oriented Programming
+
+- Objects help encapsulate state
+
+  ```{python}
+  class Account:
+    '''
+    A simple bank account
+    '''
+    owner: str
+    balance: float
+
+    def __init__(self, owner:str, balance:float):
+      self.owner = owner
+      self.balance = balance
+
+    def __repr__(self):
+      return f'Account({self.owner!r}, {self.balance!r})'
+    
+    def deposit(self, amount:float):
+      self.balance += amount
+
+    def withdraw(self, amount:float):
+      self.balance -= amount
+
+    def inquiry(self):
+      return self.balance
+
+  a = Account("Tyler", 1_000_000)
+  print(a)
+  ```
+
+- `Class` itself doesn't create any instances of the class. I like to think of it as the blue print on how to create the instance of the class
+
+- > When you access a method as an attribute, you get an object known as a ***bound method***. A bound method is an object that contains both an instance and the function that implements the method. You can call a bound method by adding parentheses and arguments, it executed the method, passing the attached instance as the first argument.
+
+- The `self` parameter in Python is akin to the `this` pointer in other languages, but in Python you always have to use it explicitly
+
+- Sometimes it's better to avoid inheritance via composition. The example given in the book shows making a stack data structure with push and pop operations. A bad way to do this is by inheriting from the list class
+
+  ```{python}
+  class Stack(list):
+    def push(self, item):
+        self.append(item)
+    
+  s = Stack()
+  s.push(1)
+  s.push(2)
+  s.pop()
+  s
+  ```
+
+  The problem with the above code is that is has other features that don't make sense for the `Stack` data structure like inserting, sorting etc. This is called implementation inheritance--you used inheritance to reuse some code which you built something else, but you got a lot of features that aren't pertinent to the problem. Instead we should ***composition***. Build an independent class that happens to have a list contained in it. 
+
+  ```{python}
+  class Stack():
+    def __init__(self):
+        self._items = list()
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        return self._items.pop()
+    
+    def __len__(self):
+        return len(self._items)
+
+  s = Stack()
+  s.push(1)
+  s.push(2)
+  s.pop()
+  s.push(3)
+  s
+  ```
+
+    We could also extend the implementation by accepting an internal `list` class as an optional argument
+
+    ```python
+    class Stack():
+        def__init__(self, *, container=None):
+            if container is None:
+                container = list()
+            self._items = container 
+    ```
+
+    This promotes loose coupling of components, e.g. you can make a stack that stores its elements in a typed array instead of a list.
+
+    ```python
+    import array
+    
+    s = Stack(conatiner=array.array("i"))
+    s.push(42)
+    s.push(23)
+    s.push("a lot") # TypeError
+    ```
+
+    This is also known as ***dependency injection***. Instead of hardwiring `Stack` to depend on `list`, you can make it depend on any container a user decides to pass in, provided it implements the required interface.
+
+-  I like to think of ***duck typing*** as python does not care if each variable is the same object but rather looks to see if implements the same interfaces to interact with it (methods and attributes). A good example is how the `for` loop works with many different objects such as lists, files, generators, strings etc. even though none of these classes inherit from any kind of special `Iterable` base class
+
+- ***Class Method*** is a method applied on the class itself, not an instance of it. Meaning you do not pass `self` in the method but instead `cls`. It's common to create class methods to define alternate instance constructors and you can create the method by adding the `@classmethod` decorator. 
+
+- ***Static Method*** is unlike a normal method or class method, a static method does not take extra `self` or `cls` argument. A static method is just an ordinary function that happens to be defined inside a class. 
+
+    ```{python}
+    class Ops:
+        @staticmethod
+        def add(x, y):
+            return x + y
+
+        @staticmethod
+        def sub(x, y):
+            return x - y
+
+    a = Ops.add(2,3)
+    b = Ops.sub(4,5)
+    print(a)
+    print(b)
+    ```
+
+- > ***Property*** is a special kind of attribute that intercepts attribute access and handles it via user-defined methods. 
+
+    ```{python}
+    import string
+
+    class Account:
+        def __init__(self, owner, balance):
+            self.owner = owner
+            self._balance = balance
+
+        @property
+        def owner(self):
+            return self._owner
+        
+        @owner.setter
+        def owner(self, value):
+            if not isinstance(value, str):
+                raise TypeError("Expected Str")
+            if not all(c in string.ascii_uppercase for c in value):
+                raise ValueError("Must be uppercase ASCII")
+            if len(value) > 10:
+                raise ValueError("Must be 10 characters or less")
+            self._owner = value
+    ```
+
+    In thi above example the `owner` attribute is being constrained to a 10-char uppercase ASCII string. With this property set on owner it now automatically routes through the getter/setter methods that you implemented. 
+
+- In the `__init__` method we have to use `self.owner = owner` instead of `self._owner = owner` otherwise it would case infinite recursion. T
+    
+    > Since each access to a property attribute automatically invokes a method, the actual value needs to b stored under a different name. This is why `_owner` is used inside the getter and setter methods.
+
+- ***Abstract base classes*** using the `abc` module and the `@abstractmethod` are used together to describe an interface. It's not meant to be instantiated directly rather serve as a guide for writing subclasses. 
+
+- Wow OOP can get complex in python, but I appreciate the author's advice at the end of the chapter which is basically keep it simple stupid.
+
+# Chapter 8. Modules and Packages
+
+- > A common misconception is that the `from module import name` statement is more efficient--possible only loading part of a module. This is not hte case. Either way, the entire module is loaded and stored in the cache.
+
+    Interesting, I definitely had this misconception
+
+- > ***Package*** is a collection of modules that are grouped under a common top-level name.
+
+- You can run a package submodule as a script but defining a `if __name__ == "__main__" and then executing `python -m name_of_submodule.py`
+
+- You can use the `__init__.py` to build and manage the contents of the top level namespace. 
+
+# Chapter 9. Input and Output
+
+- The formatting of strings follows this format `[[fill][align][sign][0][width][,][.precision][type]`
+
+- > one useful easter egg of the `http` package is the ability for Python to run a standalone web server. Go a directory with a collection of files and type the following:
+
+    ```bash
+    $ python -m http.server
+    Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ... 
+    ```
+
+- `os.path` is legacy, use the `pathlib` module instead
+
+# Review
+
+I know this book is called "Python Distilled" but wow does it get in pretty in depth. Before this book I would classify myself as a "fundamental" python programmer (which I like to think of as someone between intermediate and beginner level). I found this book to be very helpful to me as it felt like I got to "look under the cover" as to how a lot of the different functionality of python works. I believe any python programmer will get some value added out of reading this book but I think it can really serve as a great jumping off point for other non python programmers who are looking to learn python. 
+
