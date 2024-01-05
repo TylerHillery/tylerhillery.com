@@ -37,7 +37,7 @@ My first job out of college was in the investment management department of a for
 
 I am a generalist. While most of my background has been in various data roles I don't let that define who I am. I am continuously learning about different domains from web development, database internals, devops, networking etc. 
 
-It bothers me when people don't believe someone can be "Full Stack" or they consider themselves a "Insert X framework dev". Don't be a frameworker be a developer. At the end of the day I am willing to learn or do whatever it takes to solve the task at hand.
+It bothers me when people don't believe someone can be "Full Stack" or they consider themselves a "Insert X framework dev". Don't be a frameworker be a developer. At the end of the day I am a problem solver and I am willing to learn or do whatever it takes to solve the task at hand.
 
 This philosophy closely aligns with one of my favorite books "The Pragmatic Programmer":
 
