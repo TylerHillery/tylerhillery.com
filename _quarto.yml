@@ -39,6 +39,7 @@ format:
     toc-location: left
     smooth-scroll: true
     code-line-numbers: true
+    highlight-style: atom-one
 execute:
   freeze: auto
 resources:

@@ -2,7 +2,7 @@
 title: "Python in a Nutshell"
 description: My notes on [Python in a Nutshell](https://a.co/d/crDbxOD) by Alex Martelli, Anna Martelli Ravenscroft, Steven Holden, Paul McGuire.
 author: "Tyler Hillery"
-date: "2024-01-06"
+date: "2024-01-07"
 image: "./python_in_a_nutshell.jpg"
 filters:
   - social-share
@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 execute:
   echo: true
   error: true

@@ -27,399 +27,428 @@ jupyter: python3
 ------------------------------------------------------------------------
 
 # Preface
-- Book is focused on presenting a modern yet curated core of the language.
 
-- I like the author's opinion about **not** using python for large scale projects, ones with millions and millions of code. 
+-   Book is focused on presenting a modern yet curated core of the language.
 
-- This book is written during python 3.9 so it doesn't not include some of the newer language features. Current version of python as of me reading this book is 3.12. 
+-   I like the author's opinion about **not** using python for large scale projects, ones with millions and millions of code.
+
+-   This book is written during python 3.9 so it doesn't not include some of the newer language features. Current version of python as of me reading this book is 3.12.
 
 # Chapter 1. Python Basics
 
-- > ***REPL*** stands for read-evaluation-print-loop
+-   
 
-- The author brings up how he uses it as their desktop which I found funny because the first time I saw someone use python as their calculator was on Tsoding's twitch stream. I remember thinking that was so odd but I guess it's a lot more common than I think!
+    > ***REPL*** stands for read-evaluation-print-loop
 
-- You can add type hinting to variable assignment by doing `x: int = 42`
+-   The author brings up how he uses it as their desktop which I found funny because the first time I saw someone use python as their calculator was on Tsoding's twitch stream. I remember thinking that was so odd but I guess it's a lot more common than I think!
 
-- With f-strings I did not know you could align them like `print(f'{year:>3d} {principal:0.2f}')`
+-   You can add type hinting to variable assignment by doing `x: int = 42`
 
-- Didn't know `divmod(x,y)` which returns `(x // y, x % y)` existed. I could see this being handy.
+-   With f-strings I did not know you could align them like `print(f'{year:>3d} {principal:0.2f}')`
 
-- Remember falsy values include `False`, `None`, `0`, or empty
+-   Didn't know `divmod(x,y)` which returns `(x // y, x % y)` existed. I could see this being handy.
 
-- Python ternary expression `a if a > b else b`
+-   Remember falsy values include `False`, `None`, `0`, or empty
 
-- If you have a large file you can read it in chunks like so:
+-   Python ternary expression `a if a > b else b`
 
-  ```python
-  with open('data.txt') as file:
-    while (chunk := file.read(10000)):
-      print(chunk, end='')
-  ```
+-   If you have a large file you can read it in chunks like so:
 
-- Common Python project structure
-  - tutorial-project/
-    - tutorial/
-      - __init__.py
-      - other_files.py
-  - tests/
-    - test_file.py
-  - examples/
-    - example.py
-  - doc/
-    - tutorial.txt
+    ``` python
+    with open('data.txt') as file:
+      while (chunk := file.read(10000)):
+        print(chunk, end='')
+    ```
+
+-   Common Python project structure
+
+    -   tutorial-project/
+        -   tutorial/
+            -   **init**.py
+            -   other_files.py
+    -   tests/
+        -   test_file.py
+    -   examples/
+        -   example.py
+    -   doc/
+        -   tutorial.txt
 
 # Chapter 2. Operators, Expressions, and Data Manipulation
 
-- Helpful tip I always forget about, you can use a `_` to visual separate digits: `123_456_789`
+-   Helpful tip I always forget about, you can use a `_` to visual separate digits: `123_456_789`
 
-- Interesting "truthiness" bug
+-   Interesting "truthiness" bug
 
-  ```{python}
-  def foo(x, items=None):
-    if not items: # should use if items is None otherwise a new list gets created
-      items = []
-    items.append(x)
+    ```{python}
+    def foo(x, items=None):
+      if not items: # should use if items is None otherwise a new list gets created
+        items = []
+      items.append(x)
 
-  a = []
+    a = []
 
-  foo(3,a) # nothing happens to a
+    foo(3,a) # nothing happens to a
 
-  print(a)
-  ```
+    print(a)
+    ```
 
-- I did not realize you could have multiple starred variables when unpacking more complex data structures
+-   I did not realize you could have multiple starred variables when unpacking more complex data structures
 
-  ```{python}
-  datetime = ((5,19,2008), (10,30, "am"))
+    ```{python}
+    datetime = ((5,19,2008), (10,30, "am"))
 
-  (month, *_), (hour, *_) = datetime
+    (month, *_), (hour, *_) = datetime
 
-  print(month)
-  print(hour)
-  ```
+    print(month)
+    print(hour)
+    ```
 
-- I never heard of this way to unpack variables in assignment as *splatting*
-  ```{python}
-  items = [1,2,3]
-  a = [10, *items, 11]
-  print(a)  
-  ```
+-   I never heard of this way to unpack variables in assignment as *splatting*
 
-- Be careful when assigning variables to other variables that are mutable data types such as list. What is really happening is now both variables have the same reference to the value (e.g. a list). If either variable mutates the list then the other variable with also see that change.
+    ```{python}
+    items = [1,2,3]
+    a = [10, *items, 11]
+    print(a)  
+    ```
 
-- > A ***generator expression*** is an object that carries out the same computation as a list comprehension but produces the result iteratively. You can only iterate over a generator expression once.  
+-   Be careful when assigning variables to other variables that are mutable data types such as list. What is really happening is now both variables have the same reference to the value (e.g. a list). If either variable mutates the list then the other variable with also see that change.
 
-  ```{python}
-  nums = [1,2,3,4]
-  squares = (x*x for x in nums)
-  print(squares)
-  next(squares)
-  ``` 
+-   
 
-- The main difference between the generator vs list comprehensions is generator expressions merely know how to produce the data on demand while list comprehensions creates a list that contains the resulting data.
+    > A ***generator expression*** is an object that carries out the same computation as a list comprehension but produces the result iteratively. You can only iterate over a generator expression once.
+
+    ```{python}
+    nums = [1,2,3,4]
+    squares = (x*x for x in nums)
+    print(squares)
+    next(squares)
+    ```
+
+-   The main difference between the generator vs list comprehensions is generator expressions merely know how to produce the data on demand while list comprehensions creates a list that contains the resulting data.
 
 # Chapter 3. Program Structure and Control Flow
 
-- `break` and `continue` statements apply only to the innermost loop being executed.
+-   `break` and `continue` statements apply only to the innermost loop being executed.
 
-- `else` clause of a loop only executes if the loop runs to completion
+-   `else` clause of a loop only executes if the loop runs to completion
 
-- > You should only catch exceptions from which your code can actually recover. If recovery is not possible, it's often better to let the exception propagate.
+-   
 
-- Exceptions are organized into a hierarchy. Instead of trying to defend against every exceptions look to see if there is a higher exception that you can handle. 
+    > You should only catch exceptions from which your code can actually recover. If recovery is not possible, it's often better to let the exception propagate.
 
-- These are the only exceptions that alter control flow: `SystemsExit`, `KeyboardInterrupt`, `StopIteration`
+-   Exceptions are organized into a hierarchy. Instead of trying to defend against every exceptions look to see if there is a higher exception that you can handle.
 
-- > Exceptions have an associated stack traceback that provides information about where an error occurred. The traceback is stored in the `__traceback__` attribute of an exception. You can use the `traceback` module to produce the traceback message yourself, which is helpful for reporting or debugging
+-   These are the only exceptions that alter control flow: `SystemsExit`, `KeyboardInterrupt`, `StopIteration`
 
-  ```{python}
-  import traceback
+-   
 
-  try:
-    spam()
-  except Exception as e:
-    tblines = traceback.format_exception(type(e), e, e.__traceback__)
-    tbmsg = ''.join(tblines)
-    print("It Failed:")
-    print(tbmsg)
-  ```
+    > Exceptions have an associated stack traceback that provides information about where an error occurred. The traceback is stored in the `__traceback__` attribute of an exception. You can use the `traceback` module to produce the traceback message yourself, which is helpful for reporting or debugging
+
+    ```{python}
+    import traceback
+
+    try:
+      spam()
+    except Exception as e:
+      tblines = traceback.format_exception(type(e), e, e.__traceback__)
+      tbmsg = ''.join(tblines)
+      print("It Failed:")
+      print(tbmsg)
+    ```
 
 # Chapter 4. Objects, Types and Protocols
 
-- Identity is the is a number representing the values location in memory
+-   Identity is the is a number representing the values location in memory
 
-- All objects are reference-counted
+-   All objects are reference-counted
 
-- An object's reference count is increased whenever it's assigned to a new name or placed in a container such as a list, tuple or dictionary. The current reference count of an object can be obtained by using `sys.getrefcount()` function.
+-   An object's reference count is increased whenever it's assigned to a new name or placed in a container such as a list, tuple or dictionary. The current reference count of an object can be obtained by using `sys.getrefcount()` function.
 
-- Once an object's reference count reaches zero, it is garbage-collected.
+-   Once an object's reference count reaches zero, it is garbage-collected.
 
-- `None` is stored as a singleton so it best to test against none with the `is` or `is not` operator instead of `==`.
+-   `None` is stored as a singleton so it best to test against none with the `is` or `is not` operator instead of `==`.
 
-- ***Object Protocols*** is another term to describe ***dunder methods***
+-   ***Object Protocols*** is another term to describe ***dunder methods***
 
-- Using in place operators like `+=` or `-+` might be able to provide performance optimizations when the object is not shared because it can modify in place without allocating a newly created object for the result.
+-   Using in place operators like `+=` or `-+` might be able to provide performance optimizations when the object is not shared because it can modify in place without allocating a newly created object for the result.
 
 # Chapter 5. Functions
 
-- Only use immutable objects for default argument values because default arguments are evaluated once when the function is first defined, not each time the function is called.
+-   Only use immutable objects for default argument values because default arguments are evaluated once when the function is first defined, not each time the function is called.
 
-- It's possible to force the use of keyword arguments by listing parameters after a `*` argument in the definition `def read_data(filename, *, debug=False)` this would make it so `read_data('data.csv', True)` would not work and you have to write `read_date('data.csv', debug=True)`
+-   It's possible to force the use of keyword arguments by listing parameters after a `*` argument in the definition `def read_data(filename, *, debug=False)` this would make it so `read_data('data.csv', True)` would not work and you have to write `read_date('data.csv', debug=True)`
 
-- > ***Side Effects*** occur when functions mutate their input values, or change the state of other parts of the program behind the scenes. 
+-   
 
-- Functions that do have side effects tend to return `None`
+    > ***Side Effects*** occur when functions mutate their input values, or change the state of other parts of the program behind the scenes.
 
-- `NamedTuple` allows you to reference the returned values using named attributes:
-  
-  ```{python}
-  from typing import NamedTuple
+-   Functions that do have side effects tend to return `None`
 
-  class ParseResult(NamedTuple):
-    name: str
-    value: str
+-   `NamedTuple` allows you to reference the returned values using named attributes:
 
-  def parse_value(text):
-    """
-    Split text of the form name=val into (name, val)
-    """
-    parts = text.split("=", 1)
-    return ParseResult(parts[0].strip(), parts[1].strip())
+    ```{python}
+    from typing import NamedTuple
 
-  r = parse_value("url=http://www.python.org")
-  print(r.name, r.value)
-  ```
+    class ParseResult(NamedTuple):
+      name: str
+      value: str
 
-  :::{.callout-important title="Revist" }
-  I don't quite understand this late binding example for `lambda` expressions.
-  :::
+    def parse_value(text):
+      """
+      Split text of the form name=val into (name, val)
+      """
+      parts = text.split("=", 1)
+      return ParseResult(parts[0].strip(), parts[1].strip())
 
-  ```{python}
-  x = 2 
-  f = lambda y: x*y
-  x = 3
-  g = lambda y: x*y
-  print(f(10))
-  print(g(10))
+    r = parse_value("url=http://www.python.org")
+    print(r.name, r.value)
+    ```
 
-  x = 2 
-  f = lambda y, x=x: x*y
-  x = 3
-  g = lambda y, x=x: x*y
-  print(f(10))
-  print(g(10))
-  ```
+    ::: {.callout-important title="Revist"}
+    I don't quite understand this late binding example for `lambda` expressions.
+    :::
 
-- > ***Higher-order Functions*** mean functions can be passed as arguments to other functions, placed in data structures, and returned as a result... Said to be *first-class objects*
+    ```{python}
+    x = 2 
+    f = lambda y: x*y
+    x = 3
+    g = lambda y: x*y
+    print(f(10))
+    print(g(10))
 
-- > ***Callback Function*** when a functions "call back" another function. 
+    x = 2 
+    f = lambda y, x=x: x*y
+    x = 3
+    g = lambda y, x=x: x*y
+    print(f(10))
+    print(g(10))
+    ```
 
-- > ***Closure*** a function with an environment containing all the variables needed to execute the function body
+-   
 
-  ```{python}
-  import time
+    > ***Higher-order Functions*** mean functions can be passed as arguments to other functions, placed in data structures, and returned as a result... Said to be *first-class objects*
 
-  def after(seconds, func):
-    time.sleep(seconds)
-    func()
-  
-  def main():
-    name = "Tyler"
-    def greeting():
-      print("Hello", name)
-    after(3, greeting) # the function remembers its env, an uses the value of name (closure)
-  
-  main()
-  ```
+-   
 
-- > Closures and nested functions are useful when you write code based on the concept of lazy or delayed evaluation. The `after()` function is an illustration of this. It receives a function that is not evaluated right away--that only happens at some later point.
+    > ***Callback Function*** when a functions "call back" another function.
 
-- To solve the issue of not being able to pass arguments to function callbacks, we need to think about ***function composition***, "*when functions are mixed together in various ways, you need to think about how function inputs and outputs connect together*"
+-   
 
-- > ***Thunk*** a smmall zero-argument function `after(10, lambda: add(2,3))`. It's an expression that will be evaluated later when it's eventually called as a zero-argument function. 
+    > ***Closure*** a function with an environment containing all the variables needed to execute the function body
 
-- You can use `partial()` instead of a lambda with the key difference being that `partial()` the arguments are evaluated and bound at the time the partial function is first defined. With a zero-argument `lambda` the arguments are evaluated and bound when the `lambda` function actually executes later
+    ```{python}
+    import time
 
-- > ***Currying*** is a functional programming technique where a multiple-argument function is expressed as a chain of nested single-argument functions:
+    def after(seconds, func):
+      time.sleep(seconds)
+      func()
 
-  ```{python}
-  # three argument function
-  def f(x, y, z):
-    return x + y + z
+    def main():
+      name = "Tyler"
+      def greeting():
+        print("Hello", name)
+      after(3, greeting) # the function remembers its env, an uses the value of name (closure)
 
-  # curried version
-  def fc(x):
-    return lambda y: (lambda z: x + y + z) # okay this makes no sense to me 
-  
-  # example use
-  a = f(2, 3, 4)
-  b = fc(2)(3)(4)
-  ```
+    main()
+    ```
 
-- LOL this part of the book about currying has me dying 😂
+-   
 
-  > This is not a common Python programming style and there are few practical reasons for doing it. However, sometimes you'll hear the word "*currying*" thrown about in conversations with coders who've spent too much time warping their brains with things like `lambda` calculus. This technique of handling multiple arguments is named in honor of the famous logician Haskell Curry. Knowing what it is might be useful--should you stumble into a group of functional programmers having a heated flamewar at a social event.
+    > Closures and nested functions are useful when you write code based on the concept of lazy or delayed evaluation. The `after()` function is an illustration of this. It receives a function that is not evaluated right away--that only happens at some later point.
 
-- Some issues arise when return callback function results. Mainly from the fact that it can be hard to distinguish when where an error is coming from, the original function or the callback function. Here are some techniques to handle this:
+-   To solve the issue of not being able to pass arguments to function callbacks, we need to think about ***function composition***, "*when functions are mixed together in various ways, you need to think about how function inputs and outputs connect together*"
 
-  ```{python}
-  # Chained Exceptions
-  class CallbackError(Exception):
-    pass
+-   
 
-  def after(seconds, func, *args):
-    time.sleep(seconds)
+    > ***Thunk*** a smmall zero-argument function `after(10, lambda: add(2,3))`. It's an expression that will be evaluated later when it's eventually called as a zero-argument function.
+
+-   You can use `partial()` instead of a lambda with the key difference being that `partial()` the arguments are evaluated and bound at the time the partial function is first defined. With a zero-argument `lambda` the arguments are evaluated and bound when the `lambda` function actually executes later
+
+-   
+
+    > ***Currying*** is a functional programming technique where a multiple-argument function is expressed as a chain of nested single-argument functions:
+
+    ```{python}
+    # three argument function
+    def f(x, y, z):
+      return x + y + z
+
+    # curried version
+    def fc(x):
+      return lambda y: (lambda z: x + y + z) # okay this makes no sense to me 
+
+    # example use
+    a = f(2, 3, 4)
+    b = fc(2)(3)(4)
+    ```
+
+-   LOL this part of the book about currying has me dying 😂
+
+    > This is not a common Python programming style and there are few practical reasons for doing it. However, sometimes you'll hear the word "*currying*" thrown about in conversations with coders who've spent too much time warping their brains with things like `lambda` calculus. This technique of handling multiple arguments is named in honor of the famous logician Haskell Curry. Knowing what it is might be useful--should you stumble into a group of functional programmers having a heated flamewar at a social event.
+
+-   Some issues arise when return callback function results. Mainly from the fact that it can be hard to distinguish when where an error is coming from, the original function or the callback function. Here are some techniques to handle this:
+
+    ```{python}
+    # Chained Exceptions
+    class CallbackError(Exception):
+      pass
+
+    def after(seconds, func, *args):
+      time.sleep(seconds)
+      try:
+        return func(*args)
+      except Exception as err:
+        raise CallbackError("Callback function failed") from err
+    ```
+
+    ```{python}
+    # isolates errors from the supplied callback into its own exception category
     try:
-      return func(*args)
-    except Exception as err:
-      raise CallbackError("Callback function failed") from err
-  ```
+      r = after(delay, add, x, y)
+    except CallbackError as err:
+      print("It failed. Reason", err.__cause__)
+    ```
 
-  ```{python}
-  # isolates errors from the supplied callback into its own exception category
-  try:
-    r = after(delay, add, x, y)
-  except CallbackError as err:
-    print("It failed. Reason", err.__cause__)
-  ```
+    ```{python}
+    # package the result of the callback function into some kind of result instance
+    # that holds both a value and an error.
+    def add(x,y):
+      return x + y
 
-  ```{python}
-  # package the result of the callback function into some kind of result instance
-  # that holds both a value and an error.
-  def add(x,y):
-    return x + y
+    class Result:
+      def __init__(self, value=None, exc=None):
+        self._value = value
+        self._exc = exc
+      
+      def result(self):
+        if self._exc:
+          raise self._exc
+        else:
+          return self._value
 
-  class Result:
-    def __init__(self, value=None, exc=None):
-      self._value = value
-      self._exc = exc
-    
-    def result(self):
-      if self._exc:
-        raise self._exc
-      else:
-        return self._value
+    def after(seconds, func, *args):
+      time.sleep(seconds)
+      try:
+        return Result(value=func(*args))
+      except Exception as err:
+        return Result(exc=err)
+      
+    # example use
+    r = after(1, add, 2, 3)
+    print(r.result())
 
-  def after(seconds, func, *args):
-    time.sleep(seconds)
-    try:
-      return Result(value=func(*args))
-    except Exception as err:
-      return Result(exc=err)
-    
-  # example use
-  r = after(1, add, 2, 3)
-  print(r.result())
+    # s = after("1", add, 2, 3) raises Type Error
 
-  # s = after("1", add, 2, 3) raises Type Error
+    t = after(1, add, "2", 3)
 
-  t = after(1, add, "2", 3)
+    print(t.result()) # raises type error
 
-  print(t.result()) # raises type error
+    ```
 
-  ```
+-   This style of boxing a result into a special instance to be unwrapped later is common pattern in modern programming languages. One reason is the function is fully defined with type checking as after will always return `Result` type `def after(seconds, func, *args) -> Result`
 
-- This style of boxing a result into a special instance to be unwrapped later is common pattern in modern programming languages. One reason is the function is fully defined with type checking as after will always return `Result` type `def after(seconds, func, *args) -> Result` 
+-   
 
-- > This pattern is not as common in Python code but it does arise when working with concurrency primitives such as threads and processes. For example, instances of so-called `Future` behave like this when working with thread pools. For example:
+    > This pattern is not as common in Python code but it does arise when working with concurrency primitives such as threads and processes. For example, instances of so-called `Future` behave like this when working with thread pools. For example:
 
-  ```{python}
-  from concurrent.futures import ThreadPoolExecutor
+    ```{python}
+    from concurrent.futures import ThreadPoolExecutor
 
-  pool = ThreadPoolExecutor(16)
-  r = pool.submit(add, 2, 3)
-  print(r.result())
+    pool = ThreadPoolExecutor(16)
+    r = pool.submit(add, 2, 3)
+    print(r.result())
 
-  ```
+    ```
 
-- Calling an async function doesn't execute at all instead you get an instance of a coroutine object in return. It must run under supervision of other code. A common option is `asyncio` `asyncio.run(gretting("Tyler"))`
+-   Calling an async function doesn't execute at all instead you get an instance of a coroutine object in return. It must run under supervision of other code. A common option is `asyncio` `asyncio.run(gretting("Tyler"))`
 
 # Chapter 6. Generators
 
-  > Generators allows you to alter the spacetime dimensions of normal function evaluation. 
+> Generators allows you to alter the spacetime dimensions of normal function evaluation.
 
-- So by using generators I become Loki?
+-   So by using generators I become Loki?
 
 # Chapter 7. Classes and Object-Oriented Programming
 
-- Objects help encapsulate state
+-   Objects help encapsulate state
 
-  ```{python}
-  class Account:
-    '''
-    A simple bank account
-    '''
-    owner: str
-    balance: float
+    ```{python}
+    class Account:
+      '''
+      A simple bank account
+      '''
+      owner: str
+      balance: float
 
-    def __init__(self, owner:str, balance:float):
-      self.owner = owner
-      self.balance = balance
+      def __init__(self, owner:str, balance:float):
+        self.owner = owner
+        self.balance = balance
 
-    def __repr__(self):
-      return f'Account({self.owner!r}, {self.balance!r})'
-    
-    def deposit(self, amount:float):
-      self.balance += amount
+      def __repr__(self):
+        return f'Account({self.owner!r}, {self.balance!r})'
+      
+      def deposit(self, amount:float):
+        self.balance += amount
 
-    def withdraw(self, amount:float):
-      self.balance -= amount
+      def withdraw(self, amount:float):
+        self.balance -= amount
 
-    def inquiry(self):
-      return self.balance
+      def inquiry(self):
+        return self.balance
 
-  a = Account("Tyler", 1_000_000)
-  print(a)
-  ```
+    a = Account("Tyler", 1_000_000)
+    print(a)
+    ```
 
-- `Class` itself doesn't create any instances of the class. I like to think of it as the blue print on how to create the instance of the class
+-   `Class` itself doesn't create any instances of the class. I like to think of it as the blue print on how to create the instance of the class
 
-- > When you access a method as an attribute, you get an object known as a ***bound method***. A bound method is an object that contains both an instance and the function that implements the method. You can call a bound method by adding parentheses and arguments, it executed the method, passing the attached instance as the first argument.
+-   
 
-- The `self` parameter in Python is akin to the `this` pointer in other languages, but in Python you always have to use it explicitly
+    > When you access a method as an attribute, you get an object known as a ***bound method***. A bound method is an object that contains both an instance and the function that implements the method. You can call a bound method by adding parentheses and arguments, it executed the method, passing the attached instance as the first argument.
 
-- Sometimes it's better to avoid inheritance via composition. The example given in the book shows making a stack data structure with push and pop operations. A bad way to do this is by inheriting from the list class
+-   The `self` parameter in Python is akin to the `this` pointer in other languages, but in Python you always have to use it explicitly
 
-  ```{python}
-  class Stack(list):
-    def push(self, item):
-        self.append(item)
-    
-  s = Stack()
-  s.push(1)
-  s.push(2)
-  s.pop()
-  s
-  ```
+-   Sometimes it's better to avoid inheritance via composition. The example given in the book shows making a stack data structure with push and pop operations. A bad way to do this is by inheriting from the list class
 
-  The problem with the above code is that is has other features that don't make sense for the `Stack` data structure like inserting, sorting etc. This is called implementation inheritance--you used inheritance to reuse some code which you built something else, but you got a lot of features that aren't pertinent to the problem. Instead we should ***composition***. Build an independent class that happens to have a list contained in it. 
+    ```{python}
+    class Stack(list):
+      def push(self, item):
+          self.append(item)
+      
+    s = Stack()
+    s.push(1)
+    s.push(2)
+    s.pop()
+    s
+    ```
 
-  ```{python}
-  class Stack():
-    def __init__(self):
-        self._items = list()
+    The problem with the above code is that is has other features that don't make sense for the `Stack` data structure like inserting, sorting etc. This is called implementation inheritance--you used inheritance to reuse some code which you built something else, but you got a lot of features that aren't pertinent to the problem. Instead we should ***composition***. Build an independent class that happens to have a list contained in it.
 
-    def push(self, item):
-        self._items.append(item)
+    ```{python}
+    class Stack():
+      def __init__(self):
+          self._items = list()
 
-    def pop(self):
-        return self._items.pop()
-    
-    def __len__(self):
-        return len(self._items)
+      def push(self, item):
+          self._items.append(item)
 
-  s = Stack()
-  s.push(1)
-  s.push(2)
-  s.pop()
-  s.push(3)
-  s
-  ```
+      def pop(self):
+          return self._items.pop()
+      
+      def __len__(self):
+          return len(self._items)
+
+    s = Stack()
+    s.push(1)
+    s.push(2)
+    s.pop()
+    s.push(3)
+    s
+    ```
 
     We could also extend the implementation by accepting an internal `list` class as an optional argument
 
-    ```python
+    ``` python
     class Stack():
         def__init__(self, *, container=None):
             if container is None:
@@ -429,9 +458,9 @@ jupyter: python3
 
     This promotes loose coupling of components, e.g. you can make a stack that stores its elements in a typed array instead of a list.
 
-    ```python
+    ``` python
     import array
-    
+
     s = Stack(conatiner=array.array("i"))
     s.push(42)
     s.push(23)
@@ -440,11 +469,11 @@ jupyter: python3
 
     This is also known as ***dependency injection***. Instead of hardwiring `Stack` to depend on `list`, you can make it depend on any container a user decides to pass in, provided it implements the required interface.
 
--  I like to think of ***duck typing*** as python does not care if each variable is the same object but rather looks to see if implements the same interfaces to interact with it (methods and attributes). A good example is how the `for` loop works with many different objects such as lists, files, generators, strings etc. even though none of these classes inherit from any kind of special `Iterable` base class
+-   I like to think of ***duck typing*** as python does not care if each variable is the same object but rather looks to see if implements the same interfaces to interact with it (methods and attributes). A good example is how the `for` loop works with many different objects such as lists, files, generators, strings etc. even though none of these classes inherit from any kind of special `Iterable` base class
 
-- ***Class Method*** is a method applied on the class itself, not an instance of it. Meaning you do not pass `self` in the method but instead `cls`. It's common to create class methods to define alternate instance constructors and you can create the method by adding the `@classmethod` decorator. 
+-   ***Class Method*** is a method applied on the class itself, not an instance of it. Meaning you do not pass `self` in the method but instead `cls`. It's common to create class methods to define alternate instance constructors and you can create the method by adding the `@classmethod` decorator.
 
-- ***Static Method*** is unlike a normal method or class method, a static method does not take extra `self` or `cls` argument. A static method is just an ordinary function that happens to be defined inside a class. 
+-   ***Static Method*** is unlike a normal method or class method, a static method does not take extra `self` or `cls` argument. A static method is just an ordinary function that happens to be defined inside a class.
 
     ```{python}
     class Ops:
@@ -456,13 +485,16 @@ jupyter: python3
         def sub(x, y):
             return x - y
 
+
     a = Ops.add(2,3)
     b = Ops.sub(4,5)
     print(a)
     print(b)
     ```
 
-- > ***Property*** is a special kind of attribute that intercepts attribute access and handles it via user-defined methods. 
+-   
+
+    > ***Property*** is a special kind of attribute that intercepts attribute access and handles it via user-defined methods.
 
     ```{python}
     import string
@@ -475,7 +507,7 @@ jupyter: python3
         @property
         def owner(self):
             return self._owner
-        
+
         @owner.setter
         def owner(self, value):
             if not isinstance(value, str):
@@ -487,42 +519,47 @@ jupyter: python3
             self._owner = value
     ```
 
-    In thi above example the `owner` attribute is being constrained to a 10-char uppercase ASCII string. With this property set on owner it now automatically routes through the getter/setter methods that you implemented. 
+    In this above example the `owner` attribute is being constrained to a 10-char uppercase ASCII string. With this property set on owner it now automatically routes through the getter/setter methods that you implemented.
 
-- In the `__init__` method we have to use `self.owner = owner` instead of `self._owner = owner` otherwise it would case infinite recursion. T
-    
+-   In the `__init__` method we have to use `self.owner = owner` instead of `self._owner = owner` otherwise it would case infinite recursion. T
+
     > Since each access to a property attribute automatically invokes a method, the actual value needs to b stored under a different name. This is why `_owner` is used inside the getter and setter methods.
 
-- ***Abstract base classes*** using the `abc` module and the `@abstractmethod` are used together to describe an interface. It's not meant to be instantiated directly rather serve as a guide for writing subclasses. 
+-   ***Abstract base classes*** using the `abc` module and the `@abstractmethod` are used together to describe an interface. It's not meant to be instantiated directly rather serve as a guide for writing subclasses.
 
-- Wow OOP can get complex in python, but I appreciate the author's advice at the end of the chapter which is basically keep it simple stupid.
+-   Wow OOP can get complex in python, but I appreciate the author's advice at the end of the chapter which is basically keep it simple stupid.
 
 # Chapter 8. Modules and Packages
 
-- > A common misconception is that the `from module import name` statement is more efficient--possible only loading part of a module. This is not hte case. Either way, the entire module is loaded and stored in the cache.
+-   
+
+    > A common misconception is that the `from module import name` statement is more efficient--possible only loading part of a module. This is not the case. Either way, the entire module is loaded and stored in the cache.
 
     Interesting, I definitely had this misconception
 
-- > ***Package*** is a collection of modules that are grouped under a common top-level name.
+-   
 
-- You can run a package submodule as a script but defining a `if __name__ == "__main__" and then executing `python -m name_of_submodule.py`
+    > ***Package*** is a collection of modules that are grouped under a common top-level name.
 
-- You can use the `__init__.py` to build and manage the contents of the top level namespace. 
+-   You can run a package submodule as a script but defining a `if __name__ == "__main__" and then executing`python -m name_of_submodule.py\`
+
+-   You can use the `__init__.py` to build and manage the contents of the top level namespace.
 
 # Chapter 9. Input and Output
 
-- The formatting of strings follows this format `[[fill][align][sign][0][width][,][.precision][type]`
+-   The formatting of strings follows this format `[[fill][align][sign][0][width][,][.precision][type]`
 
-- > one useful easter egg of the `http` package is the ability for Python to run a standalone web server. Go a directory with a collection of files and type the following:
+-   
 
-    ```bash
+    > one useful easter egg of the `http` package is the ability for Python to run a standalone web server. Go a directory with a collection of files and type the following:
+
+    ``` bash
     $ python -m http.server
     Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ... 
     ```
 
-- `os.path` is legacy, use the `pathlib` module instead
+-   `os.path` is legacy, use the `pathlib` module instead
 
 # Review
 
-I know this book is called "Python Distilled" but wow does it get in pretty in depth. Before this book I would classify myself as a "fundamental" python programmer (which I like to think of as someone between intermediate and beginner level). I found this book to be very helpful to me as it felt like I got to "look under the cover" as to how a lot of the different functionality of python works. I believe any python programmer will get some value added out of reading this book but I think it can really serve as a great jumping off point for other non python programmers who are looking to learn python. 
-
+I know this book is called "Python Distilled" but wow does it get in pretty in depth. Before this book I would classify myself as a "fundamental" python programmer (which I like to think of as someone between intermediate and beginner level). I found this book to be very helpful to me as it felt like I got to "look under the cover" as to how a lot of the different functionality of python works. I believe any python programmer will get some value added out of reading this book but I think it can really serve as a great jumping off point for other non python programmers who are looking to learn python.
