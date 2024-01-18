@@ -1,0 +1,94 @@
+---
+title: "Data Engineering with dbt"
+description: My notes on [Data Engineering with dbt](https://a.co/d/dcbdZxQ) by Roberto Zagni 
+author: "Tyler Hillery"
+date: "2024-01-10"
+image: "./de_with_dbt.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/data-engineering-with-dbt/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books, In Progress]
+execute:
+  echo: true
+  error: true
+jupyter: python3
+---
+
+------------------------------------------------------------------------
+# Relevant Links
+- [Book GitHub Repo](https://github.com/PacktPublishing/Data-engineering-with-dbt)
+
+
+# Chapter 1. The Basics of SQL to Transform Data
+
+- Going to skim over this chapter as I already feel very confident with my SQL skills
+
+- The book uses Snowflake but I am going to follow along using BigQuery
+
+- BigQuery datasets are like schemas in other databases
+
+
+# Chapter 2. Setting Up Your dbt Cloud Development Environment
+
+- I am going to use local dbt instead
+
+# Chapter 3. Data Modeling for Data Engineering
+
+- ***Entity***: AN entity is a concept that we want to analyze, a thing of interest that we want to collect data about, such as a car, an order or a page visit
+
+- ***Attribute***: An attribute is a property of an entity for which we want to store values, such as a car plate, a customer, or the total amount of a transaction.
+
+- ***Relationship***: A relationship is a connection between two entities that are related to each other and captures how they are related, such as the ownership relation between a car and its owner, or the purchasing relation between a customer and a product
+
+- Lots of great info in this chapter on different data modeling techniques. I didn't end up taking too many notes as I didn't want to interrupt my flow.
+
+# Chapter 5. Transforming Data with dt
+
+- You can test specific sources but using `dbt test -s source:source_name.table` 
+
+# Chapter 6. Writing Maintainable Code
+
+- Saving history with dbt
+  - You can use the standard dbt *snapshots* which creates **slowly changing dimension of type 2** (SCD2) without writing any of the code. 
+    - This can work well for normal-size datasets (up to millions of rows) and is the simplest way to go 
+    - One major con of snapshots is that they are global objects, so you only have one copy and one version active for all environments.
+    - Another con is you cannot preview or test the `select` query that feeds the data to the snapshot
+  - Another method is to use *incremental models* to save new or changed data from each run.
+    - applies set-based operations to capture changes in insert-only mode
+    - effective way to manage and store huge amounts of data
+    - requires writing custom macro 
+  
+- `Snapshots` are not normal dbt models and they are not run with the `dbt run` command but instead with the `dbt snapshot`.
+
+- `snapshots` are stored in their own folder as they are the only tables that cannot be recreated at every run so you don't want to drop them on accident
+
+- The snapshot table is a global object and is shared by all environments.
+
+- The general layout of a snapshot definition
+
+  ```sql
+  {% snapshot snapshot_name %}
+  {{ config(...) }}
+  select ... from {{ source / ref }}
+  {% endsnapshot %}
+  ```
+
+- Best way to have run snapshots is to have a stg model before them and make them `ephemeral` models so you don't need to run them before the snapshot. This makes it so you don't need to first run only the stg models for the snapshots, take the snapshot and then run all models except the snapshot ones. 
+
+# Chapter 7. Working with Dimensional Data
+
+I actually really enjoyed this chapter. I am turning into a fan of this "Pragmatic Data Platform" going from stg > snapshot > refined > mart. Didn't take to many notes on this chapter as I mostly following along with my own repo.
+
+# Chapter 8. Delivering Consistency in Your Data
+
+- 

@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books, On Hold]
 execute:
   echo: true
   error: true
