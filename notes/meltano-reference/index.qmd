@@ -1,0 +1,49 @@
+---
+title: "Meltano Reference Notes"
+description: Reference notes on Meltano. 
+author: "Tyler Hillery"
+date: "2024-01-21"
+image: "./meltano.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/meltano-reference/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [References, In Progress]
+execute:
+  echo: true
+  error: true
+jupyter: python3
+---
+
+------------------------------------------------------------------------
+# Relevant Links
+- [Metlano Docs](https://docs.meltano.com/)
+- [Meltano GitHub Repo](https://github.com/meltano/meltano)
+
+
+# Notes 
+ 
+- Plugin Types
+  - extractors (Singer Taps)
+  - loaders (Singer Targets)
+  - utilities (dbt, airflow, dagster etc.)
+
+- When you install plugins with `meltano add` they get installed into the project's `.meltano` directory. This directory is in the `.gitignore` so you'll need to explicitly run `meltano install` 
+
+- Just learning now that `~=` in pip means to install anything in the specified minor version e.g. `requests~=2.31.0` will install anything in the 31 minor version
+
+- Data Replication Methods
+  - Log-based Incremental Replication: Uses the database's binary log files to identify what records were inserted, updated, and deleted from the table since the last run (if any), and extracts only these records
+  - Key-based Incremental Replication: The extractor uses the value of a specific column on the table (e.g. `updated_at` or incrementing `id` integer) to identify what records were inserted or updated since the last run (if any)
+  - Full Table Replication: Extracts all available records in the table on every run
+
+- You can use the `--environment=dev` to specify environments you want to run meltano in

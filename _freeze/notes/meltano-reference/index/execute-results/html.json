@@ -1,0 +1,11 @@
+{
+  "hash": "a91927c96a77b39de903800854a7ab2b",
+  "result": {
+    "markdown": "---\ntitle: Meltano Reference Notes\ndescription: Reference notes on Meltano.\nauthor: Tyler Hillery\ndate: '2024-01-21'\nimage: ./meltano.png\nfilters:\n  - social-share\nshare:\n  permalink: 'https://tylerhillery.com/notes/meltano-reference/'\n  description: null\n  twitter: true\n  facebook: false\n  reddit: true\n  stumble: false\n  tumblr: false\n  linkedin: true\n  email: true\n  mastodon: true\ncategories:\n  - References\n  - In Progress\nexecute:\n  echo: true\n  error: true\n---\n\n------------------------------------------------------------------------\n# Relevant Links\n- [Metlano Docs](https://docs.meltano.com/)\n- [Meltano GitHub Repo](https://github.com/meltano/meltano)\n\n\n# Notes \n \n- Plugin Types\n  - extractors (Singer Taps)\n  - loaders (Singer Targets)\n  - utilities (dbt, airflow, dagster etc.)\n\n- When you install plugins with `meltano add` they get installed into the project's `.meltano` directory. This directory is in the `.gitignore` so you'll need to explicitly run `meltano install` \n\n- Just learning now that `~=` in pip means to install anything in the specified minor version e.g. `requests~=2.31.0` will install anything in the 31 minor version\n\n- Data Replication Methods\n  - Log-based Incremental Replication: Uses the database's binary log files to identify what records were inserted, updated, and deleted from the table since the last run (if any), and extracts only these records\n  - Key-based Incremental Replication: The extractor uses the value of a specific column on the table (e.g. `updated_at` or incrementing `id` integer) to identify what records were inserted or updated since the last run (if any)\n  - Full Table Replication: Extracts all available records in the table on every run\n\n- You can use the `--environment=dev` to specify environments you want to run meltano in\n\n",
+    "supporting": [
+      "index_files/figure-html"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

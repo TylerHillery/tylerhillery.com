@@ -1,0 +1,58 @@
+---
+title: "The Mythical Man-Month"
+description: My notes on [The Mythical Man-Month](https://a.co/d/h2gXDb0) by Frederick Brooks Jr. 
+author: "Tyler Hillery"
+date: "2024-01-23"
+image: "./mythical_man_month.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/mythical-man-month/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+Love this quote on "Why is programming fun?":
+
+> *Finally, there is the delight of working in such a tractable medium. The programmer, like the poet, works only slightly removed from pure thought-stuff. He builds his castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structure*
+
+I now know what a "Man-Month" is:
+
+> *Second, our estimating techniques fallaciously confuse effort with progress, hiding the assumption that men and months are interchangeable.*
+
+I really resonate with this way of working:
+
+> *For the human makers of things, the incompleteness and inconsistencies of our ideas become clear only during implementation. Thus it is that writing, experimentation, "working out" are essential disciplines for the theoretician.*
+
+
+# Review
+
+I will be honest, this book did not resonate with me. The book is largely
+about how people in teams make things. I feel the book was greatly influenced by
+the time period it was written in and the types of projects the author had
+experience working on.
+
+The author largely talked about building low level products such as an OS and I
+could see how such a large under taking in developing something like an operating
+system might need a different approach than the projects I am use to. 
+
+So, from a historically perspective I thought it was helpful to learn how large software
+engineering teams operated. I bet there are lots of valuable tidbits here that could
+be applied to big tech but most the projects I am working on don't relate to these
+types of challenges and I often find myself operating better in a different environment
+than the one prescribed in the book.
+
+Nonetheless, if you want to learn more about how teams developed software back in 
+the day, this is the book for you.
