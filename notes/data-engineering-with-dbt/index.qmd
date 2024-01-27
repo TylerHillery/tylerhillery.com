@@ -2,7 +2,7 @@
 title: "Data Engineering with dbt"
 description: My notes on [Data Engineering with dbt](https://a.co/d/dcbdZxQ) by Roberto Zagni 
 author: "Tyler Hillery"
-date: "2024-01-10"
+date: "2024-01-26"
 image: "./de_with_dbt.jpg"
 filters:
   - social-share
@@ -52,7 +52,7 @@ jupyter: python3
 
 - Lots of great info in this chapter on different data modeling techniques. I didn't end up taking too many notes as I didn't want to interrupt my flow.
 
-# Chapter 5. Transforming Data with dt
+# Chapter 5. Transforming Data with dbt
 
 - You can test specific sources but using `dbt test -s source:source_name.table` 
 
@@ -89,6 +89,14 @@ jupyter: python3
 
 I actually really enjoyed this chapter. I am turning into a fan of this "Pragmatic Data Platform" going from stg > snapshot > refined > mart. Didn't take to many notes on this chapter as I mostly following along with my own repo.
 
-# Chapter 8. Delivering Consistency in Your Data
+# Review
 
-- 
+I finished the rest of this book while on the plane so I wasn't able to follow along with the examples like I usually like to with technical books like this. The first few chapters I was not a fan but this was probably because I am pretty familiar with dbt. Once it started getting into more advanced topics I actually really enjoyed it.
+
+It's nice to learn about the different patterns and ways people are using dbt. I really enjoyed the part on how to create historical tables and I could see myself using so of the macros that were shown in this book. It's important for me to not get complacent with these technologies because they are always evolving. 
+
+It was nice that this book also wasn't less about dbt itself and more about different patterns and principals you can apply and how to apply them with dbt. It would be very easy to use the pragmatic data platform with another tool. 
+
+A nit pick I had about the book was how it focused on using dbt Cloud. There were lots of pictures and examples of the cloud UI which I wasn't a fan of.
+
+Overall, I would recommend this book to those looking to how use dbt. 
