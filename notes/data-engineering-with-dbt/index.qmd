@@ -18,10 +18,6 @@ share:
   email: true
   mastodon: true
 categories: [Technical Books]
-execute:
-  echo: true
-  error: true
-jupyter: python3
 ---
 
 ------------------------------------------------------------------------
