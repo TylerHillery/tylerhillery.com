@@ -1,0 +1,188 @@
+---
+title: "Docker Reference Notes"
+description: Reference notes on Docker. 
+author: "Tyler Hillery"
+date: "2024-01-29"
+image: "./docker.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/docker-reference/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [References]
+---
+
+------------------------------------------------------------------------
+
+# Relevant Links
+- [docker docs](https://docs.docker.com/)
+- [dockerhub](https://hub.docker.com/)
+
+# Notes 
+
+- OS is made of main components:
+  - Applications Layer
+  - Kernel
+
+- Docker only virtualizes the applications layer and uses the host's OS kernel
+
+- VM virtualizes the applications layer and the OS kernel
+
+- Docker images are in the MBs opposed to VMs are couple of GBs *usually*
+
+- You can't run a linux based image on a windows host because the windows kernel can't run linux applications.
+
+- You can get around this by downloading Docker Desktop which runs a **Hypervisor layer** with a lightweight Linux distro 
+
+- The **Hypervisor** controls access to physical resources to run multiple VMs on one host machines
+
+- Docker containers runs on the Docker Engine
+
+- The ***docker image*** is an executable application artifact. I like to think of it as the blueprint. It contains
+  - Application: e.g. python app
+  - Services: python interrupter, pip etc.
+  - OS layer: linux
+
+- I like to think of the ***docker container*** as a running instance of an image
+
+- Containers can be impacted by **noisy neighbors**
+
+- High level of Docker Architecture
+  - Docker Host
+    - Docker Daemon (dockerd)
+    - Containers
+    - Images
+  - Docker Client
+    - Command Line
+    - Docker Desktop
+  - Registry
+    - Repositories
+
+- A **writable layer** allows' container storage i.e. local storage in the container
+  - Each container has its own unique writable layer. 
+  - Only exists for the lifecycle of the container, they don't persist. 
+  - Uses the **union filesystem** which does have a performance hit & they are tightly coupled with the HOST
+  - Allows files and directories from separate file systems to be overlaid - forming a "single" file system.
+
+- Types of container storage
+  - `tmpfs` is another type of storage with the following characteristics:
+    - Fast host memory
+    - Not Persistent
+    - Can't be shared between containers
+    - Temp or sensitive files
+  - Host file system 
+    - Bind mounts to map host (or remote) folders to a container folder
+    - Allows other containers to access the storage
+    - Rely on host folder structure - it's not managed by docker
+  - Volumes
+    - Similar to host file system but storage is managed by docker
+    - Outside the lifecycle of the container 
+    - Can be moved between containers
+
+- Images are a collection of file system layers 
+  - Layers can be reused and help avoid unnecessary uploads and downloads 
+
+- There are docker registers where you can download these docker images from. The most popular one is [dockerhub](https://hub.docker.com/)
+
+- docker images have different versions of images, with a special one called `latest`
+
+- You don't need to pull the image first, if you use `docker run` it will pull it first if you don't have the image
+
+- When binding container port to host port it's best practice to use the same port # if possible
+
+- `docker run` will create a new container each time 
+
+- In the cli commands container id can be swapped with container name
+
+- Registry vs Repository
+  - Registry: A service provider storage, a collection of repositories e.g. Docker Hub is a registry 
+  - Repository: Collection of related images with same name but different versions
+
+- To create your own image, you can create a `Dockerfile`
+  - The Dockerfile starts with the base image name you want to start `FROM` e.g. node:19-alpine 
+  - `RUN` command will allow you to run command line commands e.g. `npm install`
+  - `COPY` command allows you to copy files from host machine into the container e.g. `COPY package.json /app/` `COPY src /app/`
+  - `ADD` similar to COPY but can add from a remote URL & do extraction etc (e.g. *application/web files*)
+  - `WORKDIR` sets the working directory for all commands after
+  - `CMD` instruction to be executed when a Docker container starts
+    - Only one `CMD` command per Dockerfile
+  - `ENTRYPOINT` similar to CMD but can't be overridden via docker run parameters
+  - `EXPOSE` informs docker what port container app is running on (metadata only! - no network configuration)
+
+- Docker Container Networking
+  - Host networking
+    - containers share the hosts network
+    - can be problematic when containers use same port
+    - don't get to choose the port mapping 
+  - Bridge networking
+    - Containers connect to a bridge network
+    - Each container gets a private IP
+    - Each container can use the same port as the IP is unique
+    - Any containers on the same bridge network can communicate with each other
+    - Container ports on accessible until they are published `host:container`
+
+- Docker Compose helps in creating, managing and cleanup of multi-container applications
+  - reads a docker-compose.yaml file for instructions 
+  - Docker Compose with take care of running all the services on the same network
+  - docker compose will add the dir name of where it's stored as a prefix to the container name but you can add the `--project-name` flag to change that
+
+# Common commands 
+
+- `docker images` lists all images you have on your machine
+
+- `docker ps` list running containers
+  -`a` will list the non running containers as well 
+
+- `docker pull {name}:{tag}` to pull an image from a registry
+  
+- `docker run {name}:{tag}` to create container from image
+  - `-d` for detach so it runs in the background
+  - `-p {HOST_PORT}:{CONTAINER_PORT}` to expose the container post to host
+  - `--name {CONTAINER NAME}` to name your containers, otherwise the name is randomly generated
+  - `-e` to set environment variables
+  - `--mount type=bind, source="file/path", target="file/path" to create a bind mount
+  - `-v file/path/source:file/path/target` same as above
+  - `--mount source={volume name}, target=file/path` to create a volume
+  - `-v {volume name}:file/path/target` same as above 
+
+- `docker stop {container id}` to stop a running container
+
+- `docker restart {container id}` to stop and start container
+
+- `docker logs {container id}` to list the logs of the container. This is helpful in detach mode because the logs aren't shown 
+
+- `docker container prune` to delete all non running containers
+
+- `docker rm {container name or id}` to remove a docker container
+  - `-f` or `--force`` to forcefully delete a running container
+
+- `docker build path/to/Dockerfile/dir` to build an image from a Dockerfile 
+  - `-t {image name}:{version}` to give Dockerfile a name and tag
+
+- `docker inspect {image name or id}` to get metadata about the image 
+  - helpful to find the ip address 
+
+- `docker exec -it {container name or id}` to run commands in the container
+  - `sh` is common command to start a shell in container or `/bin/bash`
+
+- `docker volume create` to create a volume
+
+- `docker volume inspect {volume name}` to get volume metadata
+
+- `docker volume ls` to list all volumes
+
+- `docker volume rm` to remove a volume
+
+- `docker network create {network}` to create network
+
+- `docker network ls` to list all networks
+
+- 
