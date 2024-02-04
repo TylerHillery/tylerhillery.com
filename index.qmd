@@ -24,7 +24,7 @@ about:
 ### **About Me**
 I pride myself as a *Lifelong Learner*.
 
-I currently work at [Nasdaq](https://www.nasdaq.com/) as an [Analytics Engineer](https://www.getdbt.com/what-is-analytics-engineering/) focusing on our ETF listings business.
+I currently work at [supabase](https://supabase.com/) as a Data Engineer. Try us out at [database.new](https://database.new/)
 
 My ambition is to help build systems, infrastructure and technology that empowers others.
 
