@@ -147,11 +147,13 @@ categories: [References]
   - `-d` for detach so it runs in the background
   - `-p {HOST_PORT}:{CONTAINER_PORT}` to expose the container post to host
   - `--name {CONTAINER NAME}` to name your containers, otherwise the name is randomly generated
-  - `-e` to set environment variables
+  - `-e or --env` to set environment variables
   - `--mount type=bind, source="file/path", target="file/path" to create a bind mount
   - `-v file/path/source:file/path/target` same as above
+    - `:ro` at the end to make it a read only bind mount so the container can't write any files to the host
   - `--mount source={volume name}, target=file/path` to create a volume
   - `-v {volume name}:file/path/target` same as above 
+  - `-w` to set working dir
 
 - `docker stop {container id}` to stop a running container
 
@@ -171,7 +173,7 @@ categories: [References]
   - helpful to find the ip address 
 
 - `docker exec -it {container name or id}` to run commands in the container
-  - `sh` is common command to start a shell in container or `/bin/bash`
+  - `sh` is common command to start a shell in container or `/bin/bash` or just `bash`
 
 - `docker volume create` to create a volume
 
