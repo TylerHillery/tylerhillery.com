@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [References, In Progress]
+categories: [References]
 execute:
   echo: true
   error: true

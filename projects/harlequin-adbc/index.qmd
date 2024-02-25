@@ -1,0 +1,12 @@
+---
+title: "Harelquin ADBC Adapter"
+author: "Tyler Hillery"
+date: "2024-02-23"
+categories: [Data Tools]
+image: "../../assets/images/harlequin-adbc.png"
+code: 
+  - url: https://github.com/TylerHillery/harlequin-adbc
+    text: GitHub
+  - url: https://pypi.org/project/harlequin-adbc/
+    text: PyPI
+---
