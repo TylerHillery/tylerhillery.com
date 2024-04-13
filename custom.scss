@@ -30,7 +30,7 @@ $green:         #22b24c !default;
 $teal:          #20c997 !default;
 $cyan:          #369 !default;
 
-$primary:       $gray-800 !default;
+$primary:       $gray-600 !default;
 $secondary:     $cyan !default;
 $success:       $green !default;
 $info:          $cyan !default;
@@ -78,12 +78,12 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;70
 // Navbar
 
 .bg-dark {
-  background-color: $black !important;
+  background-color: $gray-600 !important;
 }
 
 .bg-light {
-  background-color: $white !important;
-  color: $black;
+  background-color: $gray-600!important;
+  color: $gray-600 ;
   border: 1px solid $gray-200;
 
   &.navbar-fixed-top {
