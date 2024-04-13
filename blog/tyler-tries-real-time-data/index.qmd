@@ -230,7 +230,7 @@ The Redpanda Console provided a nice UI to peer into how the Redpanda instance i
 
 The console helped me identify a bug in my original code. The unique key I was making for each record was a combination of the product_id, side, & price e.g. `BTC-USD-buy-10000`. The problem was for the `snapshot` messages I was using the terms `bid` and `ask` but for the `l2update` messages I was using `buy` and `sell`. This was important to fix because the data was being inserted into Materialize via the [ENVELOPE UPSERT](https://materialize.com/docs/sql/create-source/kafka/#handling-upserts) based on this key.
 
-## **Materialize** & dbt
+## Materialize & dbt
 
 The next step in our pipeline entails processing and storing the real-time data. Materialize is a streaming database that allows for just that. It has integrations with Kafka and since Redpanda is compatible with Kafka APIs, Materialize and Redpanda work together out of the box.
 

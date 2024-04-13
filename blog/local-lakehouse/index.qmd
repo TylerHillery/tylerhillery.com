@@ -20,13 +20,13 @@ share:
   mastodon: true
 ---
 
-## **The Data Lakehouse**
+## The Data Lakehouse
 The term *Data Lakehouse* came from combining the words *Data Lake* and *Data Warehouse*. Lets first describe how I view these two terms.
 
-### **Data Lake**
+### Data Lake
 The Data Lake is a term used to describe storing all your data into object storage like S3. This can be anything from structured data (parquet, CSVs etc.) to semi-structured data (JSON, XML) to unstructured data (images, audio etc,). To me that is it, that's a data lake. 
 
-### **Data Warehouse**
+### Data Warehouse
 The Data Warehouse is a database that is suppose to act as the coveted *single source of truth* of all data within a company. While you can use trusty old Postgres as Craig Kerstiens demonstrates here:
 
 {{< tweet craigkerstiens 1651336279806853120 >}}
@@ -51,7 +51,7 @@ The other design choice that makes these databases suited for OLAP workloads is 
 
 ![](../../assets/images/row-colum-store.png)
 
-### **Data Table Format**
+### Data Table Format
 Now you might be wondering how do we combine a Data Lake and a Data Warehouse? First, lets talk about the downsides of a data lake and data warehouse to see the problem the lakehouse is trying to solve. The main disadvantage you have with a data lake is you don't have ACID guarantees. ACID stands for atomicity, consistency, isolation, and durability.
 
 - **Atomicity** - means that all transactions either succeed or fail completely.
@@ -95,7 +95,7 @@ The benefits of Iceberg are the following^[[The Apache Iceberg Open Table Format
 - Rollback to prior versions to quickly correct issues and return tables to a known good state
 - Advanced planning and filtering capabilities for high performance on large data volumes
 
-## **My Local (Data) Lakehouse**
+## My Local (Data) Lakehouse 
 Now that we have a better understanding of what a Data Lakehouse is and the benefits it provides, lets get into designing my local lakehouse! 
 
 ![](../../assets/images/local-lakehouse.png)
