@@ -40,7 +40,7 @@ My first job out of college was in the investment management department of a For
 
 In Summer 2021, I started working on my technical skills outside of work through various resources (Books, YouTube, etc.). My favorite way to learn is by first getting a general high-level understanding of a topic and then diving into building [projects](https://www.tylerhillery.com/projects.html).
 
-In today's software development world, we build upon many layers of abstractions we build upon. I peel back each layer to understand the core fundamentals, principles, and patterns that stay true across technologies.
+In today's software development world, we build upon many layers of abstractions. I do my best to peel back each layer to understand the core fundamentals, principles, and patterns that stay true across technologies.
 
 While most of my background has been in various data roles, I don't let that define who I am. I continuously learn about different domains, such as web development, software internals, DevOps, networking, etc.
 
