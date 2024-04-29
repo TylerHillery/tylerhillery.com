@@ -1,0 +1,126 @@
+---
+title: "Google BigQuery The Definitive Guide"
+description: My notes on [Google BigQuery The Definitive Guide](https://a.co/d/bLFK0uN) by Valliappa Lakshmanan & Jordan Tigani
+author: "Tyler Hillery"
+date: "2024-04-28"
+image: "./bq_the_definitive_guide.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/bq-the-dfinitive-guide/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Review
+
+I recently transitioned to a company that utilizes BigQuery for its data warehousing needs and I was looking to deepen my understanding of BigQuery internals. This book delivered on my goal. Being published in December 2019, many of the concepts have stood the test of time such as partitioning and clustering.
+
+The authors also touched on BigQuery's architecture covering Dremel, the query engine, and Colossus, the file system. Their explanations have equipped me with the ability to conceptualize how queries are executed. I can now read the query plan and how BigQuery dynamically generates each stage and uses a "shuffle" step between stages to redistributed data between the worker nodes.    
+
+If you are someone who uses BigQuery on a daily basis and are looking to level up, I can confidently recommend this book.
+
+# Highlights
+
+Parts of the book I highlighted as I was reading. It's always fun to go back and review these to see what caught my attention at the time.
+
+> In 2003, Jeff Dean and Sanjay Ghemawat observed that they and their colleagues at Google were implementing hundreds of these special-purpose computations to process large amounts of data. Reacting to this complexity, they designed an abstraction that allowed these computations to be expressed in terms of two steps: a *map* function that processed a key/value pair to generate a set of intermediate key/value pairs, and a *reduce* function that merged all intermediate values associated with the same intermediate key.
+> *page 12-13*
+
+It was interesting to hear about how the original MadReduce framework was originally developed the MapReduce which was then popularized by the Hadoop ecosystem and then later Spark.
+
+> BigQuery resources are denominated in terms of "slots," which are, roughly speaking, about half of a CPU core
+
+One concept I still struggle with to this day is the flat-rate billing model which is based on this concept of "slots". On demand billing makes complete sense to me as you are billing on bytes scanned. 
+
+Flat-rate billing is suppose to provide a more predictable billing model and is billing on slots. It's still now clear to me though how this works in practice. Lets say I purchase 500 slots for the month. I pay for these slots regardless if I run any queries or not. But what determines how many slots a queries needs to run? What if I need more than 500 slots to run all my queries? Will this start a que until other slots are available to run? 
+
+> BigQuery differs from other cloud data warehouses in that queries are served primarily from spinning disks in a distributed filesystem. Most competitor systems needs to cache data with compute nodes to get good performance. BigQuery, on the other hand, relies on two systems unique to Google, the Colossus File System and Jupiter networking, to ensure that data can be queried quickly no matter where it physically resides in the compute cluster.
+
+I love learning about these internal details.
+
+> It is not a good idea to load data using large number of small load jobs frequently. Tables that are loaded so frequently can end up with significant fragmentation and high metadata overhead, causing queries over them to be slow until BigQuery performs an optimization pass at some point in the future
+
+Good advice to be aware of when loading data into BigQuery
+
+> Queries are routed to a Query Master, which is responsible for overall query execution. The Query Master contacts the metadata server to establish where the physical data resides and how it is partitioned. Partition pruning happens at this stage, only the metadata of the active partitions will be returned. 
+>
+> After the query server knows how much data is involved in the query and has a chance to put together a query plan, the Query Master requests slots from the scheduler. A slot is a thread of execution on a query worker shard; it generally represents half a CPU core and about 1 GB of RAM. 
+>
+> The scheduler decides how to farm out work among query shards. A request for slots returns the addresses of the shards that will run the query. The Query Master then sends the query request to each of the Dremel shards in parallel.
+
+Great overview as to what happens when you submit a query
+
+> Some users of BigQuery purchase "reserved" slots. This means that they have the right of first refusal for those slots. Those users are guaranteed to have that many slots whenever they need them. They pay a flat fee for access to those slots, and they can run as many (or as few) queries as they want using those slots. If they run queries that use more slots than are available in the reservation, portions of those queries are queued until resources become available.
+
+I don't why but this still doesn't clear up the flat rate billing model to me. How can I tell a query to use my reserved slots? Does this happen automatically? Can I see how many slots a query will use up before I submit a query that how I can see how much data will be scanned?
+
+> Shuffle is an important part of any distributed processing system. In the case of BigQuery, Shuffle allows data-dependent dataflows between stages by fanning out the data to a number of *sinks*. For example, Shuffle might write everything beginning with "A" to sink 1, and everything beginning with "B" to sink 2. Then, in the next stage, a single Worker Shared could read from sink 1 and that it had access to all the data that begins with "A," whereas a different Worker Shard could from sink 2 and know it had access to all the data that begins with "B."
+
+Great explanation of that the Shuffle step does.
+
+> Broadcast joins take the small table and send the entire table to every worker. If there are 100 workers processing the larger table, the entire small table is sent to each of those 100 workers. This is a bit of a brute-force way to do the join, but the advantage is that it can be done with just a single pass through the large table and doesn't require the a shuffle
+
+This reminds of the "distribute all" method in Redshift where you could tell Redshift to distribute the table to all the worker nodes. Interesting to hear it call a broadcast join in BigQuery because I believe Redshift distribute all distribution method was to avoid broadcast joins and instead you want to have the data you were going to join with on the same worker nodes.
+
+> Hash join is much more computationally expensive. Hash joins work by hashing both sides of the join so that rows containing the same keys end up in the same bucket.
+
+Good explanation of hash join.
+
+> One of the reasons that column stores didn't take off before distributed filesystems is the physical layout on disk. If you're reading two columns in a query, you need to iterate through those columns in sequence. To read in lockstep, you need to instruct the disk to read the first few rows of a column A and then seek to where column B is stored to read the first few rows there, and then seek back to column A to read the next few rows. Seeks are expensive and they thwart the common read-ahead algorithms used by disk hardware and operating systems. 
+
+Interesting to learn about how the lower level hardware impacted some of the design choices back then. One of my favorite books I have read is "Code: The Hidden Language of Computer Hardware and Software" and it's nice to have a high level understanding of how computers works. 
+
+> Partitioning can be thought of as dividing your table into a lot of subtables based on data in a column. Clustering, on the other hand, is like sorting your tables on a particular set of columns. The differences can be subtle, but clustering works better when you have a large number of distinct values. Fro examples, if you have a million customers and often do queries that lookup a single customer, clustering by customer ID will make those lookups very fast. If partitioned by `customer_id`, lookups would be fast, but the amount of metadata needed to keep track of all the partitions would mean that queries across all users would slow down. 
+>
+> Partitioning is often used in conjunction which clustering; you can partition by the low-cardinality field and cluster by the high-cardinality one. This lets you operate over a date-range slice of the table as if it were itself a table, but it also lets you find records from a particular customer without having to scan all of the data in the partition.
+
+I would argue that this section is the most important section throughout the whole book. Understanding partitioning and clustering is crucial to having performant queries and reduce cost.
+
+> In an on-demand pricing plan, the cost of a query is proportional to the amount of data processed by the query.
+>
+> If you are using a flat-rate reservation, the net cost of your query is quite aligned with the time taken for the query to complete.
+
+It's important to understand what you want to optimize in BigQuery which is directly influenced by the pricing plan you choose. High level mental model is on-demand optimize for less data scanned, with flat-rate optimize for query time. Now sometimes this can be correlated. Typically if you queries scanned less data odds are they are going to be completed faster. 
+
+> Find the most expensive queries
+> ```sql
+> SELECT
+>   job_id
+>   , query
+>   , user_email
+>   , total_bytes_processed
+>   , total_slot_ms
+> FROM `some-project`.INFORMATION_SCHEMA.JOBS_BY_PROJECT
+> WHERE EXTRACT(YEAR FROM creation_time) = 2019
+> ORDER BY total_bytes_processed DESC
+> LIMIT 5
+> ```
+
+Helpful query provided in the book to identify queries worth optimizing.
+
+> To tune the performance of queries, it is important to ascertain all of the following aspects of a query so that you know what to focus on:
+>
+> - How much data is read from storage and how that data is organized
+> - How many stages your query requires and how parallelizable those stages are
+> - How much data is processed at each stage and how computationally expensive each stage is
+
+Could checklist to follow on when trying to optimize queries.
+
+> Note that we are taking advantage of the ability of the Storage API to provide direct access to individual columns; it is not necessary to read the entire BigQuery table into a pandas DataFrame.
+
+Helpful to know that the Storage API can be used to reduce memory overhead.
+
+> Remember that we mentioned that running `SELECT * ... LIMIT 10` in BigQuery is an antipattern because it ends up billing you for a full scan of the table. For clustered tables, this is not true. When you're reading from a clustered table, BigQuery will pass along any optimizations that be done to prevent reading data.
+
+Helpful antipattern to be aware of that LIMIT doesn't actually limit the amount of data scanned unless you using a clustered table.
