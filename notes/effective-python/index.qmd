@@ -2,7 +2,7 @@
 title: "Effective Python"
 description: My notes on [Effective Python](https://a.co/d/49i4S3a) by Brett Slatkin 
 author: "Tyler Hillery"
-date: "2024-01-08"
+date: "2024-05-10"
 image: "./effective_python.jpg"
 filters:
   - social-share
@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Technical Books, On Hold]
+categories: [Technical Books, In Progress]
 execute:
   echo: true
   error: true
@@ -28,72 +28,382 @@ jupyter: python3
 
 # Preface
 
-- Love the start of this book.
+-   Love the start of this book.
 
-  > This book provides insight into the *Pythonic* way of writing programs: the best way to use python. It builds on a fundamental understanding of the language that I assume you already have. Novice programmers will learn the best practices of Python's capabilities. Experienced programmers will learn how to embrace the strangeness of a new tool with confidence
-  
+    > This book provides insight into the *Pythonic* way of writing programs: the best way to use python. It builds on a fundamental understanding of the language that I assume you already have. Novice programmers will learn the best practices of Python's capabilities. Experienced programmers will learn how to embrace the strangeness of a new tool with confidence
+
 # Chapter 1. Pythonic Thinking
 
-- PEP 8 is commonly referred to the style guide for how to format Python code. I personally like use the [Ruff Formatter](https://docs.astral.sh/ruff/formatter/) so I don't have to worry about if I am properly formatting my code
+-   PEP 8 is commonly referred to the style guide for how to format Python code. I personally like use the [Ruff Formatter](https://docs.astral.sh/ruff/formatter/) so I don't have to worry about if I am properly formatting my code
 
-- You don't need to explicitly test if a container data type length is 0 or > than 1 when using in an `if` statement because an empty container with result in `False` and a container with a length > 0 will result in `True`
+-   You don't need to explicitly test if a container data type length is 0 or \> than 1 when using in an `if` statement because an empty container with result in `False` and a container with a length \> 0 will result in `True`
 
-- `bytes` contains sequences of 8-bit values, and `str` contains sequences of Unicode code points.
+-   `bytes` contains sequences of 8-bit values, and `str` contains sequences of Unicode code points.
 
-- Why go through the trouble of assigning the default value for the `.get()` to `['']` instead of 0?
+-   Why go through the trouble of assigning the default value for the `.get()` to `['']` instead of 0?
+
+    ```{python}
+    from urllib.parse import parse_qs 
+
+    my_values = parse_qs("red=5&blue=0&green=",keep_blank_values=True)
+    print(my_values)
+    green = my_values.get("green", [''])[0] or 0
+    green_my_way = my_values.get("green", 0)
+    print(f"Green: {green!r}")
+    print(f"Green: {green_my_way!r}")
+    ```
+
+    Ah I see, it appears the default return value for `parse_qs` if there is no value for the color is a list with an empty string. So that's why we index into the list and if it's `''` which also means `False` we can use the `or 0` to default it to 0
+
+-   Make use of helper functions in Python. Here is an example of how to solve the above problem with a helper function
+
+    ```{python}
+    def get_first_int(values, key, default=0):
+      found = values.get(key, [''])
+
+      if found[0]:
+        return int(found[0])
+      return default
+
+    green = get_first_int(my_values, "green")
+
+    print(green)
+    ```
+
+-   You can use unpacking to swap variables in place without need to create temp variables
+
+    ```{python}
+    def temp_bubble_sort(a):
+      for _ in range(len(a)):
+        for i in range(1, len(a)):
+          if a[i] < a[i-1]:
+            temp = a[i]
+            a[i] = a[i-1]
+            a[i-1] = temp
+        
+    def inplace_bubble_sort(a):
+      for _ in range(len(a)):
+        for i in range(1, len(a)):
+          if a[i] < a[i-1]:
+            a[i-1], a[i] = a[i], a[i-1] 
+
+    names1 = ["pretzels", "carrots", "arugula", "bacon"]
+    names2 = ["pretzels", "carrots", "arugula", "bacon"]
+
+    temp_bubble_sort(names1)
+    inplace_bubble_sort(names2)
+    print(names1)
+    print(names2)
+    ```
+
+# Starting Over
+
+I starting from the beginning of this book again it's been awhile since I put the the book down. 
+
+# Chapter 1. Pythonic Thinking
+
+- `isinstance` function allows you to compare variable to a specific type and will return True or False
+- When working with bytes and strings make sure to convert them to the same type because they don't work well with each other. For example you can't add bytes to string and you can't compare them
+- All things talk about bytes and strings must of been caused by the Python 2 to Python 3 migration because I rarely have to use bytes for anything.
+- Interesting I could use this parse_qs for my Harlequin ADBC parameter to help parse some of the optional kwargs that the user can enter
 
   ```{python}
-  from urllib.parse import parse_qs 
+  from urllib.parse import parse_qs
 
-  my_values = parse_qs("red=5&blue=0&green=",keep_blank_values=True)
+  my_values = parse_qs("red=5&blue=0&green=", keep_blank_values=True)
+
   print(my_values)
-  green = my_values.get("green", [''])[0] or 0
-  green_my_way = my_values.get("green", 0)
-  print(f"Green: {green!r}")
-  print(f"Green: {green_my_way!r}")
   ```
 
-  Ah I see, it appears the default return value for `parse_qs` if there is no value for the color is a list with an empty string. So that's why we index into the list and if it's `''` which also means `False` we can use the `or 0` to default it to 0 
+- I know I wrote about it the first time but I think the inplace swap with unpacking is so clean in python. Eliminates the need of a temporary variable. The bubble sort algorithm is a great example of when you would use something like this.
+- When iterating ove a list and you also want access to the index use the `enumerate` function
+- > `zip` consumes the iterators it wraps one time at a time, which means it can be used with infinitely long inputs without risk of a program using too much memory and crashing
+- `zips` output is as long as the shortest input, you can use the `itertools.zip_longest()` instead if you want to go the longest input
 
-- Make use of helper functions in Python. Here is an example of how to solve the above problem with a helper function
+# Chapter 2. Lists and Dictionaries
 
+- The `dict` type is often called an *associative array* or a *hash table*
+- Using the `key` parameter to sort a list
   ```{python}
-  def get_first_int(values, key, default=0):
-    found = values.get(key, [''])
+  class Tool:
+      def __init__(self, name, weight):
+          self.name = name
+          self.weight = weight
 
-    if found[0]:
-      return int(found[0])
-    return default
-  
-  green = get_first_int(my_values, "green")
-
-  print(green)
-  ```
-
-- You can use unpacking to swap variables in place without need to create temp variables
-
-  ```{python}
-  def temp_bubble_sort(a):
-    for _ in range(len(a)):
-      for i in range(1, len(a)):
-        if a[i] < a[i-1]:
-          temp = a[i]
-          a[i] = a[i-1]
-          a[i-1] = temp
+      def __repr__(self):
+          return f"Tool({self.name!r}, {self.weight})"
       
-  def inplace_bubble_sort(a):
-    for _ in range(len(a)):
-      for i in range(1, len(a)):
-        if a[i] < a[i-1]:
-          a[i-1], a[i] = a[i], a[i-1] 
+  tools = [
+      Tool("level", 3.5),
+      Tool("hammer", 1.25),
+      Tool("screwdriver", 0.5),
+      Tool("ruler", 0.25),
+      Tool("chisel", 0.25),
+  ]
 
-  names1 = ["pretzels", "carrots", "arugula", "bacon"]
-  names2 = ["pretzels", "carrots", "arugula", "bacon"]
+  tools.sort(key=lambda x: x.weight, reverse=True)
 
-  temp_bubble_sort(names1)
-  inplace_bubble_sort(names2)
-  print(names1)
-  print(names2)
+  print(tools)
   ```
 
-- 
+- Interesting to hear that the `tuple` type are comparable by default with natural ordering
+
+  ```{python}
+  tools.sort(key=lambda x: (-x.weight, x.name))
+  print(tools)
+  ```
+
+- Python provides a *stable* sorting algorithm so when you first sort on something and then sort on another thing. If there is a tie in the second sort it will preserve the order from the first sort. You just need to execute the sorts in the opposite sequence of what you want the final `list` to contain. 
+- I don't understand how `votes.get` works here with out the use of a `lambda` function
+
+  ```{python}
+  votes = {
+    "otter": 1281,
+    "polar bear": 587,
+    "fox": 863,
+  }
+
+  names = list(votes.keys())
+  print(names)
+
+  names.sort(key=votes.get, reverse=False)
+  print(names)
+  
+  # I would have thought that you would have to do this
+  names.sort(key=lambda x: votes.get(x,0), reverse=True)
+  print(names)
+  ```
+
+  It appears key automatically applies any function to all elements in the list so in a way I should think of key kind of like a mapping function where I can specify any function to be applied to all elements in the list that return a scalar value that I want to sort on
+
+- I am not familiar with this `iter` function
+  
+  ```{python}
+  ranks = {}
+  for i, name in enumerate(names, 1):
+    ranks[name] = i
+  
+  print(ranks)
+
+  print(next(iter(ranks)))
+  # I would have done something like this, so good to know about next(iter())
+  print(list(ranks.keys())[0])
+  ```
+
+  Okay I get it now, so essentially this is an easier way to iterate over the keys in a dict since we don't want to iterate over all the items we can create and iter object and call next on it. IIRC, this is what `for in` does under the hood. My method would have been to turn rank.keys() into list and subscript first element. This is a a little more verbose and has the done sides have having to store the whole list of keys in memory whereas I think the iter(ranks) is lazily evaluated.
+
+- Not sure if I follow why the `SortedDict` Class is returning the wrong value when calling the get winner
+
+  ```{python}
+  from collections.abc import MutableMapping
+
+  class SortedDict(MutableMapping):
+    def __init__(self):
+      self.data = {}
+    
+    def __getitem__(self, key):
+      return self.data[key]
+    
+    def __setitem__(self, key, value):
+      self.data[key] = value
+    
+    def __delitem__(self, key):
+      del self.data[key]
+    
+    def __iter__(self):
+      keys = list(self.data.keys())
+      keys.sort()
+      for key in keys:
+        yield key
+      
+    def __len__(self):
+      return len(self.data)
+
+  def populate_ranks(votes, ranks):
+    names = list(votes.keys())
+    names.sort(key=votes.get, reverse=True)
+    for i, name in enumerate(names, 1):
+      ranks[name] = i
+
+  def get_winner(ranks):
+    return next(iter(ranks)) 
+  
+  regular_ranks = {}
+  sorted_ranks = SortedDict()
+  populate_ranks(votes, regular_ranks)
+  populate_ranks(votes, sorted_ranks)
+  print(regular_ranks)
+  print(sorted_ranks.data)
+  regular_winner = get_winner(regular_ranks)
+  sorted_winner = get_winner(sorted_ranks)
+  print(regular_winner)
+  
+  # returns the first alphabetic result because of we implemented __iter__
+  print(sorted_winner)
+  ```
+
+    I understand now, the winner results wasn't being return properly because in this new `SortedDict` class we implemented the `__iter__` to sort the keys alphabetically
+
+- the `setdefault` method is very handy and I always forget about it
+  
+  ```{python}
+  votes = {
+    "baguette": ["Bob", "Alice"],
+    "ciabatta": ["Coco", "Deb"],
+  }
+
+  key = "brioche"
+  who = "Elmer"
+
+  names = votes.setdefault(key, [])
+  names.append(who)
+
+  print(votes)
+
+  # another way to do it (preferred by author)
+  key = "wheat"
+  who = "Tyler"
+
+  if (names := votes.get(key)) is None:
+    # never seen this triple assignment first
+    votes[key] = names = []
+
+  names.append(who)
+
+  print(votes)
+  ```
+
+  Interesting, after reading further on the Author other actually discourages the use of `setdefault` because it hurts readability
+
+  > the default value passed to `setdefault` is assigned directly into the dictionary when the key is missing instead of being copied...This means that you need to make sure that you are always constructing a new default value for each key I access with `setdefault`. This leads to significant performance overhead in this example because I have to allocate a `list` instance for each call.
+
+  I am not sure I follow here. This is making more confused and now I am starting to wonder why I need `setdefault` when I could always use `get` and pass in a default value when the key doesn't exists?
+
+  Also I don't get the `get` method in the counter example only requires one access and one assignment while the `setdefault requires one access and two assignments? Does the default value always get assigned no matter what?
+
+  ```python
+  # get
+  count = counters.get(key, 0)
+  counters[key] = count + 1
+
+  # setdefault
+  count = counters.setdefault(key, 0)
+  counters[key] = count + 1
+  ```
+
+  The author states is best to only use the `setdefault` when the default values are cheap to construct, mutable and there's no potential for raising exceptions. In most cases it's better to use the `defaultdict` over the `setdefault` 
+
+- Here is a good example of using `defaultdict`
+
+  ```{python}
+  from collections import defaultdict
+
+  class Visits:
+    def __init__(self):
+      self.data = defaultdict(set)
+
+    def add(self, country, city):
+      self.data[country].add(city)
+
+  visits = Visits()
+
+  visits.add("England", "Bath")
+  visits.add("England", "London")
+  visits.add("England", "Bath")
+  print(visits.data)
+  ```
+
+- The `__missing__` dunder method can be helpful when you can't use `setdefault` because it always creates the default object regardless if the key is already present which can be problematic and you can't use `defaultdict`  because you can't pass in a parameter into the function reference.
+
+  ```python
+  pictures = {}
+  path = "profile.png"
+
+  # setdefault method (doesn't work)
+  try:
+    # open function always gets called here even when path is
+    # already present in the dictionary. This results in an
+    # additional file handle that may conflict with existing
+    # open handles in the same program
+    handle = pictures.setdefault(path, open(path, "a+b"))
+  except OSError:
+    print(f"Failed to open path {path}")
+    raise
+  else:
+    handle.seek(0)
+    image_data = handle_read()
+
+  # defaultdict method
+  from collections import defaultdict
+
+  def open_picture(profile_path):
+    try:
+      return open(profile_path, "a+b")
+    except OSError:
+      print(f"Failed to open path {path}")
+      raise
+  
+  # will error out because open_picture func ref requires
+  # argument profile_picture
+  pictures = defaultdict(open_picture)
+  handle = pictures[path]
+  handle.seek(0)
+  image_data = handle.read()
+
+
+  # __missing__
+  class Pictures(dict):
+    def __missing__(self, key):
+      value = open_picture(key)
+      self[key] = value
+      return value
+  
+  pictures = Pictures()
+  handle = pictures[path]
+  handle.seek(0)
+  image_data = handle.read()
+  ```
+
+# Chapter 3. Functions
+
+- I finally know what `closures` are, functions that refer to variables from the scope in why there were defined. In the below example this is why the `helper` function is able to access the `group` argument for `sort_priority`
+  
+  ```{python}
+  def sort_priority(values, group):
+    def helper(x):
+      # here I am inside the helper function and yet I can
+      # reference group without having to pass it in as an
+      # argument to the helper function
+      if x in group:
+        return (0, x)
+      return (1, x)
+    values.sort(key=helper)
+
+  numbers = [8,3,1,2,5,4,7,6]
+  group = {2,3,5,7}
+  sort_priority(numbers, group)
+  print(numbers)
+  ```
+
+- When someone says Functions are *first-class* objects in Python it means you can do the following
+  - Refer to them directly
+  - Assign them to variables
+  - pass them as arguments to other functions
+  - compare them in expressions and `if` statements
+
+- When comparing sequences in python if first compares the items as index zero and keeps moving on to each sequence if there are equal. This is why the `(0, x)` and `(1, x)` creates two distinct groups
+- One thing I not a big fan of is how this function modifies the original object. I always thought that was an anti-patter. Shouldn't we instead prefer creating a copy instead and return the sorted list?
+- Being careful with *scoping bugs*, python has a specific order when it goes through when referencing a variable before you hit the `NameError`. Assignments work different in closures then referring to a variable directly. Use the `nonlocal` variable to assign data outside the closure.
+- When looking to extend a functions capabilities look at using a key word argument with a default to maintain backwards capability to existing callers.
+
+- ::: callout-caution
+  A default argument value is evaluated once per module load, which usually happens when a program starts. This trips people up a lot so you have to be careful with the default values you provide kwargs. Instead use the default value of `None` and add a conditional `if` to check if `is None` then call assign the default value.
+
+  Especially important for default arguments are mutual e.g. a `list` or it's a function e.g. `datetime.now()`
+  :::
+
+- To define *key-word only* arguments you can force the caller to make the spell out the key word by adding a `*` to indicate the end of all the positional arguments and the beginning of the keyword arguments. 
+- Very interesting, I have heard of *key-word only* arguments but this is the first time of hearing *positional-only arguments* where arguments can only be supplied by their position. The `/` indicates where the positional-only arguments ends.
+- Python *decorators* has the ability to run additional code before and after each call to a function it wraps. 
+
+# Chapter 4. Comprehensions and Generators
