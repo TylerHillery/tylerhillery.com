@@ -407,3 +407,86 @@ I starting from the beginning of this book again it's been awhile since I put th
 - Python *decorators* has the ability to run additional code before and after each call to a function it wraps. 
 
 # Chapter 4. Comprehensions and Generators
+
+- I was not aware of *generator expressions*, which are like list comprehensions for generators
+- You have to be caution when using generators as they are stateful so if you iterator over an entire generator it's done. It's best way to prevent this if you want to create a function that requires iteratoring over a generator multiple times is to provide a new container class that implements the *iterator protocol* by implementing the `__iter__` method as a generator.
+- I'll be honest I having a hard time understanding some of this more advanced generator topics 😅
+
+# Chapter 5. Classes and Interfaces
+
+- I need understood why I would use a named tuple over a dict. I guess if you want to keep it immutable?
+
+  ```{python}
+  from collections import namedtuple
+
+  Grade = namedtuple("Grade", ("score", "weight"))
+  my_grade = Grade(90,20)
+  print(my_grade.score)
+
+  grade = {"score": 100, "weight": 20}
+  print(grade["score"]) 
+
+  ```
+
+- I am not sure if I am completely grokking what *polymorphism* is? My mental model as right now is that it enables a class to inherit a method from a parent class but change the functionality of that method. Unsure if that's the right way to think about it.
+- *mix-in* is a class that defines only a small set of additional methods for its child classes to provide.
+- If you defining your own class that you want to behave similar to a container type in Python but you don't want to inherit from that class you can use the `collections.abc` module which stands for *Abstract Base Class*. This will provided errors if you don't implement all the necessary methods and attributes that the abc you are inheriting from expects. Creating your own abc is a common technique for when you want others to adhere to building a class with the same methods and attributes (e.g. Harlequin DatabaseAdapter uses and abc to make sure other adapter authors implement the adapter correctly) 
+
+# Chapter 6. Metaclasses and Attributes
+
+- *Descriptor protocol* defines how attribute access is interpreted by the language.
+- Not many notes in this chapter simply because much of it went over my head. I am starting to feel a little detached from the book and having a hard time imagining how I can use some of these tips in my day to day work.
+
+# Chapter 7. Concurrency and Parallelism
+
+- *Concurrency* enables a compute to do many different things *seemingly* at the same time
+- *Parallelism* involves *actually* doing many different things at the same time
+- The key difference between *concurrency* and *parallelism* is *speedup*. 
+  - When two distinct paths of execution in a program make forward progress in parallel, the time it takes to do the total work is cut in half; the speed of execution is faster by a fact of two
+  - Concurrent programs may run thousands of separate paths of execution seemingly in parallel but provide no speed for the total work
+- > The standard implementation of python is called CPython. CPython runs a Python program into two steps. First, it parses and compiles the source text into `bytecode`, which is low-level representation of the program as 8-bit instructions...The, CPython runs the bytecode using a stack-based interpreter. The bytecode interpreter has state that must be maintained and coherent while the Python program executes. CPython enforces coherence with a mechanism called *global interpreter lock* (GIL).
+  >
+  > Essentially, the GIL is a mutual-exclusion lock (mutex) that prevents CPython from being affected by preemptive multithreading where one takes control of a program by interrupting another thread. Such an interruption could corrupt interpreter state (e.g. garbage collection reference counts). 
+  >
+  > The GIL has an important negative side effect. With programs written in languages like C++ or Java, having multiple threads of execution means that a program could utilize multiple CPU cores at the same time. Although Python supports multiple threads of execution, the GIL causes only one of them to ever make forward progress at a time. This means that when you reach for threads to do parallel computation and speed up your Python programs, you will be sorely disappointed.
+- Why does python support threads at all if it has the GIL?
+  - Makes it easy to for a program to seem like it's doing multiple things at the same time.
+  - To do deal with blocking I/O, which happens when Python does certain types of system calls. Examples include reading/writing files, interacting with networks, communicating with devices like displays etc.
+- *Fan-out* is the process of spawning a concurrent line of execution for each unit of work (generating new units of concurrency)
+- *Fan-in* is the process of waiting for all of those concurrent units of work to finish before moving on to the next phase in a coordinated process (waiting for existing units of concurrency to complete)
+
+# Chapter 8. Robustness and Performance
+
+- Because of how python represents floating point numbers as IEEE 754 that can lead to interesting results
+
+  ```{python}
+  rate = 1.45
+  seconds = 3*60 + 42
+  cost = rate * seconds / 60
+  print(cost)
+
+  ```
+
+  It's better to the `Decimal` class when you want extreme precision which provides fixed point math of 28 decimal places by default.
+
+  ```{python}
+  from decimal import Decimal
+
+  rate = Decimal("1.45")
+  seconds = Decimal(3*60 + 42)
+  cost = rate * seconds / Decimal(60)
+  print(cost)
+  ```
+
+# Chapter 9. Testing and Debugging
+
+- When debugging or logging make sure to use the `repr` version of an object so you can tell the differences between types e.g. `'5'` or `5`. 
+- When using f strings you can use `!r` to get the `repr` version
+
+# Chapter 10. Collaboration
+
+No notes
+
+# Review
+
+I was shocked to learn about much there really is to Python. I considered myself to be an intermediate python programmer but after reading this book I realized I have plenty to learn. I can confidently recommend this book to anyone looking to improve their python knowledge. I envision myself coming rereading this book again in the future.
