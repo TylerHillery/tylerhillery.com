@@ -2,7 +2,7 @@
 title: "Effective Python"
 description: My notes on [Effective Python](https://a.co/d/49i4S3a) by Brett Slatkin 
 author: "Tyler Hillery"
-date: "2024-05-10"
+date: "2024-05-12"
 image: "./effective_python.jpg"
 filters:
   - social-share
@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 execute:
   echo: true
   error: true
