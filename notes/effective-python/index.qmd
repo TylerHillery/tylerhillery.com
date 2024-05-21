@@ -489,4 +489,4 @@ No notes
 
 # Review
 
-I was shocked to learn about much there really is to Python. I considered myself to be an intermediate python programmer but after reading this book I realized I have plenty to learn. I can confidently recommend this book to anyone looking to improve their python knowledge. I envision myself coming rereading this book again in the future.
+I was shocked to learn about much there really is to Python. I considered myself to be an intermediate python programmer but after reading this book I realized I have plenty to learn. I can confidently recommend this book to anyone looking to improve their python knowledge. I envision myself rereading this book again in the future.

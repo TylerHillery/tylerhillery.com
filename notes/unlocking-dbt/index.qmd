@@ -1,0 +1,26 @@
+---
+title: "Unlocking dbt"
+description: My review on [Unlocking dbt](https://a.co/d/bvKys1g) by Cameron Cyr, Dustin Dorsey 
+author: "Tyler Hillery"
+date: "2024-05-21"
+image: "./unlocking_dbt.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/unlocking-dbt/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+# Review 
+
+The book does a good job explaining the fundamentals and purpose of dbt. If you already have a grasp of what dbt is and does, I don't think you will get much out of this book.
