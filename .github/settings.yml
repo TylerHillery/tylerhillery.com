@@ -1,0 +1,4 @@
+# .github/settings.yml
+pulls:
+  ignore:
+    - pages
