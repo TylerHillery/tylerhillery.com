@@ -7,12 +7,12 @@ website:
   description: "Personal website where I share my thoughts, ideas and projects."
   favicon: assets/images/favicon.ico
   image: assets/images/profile2.jpg
-  repo-url: https://github.com/TylerHillery/TylerHillery.github.io
+  repo-url: https://github.com/TylerHillery/tylerhillery.com
   repo-actions: [edit, issue]
 
   comments:
     giscus:
-      repo: TylerHillery/TylerHillery.github.io 
+      repo: TylerHillery/tylerhillery.com
   navbar:
     left:
       - href: blog.qmd
