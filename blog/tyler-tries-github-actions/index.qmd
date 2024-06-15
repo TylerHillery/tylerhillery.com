@@ -1,0 +1,111 @@
+---
+title: "Tyler Tries GitHub Actions"
+description: Join me in this installment of "Tyler Tries" where I try GitHub Actions to enforce pre-commit hooks, run pytest for continuous integration, and display test passing badges and code coverage percentages in the project's README file.
+author: "Tyler Hillery"
+date: "2024-06-14"
+categories: [DevOps, Testing, CI]
+image: "../../assets/images/github-ci-badge.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/tyler-tries-github-actions/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+---
+
+------------------------------------------------------------------------
+
+## TL;DR
+
+I have implemented some [GitHub Actions](https://github.com/TylerHillery/sql-translate/tree/main/.github/workflows) that runs [pre-commit](https://github.com/pre-commit/pre-commit) which checks the following:
+
+-   Trailing whitespace
+-   Ensures files end in a new line
+-   Verifies proper yaml syntax
+-   Ensures no debug statements were left behind
+-   Checks that python test files are named properly
+-   Runs the [ruff linter](https://docs.astral.sh/ruff/linter/) and [ruff formatter](https://docs.astral.sh/ruff/formatter/)
+-   Runs [mypy](https://mypy.readthedocs.io/en/stable/) a static type checker
+
+Next, it runs [pytest](https://docs.pytest.org/en/7.1.x/contents.html#) to run python tests and [Coverage.py](https://coverage.readthedocs.io/en/7.5.3/) to measure code coverage.
+
+Lastly, it runs [smokeshow](https://github.com/samuelcolvin/smokeshow) which is used to create a temporary website based on the code coverage report. This enables the ability to use [coverage badge](https://github.com/samuelcolvin/coverage-badge) to show the code coverage percent badge in the README.md file.
+
+## Inspiration
+
+Whenever I look at a python repos such as: [FastAPI](https://github.com/tiangolo/fastapi), [Pydantic](https://github.com/pydantic/pydantic), [rich](https://github.com/Textualize/rich) 
+
+I was always curious as to how they were able to display badges in the README.md which showed information such as tests passing, code coverage, version etc. Something about these badges gave of this instant feel of a polished project. The little details matter. 
+
+I wanted to start adding some polish to my own projects so I dove a little deeper into how I can implement this myself, but where do I start? 
+
+> "good artists borrow, great artists steal." - *Pablo Picasso*
+
+With most new things I learn, I personally start with a concrete example. A reference point that I use as a blueprint for what I am trying to build. This helps me overcome [blank canvas syndrome.](https://veryprivategallery.com/blank-canvas-syndrome/#:~:text=A%20condition%20primarily%20associated%20with,to%20make%20work%20for%20years.) 
+
+My favorite way of finding examples is by looking at prominent people in the domain and see how they do it. For python projects I personally like to look at projects by:
+
+- [Charlie Marsh](https://github.com/charliermarsh)
+- [Anthony Sottile](https://github.com/asottile)
+- [Will McGugan](https://github.com/willmcgugan)
+- [Sebastián Ramírez](https://github.com/tiangolo)
+- [Simon Willison](https://github.com/simonw)
+- [Ted Conbeer](https://github.com/tconbeer)
+- [Daniel Reeves](https://github.com/dwreeves)
+- [Samuel Colvin](https://github.com/samuelcolvin)
+- [Pamela Fox](https://github.com/pamelafox)
+
+There are so many others and I encourage you to leave a comment of some of your favorite people in the python space!
+
+For this project I used the [full-stack-fastapi-template](https://github.com/tiangolo/full-stack-fastapi-template) as my main reference.
+
+## Pre-commit 
+
+I have grown very fond of pre-commit to run my static analysis tests. It makes it really nice to run all sorts of checks and it manages the installation of any tools needed. A great example is ruff, my goto python linter and formatter. Ruff already has [ruff-pre-commit](https://github.com/astral-sh/ruff-pre-commit) which makes it as easy as adding the following lines to my `.pre-commit-config.yaml` file to run ruff as a pre-commit hook.
+
+```python
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.8
+    hooks:
+      - id: ruff
+        args:
+          - --fix
+      - id: ruff-format
+```
+
+## Testing and Code Coverage
+
+Testing can be a controversial topic for many developers... and to be honest it's an area I need to improve on. Recently, I have actually grown to like it. There is something about running tests and seeing all green that is so so satisfying.
+
+![](../../assets/images/pytest.png)
+
+Pytest is the defacto standard when it comes to implementing tests in python. I am less experienced with and this was actually the first time I had used Coverage.py or any code coverage tool for that matter.
+
+::: callout-note 
+I need to come back and look into how Coverage.py figures out code coverage percentage 
+:::
+
+To get the badges to display in the README.md file I copied the links from the fastapi-template replacing the urls with my repository url and I added the `smokeshow.yml` GitHub Action which creates the temporary website from the code coverage html report so the code coverage badge can display the percentage.
+
+::: callout-tip
+You can use [pipx]() to run python commands without having to install the package
+
+`pipx run smokeshow generate-key`
+:::
+
+::: callout-tip
+I have noticed in other people's GitHub Action files that `${{ secrets.GITHUB_TOKEN }}` is referenced. I always tried to create a secret with that name in my repository with a GitHub token value. But it would error out saying you can't have a secret that starts with GitHub. Well, it turns out this secret is already created for you and you don't need to create anything. 
+:::
+
+## Summary
+
+This blog post was written primarily so I can refer back to how I did this. Making it public so others can hopefully get something out of my experience. More importantly I wanted to shared how I approached doing something I have never done before.
+
+
