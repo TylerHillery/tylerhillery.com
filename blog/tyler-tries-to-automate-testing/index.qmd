@@ -1,6 +1,6 @@
 ---
-title: "Tyler Tries GitHub Actions"
-description: Join me in this installment of "Tyler Tries" where I try GitHub Actions to enforce pre-commit hooks, run pytest for continuous integration, and display test passing badges and code coverage percentages in the project's README file.
+title: "Tyler Tries to Automate Testing"
+description: Join me in this installment of "Tyler Tries" where I learn to automate testing which enforces pre-commit hooks, runs pytest and displays test passing and code coverage percentage badges in the project's README file.
 author: "Tyler Hillery"
 date: "2024-06-14"
 categories: [DevOps, Testing, CI]
@@ -8,7 +8,7 @@ image: "../../assets/images/github-ci-badge.png"
 filters:
   - social-share
 share:
-  permalink: "https://tylerhillery.com/blog/tyler-tries-github-actions/"
+  permalink: "https://tylerhillery.com/blog/tyler-tries-to-automate-testing/"
   description:
   twitter: true
   facebook: false
