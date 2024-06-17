@@ -86,7 +86,7 @@ Testing can be a controversial topic for many developers... and to be honest it'
 
 ![](../../assets/images/pytest.png)
 
-Pytest is the defacto standard when it comes to implementing tests in python. I am less experienced with and this was actually the first time I had used Coverage.py or any code coverage tool for that matter.
+Pytest is the defacto standard when it comes to implementing tests in python. I am less experienced with code coverage and this was actually the first time I had used Coverage.py or any code coverage tool for that matter.
 
 ::: callout-note 
 I need to come back and look into how Coverage.py figures out code coverage percentage 
