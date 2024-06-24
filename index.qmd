@@ -47,10 +47,11 @@ While most of my background has been in various data roles, I don't let that def
 With that being said, these are some of my favorite topics to learn about:
 
 -   Customer-Facing Analytics
--   Data Streaming
+-   Data Apps 
 -   Event Driven Architecture
--   Ruthless Automation
--   Database Internals
+-   Databases
+-   Local First Software
+-   Universial App Development
 
 Outside of tech:
 
