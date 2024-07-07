@@ -1,0 +1,138 @@
+---
+title: "A Philosophy of Software Design"
+description: My review on [A Philosophy of Software Design](https://a.co/d/03qlvXxv) by John Ousterhout
+author: "Tyler Hillery"
+date: "2024-07-03"
+image: "./cover.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/philosophy-of-software-design/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+::: {.callout-note appearance="minimal"} 
+> The most fundamental problem in compute science is *problem decomposition*: how to take a complex problem and divide it up into pieces that be solved independently.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> However, there is quite a bit of scientific evidence that outstanding performance in many fields is related more to high-quality practice than innate ability.
+
+High-quality practice, discipline and determination is what separates me from the others. I never felt that I have great innate ability.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> Out of all this experience, I've tried to extract common threads, both about mistakes to avoid and techniques to use.
+
+This is important mindset to have towards learning anything. Trying to identify the patters, principals, "threads" that stay true across everything.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> Writing compute software is one of the purest creative activities in the history of the human race. Programmers aren't bound by the practical limitations such as the laws of physics; we can creating exciting virtual worlds with behaviors that could never exist in the real world. Programming doesn't require great physical skill or coordination, like ballet or basketball. All programming requires is a creative mind and the ability to organize your thoughts. If you can visualize a system, you can probably implement it in computer program.
+
+I had hard time putting into words why I find computer software so interesting. This paragraph puts my feelings in such an eloquent way. I truly believe programming is the most creative outlets out theirs. And as someone who really does visualize how these systems work in my head, I have found that to be beneficial throughout my career.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> The second approach to complexity is to encapsulate it, so that programmers can work on a system without being exposed to all of its complexity at once. This approach is called *modular design*
+:::
+
+::: {.callout-note appearance="minimal"} 
+> Incremental development means that software design is never done. Design happens continuously over the life of a system
+
+This is how I view life as well. I look at life as more of as a never ending process always looking to continuously improve myself.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> **Complexity**: anything related to the structure of a software system that makes it hard to understand and modify the system.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> **Change amplification**: The first symptom of complexity is that a seemingly change requires code modifications in many different places.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> **Cognitive load**: which refers to how much a developer needs to know in order to complete a task 
+:::
+
+::: {.callout-note appearance="minimal"} 
+> **Unknown unknowns**: The third symptom of complexity is that it is not obvious which pieces of code must be modified to complete a task, or what information a developer must have to carry out the successfully.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> One of the most important goals of good design is for a system to be *obvious*. 
+:::
+
+::: {.callout-note appearance="minimal"} 
+> complexity is caused by two things: *dependencies* and *obscurity*
+
+javascript devs are in trouble if dependencies are a cause of complexity...
+:::
+
+::: {.callout-note appearance="minimal"} 
+> Complexity isn't caused by a single catastrophic error; it accumulates in lots of small chunks. A single dependency or obscurity, by itself, is unlikely to affect significantly the maintainability of software system. Complexity comes about because hundreds or thousands of small dependencies and obscurities build up over time. Eventually, there are so many of these small issues that every possible to change the system affected by several of them 
+
+Another way to put this is, "death by a thousand paper cuts" this is why when a paper cut comes up you should address is immediately, even if it's considered a "nit-pick".
+
+I am noticing that several of these tips can also be applied to many aspects of normal life. Who would have thought that philosophy of software design aligns with my philosophy of life.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> The best modules are deep: they allow a lot of functionality to be accessed through a simple interface. A shallow module is one with a relatively complex interface, but not much functionality: it doesn't hide much complexity.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> The best features are the ones you get without even knowing they exists. 
+:::
+
+::: {.callout-note appearance="minimal"} 
+> I have found over and over that specialization leads to complexity; I now think that over-socialization may be the single greatest cause of complexity in software.  
+
+That's a bold statement.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> If the `FileInputStream` and `BufferedInputStream` classes were combined and buffering were provided by default, the vast majority of users would never even need to be aware of the existence of buffering
+
+This author really dislikes this implementation in Java 🤣. He has brought it up several times throughout the book.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> Some comments provide information at a lower, more detailed, level than the code; these comments add *precision* by clarifying the exact meaning of the code. Other comments provide information at a higher, more abstract, level than the code; these comments offer *intuition*, such as the reasoning behind the code, or a simpler and more abstract way of thinking about the code
+
+Most the comments are write intuition based. I find that being able to adopt the mindset of the purpose who write the code helps me understand it at a deeper level even if the comment itself is explain in a more abstract way.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> Engineers tend to be very detail-oriented. We love details and are good at managing lots of them; this is essential for being a good engineer. But, great software designers can also step back from the details and think about a system at a higher level. This means deciding the aspects of the system most important, and being able to ignore the low-level details and think about the system in terms of its most fundamental characteristics. This is the essence of abstraction (finding a simple way to think about a complex entity)
+:::
+
+::: {.callout-note appearance="minimal"} 
+> **Enforce**. Even with good documentation, it's hard for developers to remember all of the conventions. The best way to enforce conventions is to write a tool that checks for violations, and make sure that code cannot be committed to the repository unless it passes the checker.
+
+I am a big fan of automating ways to enforce code quality. It's the only way to really ensure that everyone adheres to a standard.
+:::
+
+::: {.callout-note appearance="minimal"} 
+> *When in Rome* ... The most important convention of all is that every should developer should follow the old adage "When in Rome, do as the Romans do." When working in a new file, look around to see how the existing code is structured.
+
+I really like this to an extent. I always adopt the way a code based does something because I believe **consistency** is the most important. The one exception is if the way was flat out wrong or this is a much better way to do it. In that case I would refactor everything done in that way and migrate over to the new way.
+:::
+
+# Review
+
+I can always tell if I like a book based on how many highlighted sections I have at the end. I thought this book provided some good advice on software design. It's a tough balance between investing upfront on design vs shipping something that just works. The book has some valid points but I think the author could be a bit more pragmatic. Overall, I would recommend this book to someone else but I wouldn't consider it a must read.
+
