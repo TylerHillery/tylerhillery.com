@@ -1,0 +1,98 @@
+---
+title: "SQL Antipatterns: Avoiding the Pitfalls of Database Programming"
+description: My review on [SQL Antipatterns Avoiding the Pitfalls of Database Programming](https://a.co/d/0ebq9urx) by Bill Karwin 
+author: "Tyler Hillery"
+date: "2024-07-08"
+image: "./cover.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/sql-antipatterns/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+::: {.callout-note appearance="minimal"}
+> When the table has foreign keys referencing two tables, it's called an *intersection table*
+:::
+
+::: {.callout-note appearance="minimal"}
+> The naive solution commonly shown in books and articles is to add a column **parent_id**. This column references another comment in the same table, and you can create a foreign key constraint on this relationship. This design is called *Adjacency List*.
+
+I never knew this was called an "adjacency list".
+:::
+
+::: {.callout-note appearance="minimal"}
+> One weakness of the adjacency list is that it's expensive to retrieve ancestors of a given node in the tree. In Path Enumeration, that is solved by storing in the string of ancestors as an attribute of each node.
+>
+> You can see a form of Path Enumeration in a directory hierarchies. A **UNIX** path like `/usr/local/lib` is a Path Enumeration of the filesystem, where `usr` is the parent of the `local`, which in turn is the parent of the lib.
+:::
+
+::: {.callout-note appearance="minimal"}
+> The Nested Sets solution stores information with each node that pertains to the set of its descendants, rather than the node's immediate parent. This information can be represented by encoding each node in the tree with two numbers, which you can call `nsleft` and `nsright`.
+:::
+
+::: {.callout-note appearance="minimal"}
+> The Closure Table solution is a simple and elegant way of storing hierarchies. It involves storing all paths through the tree, not just those with a direct parent-child relationship.
+>
+> In addition to a plain `Comments` table, create another table `TreePaths`, with two columns, each of which is a foreign key to the `Comments` table.
+:::
+
+::: {.callout-note appearance="minimal"}
+> ### Which Design Should You Use?
+>
+> Each of the designs has its own strengths and weaknesses. Choose the design depending on which operations you need to be most efficient.
+>
+> In the table shown, some operations are marked as easy or hard each respective tree design
+>
+> | Design           | Tables | Query Child | Query Tree | Insert | Delete | Ref. Integ. |
+> |------------------|--------|-------------|------------|--------|--------|-------------|
+> | Adjacency List   | 1      | Easy        | Hard       | Easy   | Easy   | Yes         |
+> | Recursive Query  | 1      | Easy        | Easy       | Easy   | Easy   | Yes         |
+> | Path Enumeration | 1      | Easy        | Easy       | Easy   | Easy   | No          |
+> | Nested Sets      | 1      | Hard        | Easy       | Hard   | Hard   | No          |
+> | Closure Table    | 2      | Easy        | Easy       | Easy   | Easy   | Yes         |
+>
+> -   *Adjcaency List* is the most conventional design, and many software developers recognize it. It has the advantage over the other designs that it's normalized. In other words, it has no redundancies, and it's not possible to create conflicting data. Recursive queries using `WITH` or `CONNECT BY PRIOR` make it more efficient to use the Adjacency List design, provided you use a version of SQL database that supports the syntax.
+>
+> -   *Path Enumeration* is good for breadcrumbs in user interfaces, but it's fragile because it fails to enforce referential integrity and stores information redundantly.
+>
+> -   *Nested Sets* is a clever solution – maybe too clever. It also fails to support referential integrity. It's best used when you need to query a tree more than you need to modify the tree.
+>
+> -   *Closure Table* is the most versatile of the alternative designs, and the only design in this chapter that allows node to belong to multiple trees. It requires an additional table to store the relationships. This design also uses a lot of rows when encoding deep hierarchies, increasing space consumption as a trade-off for reducing computing. Like many denormalized solutions, it gives good performance for certain query cases.
+
+This page in the book is probably my favorite because at work I was just dealing with this problem at work on the best way to store hierarchal data and it was nice to learn about these different data modeling patterns to address this case. 
+:::
+
+::: {.callout-note appearance="minimal"}
+- *Compound key* consists of multiple columns vs a *surrogate key* is artificial value with no meaning to be used as PK. I always get this terms mixed up 
+:::
+
+::: {.callout-note appearance="minimal"}
+> The way you can declare the `ON UPDATE` or `ON DELETE` clauses in the foreign key constraint allow you to control the result of a cascading operation.
+
+TIL that you can cascade updates, I thought this was only for deletes
+:::
+
+::: {.callout-note appearance="minimal"}
+> This design is called Entity-Attribute-Value, or *EAV* for short.
+
+I wish my eyes have never seen this data modeling pattern.
+:::
+
+
+# Review
+
+I have been writing SQL for 4.5 years and would say my SQL skills are advanced and still, I came away with some helpful tips after reading this book. Granted most of the SQL I write is for OLAP workloads whereas this book was more OLTP workloads. Nonetheless, I still found this book informative and it was nice to learn the proper terminology for things that I come across on a daily basis. It was a very easy read and would recommend to others looking to strengthening their SQL skills.
