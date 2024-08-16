@@ -1,0 +1,53 @@
+---
+title: "Database Design for Mere Mortals"
+description: My review on [Database Design for Mere Mortals](https://a.co/d/aRtxv9r) by Michael Hernandez
+author: "Tyler Hillery"
+date: "2024-08-16"
+image: "./cover.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/db-design-for-mere-mortals/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+> 1. ***Logical Design***: The first phase involves determining and defining tables and their fields, establishing primary and foreign keys, establishing table relationships, and determining and establishing the various levels of data integrity.
+> 2. ***Physical Implementation***: The second phase entails creating the tables, establishing the key fields and table relationships, and using the proper tools to implement the various levels of data integrity.
+> 3. ***Application Development***: The third phase involves creating an application that allows a single user or group of users to interact with the data stored in the database. The application development phase itself can be divided into separate processes, such as determining end-user tasks and their appropriate sequences, determining information requirements for report output, and creating a menu system for navigating the application.
+
+> Dr. Codd formally presented his new relation model in a landmark work entitled "A Relational Model of Data for Large Shared Databanks" in June of 1970. He based his new model on two branches of mathematics -- set theory and first-order predicate logic. Indeed, the name of the model itself derived from the term relation, which is part of set theory. 
+
+- I actually didn't know "first-order predicate logic" was another branch of mathematics involved in the relational model. I don't even know what kind of math that is. 
+
+> The subject that a given table represents can either be an *object* or *event*. When the subject is an object, it means that table represents something is tangible, such as a person, place or thing...When the subject of a table is an event, it means that the table represents something that occurs as a given point in time having characteristics you want to record
+
+- I think this way to describe the types of "entities" you store in a table. I think even for objects though you want to have be able to when *events* for when the object information updates 
+
+> Every field in a *properly designed* database contains one and only one value, and its name will identify the type of value it holds.
+
+- Not sure I agree with this. I think there are use cases in a relational database design where types like `JSONB` or `Array` are helpful.
+
+> Everything has a beginning, and the database design process is no different. Interestingly enough, you start the process by defining the end result
+
+- I think most processes are best started with having the end goal in mind
+
+> Both of these tables represent employees, but each represents a *specific type* of employee 
+
+- In this example of *subset tables* I wish the author would go into detail on how you set this up. So you would have one main table that contains the shared information across the types and a separate table for each type where you store the information only relevant for this type but then how does an `insert` work. Do I still need another PK for the subset table or can I use the pk from the base table as both my fk and pk in my subset table?
+
+# Review
+
+I thought the book was okay. I think it gave some good advice but to be honest I am not a fan all of then went into the up front planning of the database design. There too many unknowns as you build out an application that it can tough to know all the tables and columns you are going to need ahead of time. I rather work iteratively through this process.
