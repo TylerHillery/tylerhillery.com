@@ -1,0 +1,78 @@
+---
+title: "Modern Software Engineering: Doing What Works to Build Better Software"
+description: My review on [Modern Software Engineering](https://a.co/d/3LCg94h) by David Farley
+author: "Tyler Hillery"
+date: "2024-08-18"
+image: "./cover.jpg"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/modern-software-engineering/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+> Software development is a process of discovery and exploration; therefore, to succeed at it, software engineers need to become experts **at learning**.
+
+- Couldn't agree more with this. Learning how to learn is one of the greatest skills a SWE can have. Often times you a dropped into a complex problem with out much context and you are left to "figure it out". The best SWEs can get up to speed with a completely new technology stack that they have never dealt with before very quickly.
+
+> The remarkable advantage that we have over all other engineering disciplines means that models that we create in software are executable result of our work, so when we test them, we are testing our products, not our best guess of reality of our products.
+
+- I never thought of is this way but it's so true. So many other disciplines first have to create scaled down prototypes of the real thing primarily due to costs while in software development we get the luxury of building the *real thing all the time*.
+
+> Instead of optimizing our systems to minimize storage, by having normalized data stores, we should probably adopt a more genuinely distributed model of computing using non-normalized stores and eventual-consistency patterns. These things matter because of their impact on the modularity of the systems we create.
+
+- Not sure if I agree with this and as always "it depends". Meaning applications require ACID guarantees and eventual-consistency patterns wont suffice. I understand that authors point about how 3NF was primarily served as a purpose of a reducing data storage but I think normalizing data has more benefits than that. It gives you a single source of truth of specific entities. You can enforce constraints on these entities. I believe normalization has a great impact of the data integrity of an application.
+
+> Our industry is awash with philosophies, processes, and technologies. There are religious wares among technologists over the best programming language, architectural approaches, development processes, and tools. There often seems to be only a loose sense of what the objective and strategies of our profession are or should be.
+
+- Man, this hit close to home. There are so many arguments the come across tech twitter where I often think "Who cares?". One of my favorite conference was the Normcore Tech Conference which was about the stuff that matters in data and machine learning but no one talks about. The talks there is the content that I want to see more of.
+
+> Alternatively, if we look at organizations that are seen as high performers, then there are common behaviors, such as continuous delivery and being organized into small teams, that they share.
+> Measures of stability and throughput, then, give us a model that we can use to predict team outcomes. 
+> Stability and throughput are each tracked by two measures
+> Stability is tracked by the following:
+>
+> - *Change Failure Rate*: The rate at which a change introduces a defect at a particular point in the process
+> - *Recovery Failure Time*: How long to recover from a failure at a particular point in the process.
+
+- I thought these were interesting measurements that were called out on how to measure a team's performance. The author throughout the book consistently brings up the importance of CI/CD and I couldn't agree more. I think you can learn a lot about how well a team operates simply but the development workflow a SWE has to go through to make a change to the code base.
+
+> It also goes on dispel a commonly held belief that "you can have speed or quality but not both." This is simply not true. Speed and quality are clearly correlated in the data from this research. The route to speed is high-quality software, the route to high-quality software is speed of feedback, and the route to both is great engineering. 
+
+- This is an all time quote right here. 
+
+> We should become **experts at learning**. We should recognize and accept that our discipline is a creative design discipline and has no meaningful relationship to product-engineering and instead focus on master of the skills of exploration, discovering, and learning. This is a practical application of a scientific style of reasoning. 
+
+> Closing the feedback loop around the creation of product ideas and delivering the value into production is the real value of continuous delivery. It is the reason it has become so popular in organizations around the world, not the narrow technical advantages.
+
+- Creating tight feedback loops are so important. It is something I yearn for in the data engineering world. 
+
+> While it takes skill to achieve good modularity in our designs, what I perceive in a lot of the code that I see is that people don't just " do modularity badly," but,rather, they "don't attempt it at all." A lot of code is written at through it is a recipe, meaning a linear sequence of steps collected together in methods and functions spanning hundreds or even thousands of lines of code.
+
+- Interesting here that the author brings up the "recipe" code as a bad way to write code yet the Dagster University course uses the recipe analogy to explain Dagster concepts. I wonder if data engineering and software engineering is too different that some concepts don't apply to both domains. 
+
+::: {.callout-important appearance="default" collapse=false title="TODO"}
+The term **dependency injection** came up several times throughout the book and it's not the first time I have heard of this term. I am having a hard time grokking this term and should look into it more.
+:::
+
+
+# Review
+
+Out of five stars I would give this book a 3.5
+
+I thought it had several good points throughout this book I agree with but also some that I didn't. For example, writing a bunch of wrapper code around 3rd party libraries I am not sure is always the best idea. It seems the author really liked leaning into creating abstractions but sometimes I believe less is more. You can tell the author comes from a heavily OOP style of programming. 
+
+Nonetheless, I think those above points are mute. I think the higher level points the author was trying to convey about how to build better software come across and it's a book I would recommend but I wouldn't considered it a must read.
