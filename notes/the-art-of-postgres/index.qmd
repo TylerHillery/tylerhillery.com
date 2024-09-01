@@ -1,0 +1,387 @@
+---
+title: "The Art of PostgreSQL"
+description: My review on [The Art of PostgreSQL](https://theartofpostgresql.com/) by Dimitri Fontaine
+author: "Tyler Hillery"
+date: "2024-09-01"
+image: "./cover.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/the-art-of-postgres/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+# Overview
+
+These are my notes as I read through the book the [The Art of PostgreSQL](https://theartofpostgresql.com/) 
+
+::: callout-note 
+I am trying something different during this read through, I have to type out ever single piece of code in the book.
+:::
+
+:::{.callout-note title="Follow Up"}
+I take it back, I find writing every piece of example code takes me out of the flow of reading the book and I am not enjoying, I made it through like 3 examples...
+:::
+
+## Introduction
+
+### Structured Query Language
+
+> I will, in fact, claim that the difference between a bad programmer and a good one is whether he considers his code his data structures more important. Bad programmers worry about the code. Good programmers worry about data structures and their relationships
+>
+> *- Linus Torvalds*
+
+- 100% agree with this. I got into programming coming from the data side of things (data analyst, analytics engineer, data engineer) and I feel this has really shaped my view on programming. I truly believe all programs can be boiled done to "data pipelines" where data comes in -> something happens to the data -> then data goes out. I don't this mental model is great to have for everything but I tend to always think of problems as this DAG composed of a series of tasks then you need to complete to get to the end state.
+
+- Wow, Tom Lane has quite the track record with developing *libjpeg*, contributed to the specs of *PNG* and a major contributor to Postgres. 
+
+```sql
+begin;
+
+drop table if exists factbook;
+
+create table factbook (
+    year    int,
+    date    date,
+    shares  text,
+    trades  text,
+    dollars text
+);
+
+-- datestyle of the database is ISO, MDY
+
+\copy factbook from 'factbook.csv' with delimiter E'\t' null ''
+
+alter table factbook
+    alter shares
+        type bigint
+    using replace(shares, ',', '')::bigint,
+
+    alter trades
+        type bigint
+    using replace(trades, ',', ''):bigint,
+
+    alter dollars
+        type bigint
+    using substring(replace(dollars, ',', '') from 2)::numeric;
+
+commit;
+```
+
+```sql
+\set start '2017-02-01'
+
+    select
+        date,
+        to_char(shares, '99G999G999G999') as shares,
+        to_char(trades, '99G999G999') as trades,
+        to_char(dollars, 'L99G999G999G999') as dollars
+    from
+        factbook
+    where
+        date >= date :'start'
+        and date < date :'start' + interval '1 month'
+    order by
+        date
+;
+```
+
+```python
+import sys
+import psycopg2
+import psycop2.extras
+from calendar import Calendar
+
+CONNSTRING = "dbname=yesql application_name=factbook"
+
+def fetch_month_date(year, month):
+    "Fetch a month of data from the database"
+
+    date = f"{year}-{month:02d}-01"
+
+    sql = """
+    select
+        date,
+        shares,
+        trades,
+        dollars
+    from
+        factbook
+    where
+        date >= date %s
+        and date < date %s + interval '1 month'
+    order by
+        date
+    ;
+    """
+
+    pgconn = psycop2.connect(CONNSTRING)
+    curs = pgconn.cursor()
+    curs.execute(sql, (date, date))
+
+    res = {}
+
+    for (date, shares, trades, dollars) in curs.fetchall():
+        res[date] = (shares, trades, dollars)
+    
+    return res
+
+def  list_book_for_month(year, month):
+    "List all days for given month, and for each day list fact book entry."
+
+    data = fetch_month_date(year, month)
+
+    cal = Calendar()
+
+    print(f"{'day':>12} | {'shares':>12} | {'trades':>12} | {'dollars':>12}")
+    print(f"{'-' * 12:>12}-+-{'-' * 12:>12}-+-{'-' * 12:>12}-+-{'-' * 12:>12}")
+
+    for day in cal.itermonthdates(year, month):
+        if day.month != month:
+            continue
+        if day in data: 
+            shares, trades, dollars = data[day]
+        else:
+            shares, trades, dollars = 0, 0, 0
+
+        print(f"{day:>12} | {shares:>12} | {trades:>12} | {dollars:>12}")
+
+if __name__ == "__main__":
+    year = int(sys.argv[1])
+    month = int(sys.argv[2])
+
+    list_book_for_month(year, month)
+```
+
+### SQL Injection
+> Remeber: SQL injection happens when the SQL parser is fooled into believing that a parameter string is in fact a SQL query, and then the SQL engine goes on and executes the SQL statement. When the SQL query string lives in your application code, and the user parameters are sent **separately** on the network, there's no way that the SQL parsing engine might get confused.
+
+- This is interesting to learn how SQL libraries like `psycopg2` are able to safely pass parameters to the database avoiding SQL Injection. I knew this was something you should always do but never understand how these libraries implemented the parameter passing under the hood to avoid SQL injection. They send the parts as separate entities over the protocol.
+
+### Why PostgreSQL
+
+```sql
+select
+    jsonb_pretty(data)
+from
+    magic.cards
+where
+    data @> '{
+        "type": "Enchantment", 
+        "artist": "Jim Murray", 
+        "colors": ["White"]
+    }'
+;
+```
+
+- `@>` reads *contains* and implements JSON searches
+
+## Writing SQL Queries
+
+> Maybe you are currently using an ORM to write your queries and then have never cared about learning how to format, indent and maintain SQL queries. SQL is code, so you need to apply the same rules as when you maintain code written in other languages: indentation, comments, version control, unit testing, etc.
+
+- SAY IT LOUDER SO THE PEOPLE IN THE BACK CAN HEAR 🗣️
+
+> My view is that every SQL query embeds some parts of the business logic you are implementing, thus the question changes from this:
+> - Should we have business logic in the database?
+> to this:
+> - How much of our business logic should be maintained in the database?
+
+- oooooo, I really like way to frame this thinking around business logic in the database
+
+### Correctness
+
+- The various levels of isolation levels
+    - **Read uncommitted**: PostgreSQL accepts this settings and actually implements *read committed, which is compliant with the SQL standard
+    - **Read committed**: This the default and it allows your transaction to see other transactions changes as soon as they are committed; is means that if you run the following query twice in your transaction but someone else added or removed objects from the stock, you will have different counts at different points in your transaction
+    - **Repeatable read**: In this isolation level, your transaction keeps the same *snapshot* of the whole database for its entire duration, from `BEGIN` to `COMMIT`. It is very useful to have that for online backups -- a straightforward use case for this feature
+    - **Serializable**: This level guarantees that one-transaction-at-a-time ordering of what happens on the server exists with the exact same result as what you're obtaining with concurrent activity
+
+### Efficiency
+
+- It's important to think of network round trips when dealing with databases. If you constantly have to keep going back to the database after fetching the results oppose to writing one query that can return what you want right away, there is lots of time wasted sending data over the wire.
+
+```sql
+create or replace function get_all_albums (
+    in  artistid    bigint,
+    out album       text,
+    out duration    interval
+)
+returns setof record
+language sql
+as $$
+    select
+        album.title as album,
+        sum(milliseconds) * interval '1 ms' as duration
+    from
+        album
+        inner join artist using(artistid)
+        left join track using(albumid)
+    where
+        artist.artistid = get_all_albums.artistid
+    group by
+        album
+    order by
+        album
+;
+
+select 
+    album,
+    duration
+from
+    artist,
+    lateral get_all_albums(artistid)
+where
+    artist.name = 'Red Hot Chili Peppers'
+;
+```
+
+- This is a cool use of the postgres `lateral` join 
+- Although, I want to check to see if `get_all_albums` could be a view that you just filter by `artistid` on, I wonder if the performance would be the same 🧐
+
+```
+Function Scan on get_all_albums  (cost=0.25..10.25 rows=1000 width=48) (actual time=0.441..0.441 rows=3 loops=1)
+Planning Time: 0.032 ms
+Execution Time: 0.450 ms
+```
+
+```
+Subquery Scan on get_all_albums_v  (cost=39.62..39.66 rows=3 width=39) (actual time=0.162..0.165 rows=3 loops=1)
+->  Sort  (cost=39.62..39.63 rows=3 width=43) (actual time=0.160..0.162 rows=3 loops=1)
+        Sort Key: album.title
+        Sort Method: quicksort  Memory: 25kB
+        ->  HashAggregate  (cost=39.55..39.60 rows=3 width=43) (actual time=0.138..0.140 rows=3 loops=1)
+            Group Key: album.title
+            Batches: 1  Memory Usage: 24kB
+            ->  Nested Loop Left Join  (cost=0.28..39.40 rows=30 width=31) (actual time=0.061..0.111 rows=48 loops=1)
+                    ->  Nested Loop  (cost=0.00..12.80 rows=3 width=31) (actual time=0.047..0.075 rows=3 loops=1)
+                        ->  Seq Scan on artist  (cost=0.00..5.44 rows=1 width=4) (actual time=0.024..0.037 rows=1 loops=1)
+                                Filter: (artist_id = 127)
+                                Rows Removed by Filter: 274
+                        ->  Seq Scan on album  (cost=0.00..7.34 rows=3 width=31) (actual time=0.022..0.035 rows=3 loops=1)
+                                Filter: (artist_id = 127)
+                                Rows Removed by Filter: 344
+                    ->  Index Scan using track_album_id_idx on track  (cost=0.28..8.77 rows=10 width=8) (actual time=0.005..0.008 rows=16 loops=3)
+                        Index Cond: (album_id = album.album_id)
+Planning Time: 0.552 ms
+Execution Time: 0.260 ms
+(19 rows)
+```
+
+- I am realizing now I can't do a fair comparison because with a view it forces me to leave the column that I want to filter on in the select even if I don't want to return that column. This means I also have to group by this column and do other things. I feel like there could be a better way to do the function though through a view as I would think that is easier and then you could just join on the view to other tables oppose to having to mess around with lateral scans and such. 
+
+## A Small Application
+
+- This looks like a neat python project for those who want to write raw sql: [aiosql](https://github.com/nackjicholson/aiosql)
+
+:::{.callout-important title="❓" icon="false"}
+I don't get the purpose to do a `left join lateral ... on true` what not just use `cross join lateral`?
+
+I ran the same exact query from the `genre-top-n` example and I got the same results so doesn't appear to be different
+:::
+
+## SQL is Code
+
+> Code style is mainly about following the *principle of least astonishment* 
+- I like this rule
+
+- Another interesting project is [pgTap]() which allows you to write unit tests for your SQL code. For each query you should have an expected result give the input.
+- Adding the `application_name` parameter to your sql connection string can be helpful for debugging purposes as this will get added to the server's logs and the `pg_stat_activity`
+
+## Indexing Strategy
+
+- The basic premise of MVCC (Multiversion Concurrency Control) is how postgres manages concurrent access to the data. What happens is every SQL statement sees a snapshot of data (a database version) as it was some time ago
+
+## PostgreSQL Index Access Methods
+
+- **B-Tree** or balanced Tree: The most common type of index
+- **GiST** or generalized search tree: Allows support for 2-dimensional types such as *ranges* which don't support *total order* which means they can't be index properly by a B-tree index
+- **SP-GiST** or space partitioned gist:
+- **GIN** or generalized inverted index: Designed to handle cases where the items to be indexed are composite values, and the queries to be handled by the index need to search for element values that appear within the composite items e.g. items could be documents and the queries could be searches for specific words
+- **BRIN** or block range indexes:
+- **Hash**: 
+- **Bloom Filters**
+
+## SQL Toolbox
+- `group by rollup` and `grouping sets` are two things in SQL I have never found a good use case for
+- `INTERSECT` strictly in both sets
+- `EXCEPT` in first result set but not in second
+
+## Data Types
+
+- 'allballs' is slang for 'all zeros' and is valid in postgres
+- Never use *real* or *double precision* data types for money. There are used to represent values that can't be represented in base 10 such as 1/3. Use *numeric* for money instead
+
+## Insert, Update, Delete
+- Postgres doesn't have a merge statement but you can do an insert on conflict where if values from the source table exist in the target table these are the "Conflicted" records referred to as "EXCLUDED".
+- If you only want to update when a column differs, then it's best to use the `IS DISTINCT FROM` syntax as this handles `null` better but mentally you can think of it as `!=`
+- So the syntax would be `INSERT INTO target SELECT FROM source ON CONFLICT (pkey) DO UPDATE SET WHERE RETURN *`
+- If you want to do a merge statement you would wrap the above in a transaction and do delete from target table where id not in source table
+- A nice workaround for select all columns as a json record without have to reference each column is `to_jsonb(table.*)` but postgres doesn't support the `except` so you could do:
+```sql
+SELECT to_jsonb(customer.*) - 'fax' AS customer_json 
+FROM customer 
+LIMIT 1;
+```
+- The difference between *tuples* and *rows*: a single *row* must exist on-disk as more than one *tuple* at any time, with only of them visible to any single transaction. 
+- *delete* marks the tuples as not being visible anymore and *vacuum* does the heavy lifting in the background.
+    - Interesting, this makes it so that it's more efficient to create a new table containing only rows and you want and swap it with the old table. This is far better than removing most entries from the table with a `delete` statement.
+    - The downsides of this swapping technique is it requires an *access exclusive lock* and will block any read and write traffic to both tables while they run.
+
+## Isolation and Locking
+
+- *Dirty Read*: A transaction reads data by a concurrent uncommitted transaction
+- *Nonrepeatable Read*: A transaction re-reads data it has previously read and finds the data has been modified by another transaction ( that committed since the initial read)
+- *Phantom read*: A transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows satisfying the condition has changed due to another recently committed transaction.
+- *Serialization anomaly*: The result of successfully committing a group of transactions is inconsistent with all possible orderings of running those transactions one at a time.
+
+- There are 4 levels of isolation defined by the standard:
+    - *Read uncommitted*
+    - *Read committed*
+    - *Repeatable Read*
+    - *Serializable*
+- Postgres doesn't implement *read uncommitted*, which allows *dirty reads*, and instead defaults to *read committed*  
+
+## Batch Update
+
+- TIL about the row comparison operator, which was used in the example to only update rows that have changed
+```sql
+and (artist.name, artist.bio, artist.nationality, artist.gender, artist.begin, artist."end", artist.wiki_qid, artist.ulan) <> (batch.name, batch.bio, batch.nationality, batch.gender, batch.begin, batch."end", batch.wiki_qid, batch.ulan)
+```
+
+- Interesting way to create a temporary staging table and drop it after commit
+```sql
+begin;
+
+create temp table batch
+(
+    like moma.artisto including all -- First time I have see this include all statement    
+)
+
+on commit drop; -- neat way to drop a table after a transaction is committed. Great for this temp tables
+```
+
+- This batch updated can run into issues if it were to be executed twice at the same time because both would be using the same snapshot and both would think they would need to insert the same new records into the target table which would cause an *duplicate key error on insert*.
+
+    A way around this would be to implement a manual *lock* so that you can only run the batch update once at a time or use the *on conflict clause* and do nothing
+
+# Review
+
+
+I thought this was an excellent book as someone who has advanced SQL skills I have learned a lot of valuable Postgres specifics. The one point I really liked the author made and continue to drive home was how SQL is code and needs to be treated as such. I believe so many people under estimate the power of SQL and it can dramatically simplify you application code if you learn it at more than just a basic level. 
+
+Case in point, one of my favorite tweets of all time:
+
+{{< tweet josh_wills 1508624385241849856 >}}
+
+A lot people are concerned that you might be mixing business logic with you database which is a bad idea. The author even addresses this and I like the way they put it. The database will always encompass your business logic no matter what, so it's more of a balancing act as to how much business logic you want your database to have. To me the database is the most important thing because it really is one of the few **stateful** services your applications has. Your application should be treated like **cattle** while your database should be treated as your **pet**.
