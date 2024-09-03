@@ -1,0 +1,81 @@
+---
+title: "Fundamentals of Database Engineering"
+description: My notes on the [Fundamentals of Database Engineering](https://www.udemy.com/course/database-engines-crash-course/?couponCode=ACCAGE0923) by Hussein Nasser  
+author: "Tyler Hillery"
+date: "2024-09-01"
+image: "./cover.png"
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/notes/fundamentals-of-db-engineering/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+categories: [Courses]
+draft: true
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+- *Repeatable Read* basically means that you have multiple versions of the row. So when you have *Read Committed* isolation, another transaction can commit during your transaction which can change some rows that where original read before the other transaction starts. The way *Repeatable Read* usually works is with multi version concurrency control like in Postgres where the transaction doesn't actual modify the row it creates a new version of it that way it doesn't impact your original view of that row in your initial transaction.
+
+  - Actually now I am confused, it seems like what I just described is *Snapshot* isolation, unclear to me what the difference is between *Snapshot* and *Repeatable Read*
+
+- Different Types of Read Phenomena
+  1. Dirty Reads: Reading data that's not committed yet
+  2. Lost Updates
+  3. Non-repeatable reads: ( Think example of two transactions modifying same column, one updating all A's to B's and other all B's to A's)
+  4. Phantoms ( very similar to non repeatable read by it's a different value (INSERT) vs an UPDATE)
+
+
+
+## Data Stored on Disk
+- **Page**: A fixed size memory location, which translate to disk location, of a bunch of bytes. One page can have many rows.
+  - 8KB in postgres
+  - 16KB in MySQL
+  - *doesn't only have to be fixed but it's most common
+- When you do an IO you can multiple pages
+- IO is read request to disk
+- IO cannot read a single row, its a page (aka block IO) with many rows in them, you them for free 
+- IOs are expensive
+- Some IOs in operating systems goes to the operating system cache and not disk
+- **Heap**: Is a data structure where the table is stored with all its pages one after another
+  - Expensive to query
+  - Traversing the Heap is expensive
+  - Heap gives you everything, which is why indexes are needed to tell us where in the heap to look
+- **Index**: Another data structure separate from the heap that "pointers" to the heap
+  - Index is stored as pages and cost IO to pull the entries of the index
+  - The smaller the index, the more it can fit in memory
+  - B-Tree is popular data structure
+- Heap can be organized be organized around the index, which is called a clustered index, where the heap is ordered
+  - Usually Primary Key is a clustered index except in postgres, which only have secondary indexes and all indexes point directly to row_id which lives in the heap
+  - This is why it's important to have a sortable PK for some databases because a truly random id like a UUIDv4
+- How Postgres allocates the bytes of a page (8kb)
+  - Page Header -- 24 bytes
+
+    The page must have metadata to describe what is in the page including the free space available. This is a 24 bytes fixed header.
+  - ItemIds -- 4 bytes each
+
+    This is an array of item pointers (not the items or tuples themselves. Each itemId is a 4 bytes offset:length pointer which points to the offset in the page of where the item is and how large is it).
+
+    Is is the fact this pointer exist allows the HOT optimization (Heap only tuple), when an update happens to a row in postgres, a new tuple is generated, if the tuple happened to fit in the same pages as the old tuple, the HOT optimization changes the old item id pointer to the point to the new tuple. This way indexes and other data structures can still point to the old tuple id.
+  
+  - Items -- variable length
+
+    This is where the items themselves live in the page one after the other.
+
+  - Special -- variable length
+
+    This section is only applicable to B+Tree index leaf pages where each page links to the previous and forward. Information about page pointers are stored here
+
+## Review
+
+- I ended up listening to most of course. I thought the content was good but the course was really more like a bunch of lectures. I found these lectures were best listened to as if they were podcasts. I which the course was more interactive and hands on. Overall thought I think it's a great primer for a course that goes more hands on into database development and exposes you to concepts that can lead you to dig further into the topic.
