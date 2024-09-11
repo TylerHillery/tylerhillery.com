@@ -1,0 +1,74 @@
+---
+title: "I Can't/Wont/Am Not ..."
+description: A personal note to stop putting fake limitations on myself 
+author: "Tyler Hillery"
+date: "2024-09-11"
+categories: [Career Advice]
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/I-never/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+---
+
+------------------------------------------------------------------------
+
+A list of things I said I would never be/do/am:
+
+- I can't program that's too complicated for me.
+
+  I now work as a Data Engineer for Supabase would I program daily for work and for enjoyment.
+
+- I will never work at large cool company living in a small town in Wisconsin.
+
+  I worked remotely for Nasdaq as a Senior Analytics Engineer.
+
+- I will never live in a big city.
+
+  I now living in the greater Phoenix area, the 5th largest city in the US.
+
+- I will never give a talk at a community meetup or conference, I am not good at public speaking or presentations.
+
+  I gave a talk on the Salt Lake City Supabase Community meetup on how to solve practical problems in SQL with window functions and range joins.
+
+- I will never learn how to use vim.
+
+  I now use vim motions in vscode and whenever I am editing text I always yearn for vim mode.
+
+- I am not a reader.
+
+  I have read a total of 14 books in 2024, more books than I have read in my entire life ( excluding ones you had to read for school ).
+
+I could go on and on about these limitations I put on myself.
+
+Many of us question our ability to do or be something because we think we are a certain type of person. Well guess what, **you** get to define who **you** are. These limitations we put on ourselves are fake, only imposed on ourselves because for me personally it was a cop out. It prevents you from even trying. Question these limitations and challenge yourself.
+
+Pretend you are a kid who just discovered the word "why":
+
+"I am not reader?" 
+
+Why is that? 
+
+"I struggle with focus"
+
+Why is that?
+
+You may not know the answer but as you continue to dig into the limitations about who you are or what you can and can't do you'll often find out that these limitations aren't real. The only thing preventing from you being someone or do something is **you**. 
+
+Now, you may actually find a limitation that is out of your control and to that I say don't worry about it. If there is seriously something you can't do to change the situation then why stress? But only do this once you have ruthlessly questioned every thing you could have done. 
+
+I constantly think of the question "Who am I?" and it's tough for me to answer. I am always evolving everyday into a different, hopefully better, version of myself. There are certain values and philosophies I hold true to throughout time, like my deep feeling of gratitude towards life, and my optimistic outlook. But other than that I struggle answering this question because I am who I want to be. Time and time again I have proven myself wrong as to who I thought I was. No more. I truly believe, given enough time, I can do an be whoever I want.
+
+Also, I need to shout out my wife. She is someone who would constantly catch me when I would say something I can't do. Her goto response is "Why not? What else would you be doing?". Surrounding yourself with people who can hold you accountable really helps early on because often times when we say these things we don't even catch ourselves doing it. 
+
+Now, of course there are going to be responses to this saying "No matter how hard you train you'll never be a professional athlete". If that's your first reaction to this, you've missed the point.
+
+-- Tyler
