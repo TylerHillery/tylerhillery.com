@@ -44,19 +44,10 @@ In today's software development world, we build upon many layers of abstractions
 
 While most of my background has been in various data roles, I don't let that define who I am. I continuously learn about different domains, such as web development, software internals, DevOps, networking, etc.
 
-With that being said, these are some of my favorite topics to learn about:
-
--   Customer-Facing Analytics
--   Data Apps 
--   Event Driven Architecture
--   Databases
--   Local First Software
--   Universial App Development
-
 Outside of tech:
 
 -   I have a beautiful wife who has a passion for bodybuilding
 -   I have a twin brother
--   Recently moved to Scottsdale, Arizona 🌵
+-   Recently moved to Glendale, Arizona 🌵
 -   Big fan of the Milwaukee Bucks #BucksIn6 🦌
 -   I co-authored a paper [Inside the hiring process: how managers assess employability based on grit, the big five, and other factors](https://www.researchgate.net/publication/335182644_Inside_the_hiring_process_how_managers_assess_employability_based_on_grit_the_big_five_and_other_factors)
