@@ -1,0 +1,51 @@
+---
+title: "Immerse Yourself"
+description: Discover how immersing yourself in your domain can accelerate your learning and lead to opportunities.
+author: "Tyler Hillery"
+date: "2024-09-28"
+categories: [Career Advice]
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/immerse-yourself/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+When I started out my career in finance, I learned a valuable lesson while studying for the CFA exam. I learned this from Mark Meldrum, who was the CFA prep provider I used to help study for the exam. One of things he stressed was immersing yourself in the domain. 
+
+This can be done through numerous outlets such as watching the news or listening to a podcast. I distinctly remember Mark including a "Jelly Beans" section on his website which has links to movies, documentaries and university lectures. My two favorite resources at the time were Mark Meldrum's Market Outlook on YouTube and the Bloomberg Surveillance news show. 
+
+One major benefit I gained from this was picking up the jargon of the domain. Many jobs have this unspoken language you are expected to know and there is no Duolingo course you can learn from. This language is only learned through experience.
+
+Another key benefit was seeing the concepts being applied in real world scenarios. We've all sat in class wondering, "When will I use this?" but this experience eliminated that feeling. 
+
+It also transformed me into an active learner. Encountering familiar terminology in practice helped jog my memory and deepen my understanding, as I connected the dots between theory and application. 
+
+I carried this same practice when I transitioned into a career in tech. However, I quickly realized immersing yourself in the tech community is much different than the finance world. The news travels in unique ways and there are many pockets of specialized domains.
+
+By far the biggest resource for me has been Twitter. To this day I am shocked by the people I get to interact with on the platform, from creators of well known open source libraries to CEOs of companies. It has been arguable the most important part of my career because of the connections I have made.
+
+Twitter is what you make of it though. The algorithm feeds you the content you interact with. I strictly use the "For You" feed so I get exposed to content outside of my circle. To have a good feed though it's important to curate it. One of the first things I did when I decided to go all in on immersing myself in tech was to unfollow any account posting unrelated content. 
+
+If you find a hard time figuring out who to follow I recommend finding a few people you find interesting and looking at who they follow. There are too many people I want to call out so you can check out my following list [here](https://x.com/_TylerHillery/following).
+
+An interesting aspect of tech is the many communities within it. I initially became involved in the data community, primarily engaging through the dbt and Locally Optimistic Slack. The dbt slack was how I discovered the Senior Analytics Engineer role at Nasdaq. I reached out to the hiring manager who posted the position in the jobs channel to express my interest which helped me get pass the initial resume screening phase. 
+
+This is another key benefit you will find while immersing yourself in your domain. You'll make invaluable connections that can open doors to opportunities you might not have encountered otherwise.
+
+Every community seems to have there go to hang out spot. I encourage you to find the hang out spot in your community and if there isn't one create one! 
+
+They are many other ways to immerse yourself as well. Watch a documentary, read a book, listen to podcast. If you are looking for some resources to help immerse yourself checkout my newly created [Lists](https://tylerhillery.com/list), where I shared the podcasts & blogs I currently follow.
+
+After years of immersing yourself, you'll be shocked at how in tune you feel with the domain.
