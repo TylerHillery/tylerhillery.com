@@ -21,6 +21,8 @@ website:
         text: Notes
       - href: projects.qmd
         text: Projects
+      - href: lists.qmd
+        text: Lists
     right:
       - icon: github
         href: https://github.com/TylerHillery

@@ -1,0 +1,150 @@
+---
+title: "Lists"
+date: "2024-09-28"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/list"
+    description: List of things 
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+---
+
+*The lists are in no particular order*
+
+# Favorites
+
+::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [Making Badass Developers by Kathy Sierra](https://youtu.be/FKTxC9pl-WM?si=BkTzk7j0EnnyLECu)
+- [Simple Made Easy by Rich Hickey](https://youtu.be/SxdOUGdseq4?si=fZZqec-D5eu9SSw0)
+- [Wat by Gary Bernhardt](https://www.destroyallsoftware.com/talks/wat)
+- [A Short Summary of the Last Decades of Data Management by Hannes Mühleisen](https://youtu.be/-wCzn9gKoUk?si=IjrTQN2PfLi5v6W7)
+- [Gang of None? Design Patterns in Elixir by José Valim](https://youtu.be/agkXUp0hCW8?si=ZZxErACww18LDyrd)
+- [The past, present, and future of local-first by Martin Kleppmann](https://youtu.be/NMq0vncHJvU?si=MltJeAPhmx1eSXCq)
+- [Stop Writing Classes](https://youtu.be/o9pEzgHorH0?si=Nn5B6p1mLFgCKwid)
+- [Performance Matters by Emery Berger](https://youtu.be/r-TLSBdHe1A?si=KIF7Jlnct2EL-QIm)
+- [PostgreSQL Distributed: Architecture & Best Practices by Marco Slot](https://youtu.be/hcUeMo4lpsw?si=FwTZ-K5zt29BHcvh)
+- [Moving 17 years of old legacy code and sites into the Cloud by Scott Hanselman](https://youtu.be/mE-DGW0CcAk?si=mPi0CwhGj_OV-yAz)
+- [Don't Do Invisible Work by Chris Albon](https://youtu.be/HiF83i1OLOM?si=kJgYoeAv5ZkRcwif)
+- [Excel at nothing: How to be an effective generalist by Stephen Bailey](https://www.youtube.com/live/wB0ulHmvU7E?si=cEj5c6dISiwhxKlu)
+- [How to Play Well With Others by Josh Wills](https://youtu.be/rqWnEJXnfiY?si=6kdMFqyBRBjPM1h1)
+- [Computers are a Sadness, I am the Cure by James Mickens](https://youtu.be/3-GpiKQr9Rs?si=vLUSUV_cSudHYdz7)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Interviews 🎤"} 
+- [DHH Is Right About Everything](https://youtu.be/mTa2d3OLXhg?si=eiJf3cnUc7MowxdV)
+- [DHH Talks Apple, Linux and Running Servers](https://youtu.be/fEy9JhHk6lg?si=HR5nmrm9cB9rnhRm)
+- [I Interviewed Chris Lattner, The Creator Of LLVM, Clang, Swift, and Mojo](https://youtu.be/ovYbgbrQ-v8?si=dTbQua9Dk2kKnXSa)
+- [Swift creator Chris Lattner on Mojo & Roc](https://youtu.be/ENviIxDTmUA?si=QHDR_i4HM5Ro7eQn)
+- [Chris Lattner: Future of Programming and AI ](https://youtu.be/pdJQ8iVTwj8?si=VQjtvpxg83O_xgk0)
+- [Mojo Lang - Tomorrow's High Performance Python? (with Chris Lattner)](https://youtu.be/JRcXUuQYR90?si=8QopmbmZUDChS7cJ)
+- [Managers should know how to code feat. Thorsten Ball](https://youtu.be/ruW9wtH2AZs?si=bRzCvqVQWLlcyXZg)
+- [Do you love programming as much as Thorsten Ball does?](https://youtu.be/_JA04KfD7a4?si=Z3KruMOLKcjvEZAo)
+- [Thorsten Ball, Software Engineer at Zed](https://youtu.be/KI1Q_rdfH0k?si=BIFEM8hWUXe1Z4Of)
+- [Stories behind building HashiCorp | Mitchell Hashimoto](https://youtu.be/vMzToDQPgH4?si=RMVC2Vn75pV-RAnQ)
+- [Mitchell Hashimoto - Founder of HashiCorp, Terraform, and Thoughts of Open Source Monetization](https://youtu.be/vw61iI08iro?si=RI5hoFrnhlmgXkG4)
+- [The hard power of management and the soft power of senior ICs | Josh Wills](https://youtu.be/Pmnb5FsdfNs?si=eeZw9Twewo2Dp6M6)
+- [Databases, Ambitions, and a Testing Silver Bullet? (With Joran Dirk Greef)](https://youtu.be/ayG7ltGRRHs?si=Bniz6V0m25LLJFP5)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Books 📚"} 
+- [Code: The Hidden Language of Computer Hardware and Software](https://www.tylerhillery.com/notes/code-hidden-language/)
+- [Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones](https://www.tylerhillery.com/notes/atomic-habits/)
+- [Designing Data-Intensive Applications](https://www.tylerhillery.com/notes/ddia/)
+- [The Pragmatic Programmer](https://www.tylerhillery.com/notes/pragmatic-programmer/)
+- [Effective Python](https://www.tylerhillery.com/notes/effective-python/)
+- [A Philosophy of Software Design](https://www.tylerhillery.com/notes/philosophy-of-software-design/)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Articles 📝"} 
+- [The hunt for the Holy Grail by Benn Stancil](https://benn.substack.com/p/the-hunt-for-the-holy-grail?utm_source=pocket_shared)
+- [Obsession by Phil Eaton](https://notes.eatonphil.com/2024-08-24-obsession.html)
+- [Be someone who does things by Phil Eaton](https://notes.eatonphil.com/2024-09-23-be-someone-who-does-things.html)
+- [Polishing Forks by Thorsten Ball](https://registerspill.thorstenball.com/p/polishing-forks)
+- [The Grug Brained Developer](grugbrain.dev)
+- [It's hard to write code for computers, but it's even harder to write code for humans by Erik Bernhardsson](https://erikbern.com/2024/09/27/its-hard-to-write-code-for-humans?s=09)
+- [I don't want to learn your garbage query language by Erik Bernhardsson](https://erikbern.com/2018/08/30/i-dont-want-to-learn-your-garbage-query-language?)
+- [Programmers should stop celebrating incompetence by DHH](https://world.hey.com/dhh/programmers-should-stop-celebrating-incompetence-de1a4725)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Academic Papers 📄"} 
+- [The Composable Data Management System Manifesto](https://www.vldb.org/pvldb/vol16/p2679-pedreira.pdf)
+- [What Goes Around Comes Around... And Around... by Micheal Stonebraker and Andrew Pavlo](https://db.cs.cmu.edu/papers/2024/whatgoesaround-sigmodrec2024.pdf)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Conferences 👥"} 
+- [PyCon US](https://us.pycon.org/)
+- [Data Council](https://www.datacouncil.ai/)
+- [DuckCon](https://duckdb.org/2024/08/15/duckcon5.html)
+- [Current](https://current.confluent.io/)
+- [Cloud Native Con](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/)
+- [Systems Distributed](https://systemsdistributed.com/)
+- [P99 Conf](https://www.p99conf.io/)
+- [Local First Conference](https://www.localfirstconf.com/)
+- [SIGMOD](https://sigmod.org/)
+- [VLDB](https://vldb.org/2024/)
+- [QCon](https://qconferences.com/)
+- [Open Source Summit](https://events.linuxfoundation.org/open-source-summit-north-america/)
+- [GoTo](https://gotopia.tech/)
+- [LambdaConf](https://www.lambdaconf.us/)
+- [FOSDEM](https://fosdem.org/2025/)
+:::
+
+# Subscriptions
+
+::: {.callout-note appearance="minimal" collapse=true title="Newsletters & Blogs 📰"} 
+- [Register Spill by Thorsten Ball](https://registerspill.thorstenball.com/)
+- [benn.substack by Benn Stancil](https://benn.substack.com)
+- [Simon Willison's Weblog](https://simonwillison.net/)
+- [Phil Eaton's Personal Blog](https://notes.eatonphil.com/)
+- [Erik Bernhardsson's Personal Blog](https://erikbern.com/)
+- [Vicki Boykis' Personal Blog](https://vickiboykis.com/)
+- [Mitchell Hashimoto's Personal Blog](https://mitchellh.com/writing)
+- [Gunnar Morling's Personal Blog](https://www.morling.dev/)
+- [Jack Vanlightly's Personal Blog](https://jack-vanlightly.com/)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Podcasts 🎙️"} 
+- [Developer Voices](https://www.youtube.com/@DeveloperVoices)
+- [Software Huddle](https://www.youtube.com/@SoftwareHuddle)
+- [Syntax](https://www.youtube.com/@syntaxfm)
+- [How About Tomorrow?](https://www.youtube.com/@tomorrowfm)
+- [Software Misadventures ](https://youtube.com/@softwaremisadventures)
+- [devtools-fm](https://www.youtube.com/@devtoolsfm)
+- [Acquired](https://www.acquired.fm/)
+- [Lenny's Podcast](https://www.lennysnewsletter.com/podcast)
+- [localfirst.fm](https://www.localfirst.fm/)
+- [ADSP The Podcast](https://adspthepodcast.com/)
+- [Happy Path Programming](https://podcasters.spotify.com/pod/show/happypathprogramming)
+- [Software Unscripted](https://pod.link/1602572955)
+- [Oxide and Friends](https://oxide.computer/podcasts/oxide-and-friends)
+- [Software Engineering Daily](https://softwareengineeringdaily.com/category/all-episodes/exclusive-content/Podcast/)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="YouTube Channels 📺"} 
+- [CMU Database Group](https://www.youtube.com/@CMUDatabaseGroup)
+- [Supabase](https://www.youtube.com/@Supabase)
+- [The Linux Foundation](https://www.youtube.com/@LinuxfoundationOrg)
+- [Honeypot](https://www.youtube.com/@Honeypotio)
+- [InfoQ](https://www.youtube.com/@infoq)
+- [GOTO Conferences](https://www.youtube.com/@GOTO-)
+- [Hussein Nasser](https://www.youtube.com/@hnasr)
+- [Fireship](https://www.youtube.com/@Fireship)
+- [ThePrimeTime](https://www.youtube.com/@ThePrimeTimeagen/videos)
+- [Code Report](https://www.youtube.com/@code_report)
+- [NeetCodeIO](https://www.youtube.com/@NeetCodeIO)
+- [Aaron Francis](https://www.youtube.com/@aarondfrancis)
+- [TigerBeetle](https://www.youtube.com/@tigerbeetledb)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Discord 👾"} 
+- [Software Internals](https://eatonphil.com/discord.html)
+- [Local First Software](https://localfirstweb.dev/)
+- [DuckDB](https://discord.duckdb.org/)
+:::
