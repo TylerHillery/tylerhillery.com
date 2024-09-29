@@ -96,7 +96,7 @@ share:
 - [FOSDEM](https://fosdem.org/2025/)
 :::
 
-# Subscriptions
+# Following 
 
 ::: {.callout-note appearance="minimal" collapse=true title="Newsletters & Blogs 📰"} 
 - [Register Spill by Thorsten Ball](https://registerspill.thorstenball.com/)
