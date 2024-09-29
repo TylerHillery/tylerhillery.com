@@ -17,7 +17,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-draft: true
+draft: false 
 ---
 
 ------------------------------------------------------------------------
@@ -68,7 +68,7 @@ Now, you may actually find a limitation that is out of your control and to that 
 
 I constantly think of the question "Who am I?" and it's tough for me to answer. I am always evolving everyday into a different, hopefully better, version of myself. There are certain values and philosophies I hold true to throughout time, like my deep feeling of gratitude towards life, and my optimistic outlook. But other than that I struggle answering this question because I am who I want to be. Time and time again I have proven myself wrong as to who I thought I was. No more. I truly believe, given enough time, I can do an be whoever I want.
 
-Also, I need to shout out my wife. She is someone who would constantly catch me when I would say something I can't do. Her goto response is "Why not? What else would you be doing?". Surrounding yourself with people who can hold you accountable really helps early on because often times when we say these things we don't even catch ourselves doing it. 
+Also, I need to shout out my wife. She is someone who would constantly catch me when I would say something I can't do. Her go to response is "Why not? What else would you be doing?". Surrounding yourself with people who can hold you accountable really helps early on because often times when we say these things we don't even catch ourselves doing it. 
 
 Now, of course there are going to be responses to this saying "No matter how hard you train you'll never be a professional athlete". If that's your first reaction to this, you've missed the point.
 
