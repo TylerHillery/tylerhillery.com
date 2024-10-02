@@ -135,7 +135,6 @@ share:
 - [Fireship](https://www.youtube.com/@Fireship)
 - [ThePrimeTime](https://www.youtube.com/@ThePrimeTimeagen/videos)
 - [Code Report](https://www.youtube.com/@code_report)
-- [NeetCodeIO](https://www.youtube.com/@NeetCodeIO)
 - [Aaron Francis](https://www.youtube.com/@aarondfrancis)
 - [TigerBeetle](https://www.youtube.com/@tigerbeetledb)
 :::
