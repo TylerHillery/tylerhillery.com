@@ -34,6 +34,8 @@ share:
 - [Excel at nothing: How to be an effective generalist by Stephen Bailey](https://www.youtube.com/live/wB0ulHmvU7E?si=cEj5c6dISiwhxKlu)
 - [How to Play Well With Others by Josh Wills](https://youtu.be/rqWnEJXnfiY?si=6kdMFqyBRBjPM1h1)
 - [Computers are a Sadness, I am the Cure by James Mickens](https://youtu.be/3-GpiKQr9Rs?si=vLUSUV_cSudHYdz7)
+- [Rails World 2024 Opening Keynote by David Heinemeier Hansson](https://youtu.be/-cEn_83zRFw?si=hRaEA_VmZcmiXg55)
+- [Redesigning OLTP for a New Order of Magnitude by Joran Dirk Greef](https://youtu.be/32LMicc0gRA?si=vzHKNuHv4exe3dN6)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Interviews 🎤"} 
@@ -93,6 +95,13 @@ share:
 - [FOSDEM](https://fosdem.org/2025/)
 :::
 
+::: {.callout-note appearance="minimal" collapse=true title="Tweets 🐦"} 
+{{< tweet karpathy 1756380066580455557 >}}
+{{< tweet ftlsid 1726711340444901849 >}}
+{{< tweet josh_wills 1508624385241849856 >}}
+{{< tweet teej_m 1489491830580264960 >}}
+:::
+
 # Following 
 
 ::: {.callout-note appearance="minimal" collapse=true title="Newsletters & Blogs 📰"} 
@@ -127,10 +136,7 @@ share:
 ::: {.callout-note appearance="minimal" collapse=true title="YouTube Channels 📺"} 
 - [CMU Database Group](https://www.youtube.com/@CMUDatabaseGroup)
 - [Supabase](https://www.youtube.com/@Supabase)
-- [The Linux Foundation](https://www.youtube.com/@LinuxfoundationOrg)
 - [Honeypot](https://www.youtube.com/@Honeypotio)
-- [InfoQ](https://www.youtube.com/@infoq)
-- [GOTO Conferences](https://www.youtube.com/@GOTO-)
 - [Hussein Nasser](https://www.youtube.com/@hnasr)
 - [Fireship](https://www.youtube.com/@Fireship)
 - [ThePrimeTime](https://www.youtube.com/@ThePrimeTimeagen/videos)
