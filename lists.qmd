@@ -36,6 +36,7 @@ share:
 - [Computers are a Sadness, I am the Cure by James Mickens](https://youtu.be/3-GpiKQr9Rs?si=vLUSUV_cSudHYdz7)
 - [Rails World 2024 Opening Keynote by David Heinemeier Hansson](https://youtu.be/-cEn_83zRFw?si=hRaEA_VmZcmiXg55)
 - [Redesigning OLTP for a New Order of Magnitude by Joran Dirk Greef](https://youtu.be/32LMicc0gRA?si=vzHKNuHv4exe3dN6)
+- [Nothing is Something by Sandi Metz](https://youtu.be/OMPfEXIlTVE?si=GglvzBuNGLLQ9g5G)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Interviews 🎤"} 
@@ -114,6 +115,7 @@ share:
 - [Mitchell Hashimoto's Personal Blog](https://mitchellh.com/writing)
 - [Gunnar Morling's Personal Blog](https://www.morling.dev/)
 - [Jack Vanlightly's Personal Blog](https://jack-vanlightly.com/)
+- [Hynek Schlawack's Personal Blog](https://hynek.me/articles/)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts 🎙️"} 
@@ -143,6 +145,8 @@ share:
 - [Code Report](https://www.youtube.com/@code_report)
 - [Aaron Francis](https://www.youtube.com/@aarondfrancis)
 - [TigerBeetle](https://www.youtube.com/@tigerbeetledb)
+- [anthonywritescode](https://www.youtube.com/@anthonywritescode)
+- [mCoding](https://www.youtube.com/@mCoding)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Discord 👾"} 
