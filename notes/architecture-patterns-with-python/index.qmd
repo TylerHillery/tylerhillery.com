@@ -1,0 +1,140 @@
+---
+title: "Architecture Patterns with Python"
+description: My notes & review of [Architecture Patterns with Python](https://a.co/d/9IPpNtW) by Harry Percival & Bob Gregory
+author: "Tyler Hillery"
+date: "2024-10-13"
+image: "./cover.png"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/architecture-patterns-with-python/"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, On Hold]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+-   > We’ve found that many developers, when asked to design a new system, will immediately start to build a database schema, with the object model treated as an afterthought. This is where it all starts to go wrong. Instead, behavior should come first and drive our storage requirements. After all, our customers don’t care about the data model. They care about what the system does; otherwise they’d just use a spreadsheet.
+
+    I'll be honest I am suspect of this. The first thing I commonly do when thinking about the design is the various types of entities of the system.
+
+-   ***domain*** is fancy term for *the problem you're trying to solve*
+-   ***model*** is a map of a process that captures a useful property. 
+-   The *domain model* is the mental map that business owners have of their businesses.
+-   ***entity*** is used to describe a domain object that has a long-lived identity.
+-   A ***value*** object is defined by its attributes. It's usually best implemented as an immutable type. If you change an attribute on a value object, it represents a new object. In contrast, an entity object has attributes that may vary over time and it will still be the same and it will still be the same entity
+    - This reminds a lot about dimensional modeling, fact tables = value objects, dim tables = entity objects
+-   > The Repository pattern is an abstraction over persistent storage. It hides the boring details of data access by pretending that all of our data is in memory. If we had infinite memory in our laptops, we’d have no need for clumsy databases. Instead, we could just use our objects whenever we liked. What would that look like?
+    
+    This feels wrong to me. Databases are not clumsy, they are one of the best technology inventions of all time. 
+
+-   ***Dependency Inversion Principle*** states that high-level modules should not rely on lower level modules. Both should depend on abstractions. 
+-   The Repository pattern is the application of DIP by making it so your domain doesn't rely on your ORM
+-   ***Ports*** are the interface e.g. in python that would be the protocol or the abstract base class.
+-   ***Adapters*** is the implementation behind the interface
+    - e.g. `AbstractRepository` is the port `SqlAlchemyRepository` is the adapter
+
+-   ::: {.callout-important title="TODO"}
+    Implement the Repository pattern without using an ORM
+    :::
+
+-   synchronize file directories
+
+    ```python
+    import hashlib
+    import os
+    import shutil
+    from pathlib import Path
+
+    BLOCKSIZE = 65536
+
+    def hash_file(path):
+        hasher= hashlib.sha1()
+        with path.open("rb") as file:
+            buf = file.read(BLOCKSIZE)
+            while buf:
+                hasher.update(buf)
+                buf = file.read(BLOCKSIZE)
+        return hasher.hexdigest()
+
+    # 1st attempt (hackish)
+    def sync(source, dest):
+        # walk the source folder and build a dict of filenames and their hashes
+        source_hashes = {}
+        for folder, _, files in os.walk(source):
+            for fn in files:
+                source_hashes[hash_file(Path(folder) / fn)] = fn
+        
+        # keep track of the files we found in target
+        seen = set()
+
+        for folder, _, files in os.walk(dest):
+            for fn in files:
+                dest_path = Path(folder) / fn
+                dest_hash = hash_file(dest_path)
+                seen.add(dest_hash)
+
+                # if there's a file in target that's not in source delete it
+                if dest_hash not in source_hashes:
+                    dest_path.remove()
+                # if there's a file in target that has different path in source move it to correct path
+                elif dest_hash in source and fn != source_hashes[dest_hash]:
+                    shutil.move(dest_path, Path(folder) / source_hashes[dest_hash]) 
+        
+        # for every file that appears in source but not target, copy the file to the target
+        for src_hash, fn in source_hashes.items():
+            if src_hash not in seen:
+                shutil.copy(Path(source) / fn, Path(dest) / fn) 
+    ```
+
+    The above code is written in a way where the domain logic, figure out the difference between two directories, is tightly coupled with the I/O code. There is no way to run the difference algorithm without calling the `pathlib`, `shutil`, and `hashlib` modules.
+
+    Instead it's better to think about what the above code is doing in separate them into distinct ***responsibilities*** 
+
+    1. Traverse the filesystem and determine hashes for a series of paths. This is the same for both the source and target directories
+    2. We decide whether the file is new, renamed, or redundant
+    3. We copy, move, or delete files to match the source.
+
+-   ::: {.callout-tip}
+    Separate ***what*** you want to do from ***how*** to do it
+    :::
+
+    This tip reminds me of declarative vs imperative programming. When writing a SQL query you describe what you want from the database, then the database figures out the best way how.
+
+-   ***Mocks*** are used to verify how something gets used; they have methods like `assert_called_once_with()`
+-   ***Fakes*** are working implementations of the thing they're replacing, but they're designed for use only in tests. They wouldn't work in "real life"  
+
+- I am having a hard time understanding the benefit of using the `FakeRepository` for tests and only use the `SqlAlchemyRepository` for production. What if there is a difference with the `FakeRepository` compared to the `SqlAlchemyRepository`, wouldn't this result in bugs that are only caught when you release to production? In an ideal world I want my tests to test the exact same code that production runs, in the exact same way.
+
+- Typical service layer function has similar steps:
+    1. Fetch some objects from repository
+    2. Make some checks about the request against the current state of the world
+    3. Call a domain service
+    4. If all is good, save or update any state that changed 
+
+-   > Some of you are probably scratching your heads at this point trying to figure out exactly what the difference is between a domain service and a service layer.
+
+    I'll be honest I have been scratching my head for the whole book so far... I am starting to think this book is really meant for someone who has more experience building large applications. I am having a hard time grokking some of the patterns here because I have never experience any of the problems these patterns are aimed to solved
+
+-   ***application service*** has the job of handling requests from the outside world and to ***orchestrate*** the application.
+-   ***domain service*** is the logic that belongs in the domain model but doesn't sit naturally inside a stateful entity or value object.
+    - e.g. if you were building a shopping cart application, you might choose to build taxation rules as a domain service. Calculating tax is a separate job from updating the cart, and it’s an important part of the model, but it doesn’t seem right to have a persisted entity for the job. Instead a stateless TaxCalculator class or a calculate_tax function can do the job.
+-   ***Unit of Work*** pattern is an abstraction over the idea of ***atomic operations***.
+-   ***Aggregate*** pattern is a domain object that contains other domain objects and lets you treat the whole collection as a single unit
+    - e.g. a shopping cart is collections of times and want to make changes to the cart one at a time otherwise you expose yourself to concurrency errors
+
+# Review
+
+I am going to put this book on hold for now. I got about half way through and I realized I don't have the experience required to fully take in this book. This is no doubt in my mind that these authors know what they are talking about. I am sure it contains lots of valuable information but for me to truly absorb that information I need to go out there and build some applications so I can experience first hand some problems these patterns are trying to solve. 
+
+
