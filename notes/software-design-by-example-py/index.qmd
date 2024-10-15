@@ -1,0 +1,303 @@
+---
+title: "Software Design by Example: A Tool-Based Introduction with Python"
+description: My notes & review of [Software Design by Example A Tool-Based Introduction with Python](https://third-bit.com/sdxpy/) by Greg Wilson 
+author: "Tyler Hillery"
+date: "2024-10-15"
+image: "./cover.png"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/software-design-by-example-py/"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+## Chapter 2: Objects and Classes
+
+-   ***Polymorphism*** defined as having many different implementations of the same interface.
+    -   One thing that's not clear to me is what counts as polymorphism? The example the book gave was defining a base class called `Shape` and then two subclasses called `Square` and `Circle`. Both subclasses implemented the methods `area` and `perimeter`. This is polymorphic because `Square` and `Circle` have the same interface but how the `area` and `perimeter` are calculated are different.
+
+        The question I want to know is, does polymorphism imply object inheritance? Python is duck typed language aka nominal subtyping, which means object's suitability for use is determined by the presence of certain methods and properties. This is really what the crux of what polymorphism really is, the above example world of worked just as well if the circle and shape were defined as separate classes and didn't inherit from the same base class.
+
+        Python even has `Protocols` aka as structural subtyping or static duck typing, which enables the ability to enforce type constraints at compile-time, allowing objects to be checked for required methods and attributes without relying on inheritance (e.g. Abstract Base Classes), but based on their structure and behavior.
+
+-   This python example tripped me up a little bit so I wanted to make a note. This expands on the above `Shape` example but shows how you can do it without classes. I was a little confused by the `call()` function at first but then I realized you first retrieving a function reference and then also passing the dict object itself as an argument into the function.
+
+    ```python
+    import math
+
+    def circle_perimeter(thing: dict) -> int | float:
+        return math.pi * 2 * thing["radius"]
+
+
+    def circle_area(thing: dict) -> int | float:
+        return math.pi * thing["radius"] ** 2
+
+
+    def circle_new(name: str, radius: int | float) -> dict:
+        return {
+            "name": name,
+            "radius": radius,
+            "perimeter": circle_perimeter,
+            "area": circle_area,
+        }
+
+
+    def call(thing, method_name):
+        # thing[object_name] is the function reference
+        # (thing) is passing thing as a arg into the function
+        return thing[method_name](thing)
+
+
+    examples = [circle_new("ci", 2)]
+    for shape in examples:
+        n = shape["name"]
+        p = call(shape, "perimeter")
+        a = call(shape, "area")
+        print(f"{n} has a perimeter of {p:.2f} and area {a:.2f}")
+    ```
+
+-   ***parameters*** are part of the function definition but ***arguments*** are given when the function is called
+-  I have to admit, I am very impressed with how this book has started. Without even realizing it, the author has been gradually building up to how objects are implemented. Here is another code snippet that refactors the above example by splitting the methods into a separate dict and also using `*args` and `**kargs` as a way to pass in arguments into the methods
+
+    ```python
+    def circle_perimeter(thing: dict) -> int | float:
+        return math.pi * 2 * thing["radius"]
+
+
+    def circle_area(thing: dict) -> int | float:
+        return math.pi * thing["radius"] ** 2
+
+
+    def circle_larger(thing: dict, size) -> bool:
+        return call(thing, "area") > size
+
+
+    Circle = {
+        "perimeter": circle_perimeter,
+        "area": circle_area,
+        "larger": circle_larger,
+        "__classname": "Circle",
+    }
+
+
+    def circle_new(name: str, radius: int | float) -> dict:
+        return {"name": name, "radius": radius, "_classname": Circle}
+
+
+    def call(thing, method_name, *args):
+        # thing[object_name] is the function reference
+        # (thing) is passing thing as a param into the function
+        return thing["_classname"][method_name](thing, *args)
+
+
+    examples = [square_new("sq", 3), circle_new("ci", 2)]
+    for shape in examples:
+        n = shape["name"]
+        p = call(shape, "perimeter")
+        a = call(shape, "area")
+        print(f"{n} has a perimeter of {p:.2f} and area {a:.2f}")
+
+        size = 10
+        result = call(shape, "larger", size)
+        print(f"is {n} larger than {size}? {result}")
+    ```
+
+    One thing to call out in the above code is `circle_larger` and `square_larger` are the same thing. This is where you would want to have inheritance. To do that in our example without using classes you can define a generic `Shape` dict with a shared methods.
+
+-   Unbelievable, my mind is blown 🤯. We have implemented our own classes using nothing but dicts. Here is the full code.
+
+    ```{python}
+    import math
+
+    def shape_density(thing: dict, weight: int | float) -> int | float:
+        return weight / call(thing, "area")
+
+
+    # our own __init__
+    def shape_new(name: str) -> dict:
+        return {"name": name, "_class": Shape}
+
+
+    Shape = {
+        "density": shape_density,
+        "_classname": "Shape",
+        "_parent": None,
+        "_new": shape_new,
+    }
+
+
+    def make(cls: dict, *args) -> dict:
+        return cls["_new"](*args)
+
+
+    def square_perimeter(thing: dict) -> int:
+        return thing["side"] * 4
+
+
+    def square_area(thing: dict) -> int:
+        return thing["side"] ** 2
+
+
+    def square_larger(thing: dict, size: int) -> bool:
+        return call(thing, "area") > size
+
+
+    def square_new(name: str, side: int | float) -> dict:
+        return make(Shape, name) | {"side": side, "_class": Square}
+
+
+    Square = {
+        "perimeter": square_perimeter,
+        "area": square_area,
+        "larger": square_larger,
+        "_classname": "Square",
+        "_parent": Shape,
+        "_new": square_new,
+    }
+
+
+    def circle_perimeter(thing: dict) -> int | float:
+        return math.pi * 2 * thing["radius"]
+
+
+    def circle_area(thing: dict) -> int | float:
+        return math.pi * thing["radius"] ** 2
+
+
+    def circle_larger(thing: dict, size) -> bool:
+        return call(thing, "area") > size
+
+
+    def circle_new(name: str, radius: int | float) -> dict:
+        return make(Shape, name) | {"radius": radius, "_class": Circle}
+
+
+    Circle = {
+        "perimeter": circle_perimeter,
+        "area": circle_area,
+        "larger": circle_larger,
+        "_classname": "Circle",
+        "_parent": Shape,
+        "_new": circle_new,
+    }
+
+
+    def find(cls: dict, method_name):
+        while cls is not None:
+            if method_name in cls:
+                return cls[method_name]
+            cls = cls["_parent"]
+        raise NotImplementedError(method_name)
+
+
+    def call(thing, method_name, *args):
+        method = find(thing["_class"], method_name)
+        return method(thing, *args)
+
+
+    examples = [make(Square, "sq", 3), make(Circle, "ci", 2)]
+    for shape in examples:
+        n = shape["name"]
+        p = call(shape, "perimeter")
+        a = call(shape, "area")
+        d = call(shape, "density", 10)
+        print(f"{n} has a perimeter of {p:.2f}, area {a:.2f} and density {d:.2f}")
+
+        size = 10
+        result = call(shape, "larger", size)
+        print(f"is {n} larger than {size}? {result}")
+
+    ```
+### Chapter 2: Exercises
+
+1. **Handling Named Arguments**:
+
+    The final version of `call` declares `*args` to capture all the positional arguments of the method called and then spreads them in the actual call. Modify it to capture and spread named arguments as well.
+
+    ***My Solution*** [(code)](https://github.com/TylerHillery/software-design-by-example/blob/0260f61e3a7742651df78c248f7066f3fc3f6d68/python/ch02/objects.py#L157): 
+
+    I simply modified the `call` function to include `**kwargs` in the function definition and made sure to include `**kwargs` in any returns 
+
+2. **Multiple Inheritance**
+
+    Implement multiple inheritance using dictionaries. Does your implementation look methods up in the same order as Python would?
+
+    ***My Soltion*** [(code)](https://github.com/TylerHillery/software-design-by-example/blob/main/python/ch02/objects.py)
+
+    I came up with the idea of changing the `_parent` key to be a list of dicts of other classes. I struggled with modifying the the `find` funciton to properly loop through the list of parents to find the method. This is where I used ChatGPT which came up with the idea to recursively call `find(paten, method_name)` in a `try/except` block so that if the first parent doesn't contain the method move onto the next parent.
+
+    The order my implementation would look up the method definition would be by the first parent. After looking it up with ChatGPT:
+
+    > Python method resolution order (MRO) using **C3 linearization** algorithm to determine the MRO.
+        1. Start with Class
+        2. Check with Class's Parents
+        3. Move to Parent Classes
+        4. Depth-First, Left-to-Right Search
+    
+    It's interesting to hear them say that Python's MRO is "depth-first" because based on my understanding after reading more it will check all the parents first left to right, then all the grandparents etc.
+
+    My implementation is a little different because it would first traverse the entire parent's dependency tree until there are no more parents until moving on to the next parent. In conclusion, I didn't implement the same MRO as python.
+
+
+3. **Class Methods and Static Methods**
+
+    a. *Explain the differences between class methods and static methods*:
+
+    ***Class Method***: takes a `cls` as its first parameter which is different than a normal method which takes `self`. `self` refers to an object which is an instance of the class whereas `cls` is the actual class itself. Useful to operate on class data.
+
+    ***Staic Method***: does not taking any parameters for `cls` or `self` and it just a normal function but organized in the class namespace.
+
+    b. *Implement both using dictionaries*
+
+    ***My Soltion*** [(code)](https://github.com/TylerHillery/software-design-by-example/blob/main/python/ch02/objects.py)
+
+    This one was tough for me and I admit to using ChatGPT to implement this solution.
+
+4. **Reporting Type**
+
+    Python `type` method report the most specific type of an object, while `isinstance` determines whether an object inherits from a type either directly or indirectly. Add your own versions of both to dictionary-based objects and classes.
+
+
+::: {.callout-important title="TODO"}
+*Implement your own solution*
+:::
+
+
+5. **Using Recursion**
+
+    A recursive function is one that calls itself, either directly or indirectly, Modify the `find` function that finds a method to call so that is uses recursion instead of a loop. Which version is easier to understand? Which version is more efficient?
+
+    ***My Soltion*** [(code)](https://github.com/TylerHillery/software-design-by-example/blob/main/python/ch02/objects.py)
+
+    My solution already implemented recursion when trying to figure out how to do multiple inheritance which makes me wonder if I didn't implement multiple inheritance properly 🤔
+
+    Easier to understand is subject. Many people struggle with recursion so the loop based one will probably be easier to understand for most people. It terms of efficiency what I can say is that recursive function could take up more memory as it uses additional stack space for each recursive call. 
+
+6. **Method Caching**
+
+    Our implementation searches for the implementation of a method every time that method is called. An alternative is to add a cache to each object to save the methods that have been looked up before. For example, each object could have a special key called `_cache` whose value is a dictionary. The keys in that dictionary are the names of methods that have been called in the past, and the values are the functions that were found to implement those methods. Add this feature to our dictionary-based objects. How much more complex does it make the code? How much extra storage space does it need compared to repeated lookup?    
+
+::: {.callout-important title="TODO"}
+*Implement your own solution*
+:::
+
+
+### Chapter 2: Review
+
+This chapter was a mind bender and one I will definitely need to come back to fully digest. One of my first "ah-ha" moments in python is realizing everything is a class but now I am starting to think everything is a dict haha 
+
+
+# Review
