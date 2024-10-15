@@ -1,0 +1,126 @@
+---
+title: "Python Testing with pytest"
+description: My notes & review of [Python Testing with pytest](https://a.co/d/2vfSKCF) by Brian Okken 
+author: "Tyler Hillery"
+date: "2024-10-14"
+image: "./cover.png"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/py-testing-with-pytest/"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+-   pytest will automatically run on files that start with `test_` or end with `_test`
+-   I like these examples on how to test some code to see if it raises the right exception
+    
+    ```python
+    def test_raises_with_info():
+        match_regex = "missing 1 .* positional argument"
+        with pytest.raises(TypeError, match=match_regex)
+            cards.CardsDB()
+        
+    def test_raises_with_info_alt():
+        with pytest.raises(TypeError) as exc_info:
+            cards.CardsDB()
+        expected = "missing 1 required positional argument"
+        assert expected in str(exc_info.value)
+    ```
+-   Help stages to write your tests in:
+    1. ***Given/Arrange***: This is where you set up data or the environment to get read for action.
+    2. ***When/Act***: This the focus of the test, the behavior we are trying to make sure is right.
+    3. ***Then/Assert**: At the end of the test we make sure the action resulted in the expected behavior
+
+-   You can group tests by defining them as methods in a class. This gives the ability to run all tests in a specific class
+-   ***Fixtures*** are functions that runs before or after any actual test functions
+-   Something to note if the test fails because there is a bug in the fixture then pytest reports an "Error" opposed to when a test normally fails because the assertion was False then it reports "Fail". To recap, "Error" != "Fail"
+-   I like this example of a fixture to create and close a db
+    
+    ```python
+    from pahtlib import Path
+    from tempfile import TemporaryDirectory
+    import cards
+
+    import pytest
+
+    @pytest.fixture()
+    def cards_db():
+        with TemporaryDirectory as db_dir:
+            db_path - Path(db_dir)
+            db = cards.CardsDB(db_path)
+            yield db
+            db.close()
+
+    def test_empty(cards_db):
+        assert cards_db.count() == 0
+    ```
+
+    The code above `yield` is the "setup" code and after is the "teardown" code.
+
+-   It's best to name the fixture after the data being returned or the work being done
+-   The default scope for fixtures is **function** scope, meaning the setup portion of the fixture will run before each test that needs it runs. This may not be ideal for fixtures the are resource intensive.    
+-   To change the scope of the fixture you can do `pytest.fixture(scope="module")` other values: `class`, `package`, `session`
+-   To share fixures among multiple test files you need to use a `conftest.py` file
+-   This is cool, the author brings up a good point that the above fixture would not work because most of the tests rely on the database being empty but if run tests runs before another it's going to cause the next test to fail.
+
+    ::: {.callout-tip}
+    Tests shouldn't rely on test order
+    :::
+
+    Instead we can write two fixtures
+
+    ```python
+    from pahtlib import Path
+    from tempfile import TemporaryDirectory
+    import cards
+
+    import pytest
+
+    @pytest.fixture(scope="session"):
+    def db():
+        """CardsDB objected connected to temp db"""
+        with TemporaryDirectory as db_dir:
+            db_path - Path(db_dir)
+            db = cards.CardsDB(db_path)
+            yield db
+            db.close()
+    
+    @pytest.fixture(scope="function"):
+    def cards_db(db):
+        """CardsDB object that's empty"""
+        db.delete_all()
+        return db
+    ```
+-   pytest has built in fixtures for `tmp_path`, `tmp_path_factory`, `capsys`, `monkeypatch`
+-   ***monkey patch** is a dynamic modification of a class or module during runtime. 
+-   ***parametrized*** testing refers to adding parameters to our test functions and passing multiple sets of arguments to the tests to create new test cases.
+-   The three ways to parametrize a test
+    - `@pytest.mark.parametrize()` decorator on a test
+    - `@pytest.fixture(params=())` on a fixture
+    - `pytest_generate_tests` for complex cases e.g. change parameters based on command line flags
+-   ***markers*** are a way to tell pytest there' something special about a test
+-   customer makers need to be added to the `pytest.ini` file    
+
+# Cheatsheet
+
+- `-v` or `--verbose` for verbose flag
+- `-tb=no` to turn off tracebacks
+- `pytest -v ch1/test_one.py:test_passing` example on how to specify test by name
+- `--setup-show` shows the order in which the tests get ran  
+- 
+
+# Review
+
+Very thorough book on pytest. If you are looking to better develop you testings skills in python, this books is for you.
