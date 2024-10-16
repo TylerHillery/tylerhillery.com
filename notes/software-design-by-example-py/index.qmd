@@ -18,6 +18,10 @@ share:
     email: true
     mastodon: true
 categories: [Technical Books, In Progress]
+format:
+  html:
+    code-fold: true
+jupyter: python3
 ---
 
 ------------------------------------------------------------------------
@@ -119,109 +123,111 @@ categories: [Technical Books, In Progress]
 
 -   Unbelievable, my mind is blown 🤯. We have implemented our own classes using nothing but dicts. Here is the full code.
 
-    ```{python}
-    import math
+```{python}
+#| code-fold: false
+import math
 
-    def shape_density(thing: dict, weight: int | float) -> int | float:
-        return weight / call(thing, "area")
-
-
-    # our own __init__
-    def shape_new(name: str) -> dict:
-        return {"name": name, "_class": Shape}
+def shape_density(thing: dict, weight: int | float) -> int | float:
+    return weight / call(thing, "area")
 
 
-    Shape = {
-        "density": shape_density,
-        "_classname": "Shape",
-        "_parent": None,
-        "_new": shape_new,
-    }
+# our own __init__
+def shape_new(name: str) -> dict:
+    return {"name": name, "_class": Shape}
 
 
-    def make(cls: dict, *args) -> dict:
-        return cls["_new"](*args)
+Shape = {
+    "density": shape_density,
+    "_classname": "Shape",
+    "_parent": None,
+    "_new": shape_new,
+}
 
 
-    def square_perimeter(thing: dict) -> int:
-        return thing["side"] * 4
+def make(cls: dict, *args) -> dict:
+    return cls["_new"](*args)
 
 
-    def square_area(thing: dict) -> int:
-        return thing["side"] ** 2
+def square_perimeter(thing: dict) -> int:
+    return thing["side"] * 4
 
 
-    def square_larger(thing: dict, size: int) -> bool:
-        return call(thing, "area") > size
+def square_area(thing: dict) -> int:
+    return thing["side"] ** 2
 
 
-    def square_new(name: str, side: int | float) -> dict:
-        return make(Shape, name) | {"side": side, "_class": Square}
+def square_larger(thing: dict, size: int) -> bool:
+    return call(thing, "area") > size
 
 
-    Square = {
-        "perimeter": square_perimeter,
-        "area": square_area,
-        "larger": square_larger,
-        "_classname": "Square",
-        "_parent": Shape,
-        "_new": square_new,
-    }
+def square_new(name: str, side: int | float) -> dict:
+    return make(Shape, name) | {"side": side, "_class": Square}
 
 
-    def circle_perimeter(thing: dict) -> int | float:
-        return math.pi * 2 * thing["radius"]
+Square = {
+    "perimeter": square_perimeter,
+    "area": square_area,
+    "larger": square_larger,
+    "_classname": "Square",
+    "_parent": Shape,
+    "_new": square_new,
+}
 
 
-    def circle_area(thing: dict) -> int | float:
-        return math.pi * thing["radius"] ** 2
+def circle_perimeter(thing: dict) -> int | float:
+    return math.pi * 2 * thing["radius"]
 
 
-    def circle_larger(thing: dict, size) -> bool:
-        return call(thing, "area") > size
+def circle_area(thing: dict) -> int | float:
+    return math.pi * thing["radius"] ** 2
 
 
-    def circle_new(name: str, radius: int | float) -> dict:
-        return make(Shape, name) | {"radius": radius, "_class": Circle}
+def circle_larger(thing: dict, size) -> bool:
+    return call(thing, "area") > size
 
 
-    Circle = {
-        "perimeter": circle_perimeter,
-        "area": circle_area,
-        "larger": circle_larger,
-        "_classname": "Circle",
-        "_parent": Shape,
-        "_new": circle_new,
-    }
+def circle_new(name: str, radius: int | float) -> dict:
+    return make(Shape, name) | {"radius": radius, "_class": Circle}
 
 
-    def find(cls: dict, method_name):
-        while cls is not None:
-            if method_name in cls:
-                return cls[method_name]
-            cls = cls["_parent"]
-        raise NotImplementedError(method_name)
+Circle = {
+    "perimeter": circle_perimeter,
+    "area": circle_area,
+    "larger": circle_larger,
+    "_classname": "Circle",
+    "_parent": Shape,
+    "_new": circle_new,
+}
 
 
-    def call(thing, method_name, *args):
-        method = find(thing["_class"], method_name)
-        return method(thing, *args)
+def find(cls: dict, method_name):
+    while cls is not None:
+        if method_name in cls:
+            return cls[method_name]
+        cls = cls["_parent"]
+    raise NotImplementedError(method_name)
 
 
-    examples = [make(Square, "sq", 3), make(Circle, "ci", 2)]
-    for shape in examples:
-        n = shape["name"]
-        p = call(shape, "perimeter")
-        a = call(shape, "area")
-        d = call(shape, "density", 10)
-        print(f"{n} has a perimeter of {p:.2f}, area {a:.2f} and density {d:.2f}")
+def call(thing, method_name, *args):
+    method = find(thing["_class"], method_name)
+    return method(thing, *args)
 
-        size = 10
-        result = call(shape, "larger", size)
-        print(f"is {n} larger than {size}? {result}")
 
-    ```
-### Chapter 2: Exercises
+examples = [make(Square, "sq", 3), make(Circle, "ci", 2)]
+for shape in examples:
+    n = shape["name"]
+    p = call(shape, "perimeter")
+    a = call(shape, "area")
+    d = call(shape, "density", 10)
+    print(f"{n} has a perimeter of {p:.2f}, area {a:.2f} and density {d:.2f}")
+
+    size = 10
+    result = call(shape, "larger", size)
+    print(f"is {n} larger than {size}? {result}")
+
+```
+
+### Exercises
 
 1. **Handling Named Arguments**:
 
@@ -295,9 +301,112 @@ categories: [Technical Books, In Progress]
 :::
 
 
-### Chapter 2: Review
+### Review
 
 This chapter was a mind bender and one I will definitely need to come back to fully digest. One of my first "ah-ha" moments in python is realizing everything is a class but now I am starting to think everything is a dict haha 
 
+## Chapter 3: Finding Duplicate Files
+
+### Exercises
+
+1. **Odds of Collision**
+
+    If hashes were only 2 bits long, then the chances of collision with each successive file assuming no previous collision are:
+
+    | Number of Files | Odds of Collision |
+    |-----------------|-------------------|
+    | 1               | 0%                |
+    | 2               | 25%               |
+    | 3               | 50%               |
+    | 4               | 75%               |
+    | 5               | 100%              |
+
+    A colleague of yours says this means that if we hash four files, there's only a 75% change of any collision occurring. What are the actual odds? 
+
+    ***My Soltion*** 
+
+    The probability of no collisions amount 4 files is:
+    (3/4) * (2/4) * (1/4) = 0.09375  
+
+    The probability of at least one collision:
+    1 - 0.09375 = 90.625% 
+
+    First is the odds of not colliding for 2 files * odds of not colliding for 3 files * odds of not colliding for 4 files 
+
+2.  **Streaming I/O**
+
+    A streaming API delivers data one piece of at a time rather than all at once. Read the documentation for the `update` method of hashing objects and rewrite the duplicate find to use it.
+
+    ***My Soltion*** [(code)](https://github.com/TylerHillery/software-design-by-example/commit/70e4f8b1075282193597389f7ba1baf257351fa3)
+
+    Create a hasher then read the file in chunks updating the hasher for each iteration in an infinite `while` loop until chunk is `None`. Then break out of loop. Convert hasher from binary into hexidecimal string and add to groups. 
+
+3. **Big Oh**
+
+    Chapter 1 said that as the number of components in a system grows, the complexity of the system increases rapidly. How fast is "rapidly" in big-oh terms?
+
+    **My Solution**:
+    O(N^2^)
+
+4. **The `hash` function**
+
+    Why do `hash(123)` and `hash("123")` work when `hash([123])` raises and exception?
+    
+    **My Solution**:
+    Lists are not hashable objects because there are mutable. Python has special dunder method called `__hash__()` which is used to create the hash value of an object. They also need to have teh `__eq__()` method to make this "hashable". This hash is what's used for dict keys. 
+
+5. **How Good Is SHA-256**
+
+    1. Write a function that calculates the SHA-256 hash code of each unique line of a text file
+    2. Convert the hex digests of those hash codes into integers
+    3. Plot a histogram of those integer values with 20 bins
+    4. How evenly distributed are the hash codes? How does the distribution change as you process larger files?
+
+```{python}
+import io
+import hashlib
+import random
+import string
+import matplotlib.pyplot as plt
+
+def create_fake_file(num_lines):
+    fake_file = io.StringIO()
+
+    for _ in range(num_lines):
+        line = "".join(random.choices(string.ascii_letters + string.digits, k=random.randint(20, 100)))
+        fake_file.write(line + "\n")
+
+    fake_file.seek(0)
+    return fake_file
+
+def hash_lines(fake_file):
+    hash_integers = []
+    max_hash_value = 2**256-1
+    for line in fake_file.readlines():
+        line = line.strip()
+        hash_value = hashlib.sha256(line.encode('utf-8')).hexdigest()
+        hash_int = int(hash_value, 16) / max_hash_value
+        hash_integers.append(hash_int)
+    return hash_integers 
+
+def plot_histogram(hash_integers, num_lines):
+    plt.hist(hash_integers, bins=20)
+    plt.title(f"Histogram of SHA-256 Hashes for {num_lines} Lines")
+    plt.xlabel("Hash Integer Value")
+    plt.ylabel("Frequency")
+    plt.show()
+
+# Create and plot histograms for different file sizes
+file_sizes = [100, 1000, 10000]
+
+for size in file_sizes:
+    fake_file = create_fake_file(size)
+    hash_ints = hash_lines(fake_file)
+    fake_file.close()
+    plot_histogram(hash_ints, size)
+```
+
+
+The graphs appear to be more evenly distributed as the number of lines increases for the files. I bet this is due to the law of large numbers.
 
 # Review

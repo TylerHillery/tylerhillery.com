@@ -5,4 +5,5 @@ description = "personal website"
 requires-python = ">=3.12"
 dependencies = [
     "jupyter>=1.1.1",
+    "matplotlib>=3.9.2",
 ]
