@@ -1,0 +1,59 @@
+---
+title: "Shifting Left"
+description: How I have been slowly shifting my career "Left" 
+author: "Tyler Hillery"
+date: "2024-10-27"
+categories: [Career Advice]
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/shifting-left/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+Shifting left in data refers to addressing issues in a data pipeline as close as possible to where the data is produced. Data pipelines are responsible for the movement of data from source to destination, with sources drawn on the left, hence "shifting left."
+
+Sources could be anything from your application database, CRM, billing system, etc. Destinations are typically a data warehouse, but the data doesn't stop there. Transformations are then done in the data warehouse to make the data into a more usable format for downstream reporting or enriching data in other systems. 
+
+I graduated college with a degree in finance and intended to pursue a career path in investment management. I landed my first job out of college in a back-office role in the investment department of a mid-size insurance company.
+
+This role gave me my first exposure to programming and databases. I automated mundane tasks that took our team several hours every week down to a few minutes. This experience was a revelation, showing me how technology could solve real-world problems. But more importantly, it demystified the black boxes I once thought computers were. 
+
+It has given me a new appreciation for all the technology surrounding us. I sit here typing this blog post on my laptop, seeing characters appear on my screen, while those changes are reflected realtime in a local version of my website. This shit is mind-blowing to me. 
+
+The most mind-blowing part isn't the technology itself. It's the fact that behind all of this technology are people who built it, people who are no different from you or me. This realization prompted me to switch careers.
+
+Going to college for 4 years and then deciding 1 year after to change career paths is no easy decision. I didn't want to start over, return to school, or take time off to do a bootcamp. Being a young, recent college grad with few responsibilities, I had one major advantage, time. I did not need to become a developer in as little as "3 months". I was in it for the long haul. 
+
+Given my current background, I evaluated my skill set to see which technical roles I could get. The data space appealed to me because it's the middle ground between the technical and business domains. It's an area where I could leverage my finance background and newfound technical interests.
+
+Most people view career paths as a ladder with a single axis, you can go up or down. I didn't view my career that way. Instead, I saw it as a series of diagonal moves, each role being more technical than the last, shifting left and moving up the pipeline.
+
+It's been over 3 years since I decided to switch career paths. I went from that back-office investment role to a Business Intelligence Developer, Analytics Engineer, and my current role as a Data Engineer. Writing this now, 3 years doesn't seem like a long time, but boy, it has felt like an eternity. 
+
+While recently rewatching my favorite movie, The Shawshank Redemption, Andy Dufresne's journey resonated with me.
+
+::: {.callout-caution appearance="simple"}
+*Spoilers ahead*
+:::
+
+Andy, armed with nothing more than a rock hammer, spent nearly 20 years patiently chipping away at the walls of his prison cell, eventually tunneling a hole that would lead to his escape through a sewer pipeline. What resonates most about Andy's journey is his patience, persistence, and meticulous nature. It also showcases the slow but steady journey of self-discovery.
+
+Instead of a rock hammer, I have been armed with something much more powerful, a computer and the internet. While Andy was tunneling through walls, I was tunneling through the layers of abstraction, chipping away the black boxes of technology that once felt incomprehensible.  
+
+Unlike Andy, who emerged with a clear plan, my journey isn't complete. I'm still figuring out what I want to do in tech.
+
+I've enjoyed my time in various data roles, but something inside of me stills yearns for more. My experience in data was merely a gateway to something else I have yet to discover. I am in no rush though, I'm only year 3 into my 20 year escape.
+
+Confidence is the most valuable thing I have gained over the past three years. Given enough time and pressure, I can learn anything I want. That's all it really takes is time and pressure. Well, that and a big goddamn poster.
