@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books, On Hold]
 format:
   html:
     code-fold: true
@@ -409,5 +409,7 @@ for size in file_sizes:
 
 
 The graphs appear to be more evenly distributed as the number of lines increases for the files. I bet this is due to the law of large numbers.
+
+## Chapter 4: Matching Patterns
 
 # Review
