@@ -11,6 +11,8 @@ about:
     - icon: github
       href: https://github.com/TylerHillery
       text: GitHub
+    - text: "{{< iconify fa6-brands bluesky >}} Bluesky"
+      href: https://bsky.app/profile/tylerhillery.com 
     - icon: linkedin
       href: https://www.linkedin.com/in/tylerhillery/
       text: LinkedIn

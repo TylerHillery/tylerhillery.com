@@ -26,6 +26,8 @@ website:
     right:
       - icon: github
         href: https://github.com/TylerHillery
+      - text: "{{< iconify fa6-brands bluesky >}}"
+        href: https://bsky.app/profile/tylerhillery.com 
       - icon: linkedin
         href: https://www.linkedin.com/in/tylerhillery/
       - icon: twitter
