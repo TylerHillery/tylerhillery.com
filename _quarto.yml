@@ -32,9 +32,9 @@ website:
         href: https://www.linkedin.com/in/tylerhillery/
       - icon: twitter
         href: https://twitter.com/_TylerHillery
-      - icon: book
+      - icon: book-fill
         href: https://www.goodreads.com/user/show/150025597-tyler-hillery
-      - icon: rss
+      - icon: rss-fill
         href: blog.xml
 format:
   html:
