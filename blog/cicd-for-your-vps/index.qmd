@@ -1,0 +1,151 @@
+---
+title: "CI/CD For Your $5 VPS"
+description: My experience developing a CI/CD pipeline for my $5 VPS 
+author: "Tyler Hillery"
+date: "2024-11-11"
+categories: [DevOps, Testing, CI]
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/cicd-for-your-vps/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+To learn about web development, I set out to build a production grade web app.
+
+What does "production grade" mean? For me, it means the app includes:
+
+- Tests
+- Linting, formatting, and type-checking 
+- Application monitoring
+- Observability
+- Logging
+- Infrastructure as Code
+- Automated deployment pipeline
+- Zero downtime deploys
+- Secrets management 
+- Documentation
+- Containerization
+
+Before building the web app, I started by creating the deployment pipeline. When working on a project, it bothers me if I don't know how I'll deploy it. I want to know when the final commit is merged into `main`, the app will be automatically deployed within minutes, live for the world to see.
+
+One of the first things I set up for a new project is [pre-commit](https://pre-commit.com/) and [GitHub Actions](https://github.com/features/actions). GitHub Actions can run workflows triggered by repo activity, like a pull request. Pre-commit is a tool for managing git commit hooks to perform actions before committing.
+
+Pre-commit hooks can be a polarizing topic, I like the tool because it conveniently packages other tools to enforce linting, type checking, formatting etc. on your code. Whether or not these are ran locally, I use the [pre-commit/action](https://github.com/pre-commit/action) to enforce them on PRs.
+
+```yml
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - uses: pre-commit/action@v3.0.1
+```
+I prefer to enable them locally so I know ahead of time if this action will fail. Most pre-commit hooks will auto fix the errors they detect anyway.
+
+Containerizing the app gives it flexibility on where it can be deployed. With the recent rise in self-hosting, I was drawn to using a plain old VPS. While many PaaS and cloud providers make deploying apps trivial, it's tough to appreciate the value they add without experiencing solutions without all the bells and whistles. I don't want to be a pink elephant[^1].
+
+Since I planned to have at least two containers running on this VPS, I needed a way to orchestrate them. Tools like Kubernetes or Docker Swarm felt too heavy for my needs, so Docker Compose felt like the right solution, especially as availability isn't critical for this app. One nice benefit of Docker Compose is how easy it's to run locally. Using the same technology for both production and development provides numerous benefits.
+
+I knew I wouldn't set up my VPS through ClickOps. Instead, I used Pulumi for infrastructure as code and secrets management. Pulumi does a lot for my app, it handles building and publishing the image to ghcr.io, generating SSH keys, provisioning the VPS, setting up DNS records, configuring email routing, and running remote commands. The remote command triggers on any image changes and runs the [update_service.sh](https://github.com/TylerHillery/pypacktrends/blob/main/scripts/update_service.sh) script. ( more on that later) 
+
+On startup, the VPS runs a [cloud-init](https://github.com/TylerHillery/pypacktrends/blob/main/infra/templates/cloud-init.yml) script which configures the VPS to disallow password login, runs `apt update` `apt upgrade`, installs docker, installs tailscale, installs uv, clones repo, creates logging directory, starts containers, and configures ufw. 
+
+Pulumi is also great because I can use the same programming language for my IaC as I use for the backend. This lets me use additional packages, like jinja2, to turn the cloud-init file into a template, allowing Pulumi to inject configuration values.
+
+On each PR, pulumi preview runs via GitHub Actions and outputs the summary as a PR comment, so I know what changes will occur when the PR is merged. After merging the PR, this triggers another GitHub action to run pulumi up to deploy any changes. 
+
+When I first got the `update_service.sh` script to work, it felt like magic. The script itself is inspired by a great video from Tom Delalande, [The cloud is over-engineered and overpriced](https://youtu.be/jFrGhodqC08?si=CCiQYRmts3zmvDdR). This script is what enables zero-downtime deploys. It first pulls the new image from ghcr.io which makes the old image "dangling". We can find the image ID of dangling image by filtering for it.
+
+```bash
+dangling_image=$(docker images --filter "dangling=true" --filter "reference=${CONTAINER_REGISTRY_PREFIX}/${SERVICE_NAME}" --format "{{.ID}}")
+```
+
+Once we get the old image ID we can get the old container name by running.
+
+```bash
+old_container=$(docker ps --filter "ancestor=$dangling_image" --format "{{.Names}}")
+```
+
+Now, we can scale up the service to two containers, but we need to specify to not restart the currently running container. The new container will use the latest image we just pulled.  
+
+```bash
+docker compose -f docker-compose.yml up -d --no-deps --scale "$SERVICE_NAME"=2 --no-recreate "$SERVICE_NAME"
+```
+
+Once that's done, we can get the new container name.
+
+```bash
+new_container=$(docker ps --filter "ancestor=${FULL_IMAGE_NAME}" --format "{{.Names}}" | grep "$SERVICE_NAME" | tail -n 1)
+```
+
+We need to update our reverse proxy, caddy, to direct traffic to our new container by changing the container name env var.
+
+```bash
+CONTAINER_NAME=$(echo "${SERVICE_NAME}" | tr '[:lower:]' '[:upper:]')_CONTAINER_NAME
+docker exec "$caddy_container" /bin/sh -c "export ${CONTAINER_NAME}=$new_container && caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile"
+```
+
+Lastly, we clean up the old container and image.
+
+```bash
+docker container rm -f "$old_container"
+docker rmi "$dangling_image"
+```
+Tailscale was added because it provides a more secure and convenient way to handle SSH. It enables the GitHub Action to run remote commands and allows me to SSH into the VPS if needed. I generated the SSH key in Pulumi only as a backup in case I needed to debug the cloud-init script before Tailscale gets installed. Additionally, DigitalOcean requires you to create a password if you don't assign an SSH key when provisioning the droplet.
+
+So there you have it, CI/CD for your $5 VPS.
+
+## Caveats
+I'm still running into a few issues with the current setup. At the moment, [docker-compose.yml isn't found during cloud init start up](https://github.com/TylerHillery/pypacktrends/issues/32), so when the VPS is first provisioned, I have to SSH into the VPS and run the command manually.
+
+The update_service.sh script also hasn't been thoroughly tested. If something goes wrong in the middle of the script, it could result in downtime for the web app.
+
+Additionally, the updated container name variable for the Caddy container isn't persisted, so if there's an issue and Caddy restarts, it could lead to problems with the container.
+
+Some changes to the docker-compose.yml file or upgrades to the Caddy image will still require downtime.
+
+Another gap, I still need to implement tests,  but I've already outlined my testing plans in detail in [Tyler Tries to Automated Testing](https://www.tylerhillery.com/blog/tyler-tries-to-automate-testing/). 
+
+But remember, this is CI/CD for a $5 VPS, you'll have to wait until I come up with CI/CD for a $10 VPS to solve these problems.
+
+## Acknowledgements
+
+- [full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template): I didn't use this template directly, but I often refer to it for setup guidance on repository structure, GitHub Actions, development.md, config handling, and more.  
+- [Syntax Self Host 101 Playlist](https://www.youtube.com/playlist?list=PLLnpHn493BHHAxTeLNUZEDLYc8uUwqGXa): Helpful information on how setting up a VPS.
+- [Tailscale Infrastructure as Code Playlist](https://www.youtube.com/playlist?list=PLbKN2w7aG8EIbpIcZ2iGGsFTIZ-zMqLOn): Great resource on setting up a VPS with IaC and Tailscale.
+- [Tailscale GitHub Action](https://tailscale.com/kb/1276/tailscale-github-action): How to use Tailscale's GitHub Action and set up an OAuth client.
+- [Tom Delalande The cloud is over-engineeered and overpriced](https://youtu.be/jFrGhodqC08?si=CCiQYRmts3zmvDdR): The inspiration behind my `update_service.sh` script
+- [Rails World 2024 Opening Keynote - David Heinemeier Hansson](https://youtu.be/-cEn_83zRFw?si=i_eTTaGHbmbDVc3N): How to secure a VPS cheat sheet.
+- [Executing Remote Commands with Pulumi](https://www.pulumi.com/blog/executing-remote-commands): Where I learned about Pulumi's remote command feature.
+- [Cloudflare Pulumi Tutorial](https://developers.cloudflare.com/pulumi/tutorial/add-site): Tutorial on how using pulumi with Cloudflare resources.
+
+
+
+[^1]: [Rails World 2024 Opening Keynote - David Heinemeier Hansson](https://www.youtube.com/watch?v=-cEn_83zRFw) 

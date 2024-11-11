@@ -1,0 +1,12 @@
+{
+  "hash": "49b97d629434aed3fb5124873eb0f2ce",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"CI/CD For Your $5 VPS\"\ndescription: My experience developing a CI/CD pipeline for my $5 VPS \nauthor: \"Tyler Hillery\"\ndate: \"2024-10-27\"\ncategories: [DevOps, Testing, CI]\nfilters:\n  - social-share\nshare:\n  permalink: \"https://tylerhillery.com/blog/cicd-for-your-vps/\"\n  description:\n  twitter: true\n  facebook: false\n  reddit: true\n  stumble: false\n  tumblr: false\n  linkedin: true\n  email: true\n  mastodon: true\ndraft: false \n---\n\n------------------------------------------------------------------------\n\nAs a way to learn more about web development I wanted to build a production grade web app. Now, production grade can me many things to different people.\n\nOne thing that makes an app production grade is the CI/CD pipeline. Before diving into building the web app I wanted to have my CI/CD pipeline ironed out. Whenever ever I am working on a project it always bothers me if I don't know how I am going to end up deploying my work. It hangs over me and ends up slowing me down. I like to get a minimal working CI/CD pipeline as it's going to unlock me to ship faster in the future.\n\nOne of the first things I implement on many of my projects a tool called [pre-commit](https://pre-commit.com/) for code linting, type checking and formatting. Now pre-commit hooks seem to spark up some drama. \n\nI like pre-commit because it does a nice job packaging up a bunch of tools and different rules that you can apply on your codebase. There don't necessarily have to be enforce on every commit. This is actually what I have implemented in my Test GitHub Action\n\n\n```{yml}\n#| code-fold: true\n#| code-summary: \"test.yml\"\nname: Test\n\non:\n  push:\n    branches:\n      - main\n  pull_request:\n    types:\n      - opened\n      - synchronize\n\njobs:\n  pre-commit:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - name: Set up Python\n        uses: actions/setup-python@v5\n        with:\n          python-version-file: \".python-version\"\n      - uses: pre-commit/action@v3.0.1\n```\n\n\nYou can have triggered to only run on PR requests via GitHub Action. I personally like enabling them so I can know ahead of time if my GitHub Action is going to ail \n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
