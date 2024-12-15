@@ -18,6 +18,7 @@ share:
   email: true
   mastodon: true
 draft: false 
+image: false
 ---
 
 ------------------------------------------------------------------------
