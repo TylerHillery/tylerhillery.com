@@ -1,0 +1,147 @@
+---
+title: "How to Cost Effectively Query 440TB of PyPI Data"
+description: Some tips on how to reduce query costs when querying data on BigQuery  
+author: "Tyler Hillery"
+date: "2024-12-14"
+categories: [FinOps, Query Optimization]
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/cost-effective-bq/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+There is nothing more exhilarating than knowing one accidental SQL query can end up costing you $2,750. But if you don't like living life on the edge here are some techniques to help reduce the data scanned for your queries.
+
+BigQuery's On-demand pricing model costs $6.25 per TiB with the first TiB per month being free. I having been building [pypacktrends](pypacktrends.com), a web app to compare python package downloads, inspired by [npmtrends](npmtrends.com). This app served as a learning exercise to explore web development. 
+
+A core part of this app is being able to cost effectively serve the PyPI package downloads dataset, which is made free available on BigQuery thanks to the [Linehaul project](https://packaging.python.org/en/latest/guides/analyzing-pypi-package-downloads/#public-dataset). The downloads dataset alone is 440TB, which comes out to $2,750 if you run a simple `select * from bigquery-public-data.pypi.file_downloads`. 
+
+This is where understanding how the internals of your database can help you craft cost effective and performant queries. 
+
+One way to reduce the amount of data scanned is by selecting only the columns you need. BigQuery stores table data in a columnar format. This means when we select only one column, BigQuery is able to only scan that column worth of data. If I changed the query from doing a `select * from bigquery-public-data.pypi.file_downloads` to `select project from bigquery-public-data.pypi.file_downloads` this drops the data scanned from 440TB to 13.39TB which is $2,666 dollars less.
+
+We can confirm this by either running a [dry run query](https://cloud.google.com/bigquery/docs/samples/bigquery-query-dry-run) or if you're using BigQuery studio, in the upper right hand corner of the editor it will display the estimated amount of bytes to be scanned if you run the query.
+
+IMAGE HERE
+
+Another way to reduce the amount of data scanned is taking advantage partition pruning. A partitioned table divides the table into "chunks" called partitions. A common column to partition on is typically a date column such as `order_date`, or in our case the PyPI file downloads table is partitioned on the `timestamp` column representing the time of the download. This query will only scan 463.50 GB of data, `select * from `bigquery-public-data.pypi.file_downloads` where timestamp_trunc(timestamp, day) = timestamp("2024-12-14")`. 
+
+While partitioning divides the data up into smaller segments, clustering defines the sort order of the table. The formal definition from the BigQuery [docs](https://cloud.google.com/bigquery/docs/clustered-tables)
+
+> a clustered column is a user-defined table property that sorts storage blocks based on the values in the clustered columns.
+
+Just like partition pruning, BigQuery will also prune these blocks when filtering on this column. Running the query `select * from `bigquery-public-data.pypi.file_downloads` where project = 'duckdb'` results in 762.27 GB scanned. 
+
+Common columns to cluster on are columns used to join on. This image does a great job visualizing table partitioning and clustering:
+
+IMAGE HERE
+
+Even with all these techniques implemented, BigQuery is not designed for frequent small point queries targeting individual but rather large aggregate queries running across many rows. The terms to often describe these workloads are OLTP and OLAP. A way we can further optimize this by incrementally pre aggregating the data and then exporting it to another database then is more optimized for OTLP workloads.
+
+Daily download counts are too "nosiy" making it look like there are dramatic increases and decreases in download count day to day for a given package. To help smooth out the curve I opted to to pre aggregate on a weekly basis per package.
+
+Incremental processing is important here because once we calculate one week's worth of download counts there should be no need to recompute that data again. To calculate the weekly downloads per project takes ~230 GB scanned. Ran 4 times a month would result in 80 GB shy of the free 1 TB per month. Perfect.
+
+```
+select
+    project,
+    date_trunc(date(timestamp), week (monday)) as package_downloaded_week,
+    count(*)                                   as downloads
+from
+    bigquery-public-data.pypi.file_downloads
+where true
+    and timestamp >= '2024-12-02'
+    and timestamp < '2024-12-09'
+group by
+    1, 2
+```
+
+I prefer to use a tool like [dbt](https://github.com/dbt-labs/dbt-core) to manage these queries, as it helps with applying software engineering best practices to SQL code. Dbt even has a built in [incremental materialization](https://docs.getdbt.com/docs/build/incremental-models) method which materializes as a table in your database and only transforms the data you tell dbt to filter for.
+
+Some best practices to help minimize the chance of running an expensive query is setting the `maximum_bytes_billed` in your dbt profile. Here is how I have configured my `dev` profile. 
+
+QUARTO NOTES/WARNING/CAUTION I have noticed the BigQuery estimated bytes scanned can be way over stated when running incremental models so I have set it much higher than what I would have liked to here.
+
+```yml
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: pypacktrends-prod
+      dataset: "dbt_{{ env_var('BIGQUERY_USER') }}"
+      priority: batch
+      threads: 4
+      timeout_seconds: 300
+      maximum_bytes_billed: 300000000000
+```
+
+I have also developed a dbt macro called `pypi_package_filter` which checks the dbt target to see if it should filter for only a subset of packages. For the `dev` and `ci` targets I don't need to be querying the full range of packages.
+
+```sql
+{% macro pypi_package_filter(column_name) -%}
+    {% set package_list = [
+        'dask',
+        'datafusion',
+        'duckdb',
+        'getdaft',
+        'ibis-framework',
+        'pandas',
+        'polars',
+        'pyspark'
+    ] %}
+
+    {%- if target.name != 'prod' -%}
+        {{ column_name }} in ('{{ package_list | join("', '") }}')
+    {%- else -%}
+        true
+    {%- endif -%}
+
+{% endmacro %}
+```
+
+```sql
+with
+source as (
+    select * from {{ source('pypi', 'file_downloads') }}
+),
+
+renamed as (
+    select
+        timestamp    as package_downloaded_at,
+        country_code as package_download_country_code,
+        url          as package_download_url_path,
+        project      as package_name,
+        file         as package_download_file_details,
+        details      as package_download_details,
+        tls_protocol as package_download_tls_protocol,
+        tls_cipher   as package_download_tls_cipher
+    from
+        source
+    where {{ pypi_package_filter('project') }}
+)
+
+select * from renamed
+```
+
+Lastly, I use dbt [clone](https://docs.getdbt.com/reference/commands/clone) which takes advantage of BigQuery's [table clone](https://cloud.google.com/bigquery/docs/table-clones-intro) feature.
+
+> A table clone is a lightweight, writable copy of another table (called the base table). You are only charged for storage of data in the table clone that differs from the base table, so initially there is no storage cost for a table clone. Other than the billing model for storage, and some additional metadata for the base table, a table clone is similar to a standard table—you can query it, make a copy of it, delete it, and so on.
+
+This allows me to create a full copy of the expensive weekly downloads model into my own dev dataset at zero cost, without having to recreate it from scratch. To take advantage of this feature, it requires access the production dbt manifest JSON file, which contains a full representation of your dbt project's resources.
+
+I run my dbt jobs through GitHub Actions and save the generated manifest file to my VPS (I even have the dbt docs publicly available at [dbtdocs.pypacktrends.com](https://dbtdocs.pypacktrends.com/#!/overview)). To retrieve the manifest file I rsync the files to my local machine.
+
+The downside of this is I no longer get the thrill when I run my queries, which means I have to get it elsewhere like force pushing to main.
