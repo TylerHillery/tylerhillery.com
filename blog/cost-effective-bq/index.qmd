@@ -24,7 +24,7 @@ draft: false
 
 There's nothing more exhilarating than knowing one SQL query could end up costing you $2,750. But if you don't like living on the edge, here are some techniques to help reduce your query costs.
 
-BigQuery's On-demand pricing model costs $6.25 per TiB, with the first TiB per month being free. I have been building [pypacktrends](pypacktrends.com), a web app to compare Python package downloads inspired by [npmtrends](npmtrends.com). This app served as a learning exercise to explore web development. 
+BigQuery's On-demand pricing model costs $6.25 per TiB, with the first TiB per month being free. I have been building [PyPack Trends](https://pypacktrends.com), a web app to compare Python package downloads inspired by [npm trends](https://npmtrends.com). This app served as a learning exercise to explore web development. 
 
 A core part of this app is being able to cost-effectively serve the PyPI package downloads dataset. The dataset is made available on BigQuery for free, thanks to the [Linehaul project](https://packaging.python.org/en/latest/guides/analyzing-pypi-package-downloads/#public-dataset). The downloads dataset alone is 440TB, which comes out to $2,750 if you run a simple `select * from bigquery-public-data.pypi.file_downloads`. 
 
