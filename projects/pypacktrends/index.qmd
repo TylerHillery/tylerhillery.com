@@ -1,0 +1,14 @@
+---
+title: "PyPack Trends"
+author: "Tyler Hillery"
+date: "2024-12-26"
+categories: [Data Apps, Web Apps]
+image: "../../assets/images/pypacktrends.svg"
+code: 
+  - url: https://pypacktrends.com
+    text: Site 
+  - url: https://github.com/TylerHillery/pypacktrends
+    text: GitHub
+  - url: https://www.tylerhillery.com/blog/tyler-tries-web-dev
+    text: Blog
+---

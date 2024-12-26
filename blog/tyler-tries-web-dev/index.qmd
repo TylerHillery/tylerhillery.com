@@ -1,0 +1,336 @@
+---
+title: "Tyler Tries Web Development"
+description: To learn web development I built PyPack Trends, a web app to compare package downloads. Here is what I learned 
+author: "Tyler Hillery"
+date: "2024-12-25"
+categories: [Web Development]
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/tyler-tries-web-dev/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+## Overview
+As a learning exercise to explore web development, I built [PyPack Trends](https://pypacktrends.com), a web app to compare python package downloads inspired by [npm trends](https://npmtrends.com). Venturing into a new domain can be daunting and I wanted to share my experience. 
+
+Before starting any project, I need to understand why. Why am I, as a data engineer, taking the time to learn web development, a domain that does not overlap much with data engineering? 
+
+While I work with REST APIs for data extraction, web technologies like HTML, CSS, JavaScript, and web servers aren't part of my day to day work. Though, as Vicki points out, maybe I've been underestimating their importance:
+
+{{< tweet vboykis 1727058177689370907 >}}
+
+My drive to learn about the web stems from curiosity and my fundamental belief the web is one of the most essential pieces of tech. It's the de facto way to share your software with the world. 
+
+Even if I don't do web development for my work, I can do my banking, shopping, coding, etc. through the web. Heck, you can drive a mini jeep around someone's [personal portfolio](https://bruno-simon.com/) on the web. It's the ultimate medium.
+
+Something this fundamental to my life, yet I didn't understand how it worked. This bothered me like a loose thread on a piece of clothing. I had to pull at it.
+
+Starting with 'why' is crucial because inevitably, self-doubt creeps in, "Why are you even doing this? You'll never need to know this." That's when you need to remember your why. I hit these moments while debugging my [cloud init script](https://bsky.app/profile/tylerhillery.com/post/3lb3g2sxrw224) and setting up [Google Cloud OIDC](https://bsky.app/profile/tylerhillery.com/post/3lb3bojrckk2m).
+
+I wanted to build more than just a web app, I wanted a *"production grade"* application. The often overlooked aspects like testing, CI/CD, observability, monitoring, analytics, and logging were crucial to me. Simply throwing together some HTML, CSS, and JavaScript wasn't enough. I wanted the full experience of developing and maintaining a real world application.
+
+With that said, I imposed some self constraints as it's important not to boil the ocean when learning a new domain. If you thought the [Machine Learning, AI, & Data landscape](https://mattturck.com/mad2024/) image was overwhelming I don't even want to know what the web dev landscape would look like. 
+
+Their frameworks even have frameworks. It's a recurring joke that a new UI library is launched every week. I already had ambitious goals for this web app, and I didn't want to spend my [complexity budget](https://htmx.org/essays/complexity-budget/) on learning a whole new language and build tooling. That can come later, as we all have to start somewhere.
+
+I also didn't want to use a framework such as [Streamlit](https://github.com/streamlit), which I had used before and enjoyed. Streamlit abstracts away too many of the layers of the web I am looking to learn. Instead, I used [FastAPI](https://fastapi.tiangolo.com/) as my web framework, [pico css](https://picocss.com/) for styling, [htmx](https://htmx.org) for interactivity and [caddy](https://caddyserver.com/) as my webserver. This is continuously deployed with zero downtime to a VPS running via docker compose.
+
+## The Web 
+As a data engineer, I'm used to thinking about data pipelines and transformations. However, the web introduces a different kind of pipeline. One that starts with a URL being typed into a browser and ends with a rendered page on your screen. 
+
+Understanding this pipeline gave me a deeper appreciation for what happens whenever I visit a web page. When you type a URL into your browser, a series of steps occur to transform that URL into a rendered web page:
+
+1. **DNS Resolution**: The browser contacts a DNS server to resolve the domain name into an IP address.
+2. **TCP Connection**: The browser establishes a TCP connection with the server at the resolved IP address.
+3. **TLS Handshake**: If using HTTPS, the browser and server perform a TLS handshake to establish a secure connection.
+4. **HTTP Request**: The browser sends an HTTP request to the server, asking for the content at the specified URL.
+5. **Server Processing**: The server processes the request, which may involve querying a database, running application logic, and generating HTML.
+6. **HTTP Response**: The server returns an HTTP response containing the requested content.
+7. **Rendering**: The browser parses the HTML, CSS, and JavaScript, and renders the web page on the screen.
+
+It's crazy to think about the number of steps to load a simple web page. For Python web apps, there are even more layers involved.
+
+Python has two interface standards: WSGI (Web Server Gateway Interface) and ASGI (Asynchronous Server Gateway Interface). Servers like Gunicorn (WSGI) and Uvicorn (ASGI) implement these interfaces to communicate between web servers and Python web applications like FastAPI. These servers handle translating HTTP requests into something Python can understand.
+
+On top of these application servers, you typically need a web server and reverse proxy like Nginx or Caddy. These serve static files efficiently and route HTTP requests to your application servers. I chose Caddy because of its ease of use and automatic HTTPS.
+
+I found this definition from Real Python to provide a great mental model of the various layers of a Python web app:
+
+> Django is a web framework. It lets you build the core web application that powers the actual content on the site. It handles HTML rendering, authentication, administration, and backend logic.
+>
+> Gunicorn is an application server. It translates HTTP requests into something Python can understand. Gunicorn implements the Web Server Gateway Interface (WSGI), which is a standard interface between web server software and web applications.
+> 
+> Nginx is a web server. It's the public handler, more formally called the reverse proxy, for incoming requests and scales to thousands of simultaneous connections. [^1]
+
+
+## Getting Started
+
+With clear requirements, a Why, I was ready. So I crack open my terminal create a new directory and open my editor... now what? Where do I even begin? Well just like Picasso said *"Good artists copy. Great artists"* that's what I did. 
+
+While searching for similar projects I found the [full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template). I didn't end up using this exact template but it was another reference implementation I used to get started. 
+
+One thing I really liked about the template was the repository structure. It's a monorepo where each sub directory represents an individual project that could be theoretically separated into its own repository. I liked thinking of each sub directory as its own service. 
+
+```bash
+➜ tree -L 1
+.
+├── LICENSE
+├── README.md
+├── alloy
+├── backend
+├── caddy
+├── data
+├── dbt
+├── deployment.md
+├── development.md
+├── docker-compose.override.yml
+├── docker-compose.yml
+├── infra
+├── litestream
+├── logs
+└── scripts
+```
+
+The first thing I did when starting the project was develop the [CI/CD Pipeline](https://www.tylerhillery.com/blog/cicd-for-your-vps/). 
+
+This might sound counterintuitive given my goal of learning web development, but it provided a solid foundation and forced me to start with something. This was the initial version of the web app when I initially launched it:
+
+```python
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+
+app = FastAPI()
+
+
+@app.get("/", response_class=HTMLResponse)
+def root() -> HTMLResponse:
+    html_content = """
+    <html>
+        <head>
+            <title>PyPack Trends</title>
+        </head>
+        <body>
+            <h3>PyPack Trends 🐍 coming soon...</h3>
+        </body>
+    </html>
+    """
+    return html_content
+
+
+@app.get("/health-check/")
+async def health_check() -> bool:
+    return True
+```
+
+The upfront investment in the CI/CD pipeline allowed me to quickly iterate and deploy changes, ensuring I could focus on learning without worrying about the deployment process.
+
+## Interactivity with htmx
+
+The final web app is actually just one HTML file. I used [htmx](https://htmx.org/) to handle the interactive parts of the app, such as active search, adding packages to the list, retrieving the charts, and so on.
+
+Htmx allowed me to define specific "triggers" using the `hx-trigger` attribute, which initiates an AJAX request. AJAX (Asynchronous JavaScript and XML) allows web pages to be updated asynchronously by exchanging small amounts of data with the server behind the scenes. This means that parts of a web page can be updated without reloading the entire page[^2]. 
+
+By specifying the type of request with `hx-get`, `hx-post` or `hx-delete` attributes in the HTML tag, the request is sent to the server and handled by the corresponding FastAPI route. In the FastAPI route, I perform data validation and logic to generate the response, eventually returning HTML fragments back to the client. Htmx then swaps the HTML content based on the `hx-swap` and `hx-target` attributes.
+
+The [htmx examples](https://htmx.org/examples/) proved invaluable in understanding how to implement interactivity in my web app. My favorite example is [active search](https://htmx.org/examples/active-search/) which I used on my site to show python packages as you type in the search bar. 
+
+Working directly with HTML attributes in htmx gave me hands on experience with web fundamentals. True to its "HTML++" pitch, it enhanced HTML while keeping me close to the underlying technology, improving my overall learning process.
+
+## Observability
+I was prepared to have this detailed section on setting up observability for my app but it turned out to be very underwhelming, which is a good thing!
+
+Setting up [Grafana](https://grafana.com/) monitoring was straightforward. Following their Docker integration [docs](https://grafana.com/docs/alloy/latest/set-up/install/docker/), I added Grafana's Alloy agent as a service in my docker compose file to forward logs and metrics to Grafana Cloud.
+
+For monitoring my SQLite backups, I found a pre-built [Litestream](https://litestream.io/) dashboard in a [GitHub issue](https://github.com/benbjohnson/litestream/issues/86). Setting up Litestream in Docker was simple thanks to their [documentation](https://litestream.io/guides/docker/), though I did have to peek at the source code to see how to expose the metrics, which turned out to be a simple line in the `litestream.yml` file `addr: "0.0.0.0:9090"`
+
+::: {.callout-caution appearance="minimal" title="Grafana Dashboards" collapse="true"} 
+
+![](../../assets/images/pypacktrends-grafana-linux.svg)
+<p style="text-align: center;"><b>Grafana Linux Integration Overview</b></p>
+
+![](../../assets/images/pypacktrends-grafana-docker.svg)
+<p style="text-align: center;"><b>Grafana Docker Integration Overview</b></p>
+
+![](../../assets/images/pypacktrends-grafana-docker-logs.svg)
+<p style="text-align: center;"><b>Grafana Docker Integration Logs</b></p>
+
+![](../../assets/images/pypacktrends-grafana-litestream.svg)
+<p style="text-align: center;"><b>Grafana Litestream Overview</b></p>
+
+:::
+
+Setting up [Sentry](https://sentry.io/welcome/) was as simple as adding this code in my `main.py` file for my FastAPI app. 
+
+```python
+if settings.SENTRY_DSN and settings.ENVIRONMENT != "dev":
+    logger.info("Initializing Sentry SDK")
+    sentry_sdk.init(
+        dsn=str(settings.SENTRY_DSN),
+        enable_tracing=True,
+        traces_sample_rate=1.0,
+        _experiments={
+            "continuous_profiling_auto_start": True,
+        },
+    )
+```
+
+And this script HTML tag for session replays
+
+```html
+<script src="https://js.sentry-cdn.com/2f6693a1a57f2f806caa2d34fe9cbd7e.min.js" crossorigin="anonymous"></script>
+```
+
+I initially underestimated Sentry's capabilities, thinking it was primarily for error alerting. However, it also offers valuable performance insights, such as identifying the slowest endpoints and DB queries.
+
+The error alerting was helpful as it helped me identify a couple of issues where I was returning a 500 level status code when it should have been a 400 level.
+
+::: {.callout-note appearance="minimal" title="Sentry Dashboards" collapse="true"} 
+
+![](../../assets/images/pypacktrends-sentry-project.svg)
+<p style="text-align: center;"><b>Sentry Project Overview</b></p>
+
+![](../../assets/images/pypacktrends-sentry-perf.svg)
+<p style="text-align: center;"><b>Sentry Performance Dashboard</b></p>
+
+:::
+
+Setting up PostHog for web analytics was also done by adding an HTML script tag: 
+
+```html
+<script>
+  !function (t, e) { var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
+  posthog.init('phc_p0ITJzZ8QM1sBKYur3ugA5kqgemya2DMEpccVw5KmMO', {
+    api_host: 'https://us.i.posthog.com',
+    person_profiles: 'identified_only'
+  })
+</script>
+```
+
+::: {.callout-warning appearance="minimal" title="PostHog Dashboards" collapse="true"} 
+
+![](../../assets/images/pypacktrends-posthog-homepage.svg)
+<p style="text-align: center;"><b>PostHog Homepage</b></p>
+
+![](../../assets/images/pypacktrends-posthog-web-analytics.svg)
+<p style="text-align: center;"><b>PostHog Web Analytics</b></p>
+
+![](../../assets/images/pypacktrends-posthog-session-replay.svg)
+<p style="text-align: center;"><b>PostHog Session Replay</b></p>
+
+:::
+
+## Fun Challenges I Faced 
+
+This project exposed me to interesting challenges that would have been hard to learn through a course or book.
+
+### OOM
+My first hurdle was exit code 125 in my GitHub Action, an out of memory (OOM) error occurring while syncing BigQuery data to SQLite on my VPS. This became an opportunity to dive into Python memory profiling.
+
+I opted to use [memray](https://github.com/bloomberg/memray/tree/main), developed by the fantastic folks at Bloomberg. Uv made running memray as simple as: 
+
+```bash
+uv run --with memray memray run app/sync.py packages
+```
+
+This produces a helpful message to generate a flame graph.
+
+```bash
+You can now generate reports from the stored allocation records.
+Some example commands to generate reports:
+
+/Users/tyler/.cache/uv/archive-v0/3-XBNEwI_aeReaU130YLC/bin/python -m memray flamegraph app/memray-sync.py.98012.bin
+```
+
+Flamegraphs initially confused me because I kept treating the x-axis as time, but left-to-right ordering has no special meaning. While the memray [docs](https://bloomberg.github.io/memray/flamegraph.html) and Brendan Greg's excellent talk [Visualizing Performance - The Developers' Guide to Flame Graphs](https://www.youtube.com/watch?v=VMpTU15rIZY) helped explain the concepts, what really clicked was profiling my own code. Seeing my functions in the flame patterns made the visualization immediately more intuitive.
+
+The profiler revealed the peak memory usage. My first attempt at optimization was to reduce the batch size from 50,000 to 5,000 rows, which had no effect. This seemed odd. Turned out, the issue wasn't the batch size but how I was iterating over the BigQuery results.
+
+My original code attempted to use `islice` to iterate through the BigQuery results without loading them all into memory at once:
+
+```python
+BATCH_SIZE = 50_000
+
+job_config = bigquery.QueryJobConfig(
+    labels={
+        "application": "pypacktrends",
+        "component": "sync",
+        "type": "packages",
+        "environment": settings.ENVIRONMENT,
+    }
+)
+rows = client.query(select_query, job_config=job_config).result()
+total_rows = rows.total_rows
+rows = iter(rows)
+with write_engine.begin() as conn:
+    while batch := list(islice(rows, BATCH_SIZE)):
+        packages = [dict(row.items()) for row in batch]
+        conn.execute(upsert_sql, packages)
+```
+
+The issue? BigQuery was loading 50,000 rows regardless of the batch size setting. The solution was to use BigQuery's native `page_size` parameter to properly stream the results:
+
+```python
+BATCH_SIZE = 5000
+
+job_config = bigquery.QueryJobConfig(
+    labels={
+        "application": "pypacktrends",
+        "component": "sync",
+        "type": "packages",
+        "environment": settings.ENVIRONMENT,
+    }
+)
+rows = client.query(select_query, job_config=job_config).result(
+    page_size=BATCH_SIZE
+)
+with write_engine.begin() as conn:
+    for page in rows.pages:
+        packages = [dict(row.items()) for row in page]
+        conn.execute(upsert_sql, packages)
+```
+
+The other thing that stood out to me in the Flamegraph was seeing memory allocations from python packages that I wasn't using in this file. I learned when you use `from module import function` python still loads the entire module. I saw this in my memory flame graph. Moving functions with heavy deps to a separate file deleted a whole "flame" of memory allocations.
+
+![](../../assets/images/memray-flamegraph.svg)
+
+With all these improvements implemented I was able to reduce my peak memory usage from 400MiB to 100MiB a 75% reduction! This resolved the OOM error I was facing in my GitHub Action.
+
+### No more disk and No more db
+The other challenge I faced was running out of disk space. I explored ways to reduce disk space such as removing indexes from SQLite that were only used during the weekly sync. 
+
+This reclaimed ~5GB of disk space but it still wasn't enough. I gave in and upgraded my droplet from 1GB Memory and 25GB Disk space to the next size up which is 2GB Memory and 50GB Disk Space. No more $5 VPS 😢. 
+
+::: {.callout-tip appearance="simple"}
+**Learning Through Constraints**: Starting with a minimal VPS forced me to optimize code and understand memory usage, I highly recommended imposing these constraints before throwing resources at the problem. 
+:::
+
+Upgrading my VPS required me to redeploy it. This meant adding a database restoration process to my cloud-init script. I don't have a staging environment to test this so I just went for it. Everything seemed to work at first until I realized my database file was only 200MiB when it used to be 12GiB... 
+
+This was very concerning as it took me over 14 hours to sync the entire dataset from BigQuery to SQLite. Fortunately, Litestream maintains multiple backup generations, specifying an older generation in the restore command recovered the full database. While the root cause remains unclear, Litestream's multiple generations provide a safety net for future restores. 
+
+Step one to becoming a senior engineer: drop the prod database. Check.
+
+## Conclusion
+
+This has been, by far, the most rewarding personal project I've built. After acquiring [pypacktrends.com](https://pypacktrends.com) in late October 2024, I set out to complete the project by year's end, and the journey has been incredibly educational.
+
+I gained hands on experience across the entire software development lifecycle by developing this web application. I was challenged to think holistically about software development beyond just writing code. 
+
+This project has given me a solid foundation in full-stack development that I'm excited to build upon in future work.
+
+Stay tuned for what I try next.
+
+[^1]: [Real Python: Django, Nginx, and Gunicorn](https://realpython.com/django-nginx-gunicorn/?utm_source=pocket_shared#incorporating-nginx)
+[^2]: [AJAX](https://www.w3schools.com/whatis/whatis_ajax.asp)
