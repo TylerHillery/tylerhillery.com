@@ -2,7 +2,7 @@
 title: "Tyler Tries Web Development"
 description: To learn web development I built PyPack Trends, a web app to compare package downloads. Here is what I learned 
 author: "Tyler Hillery"
-date: "2024-12-25"
+date: "2024-12-26"
 categories: [Web Development]
 filters:
   - social-share
