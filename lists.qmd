@@ -71,6 +71,7 @@ share:
 - [It's hard to write code for computers, but it's even harder to write code for humans by Erik Bernhardsson](https://erikbern.com/2024/09/27/its-hard-to-write-code-for-humans?s=09)
 - [I don't want to learn your garbage query language by Erik Bernhardsson](https://erikbern.com/2018/08/30/i-dont-want-to-learn-your-garbage-query-language?)
 - [Programmers should stop celebrating incompetence by DHH](https://world.hey.com/dhh/programmers-should-stop-celebrating-incompetence-de1a4725)
+- [Teach Yourself Programming in Ten Years](https://norvig.com/21-days.html)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Academic Papers 📄"} 
