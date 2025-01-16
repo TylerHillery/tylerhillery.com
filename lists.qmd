@@ -51,6 +51,7 @@ share:
 - [Mitchell Hashimoto - Founder of HashiCorp, Terraform, and Thoughts of Open Source Monetization](https://youtu.be/vw61iI08iro?si=RI5hoFrnhlmgXkG4)
 - [The hard power of management and the soft power of senior ICs | Josh Wills](https://youtu.be/Pmnb5FsdfNs?si=eeZw9Twewo2Dp6M6)
 - [Databases, Ambitions, and a Testing Silver Bullet? (With Joran Dirk Greef)](https://youtu.be/ayG7ltGRRHs?si=Bniz6V0m25LLJFP5)
+- [Creator of Ghostty talks Zig over Go](https://youtu.be/YQnz7L6x068?si=73_6wfhzblymnV-c)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Books 📚"} 
@@ -72,6 +73,7 @@ share:
 - [I don't want to learn your garbage query language by Erik Bernhardsson](https://erikbern.com/2018/08/30/i-dont-want-to-learn-your-garbage-query-language?)
 - [Programmers should stop celebrating incompetence by DHH](https://world.hey.com/dhh/programmers-should-stop-celebrating-incompetence-de1a4725)
 - [Teach Yourself Programming in Ten Years](https://norvig.com/21-days.html)
+- [Being a High-Leverage Generalist](https://char.blog/generalist)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Academic Papers 📄"} 
