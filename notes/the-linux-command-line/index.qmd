@@ -1,0 +1,66 @@
+---
+title: "The Linux Command Line"
+description: My notes & review of [The Linux Command Line](https://nostarch.com/tlcl2) by William Shotts 
+author: "Tyler Hillery"
+date: "2025-01-23"
+image: "./cover.png"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/the-linux-command-line"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books]
+format:
+  html:
+    code-fold: true
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+## Introduction 
+
+- What a way to start off a book, I pumped.
+
+> I want to tell you a story. No, not the story of how, in 1991, Linus Torvalds wrote the first version of the Linux kernal. You can read that story in lots of Linux books. Nor am I going to tell you the story of how, some years earlier, Richard Stallman began the GNU Project to create a free Unix-like operating system. That's an important story too, but most other Linux books have that one as well. No, I want to tell you the story of how you take back control of your computer.
+
+- Another one:
+
+> Many people speak of "freedom" with regard to Linux, but I don't think most people know what this freedom really means. Freedom is the power to decide what your computer does, and the only way to have this freedom is to know what your computer is doing. Freedom is a computer that is without secrets, one where everything can be known if you care enough to find out.
+
+- **Shell**: A program that takes keyboard commands and passes them to the operating system to carry out e.g. `bash`
+- **Terminal Emulators**: Program to interact with the shell
+- **Shell Prompt**: A symbol or set of characters at the beginning of the command line that indicates the shell is ready to accept commands, e.g., `$` for a standard user or `#` for the root user.
+- **Symbolic Link**: Special kind of file that points to another file or directory. It acts as a shortcut, allowing you to access the target file or directory from a different location in the filesystem. Symbolic links can span across different filesystems and can link to directories as well as files.
+
+## Wildcards (Globbing)
+
+| Wildcard       | Meaning                                      |
+|----------------|----------------------------------------------|
+| `*`            | Matches any number of characters             |
+| `?`            | Matches any single character                 |
+| `[characters]` | Matches any one character in the set         |
+| `[!characters]`| Matches any one character not in the set     |
+| `[[:class:]]`  | Matches any character in the specified class |
+
+### Character Classes
+
+| Class        | Meaning                                      |
+|--------------|----------------------------------------------|
+| `[:alnum:]`  | Alphanumeric characters                      |
+| `[:alpha:]`  | Alphabetic characters                        |
+| `[:digit:]`  | Digits (0-9)                                 |
+| `[:lower:]`  | Lowercase letters                            |
+| `[:upper:]`  | Uppercase letters                            |
+| `[:space:]`  | Whitespace characters                        |
+
+- I have always wondered what the difference between `rm -r dir` vs `rm -rf dir` and it's the same except the `f` means if `dir` doesn't exists, `rm` will continue silently. `f` or `--force` ignores nonexistence files/dirs and does not prompt.
