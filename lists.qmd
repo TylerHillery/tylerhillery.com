@@ -27,9 +27,6 @@ share:
 - [Supabase Community Meetup - Solving Practical Problems with Window Functions & Range Joins (Slides)](https://onedrive.live.com/:p:/g/personal/B108287C54AF8760/s!AmCHr1R8KAix30k1LypT60PBnd-P?resid=B108287C54AF8760!12233&ithint=file%2Cpptx&e=KrLEva&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvcyFBbUNIcjFSOEtBaXgzMGsxTHlwVDYwUEJuZC1QP2U9S3JMRXZh)
 :::
 
-
-
-
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
@@ -73,6 +70,7 @@ share:
 - [The Pragmatic Programmer](https://www.tylerhillery.com/notes/pragmatic-programmer/)
 - [Effective Python](https://www.tylerhillery.com/notes/effective-python/)
 - [A Philosophy of Software Design](https://www.tylerhillery.com/notes/philosophy-of-software-design/)
+- [High Performance Browser Networking](https://hpbn.co/)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Articles 📝"} 
@@ -84,8 +82,10 @@ share:
 - [It's hard to write code for computers, but it's even harder to write code for humans by Erik Bernhardsson](https://erikbern.com/2024/09/27/its-hard-to-write-code-for-humans?s=09)
 - [I don't want to learn your garbage query language by Erik Bernhardsson](https://erikbern.com/2018/08/30/i-dont-want-to-learn-your-garbage-query-language?)
 - [Programmers should stop celebrating incompetence by DHH](https://world.hey.com/dhh/programmers-should-stop-celebrating-incompetence-de1a4725)
-- [Teach Yourself Programming in Ten Years](https://norvig.com/21-days.html)
+- [Teach Yourself Programming in Ten Years by Peter Norvig](https://norvig.com/21-days.html)
 - [Being a High-Leverage Generalist](https://char.blog/generalist)
+- [Professional Programming: The First 10 Years by Thorsten Ball](https://thorstenball.com/blog/2022/05/17/professional-programming-the-first-10-years/)
+- [How can you not be romantic about programming? by Thorsten Ball](https://thorstenball.com/blog/2020/09/08/how-can-you-not-be-romantic-about-programming/)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Academic Papers 📄"} 
