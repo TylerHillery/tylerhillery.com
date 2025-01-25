@@ -64,3 +64,8 @@ format:
 | `[:space:]`  | Whitespace characters                        |
 
 - I have always wondered what the difference between `rm -r dir` vs `rm -rf dir` and it's the same except the `f` means if `dir` doesn't exists, `rm` will continue silently. `f` or `--force` ignores nonexistence files/dirs and does not prompt.
+
+## Redirection
+
+- `>` will always overwrite a file and if you can use `$ > file_name.txt` as a quick way to trunc a file
+- `>>` to append to a file
