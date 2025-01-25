@@ -18,6 +18,18 @@ share:
 
 *The lists are in no particular order*
 
+# My Content 
+::: {.callout-note appearance="minimal" collapse=true title="️Videos 📺"} 
+- [Supabase Storage and DuckDB Demo](https://github.com/TylerHillery/supabase-storage-duckdb-demo)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [Supabase Community Meetup - Solving Practical Problems with Window Functions & Range Joins (Slides)](https://onedrive.live.com/:p:/g/personal/B108287C54AF8760/s!AmCHr1R8KAix30k1LypT60PBnd-P?resid=B108287C54AF8760!12233&ithint=file%2Cpptx&e=KrLEva&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvcyFBbUNIcjFSOEtBaXgzMGsxTHlwVDYwUEJuZC1QP2U9S3JMRXZh)
+:::
+
+
+
+
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
