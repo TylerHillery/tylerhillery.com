@@ -113,7 +113,6 @@ share:
 
 ::: {.callout-note appearance="minimal" collapse=true title="Tweets 🐦"} 
 {{< tweet karpathy 1756380066580455557 >}}
-{{< tweet ftlsid 1726711340444901849 >}}
 {{< tweet josh_wills 1508624385241849856 >}}
 {{< tweet teej_m 1489491830580264960 >}}
 :::
