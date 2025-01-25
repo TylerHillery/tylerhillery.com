@@ -73,7 +73,7 @@ share:
 - [High Performance Browser Networking](https://hpbn.co/)
 :::
 
-::: {.callout-note appearance="minimal" collapse=true title="Articles 📝"} 
+::: {.callout-note appearance="minimal" collapse=true title="Blog Posts📝"} 
 - [The hunt for the Holy Grail by Benn Stancil](https://benn.substack.com/p/the-hunt-for-the-holy-grail?utm_source=pocket_shared)
 - [Obsession by Phil Eaton](https://notes.eatonphil.com/2024-08-24-obsession.html)
 - [Be someone who does things by Phil Eaton](https://notes.eatonphil.com/2024-09-23-be-someone-who-does-things.html)
