@@ -69,3 +69,7 @@ format:
 
 - `>` will always overwrite a file and if you can use `$ > file_name.txt` as a quick way to trunc a file
 - `>>` to append to a file
+
+## Processes
+
+- **daemon program**: programs that sit in the background and do their thing without having any user interface
