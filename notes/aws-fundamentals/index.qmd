@@ -1,0 +1,32 @@
+---
+title: "AWS Fundamentals"
+description: My notes & review of [AWS Fundamentals](https://awsfundamentals.com/) by Tobias Schmidt & Sandro Volpicella
+author: "Tyler Hillery"
+date: "2025-02-09"
+image: "./cover.png"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/aws-fundamentals"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books]
+format:
+  html:
+    code-fold: true
+---
+
+------------------------------------------------------------------------
+
+## Review 
+
+**Rating**: ⭐⭐⭐⭐
+
+Very good hands on introduction to the most important services of AWS. There were a few commands I thought were glossed over during the setup of certain resources such as implementing the proper security group rules on the default VPC. Otherwise, I thought the book did a great job explaining many of the core AWS products, their uses cases, and real-world examples. I would recommend this to someone getting start with AWS.
