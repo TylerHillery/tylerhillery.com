@@ -2,7 +2,7 @@
 title: "The Linux Command Line"
 description: My notes & review of [The Linux Command Line](https://nostarch.com/tlcl2) by William Shotts 
 author: "Tyler Hillery"
-date: "2025-01-23"
+date: "2025-02-10"
 image: "./cover.png"
 filters:
     - social-share
@@ -73,3 +73,7 @@ format:
 ## Processes
 
 - **daemon program**: programs that sit in the background and do their thing without having any user interface
+
+# Review
+
+This book covers a lot about the linux command line. Overall, I thought it was very good but I wouldn't go into the book expecting to have all the command line memorized. Use it as an opportunity to expose yourself to what's possible and then come back to it as a reference book. Let your curiosity drive you when exposed to new commands that you find useful to dive deeper in.

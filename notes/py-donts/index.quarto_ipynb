@@ -1,0 +1,79 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"\"\n",
+        "description: My notes & review of [Py Donts](https://mathspp.com/books/pydonts) by Rodrigo Girão Serrão \n",
+        "author: \"Tyler Hillery\"\n",
+        "date: \"2025-02-11\"\n",
+        "image: \"./cover.png\"\n",
+        "filters:\n",
+        "    - social-share\n",
+        "share:\n",
+        "    permalink: \"https://tylerhillery.com/notes/py-donts\"\n",
+        "    description:\n",
+        "    twitter: true\n",
+        "    facebook: false\n",
+        "    reddit: true\n",
+        "    stumble: false\n",
+        "    tumblr: false\n",
+        "    linkedin: true\n",
+        "    email: true\n",
+        "    mastodon: true\n",
+        "categories: [Technical Books]\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "\n",
+        "------------------------------------------------------------------------\n",
+        "\n",
+        "# Notes\n",
+        "\n",
+        "## Zip Up\n",
+        "\n",
+        "- `zip` goes until the shortest of the iterators provided\n",
+        "- In Python 3.10> you can use a `strict` keyword to error if the length of iterators don't match\n"
+      ],
+      "id": "540a5737"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "firsts = [\"Tyler\", \"Chandra\"]\n",
+        "lasts = [\"Hillery\", \"Hillery\", \"Hill\"]\n",
+        "\n",
+        "try:\n",
+        "    for z in zip(firsts, lasts, strict=True):\n",
+        "        print(z)\n",
+        "except Exception as e:\n",
+        "    print(e)"
+      ],
+      "id": "707ddb8b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "- The error doesn't occur until the end when the mismatch occurs because zip is lazily evaluated\n",
+        "- Interesting, you can use `zip` inside `dict` to make key,value pair of the iterators passed in\n"
+      ],
+      "id": "43925673"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/tyler/code/personal/tylerhillery.com/.venv/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

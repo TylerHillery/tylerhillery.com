@@ -1,0 +1,46 @@
+---
+title: ""
+description: My notes & review of [Py Donts](https://mathspp.com/books/pydonts) by Rodrigo Girão Serrão 
+author: "Tyler Hillery"
+date: "2025-02-11"
+image: "./cover.png"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/py-donts"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books]
+jupyter: python3
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+## Zip Up
+
+- `zip` goes until the shortest of the iterators provided
+- In Python 3.10> you can use a `strict` keyword to error if the length of iterators don't match
+
+```{python}
+firsts = ["Tyler", "Chandra"]
+lasts = ["Hillery", "Hillery", "Hill"]
+
+try:
+    for z in zip(firsts, lasts, strict=True):
+        print(z)
+except Exception as e:
+    print(e)
+```
+
+- The error doesn't occur until the end when the mismatch occurs because zip is lazily evaluated
+- Interesting, you can use `zip` inside `dict` to make key,value pair of the iterators passed in
+
