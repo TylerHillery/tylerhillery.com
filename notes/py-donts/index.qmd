@@ -44,3 +44,17 @@ except Exception as e:
 - The error doesn't occur until the end when the mismatch occurs because zip is lazily evaluated
 - Interesting, you can use `zip` inside `dict` to make key,value pair of the iterators passed in
 
+## Chaining comparison operators
+
+- Pitfall to watch out for is chaining `!=` together. 
+
+```{python}
+a = c = 1
+b = 2
+if a != b != c:
+    print("a, b, and c are all different: ", a, b, c)
+```
+
+- `a != b != c` really evaluates to `a != b` and `b != c` it doesn't tell you anything about a relates to c. Stick with chaining comparison operators on **transitive** operations
+
+- 
