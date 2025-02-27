@@ -1,0 +1,12 @@
+---
+title: "SQL Translate"
+author: "Tyler Hillery"
+date: "2025-02-27"
+categories: [Web Apps]
+image: "../../assets/images/sql-translate.png"
+code: 
+  - url: https://tylerhillery--sql-translate-fastapi-app.modal.run/ 
+    text: Site 
+  - url: https://github.com/TylerHillery/sql-translate
+    text: GitHub
+---

@@ -57,4 +57,5 @@ if a != b != c:
 
 - `a != b != c` really evaluates to `a != b` and `b != c` it doesn't tell you anything about a relates to c. Stick with chaining comparison operators on **transitive** operations
 
-- 
+## Boolean short-circuiting
+
