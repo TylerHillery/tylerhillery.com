@@ -30,6 +30,7 @@ share:
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [Advanced Napkin Math: Estimating System Performance from First Principles by Simon Eskildsen](https://youtu.be/IxkSlnrRFqc?si=Lgj9HoYQWyoC3Bhj)
 - [Making Badass Developers by Kathy Sierra](https://youtu.be/FKTxC9pl-WM?si=BkTzk7j0EnnyLECu)
 - [Simple Made Easy by Rich Hickey](https://youtu.be/SxdOUGdseq4?si=fZZqec-D5eu9SSw0)
 - [Wat by Gary Bernhardt](https://www.destroyallsoftware.com/talks/wat)
@@ -49,6 +50,8 @@ share:
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Interviews 🎤"} 
+- [How to Make Yourself Into a Learning Machine with Simon Eskildsen](https://every.to/superorganizers/how-to-build-a-learning-machine-299655?sid=16664)
+- [How to Use AI to Become a Learning Machine - Ep. 34 with Simon Eskildsen](https://youtu.be/D_4AYLr_hFI?si=TbvtqSDpbtqwp36t)
 - [DHH Is Right About Everything](https://youtu.be/mTa2d3OLXhg?si=eiJf3cnUc7MowxdV)
 - [DHH Talks Apple, Linux and Running Servers](https://youtu.be/fEy9JhHk6lg?si=HR5nmrm9cB9rnhRm)
 - [I Interviewed Chris Lattner, The Creator Of LLVM, Clang, Swift, and Mojo](https://youtu.be/ovYbgbrQ-v8?si=dTbQua9Dk2kKnXSa)
