@@ -17,8 +17,9 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books]
+categories: [Technical Books, On Hold]
 jupyter: python3
+draft: true
 ---
 
 ------------------------------------------------------------------------

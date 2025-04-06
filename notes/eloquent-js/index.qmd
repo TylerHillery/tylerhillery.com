@@ -1,0 +1,50 @@
+---
+title: "Eloquent JavaScript"
+description: My notes & review of [Eloquent JavaScript](https://eloquentjavascript.net/) by Marijn Haverbeke 
+author: "Tyler Hillery"
+date: "2025-04-05"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/eloquent-js"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+## Chapter 1. Values, Types and Operators
+
+JavaScript stores `Number` type as 64 bits.
+
+JavaScript has three "special" numbers, `Infinity` `-`Infinity` and `NaN`.
+
+JavaScript uses the *Unicode* standard for strings, but it uses the 16 bits version which can complicate things that are outside the 16 bit range such as emojis taking two "character positions".
+
+JavaScript uses `null` and `undefined` as special values to denote "emptiness".
+
+For coalescing the main difference between using `||` vs `??` is `||` tests if the left value is "truthy" so if the value is `0` it will be false is choose the default. Often times this is not what we want and instead should use `??` which checks if the value is `null` or `undefined`.
+
+```js
+console.log(0 || 100);
+// --> 100
+
+console.log(0 ?? 100);
+// --> 0 
+
+console.log(null ?? 100);
+// --> 100
+```
+
+
