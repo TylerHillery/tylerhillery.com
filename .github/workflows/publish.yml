@@ -17,15 +17,18 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          tinytex: true
           
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install Latest Wrangler
+        run: npm install --global wrangler@4
 
       - name: Publish
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: "${{ github.workspace }}"
