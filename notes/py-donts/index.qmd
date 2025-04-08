@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "Py Donts"
 description: My notes & review of [Py Donts](https://mathspp.com/books/pydonts) by Rodrigo Girão Serrão 
 author: "Tyler Hillery"
 date: "2025-02-11"

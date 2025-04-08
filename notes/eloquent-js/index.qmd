@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books]
+categories: [Technical Books, In Progress]
 ---
 
 ------------------------------------------------------------------------
@@ -46,5 +46,3 @@ console.log(0 ?? 100);
 console.log(null ?? 100);
 // --> 100
 ```
-
-
