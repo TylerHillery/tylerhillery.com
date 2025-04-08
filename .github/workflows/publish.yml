@@ -22,12 +22,9 @@ jobs:
           
       - name: Render Quarto Project
         uses: quarto-dev/quarto-actions/render@v2
-      
+
       - name: Publish
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: tylerhillery 
-          directory: '_site' # or _site or any other directory you used as project's output-dir in `_quarto.yml`
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
