@@ -2,7 +2,7 @@
 title: "Eloquent JavaScript"
 description: My notes & review of [Eloquent JavaScript](https://eloquentjavascript.net/) by Marijn Haverbeke 
 author: "Tyler Hillery"
-date: "2025-04-05"
+date: "2025-04-09"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -46,3 +46,56 @@ console.log(0 ?? 100);
 console.log(null ?? 100);
 // --> 100
 ```
+
+## Chapter 6. The Secret Life of Objects
+
+I love the example of explaining **polymorphism** using the a `for/of` loop and an **iterable**. Clearly demonstrates how polymorphic code can operate on any type as long as it conforms to a specific "interface". For `for/of` loop will work on any **iterable** which just means it has a method named `Symbol.iterator` which when called should return an object with a second interface called **iterator** which has a `next` method and the result should have a `value` property otherwise a `done` property if there is no next.
+
+Here is an example of implement a link list with this interface
+
+```js
+class List {
+  constructor(value, rest) {
+    this.value = value;
+    this.rest = rest;
+  }
+  
+  get length() {
+    return 1 + (this.rest ? this.rest.length : 0);
+  }
+  
+  static fromArray(arr) {
+    let result = null;
+    for (let i = arr.length - 1; i >=0; i--) {
+      result = new this(arr[i], result);
+    }
+    return result;
+  }
+}
+
+class ListIterator {
+  constructor(list) {
+    this.list = list;
+  }
+  
+  next() {
+    if (this.list == null) {
+      return {done: true};
+    }
+    
+    let value = this.list.value;
+    this.list = this.list.rest;
+    return {value, done: false}
+  }
+}
+
+List.prototype[Symbol.iterator] = function() {
+  return new ListIterator(this);
+};
+
+let list = List.fromArray([1, 2, 3]);
+for (let element of list) {
+  console.log(element);
+}
+```
+
