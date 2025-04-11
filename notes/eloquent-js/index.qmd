@@ -2,7 +2,7 @@
 title: "Eloquent JavaScript"
 description: My notes & review of [Eloquent JavaScript](https://eloquentjavascript.net/) by Marijn Haverbeke 
 author: "Tyler Hillery"
-date: "2025-04-09"
+date: "2025-04-11"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
