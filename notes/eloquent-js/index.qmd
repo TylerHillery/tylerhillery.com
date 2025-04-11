@@ -99,3 +99,8 @@ for (let element of list) {
 }
 ```
 
+# Review
+
+I thought it was a great introduction to JavaScript. I really enjoyed the exercises and how all the code examples were runnable when reading the version on the website. I skimmed all chapters that covered JavaScript in the browser as my main goal is to learn how to use it on the server.
+
+I also found out the Author is the creator of [CodeMirror](https://codemirror.net/) which I used in [SQL Translate](https://tylerhillery--sql-translate-fastapi-app.modal.run/)!
