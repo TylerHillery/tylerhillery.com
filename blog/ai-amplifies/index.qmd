@@ -1,0 +1,68 @@
+---
+title: "AI Amplifies"
+author: "Tyler Hillery"
+date: "2025-04-13"
+categories: 
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/ai-amplifies/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+Much of the hype about AI tools for programming often comes from two ends of a spectrum, those who don't know programming and those who already have deep expertise.
+
+People who don't know how to program are blown away because they can accomplish something that was unfeasible to them before.
+
+The experts, on the other hand, can quickly discern whether the output is good or bad. AI removes much of the programming toil so they can focus on the bigger picture.
+
+Couple of quotes that really stuck with me.
+
+> **Simon Willison**  
+> *"LLMs amplify existing expertise"*  
+> [Source](https://simonwillison.net/2025/Mar/11/using-llms-for-code/#llms-amplify-existing-expertise)  
+
+> **Charlie Marsh**  
+> *"These tools are a magnifier. But if I were using them without my existing programming experience, it’s so obvious to me that I’d be generating mountains of garbage. And I probably wouldn’t even see it."*  
+> [Source](https://x.com/charliermarsh/status/1911119754573591004)  
+
+> **Ankur Goyal**  
+> *"AI seems to multiply the quality of code that someone would write without AI.*  
+>  
+> *Bad programmer * AI = Lots of bad code*  
+>  
+> *Medium programmer * AI = Lots of medium code*  
+>  
+> *Great programmer * AI = Lots of great code"*  
+> [Source](https://x.com/ankrgyl/status/1903996985713270931)  
+
+What if you're not already great but have aspirations to be great?
+
+Or the better question is, can AI help you become great? 
+
+I think so, as long as you **ruthlessly** question it. If you use AI to truly understand.
+
+I am not talking about the hand waving, you get the gist, surface level understanding. You'll know if you truly understand something if you don't need AI. 
+
+You're not going to become an expert from vibe coding. Vibe coding is the exact opposite of this. Vibe coding is all about forgetting the code even exists.
+
+Some may not have the goal of becoming a great programmer, then by all means, give into the vibes.
+
+Some may argue AI will become so advanced knowing how to program will become meaningless.
+
+Even so, if you had two people, both can use AI, but one knows nothing about programming and the other is an expert in programming, who do you think will do better?
+
+If everyone is going to access to these AI tools in the future, how will you stand out?
+
+I know how I am. By being the one who truly understands.
