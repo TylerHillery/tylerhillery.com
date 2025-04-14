@@ -1,0 +1,33 @@
+---
+title: "JavaScript: The Definitive Guide"
+description: "My notes & review of [JavaScript: The Definitive Guide](https://a.co/d/2okfyg6) by David Flanagan" 
+author: "Tyler Hillery"
+date: "2025-04-12"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/js-the-definitive-guide"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+## Chapter 03: Types, Values and Variables
+
+I find it interesting that `null` is of type object yet other special values like `undefined`, `Infinity` and `NaN` are just global constants.
+
+Does `Array.from()` do a deep copy? By deep I mean if it has array of arrays or object with values as objects.
+
+# Review
