@@ -30,6 +30,16 @@ share:
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [Intelligence is not Enough by Bryan Cantrill](https://www.youtube.com/watch?v=bQfJi7rjuEk)
+- [Coming Of Age by Bryan Cantrill](https://www.youtube.com/watch?v=VzdVSMRu16g)
+- [Instrumenting the real-time web: Node.js, DTrace and the Robinson Projection](https://www.youtube.com/watch?v=_jS_XkCkpVI)
+- [Leaping the chasm from proprietary to open: A survivor's guide by Bryan Cantrill](https://youtu.be/Zpnncakrelk?si=C6WwyFvbIoykN6R0)
+- [Surge 2013: Leadership Without Management: Scaling Organizations by Scaling Engineers by Bryan Cantrill](https://youtu.be/1KeYzjILqDo?si=ioK4UqA9k4JG_OIJ) 
+- [Surge 2013: LightningTalks by Bryan Cantrill](https://www.youtube.com/watch?v=vm1GJMp0QN4)
+- [The Container Revolution: Reflections After the First Decade](https://www.youtube.com/watch?v=xXWaECk9XqM&t=1287s)
+- [Run containers on bare metal already! by Bryan Cantrill](https://youtu.be/coFIEH3vXPw?si=swTZO931l24k-RIB)
+- [LISA11 - Fork Yeah! The Rise and Development of illumos by Bryan Cantrill](https://youtu.be/-zRN7XLCRhc?si=etALDphQTOFxBane)
+- [Running Aground: Debugging Docker in Production by Bryan Cantrill](https://youtu.be/AdMqCUhvRz8?si=yxMuuRGXXbK6a_t3)
 - [The Hurricane's Butterfly: Debugging Pathologically Performing Systems by Bryan Cantrill](https://www.youtube.com/watch?v=7AO4wz6gI3Q&list=WL&index=2)
 - [Principles of Technology Leadership by Bryan Cantrill](https://youtube.com/watch?v=9QMGAtxUlAc&si=OCf_ZuuA0t6uyJ7t)
 - [Bringing the Unix Philosophy to Big Data by Bryan Cantrill](https://youtube.com/watch?v=S0mviKhVmBI&si=YUtVlmPfneUaOR2g)
@@ -104,6 +114,7 @@ share:
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Conferences 👥"} 
+- [ALl Things Open](https://allthingsopen.org/)
 - [SRECON](https://www.usenix.org/conference/srecon)
 - [PyCon US](https://us.pycon.org/)
 - [Data Council](https://www.datacouncil.ai/)
