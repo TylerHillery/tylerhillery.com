@@ -53,7 +53,7 @@ share:
 - [A Short Summary of the Last Decades of Data Management by Hannes Mühleisen](https://youtu.be/-wCzn9gKoUk?si=IjrTQN2PfLi5v6W7)
 - [Gang of None? Design Patterns in Elixir by José Valim](https://youtu.be/agkXUp0hCW8?si=ZZxErACww18LDyrd)
 - [The past, present, and future of local-first by Martin Kleppmann](https://youtu.be/NMq0vncHJvU?si=MltJeAPhmx1eSXCq)
-- [Stop Writing Classes](https://youtu.be/o9pEzgHorH0?si=Nn5B6p1mLFgCKwid)
+- [Stop Writing Classes by Jack Diederich](https://youtu.be/o9pEzgHorH0?si=Nn5B6p1mLFgCKwid)
 - [Performance Matters by Emery Berger](https://youtu.be/r-TLSBdHe1A?si=KIF7Jlnct2EL-QIm)
 - [Moving 17 years of old legacy code and sites into the Cloud by Scott Hanselman](https://youtu.be/mE-DGW0CcAk?si=mPi0CwhGj_OV-yAz)
 - [Don't Do Invisible Work by Chris Albon](https://youtu.be/HiF83i1OLOM?si=kJgYoeAv5ZkRcwif)
@@ -65,7 +65,10 @@ share:
 - [Nothing is Something by Sandi Metz](https://youtu.be/OMPfEXIlTVE?si=GglvzBuNGLLQ9g5G)
 :::
 
-::: {.callout-note appearance="minimal" collapse=true title="Interviews 🎤"} 
+::: {.callout-note appearance="minimal" collapse=true title="Podcasts Episodes🎙️"} 
+- [Engineering Culture - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/engineering-culture-2022-02-21)
+- [I know this! (Purpose-built systems with general-purpose guts) - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/i-know-this-purpose-built-systems-with-general-purpose-guts-2022-02-07)
+- [Amir Michael - On The Metal](https://onthemetal.transistor.fm/episodes/amir-michael)
 - [How to Make Yourself Into a Learning Machine with Simon Eskildsen](https://every.to/superorganizers/how-to-build-a-learning-machine-299655?sid=16664)
 - [How to Use AI to Become a Learning Machine - Ep. 34 with Simon Eskildsen](https://youtu.be/D_4AYLr_hFI?si=TbvtqSDpbtqwp36t)
 - [DHH Is Right About Everything](https://youtu.be/mTa2d3OLXhg?si=eiJf3cnUc7MowxdV)
