@@ -27,9 +27,7 @@ about:
 ### **About Me**
 Currently working at [Supabase](https://supabase.com/) as a Data Engineer.
 
-*Product-minded* engineer and *lifelong learner* passionate about understanding the '*why*' behind systems and products. With a background in data engineering, I’m now focused on backend and full-stack development, working across the stack to own the end-to-end implementation of product features. 
-
-My strength lies in combining technical depth with a big-picture understanding of business and user needs. I take a pragmatic approach to problem-solving, favoring [boring tech](https://boringtechnology.club/). 
+*Product-minded* engineer and *lifelong learner* passionate about understanding the '*why*' behind systems and products.
 
 Driven by gratitude.
 
