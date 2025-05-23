@@ -66,6 +66,10 @@ share:
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts Episodes🎙️"} 
+- [Paths into Systems Programming](https://oxide-and-friends.transistor.fm/episodes/paths-into-systems-programming?)
+- [Surviving the Dot-Com Bust - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/surviving-the-dot-com-bust) 
+- [Time, Timezones, Metric Time, Losing and Saving - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/time-timezones-metric-time-losing-and-saving-2022-03-28)
+- [Fail Whaling - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/fail-whaling)
 - [Engineering Culture - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/engineering-culture-2022-02-21)
 - [I know this! (Purpose-built systems with general-purpose guts) - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/i-know-this-purpose-built-systems-with-general-purpose-guts-2022-02-07)
 - [Amir Michael - On The Metal](https://onthemetal.transistor.fm/episodes/amir-michael)
