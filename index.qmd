@@ -27,25 +27,26 @@ about:
 ### **About Me**
 Currently working at [Supabase](https://supabase.com/) as a Data Engineer.
 
-Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction. My interests span infrastructure, data systems, application networking and product.
+Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction. My interests span infrastructure, data systems and product. I'm energized by seeing things through from idea to production.
 
 Driven by curiosity, grounded in gratitude.
 
 ### **Background**
 
-Before pursuing a tech career, I wanted to work in investment management. I graduated with a B.S. in Finance in December 2019.
+Before tech, I studied finance and started my career in investment operations. After 1.5 years, I realized I was more interested in computers, software, and data.
 
-My first job out of college was in the investment management department of a Fortune 650 insurance company, working in investment operations and helping manage our money market portfolio. It wasn't until I passed the [CFA](https://www.cfainstitute.org/en/programs/cfa/charter) level 1 exam that I knew this career wasn't for me. What I did discover was my interest in computer science, data, and technology.
+In 2021, I pivoted into software engineering and began teaching myself programming through books, videos and online courses. My favorite way to learn is by first getting a general high-level understanding of a topic and then diving into building [projects](https://tylerhillery.com/projects).
 
-In Summer 2021, I started working on my technical skills outside of work through various resources (Books, YouTube, etc.). My favorite way to learn is by first getting a general high-level understanding of a topic and then diving into building [projects](https://www.tylerhillery.com/projects.html).
+Early in my career, I worked in various data related roles, leveraging my finance background. While I enjoyed working with data, I often felt removed from the actual product and my impact wasn't as clear. 
 
-In today's software development world, we build upon many layers of abstractions. I do my best to peel back each layer to understand the core fundamentals, principles, and patterns that stay true across technologies.
+Over time, I became more drawn to the bigger picture of how software is built and operated to deliver real value to users. That curiosity has pulled me deeper into software engineering, where I can work closer to the product, tackle technically challenging problems, and more easily see the impact of my contributions. 
 
-While most of my background has been in various data roles, I don't let that define who I am. I continuously learn about different domains, such as web development, software internals, DevOps, networking, etc.
+Today, I'm focused on growing as a software engineer, combining my broad curiosity and pragmatic mindset to build great products and the foundations that support them, whether that’s working on data systems, backend services, infrastructure, or front-end user experience. 
 
 Outside of tech:
 
--   I have a beautiful wife who has a passion for bodybuilding
--   I have a twin brother
--   Recently moved to Glendale, Arizona 🌵
--   I co-authored a paper [Inside the hiring process: how managers assess employability based on grit, the big five, and other factors](https://www.researchgate.net/publication/335182644_Inside_the_hiring_process_how_managers_assess_employability_based_on_grit_the_big_five_and_other_factors)
+- I enjoy weight lifting 🏋️️
+- I have a beautiful wife who has a passion for health and fitness 
+- I have a twin brother
+- Recently moved to Arizona 🌵 but original from Wisconsin 🧀
+- I co-authored a paper [Inside the hiring process: how managers assess employability based on grit, the big five, and other factors](https://www.researchgate.net/publication/335182644_Inside_the_hiring_process_how_managers_assess_employability_based_on_grit_the_big_five_and_other_factors)
