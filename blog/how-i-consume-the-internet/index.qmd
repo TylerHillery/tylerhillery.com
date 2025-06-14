@@ -1,0 +1,48 @@
+---
+title: "Internet Zero: How I Consume The Internet"
+author: "Tyler Hillery"
+date: "2025-06-14"
+categories: 
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/how-i-consume-the-internet/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+Inbox zero is a methodology of email management with the goal of having zero emails in your inbox. For me it's simple, I treat my inbox like a todo list. If an email comes in and requires an action either I do it or leave it in my inbox until I do. If no action is required I either delete it or move it to a folder if it's something I might want to reference later.
+
+I do that exact same thing for consuming the internet, which for the sake of this blog post I am deeming "Internet Zero."
+
+But the internet doesn't have an inbox... or does it? Anything you're subscribed to is your inbox. RSS Feeds, Podcasts, YouTube Channels, Newsletters etc. When something new is posted that piece of content is now in your inbox. 
+
+When something is posted in my internet inbox it's time for me to decide, is this something I want to consume or not? If so I file it away to a "consume it later" folder. Most of the time I don't consume new content as I discover it but rather when I have dedicated time to do so. If it's not something I want to consume I delete it. If I find I have been deleting a lot of content from a particular source I unfollow.
+
+::: {.callout-note} 
+I used to be a big Pocket user but with [Pocket shutting down](https://getpocket.com/farewell) I have actually switched to [Readwise Reader](https://readwise.io/read) which has been a game changer for me. 
+
+Reader has two main concepts, Feeds and Library. Feeds is where all the new content I subscribe to lands first. It's here I decided to move it to my library as "Later" or delete it. After I consume the content I move it to archived.
+
+I now have one app to manage all my subscriptions whereas before I would go to Spotify to check if new podcasts were posted and then move it to a dedicated "Listen Later" playlist and repeat for all other apps. 
+:::
+
+What about discovery? The problem with only consuming content I subscribe to is I am not exposing myself to content outside of that circle.
+
+Personally I use X, Discord groups, Bluesky and Hackernews as discovery mechanisms. Hackernews is nice because I mainly limit myself to the front page. Discord groups are nice as well because they don't expose you to an endless feed.
+
+On the other hand, X & Bluesky I use the "For You" feeds which are unbounded. Refresh on and more content appears. It's endless content like this that can lead to doom scrolling where you find yourself wondering why you have been consuming 3 hours of GCP & Cloudflare outage memes. This is why I have time limits on these sources because there is no real "end" to them. 
+
+I stay diligent with the posts I interact with and people I follow so I don't upset the algo. When I find content I want to consume through these discovery sources they get saved straight to my later library, bypassing my inbox.
+
+That's the gist. When I have spare time now, instead of heading straight to discovery sources, I go to my later library first or check my internet inbox for new content. I created a [lists](https://tylerhillery.com/lists) page where you can check out some of my personal favorites and what I'm currently following.
