@@ -159,6 +159,7 @@ share:
 - [Gunnar Morling's Personal Blog](https://www.morling.dev/)
 - [Jack Vanlightly's Personal Blog](https://jack-vanlightly.com/)
 - [Hynek Schlawack's Personal Blog](https://hynek.me/articles/)
+- [Anton Zhiyanov's Personal Blog](https://antonz.org/all/)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts 🎙️"} 
