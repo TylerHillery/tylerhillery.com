@@ -30,6 +30,7 @@ share:
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [Let's all write good software - Will Wilson](https://youtu.be/eZ1mmqlq-mY?si=RO6wJJObSOKRVDze)
 - [Intelligence is not Enough by Bryan Cantrill](https://www.youtube.com/watch?v=bQfJi7rjuEk)
 - [Coming Of Age by Bryan Cantrill](https://www.youtube.com/watch?v=VzdVSMRu16g)
 - [Instrumenting the real-time web: Node.js, DTrace and the Robinson Projection](https://www.youtube.com/watch?v=_jS_XkCkpVI)
