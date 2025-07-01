@@ -41,7 +41,7 @@ Early in my career, I worked in various data related roles, leveraging my financ
 
 Over time, I became more drawn to the bigger picture of how software is built and operated to deliver real value to users. That curiosity has pulled me deeper into software engineering, where I can work closer to the product, tackle technically challenging problems, and more easily see the impact of my contributions. 
 
-Today, I'm focused on growing as a software engineer, combining my broad curiosity and pragmatic mindset to build great products and the foundations that support them, whether that’s working on data systems, backend services, infrastructure, or front-end user experience. 
+Today, I'm focused on growing as a software engineer, combining my broad curiosity and pragmatic mindset to build great products and the foundations that support them.
 
 Outside of tech:
 
