@@ -1,6 +1,6 @@
 ---
 title: "Lists"
-date: "2025-04-01"
+date: "2025-07-11"
 filters:
     - social-share
 share:
@@ -150,6 +150,8 @@ share:
 # Following 
 
 ::: {.callout-note appearance="minimal" collapse=true title="Newsletters & Blogs 📰"} 
+- [Bryan Cantrill's Personal Blog](https://bcantrill.dtrace.org/)
+- [Charity Majors' Personal Blog](https://charity.wtf/)
 - [Register Spill by Thorsten Ball](https://registerspill.thorstenball.com/)
 - [benn.substack by Benn Stancil](https://benn.substack.com)
 - [Simon Willison's Weblog](https://simonwillison.net/)
