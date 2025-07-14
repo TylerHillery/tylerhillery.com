@@ -2,7 +2,7 @@
 title: "JavaScript: The Definitive Guide"
 description: "My notes & review of [JavaScript: The Definitive Guide](https://a.co/d/2okfyg6) by David Flanagan" 
 author: "Tyler Hillery"
-date: "2025-04-12"
+date: "2025-07-14"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
