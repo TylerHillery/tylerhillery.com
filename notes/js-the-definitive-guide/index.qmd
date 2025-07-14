@@ -26,8 +26,64 @@ categories: [Technical Books, In Progress]
 
 ## Chapter 03: Types, Values and Variables
 
-I find it interesting that `null` is of type object yet other special values like `undefined`, `Infinity` and `NaN` are just global constants.
+- I find it interesting that `null` is of type object yet other special values like `undefined`, `Infinity` and `NaN` are just global constants.
 
-Does `Array.from()` do a deep copy? By deep I mean if it has array of arrays or object with values as objects.
+- ❓ Does `Array.from()` do a deep copy? By deep I mean if it has array of arrays or object with values as objects.
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+Symbols were introduced in ES6 to serve as non-string property names. To understand Symbols, you need to know that JavaScript’s fundamental Object type is an unordered collection of properties, where each property has a name and a value. Property names are typically (and until ES6, were exclusively) strings. 
+:::
+
+    I like to think Symbols was a way for JavaScript authors to extend the language without interferring with exisitng properties on objects. There are almost like dunder methods in Python.
+
+## Chapter 08: Closures
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+Like most modern programming languages, JavaScript uses lexical scoping. This means that functions are executed using the variable scope that was in effect when they were defined, not the variable scope that is in effect when they are invoked. In order to implement lexical scoping, the internal state of a JavaScript function object must include not only the code of the function but also a reference to the scope in which the function definition appears. This combination of a function object and a scope (a set of variable bindings) in which the function’s variables are resolved is called a closure in the computer science literature.
+:::
+
+    This definition of closures really clicked for me.
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+The primary purpose of bind() is to bind a function to an object. When you invoke the bind() method on a function f and pass an object o, the method returns a new function. Invoking the new function (as a function) invokes the original function f as a method of o. Any arguments you pass to the new function are passed to the original function.
+:::
+
+    This definition cleared up bind a little more for me. In simple terms you are creating a new function that hardcodes the function's `this` to the object it was bound to.
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+bind() method does more than just bind a function to an object, however. It can also perform partial application: any arguments you pass to bind() after the first are bound along with the this value. This partial application feature of bind() does work with arrow functions. Partial application is a common technique in functional programming and is sometimes called currying. Here are some examples of the bind() method used for partial application:
+:::
+
+    ```js
+    let sum = (x,y) => x + y;
+    let succ = sum.bind(null, 1);
+    succ(3) // => 3: x is boudn to 1
+
+    function f(y,z) { return this.x + y + z}
+    let g = f.bind({x: 1}, 2);
+    g(3) // => 6: this.x is boudn to 1, y is bound to 2 and z is 3
+    ```
+
+    Currying on the other hand still hasn't quite clicked for me.
+
+
+## Chapter 12: Resolving Promises
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+When a Promise is resolved with a value that is not itself a Promise, it is immediately fulfilled with that value. So if c returns a non-Promise, that return value becomes the value of p, p is fulfilled and we are done. But if the return value v is itself a Promise, then p is resolved but not yet fulfilled.
+:::
+
+    A promise can be resolved but not yet fulfilled. Remember a promise is `fulfilled` if and when the first callback is called. What does resolved state mean though?
+
+## Chpater 16: Node
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+A Buffer is a lot like a string, except that it is a sequence of bytes instead of a sequence of characters.
+:::
+
+    Great definition of a buffer.
 
 # Review
+This book truly delivers on its promise of being "The Definitive Guide", it' very comprehensive in its coverage of JavaScript. However, this comprehensiveness sometimes works against it, as the author occasionally delves into very niche or esoteric topics that feel forced, seemingly included just to maintain the "definitive" label.
+
+Despite this minor critique, I would definitely recommend this book to anyone looking to develop a deep understanding of the JavaScript programming language. 
