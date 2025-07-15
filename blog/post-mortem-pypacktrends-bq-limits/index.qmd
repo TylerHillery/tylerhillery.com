@@ -42,7 +42,7 @@ GitHub Actions *did* try to alert me via email but I had previously blocked the 
 | 2025-07-14 10:15:31 UTC   | Second scheduled update also fails                            |
 | 2025-07-15 05:30:00 UTC   | A GitHub [issue](https://github.com/TylerHillery/pypacktrends/issues/148){target="_blank"} is opened by a user reporting stale data |
 | 2025-07-15 13:35:00 UTC   | Billing limit identified as root cause; PR merged             |
-| 2025-07-15 14:17:59 UTC   | Missed updated manually reprocessed and data fully up to date |
+| 2025-07-15 14:17:59 UTC   | Pipeline manually rerun and data fully updated                |
 
 ## Remediation and follow-up steps  
 - ✅ Increased BigQuery `max_bytes_billed` limit to handle current data size
