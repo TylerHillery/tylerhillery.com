@@ -1,0 +1,51 @@
+---
+title: "Post-Mortem: Two Weeks of Stale Data on PyPack Trends July 15th, 2025"
+author: "Tyler Hillery"
+date: "2025-07-15"
+categories: 
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/post-mortem-pypacktrends-bq-limits/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+## Overview  
+The weeks of June 7 and July 14, 2025, PyPack Trends failed to publish updated download statistics due to a failure in the weekly data refresh pipeline. The issue was caused by a self-imposed `max_bytes_billed` limit in BigQuery that prevented the scheduled query from completing. The issue was resolved on July 15 after it was reported via a GitHub issue.
+
+## What was impacted?  
+- No new PyPI package download data was published on the site for two consecutive weekly refreshes.
+- Any users relying on PyPack Trends for weekly usage trends saw stale data during this period.
+- The affected weeks were: **June 30th – July 7th 2025**.
+
+## Background  
+To avoid unexpected BigQuery costs, the project uses a `max_bytes_billed` safeguard on all scheduled queries. While this has generally worked well, a recent increase in data volume caused the queries to exceeded this limit. As a result, the weekly update job failed. 
+
+GitHub Actions *did* try to alert me via email but I had previously blocked the `githubactions` domain because it was getting too noisy from all the repositories I'm a part of, so the failure notifications went straight to my spam folder...
+
+## Incident Timeline  
+
+| Time (UTC)                | Event                                                         |
+|---------------------------|-------------------------------------------------------------- |
+| 2025-06-07 10:15:43 UTC   | First scheduled update fails                                  |
+| 2025-07-14 10:15:31 UTC   | Second scheduled update also fails                            |
+| 2025-07-15 05:30:00 UTC   | A GitHub [issue](https://github.com/TylerHillery/pypacktrends/issues/148){target="_blank"} is opened by a user reporting stale data |
+| 2025-07-15 13:35:00 UTC   | Billing limit identified as root cause; PR merged             |
+| 2025-07-15 14:17:59 UTC   | Missed updated manually reprocessed and data fully up to date |
+
+## Remediation and follow-up steps  
+- ✅ Increased BigQuery `max_bytes_billed` limit to handle current data size
+- ✅️ Add monitoring or failure alerting for scheduled jobs
+- 🔍 Review query efficiency to reduce data scanned and maintain cost predictability
+- 🧪 Set up a basic health check or badge to display last successful update on the website
