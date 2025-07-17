@@ -122,6 +122,7 @@ share:
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Conferences 👥"} 
+- [Open Sauce](https://opensauce.com/)
 - [ALl Things Open](https://allthingsopen.org/)
 - [SRECON](https://www.usenix.org/conference/srecon)
 - [PyCon US](https://us.pycon.org/)
