@@ -1,0 +1,79 @@
+---
+title: "PyPack Trends Data Is Now Public"
+author: "Tyler Hillery"
+date: "2025-08-19"
+categories: 
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/pypacktrends-goes-public"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+I understand many people just want access to the underlying data and not my beautiful chart. That's okay, I understand. I've added a new subdomain `data.pypacktrends.com` for just this reason. 
+
+Now, the official PyPI download data is already publicly available in BigQuery thanks to the [Linehaul project](https://packaging.python.org/en/latest/guides/analyzing-pypi-package-downloads/#public-dataset). The catch is you still need a BigQuery account and, if you’re not careful, you can end up with a [surprise bill](https://tylerhillery.com/blog/cost-effective-bq/).
+
+My export is aggregated to weekly downloads. It’s less granular than Linehaul, but it’s free and no sign up required. 
+
+Here is an example with DuckDB:
+
+```sql
+set variable list_of_files = (
+  select 
+    array_agg(url) as urls 
+  from 
+    read_parquet('https://data.pypacktrends.com/pypi-weekly-downloads/manifest.parquet')
+);
+
+select 
+  * 
+from 
+  read_parquet(getvariable('list_of_files'), filename := True);
+```
+
+I would have loved to allow for file globbing patterns with DuckDB but because I am using [R2 Public Buckets](https://developers.cloudflare.com/r2/buckets/public-buckets/) with a custom domain, file globbing doesn't work like it does with the S3 API.
+
+> I’ve opted for this approach vs. adding a data API, since with static files I don’t have to worry about bots overwhelming my precious $5 VPS.
+
+Instead I provide a `manifest.parquet` file. This file has two columns `week` and `url`. You can use this file to construct an array of parquet files to fetch. If you only want certain weeks you can add a filter:
+
+```sql
+set variable list_of_files = (
+  select 
+    array_agg(url) as urls 
+  from 
+    read_parquet('https://data.pypacktrends.com/pypi-weekly-downloads/manifest.parquet')
+  where
+    week = '2025-08-11'
+);
+
+```
+The dataset updates automatically every Monday at 10:00am UTC via a [GitHub Action](https://github.com/TylerHillery/pypacktrends/actions/workflows/weekly-pipeline.yml).
+
+Here is what the schema of the parquet files look like:
+
+| Column                           | Description                                           |
+| -------------------------------- | ----------------------------------------------------- |
+| `package_name`                   | Name of the PyPI package                              |
+| `package_downloaded_week`        | Week of the downloads (Monday date)                   |
+| `downloads`                      | Number of downloads for that package during the week  |
+| `cumulative_downloads`           | Running total downloads up to and including this week |
+| `first_distribution_week`        | First week the package appeared on PyPI               |
+| `weeks_since_first_distribution` | Number of weeks since the package’s first appearance  |
+| `published_at`                   | Timestamp of the package’s first release (UTC)        |
+
+If you want more documentation on how this dataset is generated checkout [dbtdocs.pypacktrends.com](https://dbtdocs.pypacktrends.com/#!/model/model.pypacktrends.pypi_package_downloads_weekly_metrics).
+
+I hope you find the data useful!
