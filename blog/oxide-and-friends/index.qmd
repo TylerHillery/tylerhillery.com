@@ -1,0 +1,49 @@
+---
+title: "Oxide and Friends Change Computing Forever"
+description: "Why I think the Oxide and Friends podcast will have a greater impact on computing than their rack scale computer"
+author: "Tyler Hillery"
+date: "2025-08-24"
+categories: 
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/oxide-and-friends"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+> **Change Computing Forever:**
+>
+> Computing is our shared passion; our calling is to advance the state of the art, bringing those advances to the broadest possible audience.
+
+This is part of Oxide's [mission statement](https://oxide.computer/principles). I believe their podcast, [Oxide and Friends](https://oxide-and-friends.transistor.fm/), will have a bigger impact on computing than their rack scale computer. 
+
+> **Kramer:** Do you ever yearn?  
+> **George:** Yearn? Do I yearn?  
+> **Kramer:** I yearn.  
+> **George:** You yearn.  
+> **Kramer:** Oh, yes. Yes, I yearn. Often, I... I sit... and yearn. Have you yearned?
+
+Like Kramer, I yearn. 
+
+I consider myself a young technologist. I've been programming professionally for 1.5 years, recreationally for 4 years. I made the switch from finance into tech July 2021, well after everything had gone remote. Ever since, I felt something was missing.
+
+I yearned for the lunchtime chats, spontaneous whiteboard sessions, after work drinks, and [office games](https://oxide-and-friends.transistor.fm/episodes/rto-or-gfto). The Oxide and Friends podcast has helped fill this gap, recreating these conversations I felt I was missing. A unique format where the podcast is live and listeners can participate in chat.
+
+The topics span [production war stories](https://oxide-and-friends.transistor.fm/episodes/rebooting-a-datacenter-a-decade-later), [hiring processes](https://oxide-and-friends.transistor.fm/episodes/hiring-processes-with-gergely-orosz), [culture](https://oxide-and-friends.transistor.fm/episodes/cultural-idiosyncrasies), [security incidents](https://oxide-and-friends.transistor.fm/episodes/discovering-the-xz-backdoor-with-andres-freund), [baseball](https://oxide-and-friends.transistor.fm/episodes/a-baseball-startup-with-paul-freedman-and-bryan-carmel), [silicon valley lore](https://oxide-and-friends.transistor.fm/episodes/a-half-century-of-silicon-valley-with-randy-shoup/transcript), [heterogeneous computing](https://oxide-and-friends.transistor.fm/episodes/heterogeneous-computing-with-raja-koduri), [operating systems](https://oxide-and-friends.transistor.fm/episodes/helios), [rust](https://oxide-and-friends.transistor.fm/episodes/crates-we-love) and much much more.
+
+The podcast has given me a new found interest in computing history, a greater appreciation for hardware and deepened my love for technology. Inspiring other technologists, that is how you change computing forever.
+
+Not everyone can buy an Oxide computer but they can listen to Oxide and Friends.
+
+Thank you to all those involved in making the Oxide and Friends podcast.
