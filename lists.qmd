@@ -67,6 +67,10 @@ share:
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts Episodes🎙️"} 
+- [A Half-Century of Silicon Valley with Randy Shoup](https://oxide-and-friends.transistor.fm/episodes/a-half-century-of-silicon-valley-with-randy-shoup/transcript)
+- [Holistic Engineering with Robert Mustacchi - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/holistic-engineering-with-robert-mustacchi)
+- [Crates We Love - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/crates-we-love/transcript)
+- [OxF 2024 Wrap-Up - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/oxf-2024-wrap-up)
 - [Querying Metrics with OxQL - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/querying-metrics-with-oxql)
 - [Reflecting on Founder Mode - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/reflecting-on-founder-mode)
 - [RFDs: The Backbone of Oxide - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/rfds-the-backbone-of-oxide)
