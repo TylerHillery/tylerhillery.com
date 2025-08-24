@@ -72,6 +72,7 @@ share:
 - [Crates We Love - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/crates-we-love/transcript)
 - [OxF 2024 Wrap-Up - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/oxf-2024-wrap-up)
 - [Querying Metrics with OxQL - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/querying-metrics-with-oxql)
+- [RTO or GTFO - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes?page=2&per=20)
 - [Reflecting on Founder Mode - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/reflecting-on-founder-mode)
 - [RFDs: The Backbone of Oxide - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/rfds-the-backbone-of-oxide)
 - [Whither CockroachDB? - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/whither-cockroachdb)
