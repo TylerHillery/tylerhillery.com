@@ -30,6 +30,7 @@ share:
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [Platform as a Reflection of Values by Bryan Cantrill](https://www.youtube.com/watch?v=Xhx970_JKX4)
 - [Let's all write good software - Will Wilson](https://youtu.be/eZ1mmqlq-mY?si=RO6wJJObSOKRVDze)
 - [Intelligence is not Enough by Bryan Cantrill](https://www.youtube.com/watch?v=bQfJi7rjuEk)
 - [Coming Of Age by Bryan Cantrill](https://www.youtube.com/watch?v=VzdVSMRu16g)
