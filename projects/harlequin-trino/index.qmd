@@ -5,7 +5,7 @@ date: "2023-12-28"
 categories: [Data Tools]
 image: "../../assets/images/harlequin-trino.svg"
 code: 
-  - url: https://github.com/TylerHillery/harlequin-trino
+  - url: https://github.com/rogerioguicampos/harlequin-trino
     text: GitHub
   - url: https://www.tylerhillery.com/blog/tyler-tries-publishing-py-pack
     text: Blog
