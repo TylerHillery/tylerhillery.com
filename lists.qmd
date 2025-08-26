@@ -246,3 +246,106 @@ share:
 - [Local First Software](https://localfirstweb.dev/)
 - [DuckDB](https://discord.duckdb.org/)
 :::
+
+# Tech I Find Interesting
+*These are examples of the kinds of technologies I find interesting. The specific tools listed are less important, but illustrate the categories.*
+
+::: {.callout-note appearance="minimal" collapse=true title="Languages 📜"} 
+- [SQL](https://en.wikipedia.org/wiki/SQL)
+- [Python](https://www.python.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Go](https://go.dev/)
+- [Rust](https://www.rust-lang.org/)
+- [Mojo](https://www.modular.com/mojo)
+- [C](https://www.c-language.org/)
+- [C++](https://isocpp.org/)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Databases 🗄️"} 
+- OLTP
+    - [PostgreSQL](https://www.postgresql.org/)
+    - [SQLite](https://sqlite.org/)
+    - [Vitess](https://vitess.io/)
+    - [Convex](https://www.convex.dev/)
+- OLAP 
+    - [DuckDB](https://duckdb.org/)
+    - [ClickHouse](https://github.com/ClickHouse/ClickHouse)
+- Key Value
+    - [Redis](https://github.com/redis/redis)
+    - [Memcached](https://memcached.org/)
+    - [DynamoDB](https://aws.amazon.com/dynamodb/)
+- Time Series
+    - [Prometheus](https://github.com/prometheus/prometheus)
+    - [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
+- Search & Vector Stores
+    - [Elastic Search](https://github.com/elastic/elasticsearch)
+    - [Lucene](https://github.com/apache/lucene)
+    - [Tantivy](https://github.com/quickwit-oss/tantivy)
+    - [Turbopuffer](https://turbopuffer.com/)
+- Incremental View Maintenance / Sync Engines
+    - [MaterializeDB](https://materialize.com/)
+    - [Zero Sync](https://zero.rocicorp.dev/)
+    - [Electric SQL](https://electric-sql.com/)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Messaging Systems ✉️"} 
+- [Kafka](https://kafka.apache.org/)
+- [NATS](https://nats.io/)
+- [RabbitMQ](https://www.rabbitmq.com/)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Proxies/API Gateways/Networking 🌐"} 
+- Proxies
+    - [Caddy](https://caddyserver.com/)
+    - [NGINX](https://nginx.org/)
+    - [HAProxy](https://www.haproxy.org/)
+    - [Traefik](https://traefik.io/)
+    - [Envoy](https://www.envoyproxy.io/)
+- API Gateways
+    - [Kong](https://konghq.com/)
+    - [Tyk](https://tyk.io/)
+- Networking
+    - [Pingora](https://github.com/cloudflare/pingora)
+    - [Tailscale](https://tailscale.com/)
+    - [ngrok](https://ngrok.com/)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="️Durable Execution/Task Queues/Worklows ⚙️"} 
+- Durable Execution
+    - [Temporal](https://temporal.io/)
+    - [Restate](https://restate.dev/)
+    - [DBOS](https://dbos.dev/)
+    - [Golem](https://golem.cloud/)
+- Workflow Orchestration
+    - [Airflow](https://airflow.apache.org/)
+    - [Prefect](https://www.prefect.io/)
+    - [Dagster](https://dagster.io/)
+    - [Steno](https://github.com/oxidecomputer/steno)
+- Task Queues
+    - [Celery](https://docs.celeryq.dev/en/stable/)
+    - [BullMQ](https://bullmq.io/)
+    - [pg-boss](https://github.com/timgit/pg-boss)
+    - [Inngest](https://www.inngest.com/)
+    - [River](https://riverqueue.com/)
+    - [hatchet](https://hatchet.run/)
+:::
+
+::: {.callout-note appearance="minimal" collapse=true title="Infra 🏗️"} 
+- Containers
+    - [Docker](https://www.docker.com/)
+    - [Kubernetes](https://kubernetes.io/)
+- Infrastructure as Code & Config Management
+    - [Terraform](https://www.terraform.io/)
+    - [Pulumi](https://www.pulumi.com/)
+    - [Ansible](https://www.ansible.com/)
+- Observability (O11y)
+    - [OpenTelemetry](https://opentelemetry.io/)
+    - [eBPF](https://ebpf.io/)
+    - [Cilium](https://cilium.io/)
+    - [DTrace](https://dtrace.org/)
+    - [Jaeger](https://www.jaegertracing.io/)
+    - [Grafana](https://grafana.com/)
+    - [Honeycomb](https://www.honeycomb.io/)
+    - [Datadog](https://www.datadoghq.com/)
+    - [Sentry](https://sentry.io/welcome/)
+:::
