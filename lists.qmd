@@ -310,7 +310,7 @@ share:
     - [ngrok](https://ngrok.com/)
 :::
 
-::: {.callout-note appearance="minimal" collapse=true title="️Durable Execution/Task Queues/Worklows ⚙️"} 
+::: {.callout-note appearance="minimal" collapse=true title="️Durable Execution/Task Queues/Workflows ⚙️"} 
 - Durable Execution
     - [Temporal](https://temporal.io/)
     - [Restate](https://restate.dev/)
