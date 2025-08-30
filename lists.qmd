@@ -30,6 +30,9 @@ share:
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [Is It Time to Rewrite the Operating System in Rust? by Bryan Cantrill](https://www.infoq.com/presentations/os-rust/)
+- [A Wardrobe for the Emperor: Stitching practical bias into systems software research by Bryan Cantrill](https://www.youtube.com/watch?v=gAEiXWO44bQ)
+- [Debugging Under Fire: Keep your Head when Systems have Lost their Mind • Bryan Cantrill • GOTO 2017](https://www.youtube.com/watch?v=30jNsCVLpAE)
 - [Monktoberfest 2016: Bryan Cantrill - Oral Tradition in Software Engineering](https://www.youtube.com/watch?v=4PaWFYm0kEw&t=2s)
 - [Social Audio as a Vector For Engineering Wisdom by Bryan Cantrill](https://www.youtube.com/watch?v=W8qiDhlFVCE)
 - [Platform as a Reflection of Values by Bryan Cantrill](https://www.youtube.com/watch?v=Xhx970_JKX4)
@@ -70,6 +73,8 @@ share:
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts Episodes🎙️"} 
+- [RIP USENIX ATC - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/rip-usenix-atc)
+- [Solutions Software Engineering with Matthew Sanabria - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/solutions-software-engineering-with-matthew-sanabria)
 - [Bringing up Cosmo - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/bringing-up-cosmo)
 - [Hell is other networks - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/hell-is-other-networks)
 - [Raiding the Minibar - Oxide and Friends](https://oxide-and-friends.transistor.fm/episodes/raiding-the-minibar)
