@@ -1,0 +1,25 @@
+---
+title: "Programming TypeScript: Making Your JavaScript Applications Scale"
+description: "My notes & review of [Programming TypeScript: Making Your JavaScript Applications Scale](https://a.co/d/9EtlR4r) by Boris Cherny" 
+author: "Tyler Hillery"
+date: "2025-09-01"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/programming-typescript"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
