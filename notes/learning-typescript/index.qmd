@@ -2,7 +2,7 @@
 title: "Learning TypeScript: Enhance Your Web Development Skills Using Type-Safe JavaScript"
 description: "My notes & review of [Learning TypeScript: Enhance Your Web Development Skills Using Type-Safe JavaScript](https://a.co/d/bjJegu0) by Josh GoldBerg" 
 author: "Tyler Hillery"
-date: "2025-07-15"
+date: "2025-08-31"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,9 +17,11 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
 
-# Notes
+# Review 
+
+Great introduction into TypeScript and teases you at the end with some of the more advanced features.
