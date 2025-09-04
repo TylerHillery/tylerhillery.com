@@ -23,3 +23,83 @@ categories: [Technical Books, In Progress]
 ------------------------------------------------------------------------
 
 # Notes 
+
+::: {.callout-important appearance="default" collapse=false title="TODO"}
+What does "downlevel compiler" mean?
+:::
+
+## Typing Call 
+
+```typescript
+function call<T extends unknown[], U>(
+    f: (...args: T) => U,
+    ...args: T
+): U
+
+function add(a: number, b: number): number {
+    return a + b
+}
+
+call(add, 1, 2)     // 3
+call(add, 1, "2")   // type error: argument of type 'string' is not assignable to parameter of type 'number'.
+call(add, 1)        // type error:Expected 3 arguments, but got 2
+call(add, 1, 2, 3)  // type error Expected 3 arguments, but got 4
+```
+
+## Typing Map 
+
+```typescript
+function map<T, U>(arr: T[], cb: (item: T, index: number, arr: T[]) => U): U[] {
+  const result =  [];
+  for (let i = 0; i < arr.length; i++) {
+      result.push(cb(arr[i], i, arr));
+  }
+  return result
+}
+
+const myArray = [1,2,3];
+const doubled = map(myArray, (num) => num * 2);         // inferred result: number[]
+const strings = map(myArray, (num) => num.toString());  // inferred result: string[]
+```
+
+## Typing Mixins 
+
+```typescript
+type Constructor<T> = new (...args: any[]) => T
+
+function withEzDebug<C extends Constructor<{getDebugValue: () => object}>>(
+    Class: C
+) {
+    return class extends Class {
+        debug() {
+            const name = Class.name; // I believe the book is wrong here they had Class.constructor.name which returned Function 
+            const value = this.getDebugValue(); 
+            return `${name}(${JSON.stringify(value)})`
+        }
+    }
+}
+
+class HardToDebugUser {
+    #id: number;
+    #firstName: string;
+    #lastName: string
+
+    constructor(id: number, firstName: string, lastName: string) {
+        this.#id = id;
+        this.#firstName = firstName;
+        this.#lastName = lastName;
+    }
+
+    getDebugValue() {
+        return {
+            id: this.#id,
+            name: `${this.#firstName} ${this.#lastName}`
+        }
+    }
+}
+
+const User = withEzDebug(HardToDebugUser);
+let user = new User(1, "Tyler", "Hillery");
+console.log(user.debug()); // "HardToDebugUser({"id":1,"name":"Tyler Hillery"})"
+```
+
