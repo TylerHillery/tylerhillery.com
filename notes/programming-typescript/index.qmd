@@ -103,3 +103,12 @@ let user = new User(1, "Tyler", "Hillery");
 console.log(user.debug()); // "HardToDebugUser({"id":1,"name":"Tyler Hillery"})"
 ```
 
+# Review
+
+Man I thought the author has lots of great content about TypeScript itself but I wasn't the biggest fan their writing style. I appreciate them trying to make a technical book a more fun read by adding some humor but the jokes didn't land for me. I also felt there many ways the author imposed their opinion rather than just describing the facts. Author said you should use ORMs in all places as raw sql is not type safe. Author easily could have shown the difference between using raw SQL vs ORM and let the reading come to conclusion if the benefits provided by the ORM are worth it (I have nothing against ORMs, just illustrating a point).
+
+Another major section left out was the use of run time validation libraries like Zod that I think would have been a helpful addition. The author mentions using typed protocols like Swagger, gRPC etc. but what if you're communicating with API that doesn't implement one of these protocols? How can you go about validating **at runtime** that data you get is what you expect. I like doing this even when consuming things like OpenAPI specs because the server implementation can often be wrong.
+
+With that said I thought the author showed some very examples, in particular I liked learning how to properly type an event emitter.
+
+I still would recommend the book for those thing to get quickly up to speed with TypeScript.
