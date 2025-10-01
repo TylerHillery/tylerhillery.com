@@ -2,7 +2,7 @@
 title: "The Soul of A New Machine"
 description: "My notes & review of [The Soul of A New Machine](https://a.co/d/6C3qMAc) by Tracy Kidder" 
 author: "Tyler Hillery"
-date: "2025-09-01"
+date: "2025-10-01"
 image: "./cover.jpg"
 filters:
     - social-share
