@@ -1,0 +1,25 @@
+---
+title: "Node.js Design Patterns"
+description: "My notes & review of [Node.js Design Patterns](https://a.co/d/hTE7uzB) by Luciano Mammino & Mario Casciaro" 
+author: "Tyler Hillery"
+date: "2025-10-02"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/nodejs-design-patterns"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes 

@@ -17,9 +17,95 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [History, In Progress]
+categories: [History]
 ---
 
 ------------------------------------------------------------------------
 
 # Notes 
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+Shortly after World War II, decades of investigation into the internal workings of the solids yielded a new piece of electronic hardware called a transistor (for its actual invention, three scientists at Bell Laboratories won the Nobel Prize). Transistors, a family of devices, alter and control the flow of electricity in circuits; one standard rough analogy compares their action to that of faucets controlling the flow of water in pipes. Other devices then in existence could do the same work, but transistors are superior. They are solid. They have no cogs and wheels, no separate pieces to be soldered together; it is as if they are stones performing useful work. They are durable, take almost no time to start working, and don’t consume much power.
+:::
+
+    I liked this way of explaining transistors.
+
+- ::: {.callout-note appearance="minimal" icon="false"} 
+The second crucial stage in the development of the new electronics came when techniques were developed to hook many transistors together into complicated circuits—into little packets called integrated circuits, or chips (imagine the wiring diagram of an office building, inscribed on the nail of your little toe). The semiconductor industry, which is named for the class of solids out of which transistors are made, grew up around these devices and began producing chips in huge quantities. Chips made spaceships and pocket calculators possible. They became the basic building blocks of TVs, radios, stereos, watches, and they made computers ubiquitous and varied. They did not eliminate the sizable, expensive computer; they made it possible for the likes of IBM to produce machines of increased speed and capability and still make handsome profits without raising prices much. At the same time, the development of chips fostered an immense and rapid growth of other kinds of computing machines.
+:::
+
+    Wasn't aware of this term *integrated circuits* before.
+
+- ::: {.callout-note appearance="minimal" icon="false"} 
+For a while, the three classifications really did describe a company’s products and define its markets, but then mainframers and microcomputer companies started making minis and minicomputer companies added micros and things that looked like mainframes to their product lines. Meanwhile, a host of frankly imitative enterprises started making computers and gear for computers that could be plugged right into systems built around the wares of the big successful companies. These outfits went by the names of “plug compatibles” and “third-party peripheral manufacturers”; those who lost some business to them called them “knockoff companies.” Probably they helped maintain competition in prices. Many “software” houses sprang up, to write programs that would make all those computers actually do work. Many customers, such as the Department of Defense, wanted to buy complete systems, all put together and ready to run with the turn of a key; hence the rise of companies known as original equipment manufacturers, or OEMs—they’d buy gear from various companies and put it together in packages.
+...
+In the computer business, your market can be your fate. Although by the late 1970s it was hard to define a company’s place in the industry by the sorts of machines that it made, certain broad historic distinctions in ways of doing business still divided a large part of the industry into three segments. The differences showed up in the nature of a company’s expenditures. IBM and other mainframe companies spent more money selling their products and serving their customers than they did in actually building their machines. They sold their computers to people who were actually going to use them, not to middlemen, and this market required good manners. Microcomputer companies sold equipment as if it were corn, in large quantities; they spent most of their money making things and competed not by being polite but by being aggressive. Minicomputer companies split the differences more or less; they sold some machines and service to actual users, but spent most of their money on hardware and did a big business by selling machines in quantity to OEMs.
+:::
+
+    So you have mainframes, micros, minis and OEMs that make up the computer industry. Interesting to learn this was how the industry was split up. I still quite get what OEMs are.
+
+    Mainframes: Spent most of their money on sales, directly to the people who were going to use them.
+    Micros: Large quantities, spend most money on making things and much more aggressive.
+    Minis: Lot of business selling to OEMs, and spent most money on hardware
+
+- ::: {.callout-note appearance="minimal" icon="false"} 
+Otherwise, the management seemed bent on saving all their cash to feed the hungry beast of growth. And, of course, the more this beast gets fed, the bigger it becomes, the more it wants to eat.
+:::
+
+    Great quote.
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+By the mid-1960s, a trend that would become increasingly pronounced was already apparent: while the expense of building a computer’s hardware was steadily declining, the cost of creating both user and system software was rising. In an extremely bold stroke, IBM took advantage of the trend. They announced, in the mid-sixties, all at one time, an entire family of new computers—the famous 360 line. In the commerce of computers, no single event has had wider significance, except for the invention of the transistor. Part of the 360’s importance lay in the fact that all the machines in the family were software compatible.
+:::
+
+    Crazy to think how early on software became so important. As early as the mid-1960s being able to continue to run your software on new machines was so important that it was a main requirement for new hardware to be able to be backwards compatible.
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+North Carolina’s leaders had assembled a large crew mainly by luring experienced engineers away from Westborough and other companies. But around this time videotape was circulating in the basement, and it suggested another approach. In the movie, an engineer named Seymour Cray described how his little company, located in Chippewa Falls, Wisconsin, had come to build what are generally acknowledged to be the fastest computers in the world, the quintessential number-crunchers. Cray was a legend in computers, and in the movie Cray said that he liked to hire inexperienced engineers right out of school, because they do not usually know what’s supposed to be impossible. West liked that idea. He also realized, of course, that new graduates command smaller salaries than experienced engineers. Moreover, using novices might be another way in which to disguise his team’s real intentions. Who would believe that a bunch of completely inexperienced engineers could produce a major CPU to rival North Carolina’s?
+:::
+
+    Wisconsin shout-out!
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+Yet it is a fact, not entirely lost on management consultants, that some people would rather work twelve hours a day of their own choosing than eight that are prescribed. Provided, of course, that the work is interesting. That was the main thing.
+:::
+
+    This is so true. I am the same way.
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+Looking around the basement, some of the team’s brand-new engineers would sometimes wonder what would happen to them when they turned thirty. Being young, they could make light of the question, and say, as one did, “When a computer engineer gets old, he gets turned out to pasture or else made into dog food.” Data General was a young company, and so its engineers tended to be young. There really was such a thing in the world as a practicing middle-aged computer engineer. It did appear, however—management handbooks say so—that many engineers experience a change of life when they reach the age of thirty or so.
+:::
+    
+    Damn three more years until I get turned out to pasture
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+Alsing believed that the team’s managers, in handling the new recruits, really were practicing what was called “the mushroom theory of management.” It was an old expression, used in many other corners of corporate America. The Eclipse Group’s managers defined it as follows: “Put ’em in the dark, feed ’em shit, and watch ’em grow.” It was a joke with substance, Alsing felt; and he believed that their mushroom management needed an occasional antidote. Alsing in effect had signed up to provide the kids with some relief from their toil. West warned him several times, “If you get too close to the people who work for you, Alsing, you’re gonna get burned.” But West didn’t interfere, and he soon stopped issuing warnings.
+:::
+
+    "Put 'em in the dark, feed 'em shit, and watch 'em grow" love it.
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+Rasala himself said: “I’m an implementer. I’m not gonna go out and invent anything. But making it work is fun. It’s something I think I do reasonably well. I don’t have Wallach’s knowledge, I’m not on top of the architecture per se, but I’m a good designer, I think, and I’m a better debugger.”
+:::
+
+    I identify with Rasala the most out of all the characters.
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+Rasala had that one fairly well in hand. But there was also “the bogeyman fear.” “Just something dark and nameless,” said Alsing, “that the machine just won’t ever work.” West said: “It’s the infinite page fault you didn’t anticipate. The bogeyman is the space your mind can’t comprehend.”
+:::
+
+    The unknown unknowns
+
+- ::: {.callout-note appearance="minimal" icon="false"}
+When he was ten years old, Alsing remembered, he was given a book called All You Need to Know about Radio and TV. When he had read it from cover to cover, he really believed that he did know everything about radios and TVs. He didn’t, of course, but thinking that he did had given him the confidence to take apart radios and TVs and in the process to learn what made them work.
+:::
+
+    I find myself doing the same thing. Consumer various resources (books, courses, etc.) gives me confidence to dive into the domain.
+
+# Review
+
+I had high expectations going into this book as it was recommended by Bryan Cantrill. I would say it was a great book but because of these expectations I was a little let down. Don't get me wrong I would still recommend it to any technologist as it was such great insight into what goes into shipping such a complex project like a new computer.
+
+I believe the let down was because the book didn't resonate with me and that's more of a reflection of me and my experience. That combined with my little understanding of the computer industry during the time period it was hard for me to really visualize the book in my head as I read through it.
+
+I plan on giving this book a reread down the road after so more years of experience of a software engineering and I wonder if that will change my opinion down the road once I have some more battle scars.
