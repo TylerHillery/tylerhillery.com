@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books]
+categories: [Technical Books, In Progess]
 ---
 
 ------------------------------------------------------------------------

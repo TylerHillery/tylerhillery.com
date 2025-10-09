@@ -2,7 +2,7 @@
 title: "Tyler Tries Git Bisect"
 description: To figure out a bug in Supabase Storage I used git bisect to track down what happened.
 author: "Tyler Hillery"
-date: "2025-10-04"
+date: "2025-10-09"
 categories: []
 filters:
   - social-share
