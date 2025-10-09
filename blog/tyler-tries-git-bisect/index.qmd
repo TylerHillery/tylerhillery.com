@@ -1,0 +1,221 @@
+---
+title: "Tyler Tries Git Bisect"
+description: To figure out a bug in Supabase Storage I used git bisect to track down what happened.
+author: "Tyler Hillery"
+date: "2025-10-04"
+categories: []
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/tyler-tries-git-bisect/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+---
+
+------------------------------------------------------------------------
+
+I want to walk through how I went about debugging this [issue](https://github.com/supabase/storage/issues/771) and how `git bisect` was crucial for pinpointing the exact commit that caused it.
+
+First, I tried to reproduce the issue locally on my machine. The user [linked](https://github.com/Cap-go/capgo/actions/runs/17979805447/job/51142531945) the GitHub action where they first noticed this issue occurring. I was able to look at the logs to find out the version of supabase storage they were running `Downloaded newer image for ghcr.io/supabase/storage-api:v1.27.4`. Now that I know the version I checked out that specific commit and ran the storage api locally.
+
+```bash
+work/storage git:(master) 
+➜ git checkout v1.27.4
+work/storage git:(v1.27.4) 
+➜ npm run infra:start
+work/storage git:(v1.27.4) 
+➜ npm run dev
+```
+
+With the server running, I copied the repro script from the GitHub issue to my local environment. The script required an additional package, so I temporarily added it to the package.json just to get the script working locally, not as a permanent dependency.
+
+```bash
+work/storage git:(v1.27.4) 
+➜ npx jsr add @bradenmacdonald/s3-lite-client
+```
+
+I changed some of the hardcoded defaults because it was setup to run against the supabase cli and I also added some code to handle creating the bucket and uploading the example file for convenience.
+
+After running the script this was the result.
+
+```bash
+work/storage git:(v1.27.4) ✗
+➜ node src/scripts/repro.ts
+Creating bucket: your-bucket
+Bucket 'your-bucket' already exists
+Uploading file to: orgs/demo-app/example.txt
+File uploaded successfully to orgs/demo-app/example.txt
+Presigned PUT URL: http://127.0.0.1:5000/s3/your-bucket/orgs/demo-app/example.txt?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&x-id=PutObject&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=b585f311d839730f8a980a3457be2787%2F20251004%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251004T193230Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=75b7bd2d33b66855952bad41bc56f17aaa98cd96a50f49ad96540c030e27ee19
+Local storage response: 200
+Response body:
+```
+
+Huh, completed successfully. This had me puzzled but then I recalled the user was running into issues when running with the supabase cli command. So, instead of running directly against the storage api I thought I try against the supabase cli. 
+
+```bash
+work/storage git:(v1.27.4)
+➜ npx supabase init
+work/storage git:(v1.27.4)
+➜ npx supabase start
+```
+
+I reran the script.
+
+```bash
+work/storage git:(v1.27.4) ✗
+➜ node src/scripts/repro.ts
+Creating bucket: your-bucket
+Bucket 'your-bucket' already exists
+Uploading file to: orgs/demo-app/example.txt
+File uploaded successfully to orgs/demo-app/example.txt
+Presigned PUT URL: http://127.0.0.1:5000/s3/your-bucket/orgs/demo-app/example.txt?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&x-id=PutObject&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=b585f311d839730f8a980a3457be2787%2F20251004%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251004T193230Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=75b7bd2d33b66855952bad41bc56f17aaa98cd96a50f49ad96540c030e27ee19
+Local storage response: 200
+Response body:
+```
+What!? Succeeded again. Then I realized the user was running supabase cli version 2.45.5 so I tried it again.
+
+```bash
+work/storage git:(v1.27.4)
+➜ npx supabase@2.45.5 start
+work/storage git:(v1.27.4) ✗
+➜ node src/scripts/repro.ts
+Creating bucket: your-bucket
+Bucket 'your-bucket' created successfully
+Uploading file to: orgs/demo-app/example.txt
+File uploaded successfully to orgs/demo-app/example.txt
+Presigned PUT URL: http://127.0.0.1:54321/storage/v1/s3/your-bucket/orgs/demo-app/example.txt?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&x-id=PutObject&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=625729a08b95bf1b7ff351a663f3a23c%2F20251004%2Flocal%2Fs3%2Faws4_request&X-Amz-Date=20251004T201956Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=1f2ff5cca5aad73d7e1e53224e6b6a3f96f89bbf144a3cdebc2ef9825d15c7de
+Local storage response: 400
+Response body: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Error><Resource>your-bucket/orgs/demo-app/example.txt</Resource><Code>InvalidSignature</Code><Message>Unsupported authorization type</Message></Error>
+```
+
+Bingo! So this tells me it has to be an issue with the supabase cli and it was already fixed in the most recent version. But how do I figure out what change caused the issue and what changed fixed it? 
+
+`git bisect` baby. Git bisect is a tool that runs a binary search to find the commit that introduced a bug. You give it a good commit, bad commit, a script to run and it will take care of the rest. 
+
+I checked the [capgo](https://github.com/Cap-go/capgo/actions/workflows/tests.yml) "Run tests" GitHub Action to see that last time it succeeded to figure out the last known working version. Looks like last time the GHA passed was supabase cli version `2.40.7`
+
+I cloned the supabase cli repo into a dedicated repro directory.
+
+```bash
+code/work/debugging/repro-presigned-url-local-771
+➜ git clone https://github.com/supabase/cli.git
+```
+
+I had Copilot generate a quick bash script I could use with git bisect
+
+```bash
+#!/bin/bash
+
+set -e
+
+# Get the current directory (should be the CLI repo)
+CLI_DIR=$(pwd)
+TEST_DIR="/Users/tyler/code/work/debugging/repro-presigned-url-local-771"
+
+echo "Building CLI at commit $(git rev-parse --short HEAD)..."
+
+# Build the CLI
+go build -o supabase_cli main.go
+
+# Stop any existing supabase instance
+./supabase_cli stop --no-backup || true
+
+# Wait a moment for cleanup
+sleep 2
+
+# Start supabase with your specific exclusions
+echo "Starting Supabase services..."
+./supabase_cli start -x imgproxy,studio,mailpit,realtime,postgres-meta,supavisor,studio,logflare,vector,realtime,gotrue,edge-runtime
+
+# Wait for services to be ready
+echo "Waiting for services to start..."
+sleep 15
+
+# Run the test
+echo "Running presigned URL test..."
+cd "$TEST_DIR"
+pnpm run dev
+
+# Capture the exit code
+result=$?
+
+# Stop supabase
+echo "Stopping Supabase services..."
+cd "$CLI_DIR"
+./supabase_cli stop --no-backup
+
+# Return result (0 = good/success, non-zero = bad/failure)
+if [ $result -eq 0 ]; then
+    echo "✅ Test PASSED - presigned URL works"
+    exit 0
+else
+    echo "❌ Test FAILED - presigned URL broken"
+    exit 1
+fi
+```
+
+I then started the bisect.
+
+```bash
+debugging/repro-presigned-url-local-771 git:(main) ✗
+➜ git bisect start
+status: waiting for both good and bad commits
+debugging/repro-presigned-url-local-771 git:(main) ✗
+➜ git bisect good v2.40.7
+status: waiting for bad commit, 1 good commit known
+debugging/repro-presigned-url-local-771 git:(main) ✗
+➜ git bisect bad v2.45.5
+git bisect run ./test_presigned_url.sh
+
+ccec464034cc90832dcb8022f78419929d5e3f7d is the first bad commit
+commit ccec464034cc90832dcb8022f78419929d5e3f7d
+Date:   Wed Sep 17 10:03:52 2025 +0800
+
+    feat: support publishable and secret key locally
+
+ internal/start/start.go           |  9 +++++
+ internal/start/templates/kong.yml | 71 ++++++++++++++++++++++++++++++++++++++-
+ internal/status/status.go         | 28 ++++++++++++---
+ pkg/config/apikeys.go             |  7 ++++
+ pkg/config/auth.go                |  2 ++
+ 5 files changed, 112 insertions(+), 5 deletions(-)
+bisect found first bad commit
+```
+
+Once I found the problematic commit, I wanted to pinpoint exactly when the issue was resolved. To do this, I flipped the logic in my repro script, now it exits with `0` when the test fails and `1` when it succeeds. This way, `git bisect` can help me track down the first commit where things start working again.
+
+```bash
+debugging/repro-presigned-url-local-771 git:(main) ✗
+➜ git bisect start
+status: waiting for both good and bad commits
+debugging/repro-presigned-url-local-771 git:(main) ✗
+➜ git bisect good v2.45.5
+status: waiting for bad commit, 1 good commit known
+debugging/repro-presigned-url-local-771 git:(main) ✗
+➜ git bisect bad develop
+debugging/repro-presigned-url-local-771 git:(main) ✗
+➜ git bisect run ./test_presigned_url.sh
+
+f5e1774848af5f97f286cae5d41b2aa3ef050830 is the first bad commit
+commit f5e1774848af5f97f286cae5d41b2aa3ef050830
+Date:   Thu Sep 25 17:17:29 2025 +0800
+
+    fix: replace auth header for backwards compatibility
+
+ internal/start/start.go           | 11 ++++++++---
+ internal/start/templates/kong.yml | 28 +++++++++++++++-------------
+ 2 files changed, 23 insertions(+), 16 deletions(-)
+bisect found first bad commit
+```
+
+Ah, the good ole `fix:` commit. We were able to easily close the issue by letting the user know to upgrade to the most recent version. 
+
+Next time you want to find the commit where it all went wrong (or right) try out `git bisect`. 
