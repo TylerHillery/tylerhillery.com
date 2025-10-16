@@ -1,0 +1,78 @@
+---
+title: "Tyler Tries DTrace"
+description: "How a Node.js backpressure example led me to explore DTrace"  
+author: "Tyler Hillery"
+date: "2025-10-16"
+categories: []
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/tyler-tries-dtrace/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: true 
+---
+
+------------------------------------------------------------------------
+
+As I have been making my way through the [learn](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs) section on [Node.js's](https://nodejs.org/en) I came across a pleasant surprise on the [Backpressuring in Streams](https://nodejs.org/en/learn/modules/backpressuring-in-streams) section:
+
+::: {.callout-note appearance="default" collapse=false title="Side Note"}
+I really appreciate the Node.js "Learn" section in their docs. Super easy, linear way to consume the docs from top to bottom.
+:::
+
+![](../../assets/images/node-backpressure-dtrace.png)
+
+That's right, `dtrace` mentioned! Over the past ~5 months I have gone through the entire [Oxide and Friends](https://oxide-and-friends.transistor.fm/) podcast backlog and it’s left a lasting impact on how I think about technology, community, and computing. I shared more about my thoughts in this [blog post](https://tylerhillery.com/blog/oxide-and-friends/). DTrace gets mentioned throughout the podcast so I'm aware of the tool but haven't used it myself. 
+
+::: {.callout-note appearance="default" collapse=false title="Side Note"}
+Calling it a "Linux tool" probably wouldn’t be my first choice. If you listen to the Oxide and Friends episode [RIP USENIX ATC](https://oxide-and-friends.transistor.fm/episodes/rip-usenix-atc), Bryan, the creator of DTrace, talks about their first public presentation of DTrace, and the very first question afterwards was, "When is the port to Linux?". 
+
+DTrace was originally developed for Solaris and now lives on in illumos, but we don’t need to go down that rabbit hole here. If you’re curious, the [SmartOS Community History](https://docs.smartos.org/community-history/) (an illumos distribution) and Bryan’s talk [Fork Yeah! The Rise and Development of illumos](https://www.youtube.com/watch?v=-zRN7XLCRhc) cover it well.
+
+And while there have been ports to other operating systems over the years (macOS, FreeBSD, and yes, even Linux), describing it purely as a "Linux tool" just feels... off. Even the [dtrace.org](https://dtrace.org/) homepage still says, "A Linux port is in development." The [official docs](https://illumos.org/books/dtrace/preface.html#preface) describe it as:
+
+> DTrace is a comprehensive dynamic tracing framework
+
+Much better fit.
+:::
+
+When learning a new programming language, I personally like to type out the examples myself and run them. However, the backpressure example didn’t go through how to instrument it with DTrace to get the results they mentioned, so I used this as an opportunity to give DTrace a spin!
+
+Of course, before I could actually run the example, I ran into my first problem: the sample uses a 9 GB video file, `The.Matrix.1080p.mkv`. Unfortunately, I don’t just have a 9 GB video lying around. I asked ChatGPT where I could download a free large video file, which led me to something called "Big Buck Bunny." 
+
+Ummm... what? I risked it and clicked the suspicious looking link and was greeted with this landing page:
+
+![](../../assets/images/big-buck-bunny-landing-page.png)
+
+Wtf? After some further research is appears to be a legit free open movie from the [Blender Foundation](https://www.blender.org/about/foundation/) licensed under the [Creative Commons Attribution 3.0 license](http://creativecommons.org/licenses/by/3.0/). The more you know! 
+
+Anywho, I downloaded what I thought would be the largest file available:
+
+```bash
+➜ curl -O http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_native_60fps_stereo_abl.mp4
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1020M  100 1020M    0     0  1190k      0  0:14:38  0:14:38 --:--:--  639k
+```
+Looks like only 1020MB so I used ffmpeg to repeat it 8 more times to get 9GBs as I wanted to have similar file size as the example. 
+
+```bash
+node-js-notes/intro-to-node-js git:(main) ✗ 
+➜ ffmpeg -stream_loop 8 -i bbb_sunflower_native_60fps_stereo_abl.mp4 -c copy bbb_repeat_9_times.mp4
+node-js-notes/intro-to-node-js git:(main) ✗ 
+➜ ls -lh bbb_repeat_9_times.mp4
+-rw-r--r--@ 1 tyler  staff   8.9G Oct 15 18:11 bbb_repeat_9_times.mp4
+```
+
+8.9GB should do. 
+
+
+
