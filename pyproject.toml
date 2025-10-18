@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "personal website"
 requires-python = ">=3.12"
 dependencies = [
+    "altair>=5.5.0",
+    "duckdb>=1.4.1",
     "jupyter>=1.1.1",
     "matplotlib>=3.9.2",
+    "pandas>=2.3.3",
 ]

@@ -17,12 +17,16 @@ share:
   linkedin: true
   email: true
   mastodon: true
-draft: true 
+draft: false 
+format:
+  html:
+    code-fold: true
+jupyter: python3
 ---
 
 ------------------------------------------------------------------------
 
-As I have been making my way through the [learn](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs) section on [Node.js's](https://nodejs.org/en) I came across a pleasant surprise on the [Backpressuring in Streams](https://nodejs.org/en/learn/modules/backpressuring-in-streams) section:
+As I have been making my way through the [learn](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs) section on the [Node.js](https://nodejs.org/en) website I came across a pleasant surprise in the [Backpressuring in Streams](https://nodejs.org/en/learn/modules/backpressuring-in-streams) section:
 
 ::: {.callout-note appearance="default" collapse=false title="Side Note"}
 I really appreciate the Node.js "Learn" section in their docs. Super easy, linear way to consume the docs from top to bottom.
@@ -33,15 +37,11 @@ I really appreciate the Node.js "Learn" section in their docs. Super easy, linea
 That's right, `dtrace` mentioned! Over the past ~5 months I have gone through the entire [Oxide and Friends](https://oxide-and-friends.transistor.fm/) podcast backlog and it’s left a lasting impact on how I think about technology, community, and computing. I shared more about my thoughts in this [blog post](https://tylerhillery.com/blog/oxide-and-friends/). DTrace gets mentioned throughout the podcast so I'm aware of the tool but haven't used it myself. 
 
 ::: {.callout-note appearance="default" collapse=false title="Side Note"}
-Calling it a "Linux tool" probably wouldn’t be my first choice. If you listen to the Oxide and Friends episode [RIP USENIX ATC](https://oxide-and-friends.transistor.fm/episodes/rip-usenix-atc), Bryan, the creator of DTrace, talks about their first public presentation of DTrace, and the very first question afterwards was, "When is the port to Linux?". 
+Calling it a "Linux tool" probably wouldn’t have been my first choice. If you listen to the Oxide and Friends episode [RIP USENIX ATC](https://oxide-and-friends.transistor.fm/episodes/rip-usenix-atc), Bryan, the creator of DTrace, talks about their first public presentation of DTrace, and the very first question afterwards was, "When is the port to Linux?". 
 
 DTrace was originally developed for Solaris and now lives on in illumos, but we don’t need to go down that rabbit hole here. If you’re curious, the [SmartOS Community History](https://docs.smartos.org/community-history/) (an illumos distribution) and Bryan’s talk [Fork Yeah! The Rise and Development of illumos](https://www.youtube.com/watch?v=-zRN7XLCRhc) cover it well.
 
-And while there have been ports to other operating systems over the years (macOS, FreeBSD, and yes, even Linux), describing it purely as a "Linux tool" just feels... off. Even the [dtrace.org](https://dtrace.org/) homepage still says, "A Linux port is in development." The [official docs](https://illumos.org/books/dtrace/preface.html#preface) describe it as:
-
-> DTrace is a comprehensive dynamic tracing framework
-
-Much better fit.
+And while there have been ports to other operating systems over the years (macOS, FreeBSD, and yes, even Linux), describing it purely as a "Linux tool" just feels... off. Even the [dtrace.org](https://dtrace.org/) homepage still says, "A Linux port is in development." The [official docs](https://illumos.org/books/dtrace/preface.html#preface) describe it as "comprehensive dynamic tracing framework".
 :::
 
 When learning a new programming language, I personally like to type out the examples myself and run them. However, the backpressure example didn’t go through how to instrument it with DTrace to get the results they mentioned, so I used this as an opportunity to give DTrace a spin!
@@ -52,7 +52,7 @@ Ummm... what? I risked it and clicked the suspicious looking link and was greete
 
 ![](../../assets/images/big-buck-bunny-landing-page.png)
 
-Wtf? After some further research is appears to be a legit free open movie from the [Blender Foundation](https://www.blender.org/about/foundation/) licensed under the [Creative Commons Attribution 3.0 license](http://creativecommons.org/licenses/by/3.0/). The more you know! 
+After some further research is appears to be a legit free open movie from the [Blender Foundation](https://www.blender.org/about/foundation/) licensed under the [Creative Commons Attribution 3.0 license](http://creativecommons.org/licenses/by/3.0/). The more you know! 
 
 Anywho, I downloaded what I thought would be the largest file available:
 
@@ -72,7 +72,336 @@ node-js-notes/intro-to-node-js git:(main) ✗
 -rw-r--r--@ 1 tyler  staff   8.9G Oct 15 18:11 bbb_repeat_9_times.mp4
 ```
 
-8.9GB should do. 
+8.9 GB should do. 
+
+After looking into the example more it looks like we need to compile a custom build of Node.js taking out the [return value](https://github.com/nodejs/node/blob/55c42bc6e5602e5a47fb774009cfe9289cb88e71/lib/_stream_writable.js#L239) of the `.write()` function, which effectively disables backpressure support.
+
+I decided it's probably best to use the latest LTS version which at the time of writing this is v22.20.0.
+
+```bash
+git clone --branch v22.20.0 https://github.com/nodejs/node.git
+```
+
+Doesn't like like `node/lib/_stream_writable.js` contains that function anymore.
+
+```js
+// https://github.com/nodejs/node/blob/v22.20.0/lib/_stream_writable.js
+'use strict';
+
+// Keep this file as an alias for the full stream module.
+
+module.exports = require('stream').Writable;
+```
+
+Looks like the link they provided was a permalink to a [commit](https://github.com/nodejs/node/commit/55c42bc6e5602e5a47fb774009cfe9289cb88e71) that took place 9 years ago.
+
+Using go to definition it takes me to `node/lib/stream.js` which is another import from `/node/lib/internal/streams/writable.js`. Ah finally, the `Writable.prototype.write` function, but wait no `return ret` line:
+
+![](../../assets/images/git-diff-writable-node-func.png)
+
+::: {.callout-note appearance="default" collapse=false title="Side Note"}
+I know, another side note but I was writing this blog post in real time as I was going through this example and I got a sidetracked a few times, okay? I was looking for a way to display a nice git diff between the old and new `write` function which is how I stumbled across this wonderful tool called [delta](https://github.com/dandavison/delta). 
+
+I can't believe I haven't heard of this before! Now I can have beautiful git diffs right in my terminal.
+:::
+
+After doing a couple of more go to definitions I found the little sucker defined in the `writeOrBuffer()` function defined in `/node/lib/internal/streams/writable.js`
+
+```js
+// Return false if errored or destroyed in order to break
+// any synchronous while(stream.write(data)) loops.
+return ret && (state[kState] & (kDestroyed | kErrored)) === 0;
+```
+
+I replaced this line with `return true` instead.
+
+Now I got to figure out how to build Node.js. Luckily, Node.js has some great documentation on [building Node.js](https://github.com/nodejs/node/blob/v22.20.0/BUILDING.md). I am pretty sure I had all the required prerequisites to run the build so I want forwards with the commands as outlined in the guide:
+
+```bash
+export CXX=g++-12
+./configure
+make -j4
+```
+
+Buttt it blew up on me when I ran `./configure`
+
+```bash
+intro-to-node-js/node git:(v22.20.0) ✗ 
+➜ ./configure
+Node.js configure: Found Python 3.13.8...
+Traceback (most recent call last):
+  File "/Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/./configure", line 28, in <module>
+    import configure
+  File "/Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py", line 2274, in <module>
+    check_compiler(output)
+    ~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py", line 1237, in check_compiler
+    ok, is_clang, clang_version, gcc_version = try_check_compiler(CXX, 'c++')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+```
+
+Hmmm, I set up a breakpoint on that line to step into what's happening with `try_check_compiler(CXX, 'c++')`. There is only two `return` statements in there and only one of them returns more than four values which implies I hitting an `OSError`
+
+```python
+  except OSError:
+    return (False, False, '', '', False)
+```
+
+Oddly enough I didn't hit that error and the function returned successfully when I ran the `configure.py` directly through the VS Code debugger. This is puzzling. I never used the built in `pdb` before but I thought I give that a try and indeed it id raise the `OSError`.
+
+```python
+➜ ./configure
+Node.js configure: Found Python 3.13.9...
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1238)check_compiler()
+-> import pdb; pdb.set_trace()
+(Pdb) n
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1239)check_compiler()
+-> ok, is_clang, clang_version, gcc_version = try_check_compiler(CXX, 'c++')
+(Pdb) s
+--Call--
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1115)try_check_compiler()
+-> def try_check_compiler(cc, lang):
+(Pdb) n
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1116)try_check_compiler()
+-> try:
+(Pdb) n
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1117)try_check_compiler()
+-> proc = subprocess.Popen(shlex.split(cc) + ['-E', '-P', '-x', lang, '-'],
+(Pdb) n
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1118)try_check_compiler()
+-> stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+(Pdb) n
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1117)try_check_compiler()
+-> proc = subprocess.Popen(shlex.split(cc) + ['-E', '-P', '-x', lang, '-'],
+(Pdb) n
+FileNotFoundError: [Errno 2] No such file or directory: 'g++-12'
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1117)try_check_compiler()
+-> proc = subprocess.Popen(shlex.split(cc) + ['-E', '-P', '-x', lang, '-'],
+(Pdb) n
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1119)try_check_compiler()
+-> except OSError:
+(Pdb) n
+> /Users/tyler/code/learning/node-js-notes/intro-to-node-js/node/configure.py(1120)try_check_compiler()
+-> return (False, False, '', '', False)
+```
+
+Ahhh I'm an idiot `FileNotFoundError: [Errno 2] No such file or directory: 'g++-12'` I blindly just copied the command `export CXX=g++-12` but I don't have that installed. The VS Code debugger didn't have `CXX` set because I just set that environment variable within my terminal session. 
+
+After unsetting `CXX` and rerunning the `./configure` the command everything was good.
+
+```bash
+ntro-to-node-js/node git:(v22.20.0) ✗ 
+➜ ./configure
+Node.js configure: Found Python 3.13.9...
+INFO: configure completed successfully
+```
+
+The next step was running make:
+
+```bash
+make -j4
+```
+
+I left a couple of minutes after running command hoping it would be finished when I got back. When I came back 10 minutes I thought my Macbook was getting ready for take off. Seriously, listen: 
+
+```{=html}
+<audio controls>
+  <source src="../../assets/audio/mac-fans.mp3" type="audio/mpeg">
+  Your browser doesn't support the audio element.
+</audio>
+```
+
+This was first time I have ever head my fans turn on. Eventually, the build did complete in about 30-40min.
+
+I copied the `stream/promises` example they had and added a few lines to track latency and ran the script for both versions:
+
+```console
+   trial (#)  | `node` binary (ms) | modified `node` binary (ms)
+=================================================================
+      1       |      137040        |          139900   
+      2       |      136362        |          139999   
+      3       |      141825        |          142009   
+      4       |      136131        |          143897   
+      5       |      139041        |          142208   
+=================================================================
+average time: |      138080        |          141603 
+```
+
+Way slower than the example but I am going to chalk that up to "my machine vs their machine" and user error. The numbers between the unmodified and modified versions are comparable which is want we wanted to see.
+
+Now it's time to setup `dtrace` to reproduce the GC measured time. I recall in a [talk](https://youtu.be/J10nd1UdSys?si=1ZRJArQekLYzoAbO&t=2511) by Adam Leventhal, who helped developed DTrace, that DTrace was "castrated" when macOS released [System Integrity Protection (SIP)](https://developer.apple.com/documentation/security/disabling-and-enabling-system-integrity-protection). Disabling that made me fell uneasy. After some googling though, I came across this [blog](https://jade.fyi/blog/misadventures-in-dtrace/) which used [UTM](https://mac.getutm.app/) to create a macOS virtual machine with SIP disabled.
+
+This was something I was much more comfortable with so I spun up a new Mac VM in recover mode and ran `csrutil disable` to disable SIP.
+
+::: {.callout-note appearance="default" collapse=false title="Note"}
+Okay I later learned that disabling SIP wasn't needed for what I was trying to measure. If I would have done a better job of listening to Adam in his talk he clearly states:
+
+> If you're running the pid provider, if you're looking at processes that you own, if you're looking at USDT probes, all of that can be done with SIP enabled.
+
+Which is all I needed for the node probes.
+:::
+
+macOS comes with `dtrace` preinstalled, so with a little help from GitHub Copilot, I asked if it could show me how to measure Node.js GC time.
+
+```bash
+tylerhillery@Tylers-Virtual-Machine intro-to-node-js % sudo dtrace -n 'node*:::gc-start { self->ts = timestamp; }
+                node*:::gc-done /self->ts/ { printf("%d ms\n", (timestamp - self->ts)/1000000); self->ts = 0; }' -p 15088
+dtrace: invalid probe specifier node*:::gc-start { self->ts = timestamp; }
+                node*:::gc-done /self->ts/ { printf("%d ms\n", (timestamp - self->ts)/1000000); self->ts = 0; }: probe description node*:::gc-start does not match any probes
+```
+
+Hmmm, doesn't look like my Node.js process is generating any DTrace probes. After some googling, it appears Node.js doesn't enable DTrace probes by default but apparently I can enable them with a flag. I couldn't find any mentions of DTrace in Node.js but after grepping through the commit history I was able to find this [commit](https://github.com/nodejs/node/commit/aa3a572e6bee116cde69508dc29478b40f40551a):
+
+```bash
+intro-to-node-js/node git:(v22.20.0) ✗ 
+➜ git show --no-patch aa3a572e6be
+commit aa3a572e6bee116cde69508dc29478b40f40551a
+Date:   Sun Jul 17 18:33:52 2022 +0200
+
+    build: remove dtrace & etw support
+    
+    There are no clear indicators anyone is using the dtrace USDT probes.
+    
+    ETW support is very intertwined with the dtrace infrastructure. It's not
+    clear if anyone uses ETW so to keep things simple it too is removed.
+    
+    Fixes: https://github.com/nodejs/node/issues/43649
+    
+    PR-URL: https://github.com/nodejs/node/pull/43652
+```
+
+You got to be kidding me. Well, it was at this moment that I found out Node.js [recommends](https://nodejs.org/en/learn/diagnostics/memory/using-gc-traces) using the `--trace-gc` flag for measuring GC nowadays.
+
+But I have come so far and I really wanted to see if I could get DTrace working on the latest LTS release. I could use an older version of Node.js that had DTrace enabled but that's no fun. Do it for the ~~gram~~ blog Tyler! The problem is my C++ skills are lacking... to say the least, and the codebase has changed so much since DTrace was removed a simple `git revert` wouldn't help here. 
+
+This seemed like a good use case for AI though, as I can provide it the context of the diff where it was removed and see if it can add it back in. I gave Copliot the task and few minuets later I had a successful build of Node.js v22.20.0 with DTrace enabled. No clue if it's actually right but I don't really care at this point, I just wanted to see those Node.js probes!
+
+You might be asking, what is a probe anyway? The [Dynamic Tracing Guide](https://illumos.org/books/dtrace/bookinfo.html#bookinfo) has a nice section on them:
+
+> DTrace helps you understand a software system by enabling you to dynamically modify the operating system kernel and user processes to record additional data that you specify at locations of interest, called probes. A probe is a location or activity to which DTrace can bind a request to perform a set of actions, like recording a stack trace, a timestamp, or the argument to a function. Probes are like programmable sensors scattered all over your illumos system in interesting places.
+
+With this helpful context, lets see if we can see those probes now:
+
+```bash
+tylerhillery@Tylers-Virtual-Machine node-js-notes % sudo dtrace -l -n 'node*:::gc*'     
+   ID   PROVIDER            MODULE                          FUNCTION NAME
+ 2904   node2008              node _ZN4node14dtrace_gc_doneEPN2v87IsolateENS0_6GCTypeENS0_15GCCallbackFlagsEPv [node::dtrace_gc_done(v8::Isolate*, v8::GCType, v8::GCCallbackFlags, void*)] gc-done
+ 2905   node2008              node _ZN4node15dtrace_gc_startEPN2v87IsolateENS0_6GCTypeENS0_15GCCallbackFlagsEPv [node::dtrace_gc_start(v8::Isolate*, v8::GCType, v8::GCCallbackFlags, void*)] gc-start
+```
+We are back in business baby. 
+
+Lets try tracking GC times again and breakdown each step of this `dtrace` command:
+
+```bash
+tylerhillery@Tylers-Virtual-Machine node-js-notes % sudo dtrace -n 'dtrace:::BEGIN { start = timestamp; } node2008:::gc-start { self->ts = timestamp; } node2008:::gc-done /self->ts/ { printf("%d,%d\n", (timestamp - start)/1000000, (timestamp - self->ts)/1000000); self->ts = 0; }'
+dtrace: description 'dtrace:::BEGIN ' matched 3 probes
+CPU     ID                    FUNCTION:NAME
+  2   2904 _ZN4node14dtrace_gc_doneEPN2v87IsolateENS0_6GCTypeENS0_15GCCallbackFlagsEPv:gc-done 173,0
+  0   2904 _ZN4node14dtrace_gc_doneEPN2v87IsolateENS0_6GCTypeENS0_15GCCallbackFlagsEPv:gc-done 429,0
+```
+
+- `-n` flag enable or list probes matching the specified probe name
+- `dtrace:::BEGIN { start = timestamp; }` The `BEGIN` probe fires once each time you start a new tracing request. `timestamp` is a DTrace variable that returns the value of an always incrementing nanosecond counter. We are saving it here to `start` so we can keep track of the time elapsed since the start of the DTrace tracing request
+- `node2008:::gc-start { self->ts = timestamp; }` very similar to what we are doing above but this time saving the timestamp of the `node2008:::gc-start` probe 
+- `node2008:::gc-done /self->ts/ { ... }` This fires when GC completes, with a predicate `/self->ts/` to ensure we only process GC-done events that have a corresponding GC-start. Let's break down what happens inside:
+  - `printf("%d,%d\n", (timestamp - start)/1000000, (timestamp - self->ts)/1000000)` Prints two comma-separated values:
+    - Time elapsed since tracing started (in milliseconds)
+    - Duration of this GC cycle (in milliseconds)
+  - `self->ts = 0` Resets the GC start timestamp for the next cycle
 
 
+I measured the GC times with DTrace on the modified (backpressure disabled) and unmodified version modified. For completeness sake, I also measured GC times with the `--trace-gc` flag as well. Here are the results:
 
+```{python}
+#| echo: false
+import altair as alt
+import duckdb
+
+query = """
+with
+union_data as (
+  select
+      approx_time_ms,
+      gc_ms,
+      'Modified (Trace GC)' as configuration
+  from
+    'gc_output-node_modified_dtrace_disabled.csv'
+
+  union all
+
+  select
+      approx_time_ms,
+      gc_ms,
+      'Modified (DTrace)' as configuration
+  from
+    'gc_output-node_modified_dtrace_enabled.csv'
+
+  union all 
+
+  select 
+      approx_time_ms,
+      gc_ms,
+      'Unmodified (Trace GC)' as configuration
+  from
+    'gc_output-node_unmodified_dtrace_disabled.csv'
+
+  union all
+
+  select 
+      approx_time_ms,
+      gc_ms,
+      'Unmodified (DTrace)' as configuration
+  from
+    'gc_output-node_unmodified_dtrace_enabled.csv'
+)
+
+select
+  *
+from
+  union_data
+where
+  -- make chart smaller so it displays better
+  approx_time_ms <= 54000
+order by
+  configuration, approx_time_ms
+"""
+
+df = duckdb.query(query).df()
+
+# Create interactive selection for legend
+selection = alt.selection_point(fields=["configuration"], bind="legend")
+
+# Create line chart with Altair
+chart = (
+    alt.Chart(df)
+    .mark_line()
+    .encode(
+        x=alt.X("approx_time_ms:Q", title="Approximate Time (ms)"),
+        y=alt.Y("gc_ms:Q", title="GC Duration (ms)"),
+        color=alt.Color(
+            "configuration:N", title="Configuration", legend=alt.Legend(orient="top")
+        ),
+        opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
+        tooltip=["configuration:N", "approx_time_ms:Q", "gc_ms:Q"],
+    )
+    .add_params(selection)
+    .properties(
+        width=650,
+        height=400,
+        title={
+            "text": "Garbage Collection Duration Over Time",
+            "subtitle": "Click legend items to highlight specific configurations (Shift+click for multiple)",
+        },
+    )
+    .interactive()
+)
+
+chart
+```
+
+
+Now, I wouldn't take this numbers too seriously as I have broken many benchmarking sins here but the general takeaway is true regardless: disabling backpressure clearly makes GC much busier.
+
+<!-- TODO: Defined backpressure-->
+<!-- TODO: Good open source citizen -->
