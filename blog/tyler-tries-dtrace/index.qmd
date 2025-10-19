@@ -30,11 +30,13 @@ As I have been making my way through the [learn](https://nodejs.org/en/learn/get
 
 ![](../../assets/images/node-backpressure-dtrace.png)
 
-That's right, `dtrace` mentioned! Over the past ~5 months, I have gone through the entire [Oxide and Friends](https://oxide-and-friends.transistor.fm/) podcast backlog, and it's left a lasting impact on how I think about technology and software engineering. I shared more about my thoughts in this [blog post](https://tylerhillery.com/blog/oxide-and-friends/).
+That's right, [`dtrace`](https://illumos.org/books/dtrace/preface.html#preface) mentioned! Over the past ~5 months, I have gone through the entire [Oxide and Friends](https://oxide-and-friends.transistor.fm/) podcast backlog, and it's left a lasting impact on how I think about technology and software engineering. I shared more about my thoughts in this [blog post](https://tylerhillery.com/blog/oxide-and-friends/).
 
 DTrace comes up frequently in the podcast since Bryan Cantrill, one of the co-hosts, was its creator and Adam Leventhal, the other co-host, was also one of its original developers. I’m familiar with the tool from those discussions, even though I haven’t used it myself.
 
-When learning a new programming language, I personally like to type out the examples myself and run them. However, the backpressure example didn’t go through how to instrument it with DTrace to get the results they mentioned, so I used this as an opportunity to give DTrace a spin!
+When learning a new programming language, I personally like to type out the examples myself and run them. However, the backpressure example didn’t go through how to instrument it with DTrace to get the results they mentioned, so I used this as an opportunity to give DTrace a spin! 
+
+First, what is DTrace? DTrace is a dynamic tracing framework, and we’ll be using it here to measure GC (garbage collection) times in Node.js to see the effects of backpressure disabled.
 
 As described in the docs, backpressure is the buildup of data behind a buffer during data transfer. [`Streams`](https://nodejs.org/api/stream.html#stream_writable_streams) in Node.js allow you to process data incrementally versus loading the entire dataset into memory. Backpressure in Node.js occurs when the [`Readable`](https://nodejs.org/api/stream.html#stream_readable_streams) stream produces too much data for the [`Writable`](https://nodejs.org/api/stream.html#stream_writable_streams) stream to handle. 
 
