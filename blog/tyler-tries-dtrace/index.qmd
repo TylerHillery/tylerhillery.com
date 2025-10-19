@@ -41,7 +41,7 @@ As described in the docs, backpressure is the buildup of data behind a buffer du
 When the `Writable` stream can't keep up the data gets put into a queue waiting to be processed. This queue will continue to grow as long as the `Writable` stream stays behind. Managing this queue from building up is what Node's backpressure mechanism does. 
 
 ::: {.callout-note appearance="default" collapse=false title="Note"}
-One thing that tripped me up is that the term *“backpressure”* is often used in two ways:  
+One thing that tripped me up is the term *“backpressure”* is often used in two ways:  
 
 - to describe the **problem**, when the consumer can’t keep up with the producer, leading to data buildup. 
 - to describe the **solution**, the mechanism that regulates or slows down the producer to prevent overload.
