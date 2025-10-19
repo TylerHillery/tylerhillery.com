@@ -235,7 +235,7 @@ average time: |      138080        |          141603
 
 Slower than the example, but I am going to chalk that up to "my machine vs their machine" and user error. The numbers between the unmodified and modified versions are comparable, which is what I wanted to see.
 
-Now it's time to setup DTrace to reproduce the GC measured time. I recall in a [talk](https://youtu.be/J10nd1UdSys?si=1ZRJArQekLYzoAbO&t=2511) by Adam Leventhal, DTrace was "castrated" when macOS released [System Integrity Protection (SIP)](https://developer.apple.com/documentation/security/disabling-and-enabling-system-integrity-protection). Disabling that made me fell uneasy. After some googling though, I came across this [blog post](https://jade.fyi/blog/misadventures-in-dtrace/), which used [UTM](https://mac.getutm.app/) to create a macOS virtual machine with SIP disabled.
+Now it's time to setup DTrace to reproduce the GC measured time. I recall in a [talk](https://youtu.be/J10nd1UdSys?si=1ZRJArQekLYzoAbO&t=2511) by Adam Leventhal, DTrace was "castrated" when macOS released [System Integrity Protection (SIP)](https://developer.apple.com/documentation/security/disabling-and-enabling-system-integrity-protection). Disabling SIP made me feel uneasy. After some googling though, I came across this [blog post](https://jade.fyi/blog/misadventures-in-dtrace/), which used [UTM](https://mac.getutm.app/) to create a macOS virtual machine with SIP disabled.
 
 This was something I was much more comfortable with, so I spun up a VM in recovery mode and ran `csrutil disable` to disable SIP.
 
