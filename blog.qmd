@@ -7,7 +7,7 @@ listing:
     categories: false
     sort-ui: true
     filter-ui: true
-    page-size: 15
+    page-size: 100
     feed: true
     image-height: "0"
 page-layout: full
