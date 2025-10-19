@@ -2,7 +2,7 @@
 title: "Tyler Tries DTrace"
 description: "How a Node.js backpressure example led me to explore DTrace"  
 author: "Tyler Hillery"
-date: "2025-10-16"
+date: "2025-10-19"
 categories: []
 filters:
   - social-share
@@ -26,33 +26,36 @@ jupyter: python3
 
 ------------------------------------------------------------------------
 
-As I have been making my way through the [learn](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs) section on the [Node.js](https://nodejs.org/en) website I came across a pleasant surprise in the [Backpressuring in Streams](https://nodejs.org/en/learn/modules/backpressuring-in-streams) section:
-
-::: {.callout-note appearance="default" collapse=false title="Side Note"}
-I really appreciate the Node.js "Learn" section in their docs. Super easy, linear way to consume the docs from top to bottom.
-:::
+As I have been making my way through the [learn](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs) section on the [Node.js](https://nodejs.org/en) website, I came across a pleasant surprise in the [Backpressuring in Streams](https://nodejs.org/en/learn/modules/backpressuring-in-streams) section:
 
 ![](../../assets/images/node-backpressure-dtrace.png)
 
-That's right, `dtrace` mentioned! Over the past ~5 months I have gone through the entire [Oxide and Friends](https://oxide-and-friends.transistor.fm/) podcast backlog and it’s left a lasting impact on how I think about technology, community, and computing. I shared more about my thoughts in this [blog post](https://tylerhillery.com/blog/oxide-and-friends/). DTrace gets mentioned throughout the podcast so I'm aware of the tool but haven't used it myself. 
+That's right, `dtrace` mentioned! Over the past ~5 months, I have gone through the entire [Oxide and Friends](https://oxide-and-friends.transistor.fm/) podcast backlog, and it's left a lasting impact on how I think about technology and software engineering. I shared more about my thoughts in this [blog post](https://tylerhillery.com/blog/oxide-and-friends/).
 
-::: {.callout-note appearance="default" collapse=false title="Side Note"}
-Calling it a "Linux tool" probably wouldn’t have been my first choice. If you listen to the Oxide and Friends episode [RIP USENIX ATC](https://oxide-and-friends.transistor.fm/episodes/rip-usenix-atc), Bryan, the creator of DTrace, talks about their first public presentation of DTrace, and the very first question afterwards was, "When is the port to Linux?". 
-
-DTrace was originally developed for Solaris and now lives on in illumos, but we don’t need to go down that rabbit hole here. If you’re curious, the [SmartOS Community History](https://docs.smartos.org/community-history/) (an illumos distribution) and Bryan’s talk [Fork Yeah! The Rise and Development of illumos](https://www.youtube.com/watch?v=-zRN7XLCRhc) cover it well.
-
-And while there have been ports to other operating systems over the years (macOS, FreeBSD, and yes, even Linux), describing it purely as a "Linux tool" just feels... off. Even the [dtrace.org](https://dtrace.org/) homepage still says, "A Linux port is in development." The [official docs](https://illumos.org/books/dtrace/preface.html#preface) describe it as "comprehensive dynamic tracing framework".
-:::
+DTrace comes up frequently in the podcast since Bryan Cantrill, one of the co-hosts, was its creator and Adam Leventhal, the other co-host, was also one of its original developers. I’m familiar with the tool from those discussions, even though I haven’t used it myself.
 
 When learning a new programming language, I personally like to type out the examples myself and run them. However, the backpressure example didn’t go through how to instrument it with DTrace to get the results they mentioned, so I used this as an opportunity to give DTrace a spin!
 
-Of course, before I could actually run the example, I ran into my first problem: the sample uses a 9 GB video file, `The.Matrix.1080p.mkv`. Unfortunately, I don’t just have a 9 GB video lying around. I asked ChatGPT where I could download a free large video file, which led me to something called "Big Buck Bunny." 
+As described in the docs, backpressure is the buildup of data behind a buffer during data transfer. [`Streams`](https://nodejs.org/api/stream.html#stream_writable_streams) in Node.js allow you to process data incrementally versus loading the entire dataset into memory. Backpressure in Node.js occurs when the [`Readable`](https://nodejs.org/api/stream.html#stream_readable_streams) stream produces too much data for the [`Writable`](https://nodejs.org/api/stream.html#stream_writable_streams) stream to handle. 
 
-Ummm... what? I risked it and clicked the suspicious looking link and was greeted with this landing page:
+When the `Writable` stream can't keep up the data gets put into a queue waiting to be processed. This queue will continue to grow as long as the `Writable` stream stays behind. Managing this queue from building up is what Node's backpressure mechanism does. 
+
+::: {.callout-note appearance="default" collapse=false title="Note"}
+One thing that tripped me up is that the term *“backpressure”* is often used in two ways:  
+
+- to describe the **problem**, when the consumer can’t keep up with the producer, leading to data buildup. 
+- to describe the **solution**, the mechanism that regulates or slows down the producer to prevent overload.
+:::
+
+The example provided in the docs show compressing a video file because writing to disk is a lot slower than reading from disk. This provides a good way to demonstrate the effects of backpressure. If we turn off the backpressure mechanism, memory usage spikes and garbage collection runs more often, which is exactly what we’ll measure with DTrace.
+
+Of course, before I could actually run the example, I ran into my first problem. The example uses a 9GB video file, `The.Matrix.1080p.mkv`. Unfortunately, I don’t just have a 9 GB video lying around. I asked ChatGPT where I could download a free large video file, which led me to something called "Big Buck Bunny." 
+
+Ummm... what? I risked it and clicked the suspicious looking link which greeted me with this:
 
 ![](../../assets/images/big-buck-bunny-landing-page.png)
 
-After some further research is appears to be a legit free open movie from the [Blender Foundation](https://www.blender.org/about/foundation/) licensed under the [Creative Commons Attribution 3.0 license](http://creativecommons.org/licenses/by/3.0/). The more you know! 
+After some further research, it appears to be a legit free open movie from the [Blender Foundation](https://www.blender.org/about/foundation/) licensed under the [Creative Commons Attribution 3.0 license](http://creativecommons.org/licenses/by/3.0/). The more you know! 
 
 Anywho, I downloaded what I thought would be the largest file available:
 
@@ -62,7 +65,7 @@ Anywho, I downloaded what I thought would be the largest file available:
                                  Dload  Upload   Total   Spent    Left  Speed
 100 1020M  100 1020M    0     0  1190k      0  0:14:38  0:14:38 --:--:--  639k
 ```
-Looks like only 1020MB so I used ffmpeg to repeat it 8 more times to get 9GBs as I wanted to have similar file size as the example. 
+It's only 1020MB, so I used ffmpeg to repeat it 8 more times to get 9GB as I wanted to have a similar file size as the example. 
 
 ```bash
 node-js-notes/intro-to-node-js git:(main) ✗ 
@@ -72,17 +75,17 @@ node-js-notes/intro-to-node-js git:(main) ✗
 -rw-r--r--@ 1 tyler  staff   8.9G Oct 15 18:11 bbb_repeat_9_times.mp4
 ```
 
-8.9 GB should do. 
+8.9GB should do. 
 
-After looking into the example more it looks like we need to compile a custom build of Node.js taking out the [return value](https://github.com/nodejs/node/blob/55c42bc6e5602e5a47fb774009cfe9289cb88e71/lib/_stream_writable.js#L239) of the `.write()` function, which effectively disables backpressure support.
+After looking into the example more, it looks like we need to compile a custom build of Node.js taking out the [return value](https://github.com/nodejs/node/blob/55c42bc6e5602e5a47fb774009cfe9289cb88e71/lib/_stream_writable.js#L239) of the `.write()` function, which effectively disables backpressure support.
 
-I decided it's probably best to use the latest LTS version which at the time of writing this is v22.20.0.
+I decided to use the latest LTS version, which at the time of writing this is v22.20.0.
 
 ```bash
 git clone --branch v22.20.0 https://github.com/nodejs/node.git
 ```
 
-Doesn't like like `node/lib/_stream_writable.js` contains that function anymore.
+Doesn't look like `node/lib/_stream_writable.js` contains that function anymore.
 
 ```js
 // https://github.com/nodejs/node/blob/v22.20.0/lib/_stream_writable.js
@@ -93,19 +96,19 @@ Doesn't like like `node/lib/_stream_writable.js` contains that function anymore.
 module.exports = require('stream').Writable;
 ```
 
-Looks like the link they provided was a permalink to a [commit](https://github.com/nodejs/node/commit/55c42bc6e5602e5a47fb774009cfe9289cb88e71) that took place 9 years ago.
+The link they provided was a permalink to a [commit](https://github.com/nodejs/node/commit/55c42bc6e5602e5a47fb774009cfe9289cb88e71) that took place 9 years ago.
 
-Using go to definition it takes me to `node/lib/stream.js` which is another import from `/node/lib/internal/streams/writable.js`. Ah finally, the `Writable.prototype.write` function, but wait no `return ret` line:
+Using go to definition, it takes me to `node/lib/stream.js` which contains another import from `/node/lib/internal/streams/writable.js`. Ah finally, the `Writable.prototype.write` function, but wait no `return ret` line:
 
 ![](../../assets/images/git-diff-writable-node-func.png)
 
 ::: {.callout-note appearance="default" collapse=false title="Side Note"}
-I know, another side note but I was writing this blog post in real time as I was going through this example and I got a sidetracked a few times, okay? I was looking for a way to display a nice git diff between the old and new `write` function which is how I stumbled across this wonderful tool called [delta](https://github.com/dandavison/delta). 
+I was looking for a way to display a nice git diff between the old and new `write` function which is how I stumbled across this wonderful tool called [delta](https://github.com/dandavison/delta). 
 
 I can't believe I haven't heard of this before! Now I can have beautiful git diffs right in my terminal.
 :::
 
-After doing a couple of more go to definitions I found the little sucker defined in the `writeOrBuffer()` function defined in `/node/lib/internal/streams/writable.js`
+After doing a couple more go to definitions, I found the little sucker defined in the [`writeOrBuffer()`](https://github.com/nodejs/node/blob/caa20e28dc1f21a97f7b2a7134973fd6435b65f0/lib/internal/streams/writable.js#L548) function in the `/node/lib/internal/streams/writable.js` file.
 
 ```js
 // Return false if errored or destroyed in order to break
@@ -115,7 +118,7 @@ return ret && (state[kState] & (kDestroyed | kErrored)) === 0;
 
 I replaced this line with `return true` instead.
 
-Now I got to figure out how to build Node.js. Luckily, Node.js has some great documentation on [building Node.js](https://github.com/nodejs/node/blob/v22.20.0/BUILDING.md). I am pretty sure I had all the required prerequisites to run the build so I want forwards with the commands as outlined in the guide:
+The next step is to build Node.js from source. Luckily, Node.js has some great [documentation](https://github.com/nodejs/node/blob/v22.20.0/BUILDING.md) on how to do so. I am pretty sure I had all the required prerequisites to run the build process, so I went forward with the commands outlined in the guide:
 
 ```bash
 export CXX=g++-12
@@ -141,14 +144,14 @@ Traceback (most recent call last):
 ValueError: too many values to unpack (expected 4)
 ```
 
-Hmmm, I set up a breakpoint on that line to step into what's happening with `try_check_compiler(CXX, 'c++')`. There is only two `return` statements in there and only one of them returns more than four values which implies I hitting an `OSError`
+Hmmm, I set up a breakpoint on that line to step into what's happening with `try_check_compiler(CXX, 'c++')`. There are only two `return` statements in there, and only one of them returns more than four values, which implies I was hitting an `OSError`:
 
 ```python
   except OSError:
     return (False, False, '', '', False)
 ```
 
-Oddly enough I didn't hit that error and the function returned successfully when I ran the `configure.py` directly through the VS Code debugger. This is puzzling. I never used the built in `pdb` before but I thought I give that a try and indeed it id raise the `OSError`.
+Oddly enough I didn't hit that error running it directly through the VS Code debugger. This is puzzling. I never used the built in `pdb` before but I thought I would give that a try and indeed it raised the `OSError`.
 
 ```python
 ➜ ./configure
@@ -186,9 +189,9 @@ FileNotFoundError: [Errno 2] No such file or directory: 'g++-12'
 -> return (False, False, '', '', False)
 ```
 
-Ahhh I'm an idiot `FileNotFoundError: [Errno 2] No such file or directory: 'g++-12'` I blindly just copied the command `export CXX=g++-12` but I don't have that installed. The VS Code debugger didn't have `CXX` set because I just set that environment variable within my terminal session. 
+Ahhh I'm an idiot. `FileNotFoundError: [Errno 2] No such file or directory: 'g++-12'` I blindly just copied the command `export CXX=g++-12`, but I don't have that installed. The VS Code debugger didn't have `CXX` set because I just set that environment variable within my terminal session. 
 
-After unsetting `CXX` and rerunning the `./configure` the command everything was good.
+After unsetting `CXX` it completed successfully.
 
 ```bash
 ntro-to-node-js/node git:(v22.20.0) ✗ 
@@ -203,7 +206,7 @@ The next step was running make:
 make -j4
 ```
 
-I left a couple of minutes after running command hoping it would be finished when I got back. When I came back 10 minutes I thought my Macbook was getting ready for take off. Seriously, listen: 
+A couple of minutes after running the command, I left hoping it would be finished when I got back. 10 minutes later I returned, and I thought my MacBook was getting ready for takeoff. Seriously, listen: 
 
 ```{=html}
 <audio controls>
@@ -212,9 +215,9 @@ I left a couple of minutes after running command hoping it would be finished whe
 </audio>
 ```
 
-This was first time I have ever head my fans turn on. Eventually, the build did complete in about 30-40min.
+This was the first time I have ever had my fans turn on for this machine. Eventually, the build did complete in about ~30min.
 
-I copied the `stream/promises` example they had and added a few lines to track latency and ran the script for both versions:
+I copied the [`stream/promises`](https://nodejs.org/en/learn/modules/backpressuring-in-streams#too-much-data-too-quickly) example they had and ran the script for both versions, modified (backpressure disabled) and an unmodified version of Node.js:
 
 ```console
    trial (#)  | `node` binary (ms) | modified `node` binary (ms)
@@ -228,18 +231,18 @@ I copied the `stream/promises` example they had and added a few lines to track l
 average time: |      138080        |          141603 
 ```
 
-Way slower than the example but I am going to chalk that up to "my machine vs their machine" and user error. The numbers between the unmodified and modified versions are comparable which is want we wanted to see.
+Slower than the example, but I am going to chalk that up to "my machine vs their machine" and user error. The numbers between the unmodified and modified versions are comparable, which is what I wanted to see.
 
-Now it's time to setup `dtrace` to reproduce the GC measured time. I recall in a [talk](https://youtu.be/J10nd1UdSys?si=1ZRJArQekLYzoAbO&t=2511) by Adam Leventhal, who helped developed DTrace, that DTrace was "castrated" when macOS released [System Integrity Protection (SIP)](https://developer.apple.com/documentation/security/disabling-and-enabling-system-integrity-protection). Disabling that made me fell uneasy. After some googling though, I came across this [blog](https://jade.fyi/blog/misadventures-in-dtrace/) which used [UTM](https://mac.getutm.app/) to create a macOS virtual machine with SIP disabled.
+Now it's time to setup DTrace to reproduce the GC measured time. I recall in a [talk](https://youtu.be/J10nd1UdSys?si=1ZRJArQekLYzoAbO&t=2511) by Adam Leventhal, DTrace was "castrated" when macOS released [System Integrity Protection (SIP)](https://developer.apple.com/documentation/security/disabling-and-enabling-system-integrity-protection). Disabling that made me fell uneasy. After some googling though, I came across this [blog post](https://jade.fyi/blog/misadventures-in-dtrace/), which used [UTM](https://mac.getutm.app/) to create a macOS virtual machine with SIP disabled.
 
-This was something I was much more comfortable with so I spun up a new Mac VM in recover mode and ran `csrutil disable` to disable SIP.
+This was something I was much more comfortable with, so I spun up a VM in recovery mode and ran `csrutil disable` to disable SIP.
 
 ::: {.callout-note appearance="default" collapse=false title="Note"}
-Okay I later learned that disabling SIP wasn't needed for what I was trying to measure. If I would have done a better job of listening to Adam in his talk he clearly states:
+I later learned that disabling SIP wasn't needed for what I was trying to measure. If I would have done a better job of listening to Adam in his talk, he clearly states:
 
 > If you're running the pid provider, if you're looking at processes that you own, if you're looking at USDT probes, all of that can be done with SIP enabled.
 
-Which is all I needed for the node probes.
+Which is all I needed for the Node.js probes.
 :::
 
 macOS comes with `dtrace` preinstalled, so with a little help from GitHub Copilot, I asked if it could show me how to measure Node.js GC time.
@@ -251,7 +254,7 @@ dtrace: invalid probe specifier node*:::gc-start { self->ts = timestamp; }
                 node*:::gc-done /self->ts/ { printf("%d ms\n", (timestamp - self->ts)/1000000); self->ts = 0; }: probe description node*:::gc-start does not match any probes
 ```
 
-Hmmm, doesn't look like my Node.js process is generating any DTrace probes. After some googling, it appears Node.js doesn't enable DTrace probes by default but apparently I can enable them with a flag. I couldn't find any mentions of DTrace in Node.js but after grepping through the commit history I was able to find this [commit](https://github.com/nodejs/node/commit/aa3a572e6bee116cde69508dc29478b40f40551a):
+Hmmm, doesn't look like my Node.js process is generating any DTrace probes. After some more googling, it appears Node.js doesn't enable DTrace probes by default, but apparently I can enable them with a flag. I couldn't find any mentions of DTrace in the Node.js codebase, but after grepping through the commit history, I was able to find this [commit](https://github.com/nodejs/node/commit/aa3a572e6bee116cde69508dc29478b40f40551a):
 
 ```bash
 intro-to-node-js/node git:(v22.20.0) ✗ 
@@ -273,15 +276,17 @@ Date:   Sun Jul 17 18:33:52 2022 +0200
 
 You got to be kidding me. Well, it was at this moment that I found out Node.js [recommends](https://nodejs.org/en/learn/diagnostics/memory/using-gc-traces) using the `--trace-gc` flag for measuring GC nowadays.
 
-But I have come so far and I really wanted to see if I could get DTrace working on the latest LTS release. I could use an older version of Node.js that had DTrace enabled but that's no fun. Do it for the ~~gram~~ blog Tyler! The problem is my C++ skills are lacking... to say the least, and the codebase has changed so much since DTrace was removed a simple `git revert` wouldn't help here. 
+But I have come so far, and I really wanted to see if I could get DTrace working on the latest LTS release. I could use an older version of Node.js that had DTrace enabled, but that's no fun. Do it for the ~~gram~~ blog! 
 
-This seemed like a good use case for AI though, as I can provide it the context of the diff where it was removed and see if it can add it back in. I gave Copliot the task and few minuets later I had a successful build of Node.js v22.20.0 with DTrace enabled. No clue if it's actually right but I don't really care at this point, I just wanted to see those Node.js probes!
+The problem is my C++ skills are lacking... to say the least, and the codebase has changed so much since DTrace was removed that a simple `git revert` wouldn't help here. This seemed like a good use case for AI though, as I can provide it the context of the diff where it was removed and see if it can add it back in. 
+
+I gave Copilot the task, and a few minutes later I had a successful build of Node.js v22.20.0 with DTrace enabled. No clue if it's actually right, but I don't really care at this point. I just wanted to see those Node.js probes!
 
 You might be asking, what is a probe anyway? The [Dynamic Tracing Guide](https://illumos.org/books/dtrace/bookinfo.html#bookinfo) has a nice section on them:
 
 > DTrace helps you understand a software system by enabling you to dynamically modify the operating system kernel and user processes to record additional data that you specify at locations of interest, called probes. A probe is a location or activity to which DTrace can bind a request to perform a set of actions, like recording a stack trace, a timestamp, or the argument to a function. Probes are like programmable sensors scattered all over your illumos system in interesting places.
 
-With this helpful context, lets see if we can see those probes now:
+With this helpful context, let's see if we can see those probes now:
 
 ```bash
 tylerhillery@Tylers-Virtual-Machine node-js-notes % sudo dtrace -l -n 'node*:::gc*'     
@@ -291,7 +296,7 @@ tylerhillery@Tylers-Virtual-Machine node-js-notes % sudo dtrace -l -n 'node*:::g
 ```
 We are back in business baby. 
 
-Lets try tracking GC times again and breakdown each step of this `dtrace` command:
+Let's try tracking GC times again and break down each step of this `dtrace` command:
 
 ```bash
 tylerhillery@Tylers-Virtual-Machine node-js-notes % sudo dtrace -n 'dtrace:::BEGIN { start = timestamp; } node2008:::gc-start { self->ts = timestamp; } node2008:::gc-done /self->ts/ { printf("%d,%d\n", (timestamp - start)/1000000, (timestamp - self->ts)/1000000); self->ts = 0; }'
@@ -301,17 +306,17 @@ CPU     ID                    FUNCTION:NAME
   0   2904 _ZN4node14dtrace_gc_doneEPN2v87IsolateENS0_6GCTypeENS0_15GCCallbackFlagsEPv:gc-done 429,0
 ```
 
-- `-n` flag enable or list probes matching the specified probe name
+- `-n` enabled or list probes matching the specified probe name
 - `dtrace:::BEGIN { start = timestamp; }` The `BEGIN` probe fires once each time you start a new tracing request. `timestamp` is a DTrace variable that returns the value of an always incrementing nanosecond counter. We are saving it here to `start` so we can keep track of the time elapsed since the start of the DTrace tracing request
 - `node2008:::gc-start { self->ts = timestamp; }` very similar to what we are doing above but this time saving the timestamp of the `node2008:::gc-start` probe 
-- `node2008:::gc-done /self->ts/ { ... }` This fires when GC completes, with a predicate `/self->ts/` to ensure we only process GC-done events that have a corresponding GC-start. Let's break down what happens inside:
+- `node2008:::gc-done /self->ts/ { ... }` This fires when GC completes, with a predicate `/self->ts/` to ensure we only process gc-done events that have a corresponding gc-start. Let's break down what happens inside:
   - `printf("%d,%d\n", (timestamp - start)/1000000, (timestamp - self->ts)/1000000)` Prints two comma-separated values:
     - Time elapsed since tracing started (in milliseconds)
     - Duration of this GC cycle (in milliseconds)
   - `self->ts = 0` Resets the GC start timestamp for the next cycle
 
 
-I measured the GC times with DTrace on the modified (backpressure disabled) and unmodified version modified. For completeness sake, I also measured GC times with the `--trace-gc` flag as well. Here are the results:
+I measured the GC times with DTrace on the modified (backpressure disabled) and unmodified versions of Node.js. For completeness sake, I also measured GC times with the `--trace-gc` flag as well. Here are the results:
 
 ```{python}
 #| echo: false
@@ -401,7 +406,14 @@ chart
 ```
 
 
-Now, I wouldn't take this numbers too seriously as I have broken many benchmarking sins here but the general takeaway is true regardless: disabling backpressure clearly makes GC much busier.
+Now, I wouldn't take the numbers too seriously as I have broken many benchmarking sins here, but the general takeaway is true regardless. Disabling backpressure clearly makes the GC work much harder. 
 
-<!-- TODO: Defined backpressure-->
-<!-- TODO: Good open source citizen -->
+This was interesting to see, but it has me left wondering, how does the Node.js backpressure mechanism work? Well, this gets explained later on in the docs. 
+
+Essentially, when a `false` is returned from the `writeOrBuffer()`, it will pause the `Readable` stream from sending any data and wait until the consumer is ready again, which gets notified by the `drain` event. The `writeOrBuffer()` function will return `false` when the data buffer has exceeded the [highWaterMark](https://nodejs.org/api/stream.html#stream_buffering) or the write queue is internally busy.
+
+::: {.callout-caution collapse=false}
+This explanation is based on the current Node.js docs at the time of writing. It looks like the `writeOrBuffer()` function may have additional logic now compared to older `write()` function, so behavior could differ depending on your Node.js version.
+:::
+
+Hopefully, this post demystifies a bit of how backpressure works in Node.js and how you can use DTrace to measure GC. Now it's time to go watch Big Buck Bunny!
