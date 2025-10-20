@@ -220,6 +220,8 @@ share:
 - [Jack Vanlightly's Personal Blog](https://jack-vanlightly.com/)
 - [Hynek Schlawack's Personal Blog](https://hynek.me/articles/)
 - [Anton Zhiyanov's Personal Blog](https://antonz.org/all/)
+- [Fatih Arslan](https://arslan.io/blog/)
+- [Benjamin Dicken](https://benjdd.com/work/)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts 🎙️"} 
