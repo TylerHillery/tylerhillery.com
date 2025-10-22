@@ -2,7 +2,7 @@
 title: "Node.js Design Patterns"
 description: "My notes & review of [Node.js Design Patterns](https://a.co/d/hTE7uzB) by Luciano Mammino & Mario Casciaro" 
 author: "Tyler Hillery"
-date: "2025-10-02"
+date: "2025-10-22"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -23,3 +23,15 @@ categories: [Technical Books, In Progess]
 ------------------------------------------------------------------------
 
 # Notes 
+
+## Chapter 2: The Module System
+
+### Loading Phases
+
+1. Construction (or parsing): The interpreter identifies all imports and recursively loads the content of each module from their respective files.
+2. Instantiation: For each exported entity in every module, the interpreter creates a named reference in memory, but it does not assign it a value yet. References are created for all the `import` and `export` statements to track the dependency relationships between them (liking). No JavaScript code is executed during this phase.
+3. Evaluation: The Node.js interpreter executes the code so that all the previously instantiated entities can get an actual value. Now, running the code starting from the entry point is possible because all the blanks have been filled.
+
+- > We could say that Phase 1 is about finding all the dots, Phase 2 connects those does creating paths, and finally Phase 3 walks through the paths in the right order
+
+    Really like this short summary of how to remember the various phases 
