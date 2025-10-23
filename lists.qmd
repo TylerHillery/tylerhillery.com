@@ -220,8 +220,11 @@ share:
 - [Jack Vanlightly's Personal Blog](https://jack-vanlightly.com/)
 - [Hynek Schlawack's Personal Blog](https://hynek.me/articles/)
 - [Anton Zhiyanov's Personal Blog](https://antonz.org/all/)
-- [Fatih Arslan](https://arslan.io/blog/)
-- [Benjamin Dicken](https://benjdd.com/work/)
+- [Fatih Arslan's Personal Blog](https://arslan.io/blog/)
+- [Benjamin Dicken's Personal Blog](https://benjdd.com/work/)
+- [Marc Brooker's Personal Blog](https://brooker.co.za/blog/)
+- [Nanda Syahrasyad's Personal Blog](https://www.nan.fyi/)
+- [Kit Langton's Personal Website](https://www.kitlangton.com/)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts 🎙️"} 
