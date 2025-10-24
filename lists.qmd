@@ -30,6 +30,8 @@ share:
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [The Summer of Rust](https://youtu.be/YKv_IDN0zCA?si=NfIPPYvK5PPfM9V3)
+- [Bryan Cantrill on Jails and Solaris Zones](https://youtu.be/hgN8pCMLI2U?si=V8LFUTtzLSl3jfcx)
 - [Is It Time to Rewrite the Operating System in Rust? by Bryan Cantrill](https://www.infoq.com/presentations/os-rust/)
 - [A Wardrobe for the Emperor: Stitching practical bias into systems software research by Bryan Cantrill](https://www.youtube.com/watch?v=gAEiXWO44bQ)
 - [Debugging Under Fire: Keep your Head when Systems have Lost their Mind • Bryan Cantrill • GOTO 2017](https://www.youtube.com/watch?v=30jNsCVLpAE)
