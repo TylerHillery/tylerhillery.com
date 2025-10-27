@@ -16,7 +16,7 @@ share:
   linkedin: true
   email: true
   mastodon: true
-draft: false 
+draft: true
 ---
 
 ------------------------------------------------------------------------
