@@ -35,3 +35,16 @@ categories: [Technical Books, In Progess]
 - > We could say that Phase 1 is about finding all the dots, Phase 2 connects those does creating paths, and finally Phase 3 walks through the paths in the right order
 
     Really like this short summary of how to remember the various phases 
+
+### Modules that modify other modules
+
+> This technique, where a module modifies other modules or objects in the global scope, is known as **monkey patching**. Monkey patching refers to the practice of altering existing objects at runtime to change or extend their behavior, or to apply temporary fixes.
+
+### The Role of the TypeScript Compiler
+
+- **Module Loading**: Will it load a TypeScript file or a pre-compiles JavaScript file?
+- **Module type** and **module resolution**: What kind of module format does the target system expected. What module type is the loaded file using? 
+- **Output transformation**: How will the module syntax be transformed during the output process?
+- **Compatibility**: Can the detected module types interact correctly based on teh syntax transformation?
+
+## Chapter 3: Callbacks and Events
