@@ -48,3 +48,30 @@ categories: [Technical Books, In Progess]
 - **Compatibility**: Can the detected module types interact correctly based on teh syntax transformation?
 
 ## Chapter 3: Callbacks and Events
+
+> `setImmediate()` gives callbacks lower priority than `process.nextTick()` or event `setTimeout(callback, 0)`. Callbacks deferred with `process.nextTick()` are called **microtasks** and they are executed just after the current operation completes, even before any other I/O event is fired. With `setImmediate()`, on the other hand, the execution is queued in an event loop that comes after all I/O events have been processed.
+
+- Node.js emits a special event called `uncaughtExceptions`
+
+### Observer Pattern
+
+Reminder we have the following patterns that have been introduced
+
+- **Reactor Pattern**: The main idea behind this pattern is to have a handler associated with each I/O operation. A handler in Node.js is represented by a `callback` function. 
+- **Callback Pattern**: Functions triggered to handle the result of an operation.
+- **Observer Pattern**: Defines an object (called subject) that can notify an observer (or listeners) when a change in state occurs.
+
+> The main difference from the Callback pattern is that the subject can notify multiple observers, while a traditional CPS (Continuation-Passing Style) callback will usually propagate its result to only one listener, the callback.
+
+::: {.callout-important appearance="default" collapse=false title="❓" icon="false"}
+What's the difference between the Reactor Pattern and Observer Pattern?
+:::
+
+> In traditional OOP, the Observer pattern requires interfaces, concrete classes, and a hierarchy... In Node.js the Observer pattern is already built into the core and available through the `EventEmitter` class. The `EventEmitter` class allows us to register one or more functions as listeners, which will be invoked when a particular event type is fired. 
+
+::: {.callout-tip appearance="default" collapse=false title="Project Idea"}
+Design your own EventEmitter class
+:::
+
+> When subscribing to observables with a long life span, it is extremely important that we **unsubscribe** our listeners once they are no longer needed. This allows us to release the memory used by the objects in a listener's scope and prevent **memory leaks**. Unreleased `EventEmitter` listeners are the main source of memory leaks in Node.js (and JavaScript in general).
+
