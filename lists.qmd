@@ -227,6 +227,7 @@ share:
 - [Marc Brooker's Personal Blog](https://brooker.co.za/blog/)
 - [Nanda Syahrasyad's Personal Blog](https://www.nan.fyi/)
 - [Kit Langton's Personal Website](https://www.kitlangton.com/)
+- [Brandur's Personal Blog](https://brandur.org/)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts 🎙️"} 
