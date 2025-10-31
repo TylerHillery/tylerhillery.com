@@ -2,7 +2,7 @@
 title: "Code: The Hidden Language of Computer Hardware and Software"
 description: My short review of the book [Code The Hidden Language of Computer Hardware and Software](https://www.codehiddenlanguage.com/) by Charles Petzold.
 author: "Tyler Hillery"
-date: "2023-04-24"
+date: "2025-10-11"
 image: "./Code2Cover.jpg"
 filters:
   - social-share
@@ -17,13 +17,17 @@ share:
   linkedin: true
   email: true
   mastodon: true
-categories: [Technical Books]
+categories: [Technical Books, In Progress]
 ---
 
+## Second Read Through
 
 
-## Summary
+
+## Summary 2023-04-24
 
 **Rating**: ⭐⭐⭐⭐⭐
 
 Throughout this book I found myself saying "*Wow, so that's how that works!*". For those who looking to gain a deeper understanding about computer internals this book is for you. The author does a great job slowly introducing these computer science topics in gentle ways gradually leading up to how a computer is built.
+
+

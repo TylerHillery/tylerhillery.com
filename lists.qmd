@@ -294,6 +294,7 @@ share:
     - [Redis](https://github.com/redis/redis)
     - [Memcached](https://memcached.org/)
     - [DynamoDB](https://aws.amazon.com/dynamodb/)
+    - [RocksDB](https://github.com/facebook/rocksdb)
 - Time Series
     - [Prometheus](https://github.com/prometheus/prometheus)
     - [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
