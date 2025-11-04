@@ -75,3 +75,14 @@ Design your own EventEmitter class
 
 > When subscribing to observables with a long life span, it is extremely important that we **unsubscribe** our listeners once they are no longer needed. This allows us to release the memory used by the objects in a listener's scope and prevent **memory leaks**. Unreleased `EventEmitter` listeners are the main source of memory leaks in Node.js (and JavaScript in general).
 
+
+## Chapter 4: Asynchronous Control Flow Patterns with Callbacks
+
+I really like the demonstration of how to solve a race condition in `spider` example. `Spider` concurrently downloads all links that it finds on a webpage and downloads it. This can link to race condition if it finds the same link on the page twice. While the function does check if the file is already downloaded it could check that, the event loop might switch to the next function which also checks it and then both functions are now going to download the file.
+
+The key point to solving it is right here
+
+> all we need is a variable to mutually exclude `spider()` tasks running on the same URL
+
+So you can just add the url to a `Set` and have additional check to that this url isn't being processed. Removing the downloaded url from the set after the file downloaded is good practice from having it grow indefinitely. The `exists()` will still catch other future calls to not download the file. In my head I like to think it as a way to indicate that this url is getting being processed.
+
