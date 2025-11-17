@@ -86,3 +86,33 @@ The key point to solving it is right here
 
 So you can just add the url to a `Set` and have additional check to that this url isn't being processed. Removing the downloaded url from the set after the file downloaded is good practice from having it grow indefinitely. The `exists()` will still catch other future calls to not download the file. In my head I like to think it as a way to indicate that this url is getting being processed.
 
+This might be one of these best chapters I have read in the JS/TS/Node.js ecosystem. I'll admit though, this callback way of programming is kicking my ass and I am really struggling. Will need to come back to this chapter and reread it few times for to settle. It's hard for me to articulate what exactly it is I am struggling with. I think the two main things are,
+
+1. You never return a result you always call the callback with an error or the result you want to pass in. This makes it weird because the callback based function doesn't usually have a return value but instead it's the callback that has the value.
+2. Now this might be more of a recursion problem but I struggle with properly passing data from one callback to itself or another callback. It always seems you need multiple functions to accomplish "one true" function
+
+## Chapter 5: Asynchronous Control Flow Patterns with Promises and Async/Await
+
+> A promise is an object that represents the eventual result (or error) of an async operation... a `Promise` is **pending** when the async operation is not yet complete, it's **fulfilled** when the operation successfully completes, and it's **rejected** when the operation terminates with an error. Once a `Promise` is either fulfilled or rejected, it's considered **settled**.
+
+Promises are executed in the **microtask queue**.
+
+> As a result of the adoption of the Promises/A+ standard, many `Promise` implementations, including the native JavaScript `Promise` API, will consider any object with a `then()` method a `Promise`-like object, also called **thenable**.
+
+
+> The difference with `Promise.all()` is that `Promise.allSettled()` will always wait for each `Promise` to either fulfill or reject, instead of immediately rejecting when one of the promises reject.
+
+## Chapter 6: Streams
+
+
+> Use a `PassThrough` stream when you need to provide a placeholder for data that will be read or written in the future.
+
+The example they gave was you wanted to upload a file that took in a readableStream but you want to do some processing on the file stream before upload e.g. compress or encrypt data. What I didn't understand about this was why not create the readableStream first then pipe the stream through encrypting the stream or compressing and then call upload at the end? Like why do you have to call the upload first with this placeholder?
+
+- Every time you call `createReadStream()` from the `fs` module, this will open a file descriptor every time a new stream is created, even before you start to read from those streams.
+
+::: {.callout-tip appearance="default" collapse=false title="Project Idea"}
+Design your own lazy `Readable` and `Writeable` streams using the `PassThrough` stream as a proxy until `_read()` mthod is invoked for the first time.
+:::
+
+
