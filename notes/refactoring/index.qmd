@@ -1,0 +1,27 @@
+---
+title: "Refactoring: Improving the Design of Existing Code"
+description: "My notes & review of [Refactoring: Improving the Design of Existing Code](https://a.co/d/2aGsxpc) by Martin Fowler" 
+author: "Tyler Hillery"
+date: "2025-11-23"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/refactoring"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+# Review  
