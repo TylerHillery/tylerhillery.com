@@ -25,3 +25,72 @@ categories: [Technical Books, In Progress]
 # Notes 
 
 # Review  
+
+## Preface
+
+> **Refactoring** is the process of changing a software system in a way that does not alter the external behavior of the code yet improves its internal structure.
+
+> My use of JavaScript is certainly not an endorsement of the language.
+
+Love how the author had to make this clear haha
+
+## Chapter 1 Refactoring: A First Example
+
+> What are your thoughts about the program?
+
+Here are some of the things that came to mind
+
+- There were a lot of "magic" values that are not obvious to what they represent
+- The function could be split up into smaller parts that would make it easier for testing. One example could be having separate function for calculating volume credits
+- I would have the function just return the amount and separate function that handles formatting the invoice message
+- For the amount based on the play type it would be nice if that information was stored as part of the play. A proper data model would have a price id linked to a play id as prices can change over time. If you want to regenerate an invoice for historical play after it changes but have hardcoded the price to the most recent price then you wont be able to do this.
+- Not sure what yell but there is some code smell around how the audience size plays into the amount. The logic isn't immediately obvious to me, could be those "magic values".
+
+> Whenever I do refactoring, the first step is always the same. I need to be ensure I have a solid set of tests for that section of code.
+
+I believe that tests are a great way to find code that couples logic together that shouldn't be coupled. You start to realize this when you want to test a specific part of a function and you have to do all this unrelated setup that makes you think that this should be separated out into its own function.
+
+> Any fool can write code that a compute can understand. Good programmers write code that humans can understand.
+
+Good quote.
+
+```js
+function playFor(aPerformance) {
+ return plays[aPerformance.playID];
+}
+```
+
+I'm sorry but this function seems pointless. Why would you a create a function for a simple property access?
+
+> My first move, is to use the *Split Loop* to separate the accumulation of `volumeCredits`
+
+Wtf, you are not going to loop through the performances twice just for better code readability? You just made the invoice calculator O(N^2) now. What is going on? 
+
+Also, so many of these new functions rely on variables being in the outer scope so I am not entirely sure how these are going to be more testable.
+
+> Let me pause for a bit to talk about what I've just done here. Firstly, I know readers will again be worrying about performance with this change, as many people are wary of repeating a loop. But most of the time, rerunning a loop like this has negligible effect on performance.
+
+I am going to try to keep an open mind as I am only 20 pages in but man this just feels wrong...
+
+> The true test of good code is how easy it is to change it.
+
+I agree with this.
+
+## Chapter 2: Principles in Refactoring
+
+> **Refactoring** (noun): a change made to the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior. 
+>
+> **Refactoring** (verb): to restructure software by applying a series of refactorings without changes its observable behavior.
+
+> I'm not a great programmer; I'm just a good programmer with great habits.
+
+
+## Chapter 3: Bad Smells In Code
+
+> Classes are a great way to reduce parameter list sizes. They are particularly useful when multiple functions share several parameter values. Then, you can use *Combine Functions into Class* to capture those common values as fields.
+
+One of things I struggled with when first getting into programming was "When should create a Class?". One of the key indicators for me was exactly this, multiple functions that share the exact same parameters. Have the functions separate often made sense because they did two distinct things and it made for writing easier testing but it was a pain to always to have to pass around this values. Having a Class that can hold these values makes it much easier.
+
+I am having a hard time following this chapter because it's suggesting several solutions that haven't been introduced yet. I wonder if this chapter would have made sense later on in the book after the author goes through some of these refactoring strategies.
+
+## Chapter 4: Building Tests
