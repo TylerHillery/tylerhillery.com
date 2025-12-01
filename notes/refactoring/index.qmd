@@ -2,7 +2,7 @@
 title: "Refactoring: Improving the Design of Existing Code"
 description: "My notes & review of [Refactoring: Improving the Design of Existing Code](https://a.co/d/2aGsxpc) by Martin Fowler" 
 author: "Tyler Hillery"
-date: "2025-11-23"
+date: "2025-12-01"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -94,3 +94,11 @@ One of things I struggled with when first getting into programming was "When sho
 I am having a hard time following this chapter because it's suggesting several solutions that haven't been introduced yet. I wonder if this chapter would have made sense later on in the book after the author goes through some of these refactoring strategies.
 
 ## Chapter 4: Building Tests
+
+> it's also good to throw tests at the boundaries of these conditions--to see what happens when things go wrong.
+
+I am big fan of writing tests that also test things at the "edge". For example, implementing binary search test the search to be at the beginning or end of the list. It's common to detect off by one bugs here.
+
+> test coverage analysis is a only good for identifying untested areas of the code, not for assessing the quality of a test suite. The best measure for a good enough test suite is subjective: How confident are you that if someone introduces a defect into the code, some test will fail? 
+
+I love that last question.
