@@ -102,3 +102,11 @@ I am big fan of writing tests that also test things at the "edge". For example, 
 > test coverage analysis is a only good for identifying untested areas of the code, not for assessing the quality of a test suite. The best measure for a good enough test suite is subjective: How confident are you that if someone introduces a defect into the code, some test will fail? 
 
 I love that last question.
+
+# Chapter 5: Introducing the Catalog
+
+I don't get the point of having this as its own chapter, it was two pages long.
+
+# Chapter 6: A First Set of Refactorings
+
+I be honest none of these patterns really stood out to me
