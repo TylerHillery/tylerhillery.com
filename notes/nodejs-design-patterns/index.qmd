@@ -2,7 +2,7 @@
 title: "Node.js Design Patterns"
 description: "My notes & review of [Node.js Design Patterns](https://a.co/d/hTE7uzB) by Luciano Mammino & Mario Casciaro" 
 author: "Tyler Hillery"
-date: "2025-10-22"
+date: "2025-12-12"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -115,4 +115,90 @@ The example they gave was you wanted to upload a file that took in a readableStr
 Design your own lazy `Readable` and `Writeable` streams using the `PassThrough` stream as a proxy until `_read()` mthod is invoked for the first time.
 :::
 
+## Chapter 7: Creation Design Patterns
 
+- **Factory**: Decouples the creation of an object from the specific implementation. My mental model of a factory is a function that returns an instance of a class that is setup for a specific purpose.
+
+- **Builder**: When I think of a builder pattern I think of method chaining where each method of a class returns (`this` in JS). Good example of this is drizzle to build SQL queries: `db.select().from(users).where(eq(users.id, 42));`
+
+> **DI** is a very simple pattern in which the dependencies of a component are *provided as input* by an external entity, often referred to as the **injector**
+
+> Another pattern, called **Inversion of Control**, allows us to shift the responsibility of wiring the modules of an application to a third-party entity. This entity can be a **service locator** & or a **DI container**
+
+## Chapter 8: Structural Design Patterns
+
+> **Proxy**: Control access to an object by standing in for it
+>
+> **Decorator**: Dynamically extend or modify and object's behavior
+>
+> **Adapter**: Bridge incompatible interfaces to enable smooth collaboration
+
+Main advantages of a **Proxy**:
+
+- **Data Validation**: can validate data before forwarding it to the subject
+- **Security**: can verify client is authorized to perform action before forwarding to subject
+- **Caching**: can keep a cached for frequently access data from the subject
+- **Lazy initialization**: If creating the subject is an expensive operation we can delay the creation until it's actual needed
+- **Observability**: By intercepting calls to the subject we can log those actions
+
+
+```js
+const evenNumbers = new Proxy([], {
+    get: (target, index) => index * ,
+    has: (target, number) => number % 2 === 0
+})
+```
+> Looking at the implementation, this proxy uses an empty array at the target and then defines the `get` and `has` traps in the handler:
+>
+> - The `get` trap intercepts access to the array elements, returning the even number for the given index
+> - The `has` trap intercepts the usage of the `in` operator and checks whether the given number is even or not
+
+::: {.callout-important appearance="default" collapse=false title="❓" icon="false"}
+What I don't understand about this `Proxy` object as how do we know that `has` trap intercepts `in` operator? Like where is this defined`
+:::
+
+- Using Level through the filesystem API I thought was a great example of the `Adapter` pattern.
+
+# Chapter 9: Behavioral Design Patterns
+
+- One good way to remember the **Strategy Pattern** is that it's very similar to the **Template Pattern** with the main difference being implementation differences. The template pattern is easier to remember because Template usually refers to an abstract base class (ABC) that defines the blueprint of the methods that need to be implemented. A subclass of the ABC is similar to a specific strategy.
+
+> If you are still struggling to grasp the conceptual difference between an iterable and an iterator, you can think of them this way:
+> 
+> - **Iterable**: An object that represents a collection of items that you can iterate on
+> - **Iterator**: An object that allows you to move from item to the next in a collection
+
+This is very nice way to define the two. I often get the two mixed up because it's common to see a data type / class to be both an Iterable and Iterator.
+
+Some differences between streams and async iterators:
+
+- Streams are *push* whereas async iterators are *pull*
+- Streams are ideal for binary data and high-throughput because of built-in buffering and backpressure mechanisms.
+- Async Iterators shine in composability and clarity, where data is produces lazily or on demand. They integrate naturally with `for await...of` 
+
+
+**Command** pattern is any object that encapsulates all information necessary to perform an action later. The advantages are:
+
+- A command can be scheduled for execution later
+- Can be easily serialized and sent over the network.
+- Easy to keep a history of all operations executed on a system
+- Important part of some algorithm for data synchronization and conflict resolution
+- Command scheduled for execution can be canceled or reverted
+- Several commands can be grouped together to create atomic transactions
+
+Chapter 10: Testing: Patterns and Best Practices
+
+
+> **Test Doubles** are stand in components used to isolate the subject under test from its dependencies. The various types of test doubles are:
+
+> - **Stubs** provide predetermined, static responses to method calls. They ignore the context, no matter what input they receive.
+> - **Spies** take stubs a step further but retain memory to see how many times a method was called, what arguments were passed each time, the order of sequence calls.
+> - **Mocks** are spies with a rulebook. They combine stub like responses with predefined expectations and actively enforce them.
+
+Three types of tests:
+
+- **Unit Tests** for isolation and validating individual components.
+- **Integration Tests** for ensuring modules collaborate seamlessly.
+- **E2E Tests** for simulating real-world user journeys.
+
+Wanted to callout the *Testing async code* section of this chapter has a bunch of great examples that can be used as reference.
