@@ -2,7 +2,7 @@
 title: "Node.js Design Patterns"
 description: "My notes & review of [Node.js Design Patterns](https://a.co/d/hTE7uzB) by Luciano Mammino & Mario Casciaro" 
 author: "Tyler Hillery"
-date: "2025-12-12"
+date: "2025-12-30"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -159,7 +159,7 @@ What I don't understand about this `Proxy` object as how do we know that `has` t
 
 - Using Level through the filesystem API I thought was a great example of the `Adapter` pattern.
 
-# Chapter 9: Behavioral Design Patterns
+## Chapter 9: Behavioral Design Patterns
 
 - One good way to remember the **Strategy Pattern** is that it's very similar to the **Template Pattern** with the main difference being implementation differences. The template pattern is easier to remember because Template usually refers to an abstract base class (ABC) that defines the blueprint of the methods that need to be implemented. A subclass of the ABC is similar to a specific strategy.
 
@@ -202,3 +202,7 @@ Three types of tests:
 - **E2E Tests** for simulating real-world user journeys.
 
 Wanted to callout the *Testing async code* section of this chapter has a bunch of great examples that can be used as reference.
+
+## Review
+
+This book was excellent. I would highly recommend it to anyone looking to deepen their understand Node.js. I believe the book does a great job explaining the entire Node.js domain from understanding how Node.js works, to implementing various patterns in Node.js, testing, etc. The book does a great job of giving you a concept and a concrete example to go with that concept.

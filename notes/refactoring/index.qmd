@@ -2,7 +2,7 @@
 title: "Refactoring: Improving the Design of Existing Code"
 description: "My notes & review of [Refactoring: Improving the Design of Existing Code](https://a.co/d/2aGsxpc) by Martin Fowler" 
 author: "Tyler Hillery"
-date: "2025-12-01"
+date: "2025-12-23"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -108,3 +108,7 @@ I don't get the point of having this as its own chapter, it was two pages long.
 ## Chapter 6: A First Set of Refactorings
 
 I be honest none of these patterns really stood out to me
+
+# Review
+
+I wouldn't recommend this book. I believe the advice of the book is fine but it all could be condensed into 50 pages.
