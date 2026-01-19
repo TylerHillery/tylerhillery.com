@@ -27,7 +27,7 @@ about:
 ### **About Me**
 Currently working at [Supabase](https://supabase.com/) as a Data & Storage Engineer.
 
-Co-organizer of [Madison Systems](madisonsystems.xyz) meetup, a community run meetup focused on system internals (compilers, databases, operating systems, etc.).
+Co-organizer of [Madison Systems](https://madisonsystems.xyz) meetup, a community run meetup focused on system internals (compilers, databases, operating systems, etc.).
 
 Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction. My interests span backend services, infrastructure, data systems, networking, debugging, testing, observability and product. 
 
