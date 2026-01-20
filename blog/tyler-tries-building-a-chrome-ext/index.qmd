@@ -2,7 +2,7 @@
 title: "Tyler Tries Building a Chrome Extension"
 description: ""  
 author: "Tyler Hillery"
-date: "2026-01-19"
+date: "2026-01-20"
 categories: []
 filters:
   - social-share
