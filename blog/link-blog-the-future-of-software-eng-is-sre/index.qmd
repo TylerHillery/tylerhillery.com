@@ -17,25 +17,22 @@ share:
   linkedin: true
   email: true
   mastodon: true
-draft: true 
 ---
 
 [The future of software engineering is SRE](https://swizec.com/blog/the-future-of-software-engineering-is-sre/)
 
-This post made the rounds recently, landing on the front page of [Hacker News](https://news.ycombinator.com/item?id=46759063) and all over my Twitter "For You" feed. It articulated something I've been feeling for a while but hadn't quite been able to name.
+This post made the rounds recently, landing on the front page of [Hacker News](https://news.ycombinator.com/item?id=46759063) and all over my Twitter "For You" feed. It articulated some of the same feelings I've been having lately but haven't been able to put into words.
 
 > *When code gets cheap operational excellence wins.*
 
-That line stuck with me.
+This line stuck with me.
 
-The genie is out of the bottle and there is no going back. People are going to writing code at an unprecedented scale with AI agents. We are already seeing downsides of this will several notable open source projects including, [Ghostty](https://x.com/mitchellh/status/2014433315261124760), [Node.js](https://nodejs.org/en/blog/announcements/hackerone-signal-requirement), [curl](https://github.com/curl/curl/pull/20312), [tldraw](https://github.com/tldraw/tldraw/issues/7695),  being inundated with open source PRs that they have turned off (or limited) external contributions.
+The genie is out of the bottle. People are going to be writing code at an unprecedented scale with AI agents and we're already seeing the downsides. Several notable open source projects such as [Ghostty](https://x.com/mitchellh/status/2014433315261124760), [Node.js](https://nodejs.org/en/blog/announcements/hackerone-signal-requirement), [curl](https://github.com/curl/curl/pull/20312), [tldraw](https://github.com/tldraw/tldraw/issues/7695) have limited or shut down external contributions after being inundated with AI generated PRs.
 
-This begs the question, how do we gain the confidence that this AI generated code "works"? 
+This begs the question, how do we gain confidence this AI generated code "works"?
 
-To me this is all ops work. The problem is "confidence" is subjective, it's not about 100% test coverage, it's more of a feeling that when I ship this code I know everything is going to be okay.
+To me, this is fundamentally ops work. The real problem is "confidence" is subjective. It's not about 100% test coverage, it's the feeling when I ship this, everything is going to be okay.
 
-If a company has a reliable CI/CD pipeline, strong observability, clear ownership, and rollback procedures, then it almost doesn't matter where the code came from. Human. AI. Intern. Vendor. What matters is whether the product can safely absorb change.
+If a company has a reliable CI/CD pipeline, strong observability, and safe rollback procedures, it almost doesn't matter where the code came from. Human. AI. Intern. Vendor. What matters is whether the product can safely absorb change.
 
-There is another element to this because machines can't be held accountable. "ChatGPT told me to..." "Claude code wrote it..." isn't going to cut it. Accountability lives with the people running the service.
-
-This is why I'm going to be heavily investing in my operational skill set in the coming years: reliability, observability, deployments, incident response, and system design.
+So lets [bring back ops pride](https://charity.wtf/2026/01/19/bring-back-ops-pride-xpost/) and get ready for software engineering in this new era.
