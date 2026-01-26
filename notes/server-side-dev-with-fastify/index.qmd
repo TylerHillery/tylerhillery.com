@@ -1,0 +1,170 @@
+---
+title: "Accelerating Server-Side Development With Fastify"
+description: "My notes & review of [Accelerating Server-Side Development With Fastify](https://a.co/d/i0dPwdt) by Manuel Spigolon & Matteo Collina & Maksim Sinik" 
+author: "Tyler Hillery"
+date: "2026-01-26"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/server-side-dev-with-fastify"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+## Chapter 01: What is Fastify?
+
+### Components
+
+**Main Components**:
+
+- **root application instance** represents the Fastify API at your disposal. It manages and controls the standard Node.js `http.Server` class and sets all the endpoints and the default behavior for every request and response.
+- **plugin instance** is a child object of the application instance, which shares the same interface. It isolates itself from other sibling plugins to let you build independent components that can't modify other contexts.
+
+**Utility Components**:
+
+- **hooks** are functions that act, when needed, during the lifecycle of the applications.
+- **decorators** let you augment the features installed by default on main components.
+- **parsers** are responsible for the request's payload conversion to primitive types.
+
+### Lifecycles
+
+- **Application lifecycle** tracks the status of the application instance and trigger these set of events:
+    - The `onRoute` event acts when you add an endpoint to the sever instance.
+    - The `onRegister` event is unique as it performs when a new **encapsulated context** is created.
+    - The `onReady` event runs when the application is ready to start listening for income HTTP requests.
+    - The `onClose` event executes when the server is stopping.
+
+    All these events are **application hooks**.
+
+- **Request lifecycle** defines the flow of every HTTP request that your server will receive. The server will process the request in two phases:
+    1. The routing: This ste p must find the function that must evaluate the request.
+    2. The handling of the request performs a set of events that compose the request lifecycle.
+
+    The request triggers the following events:
+
+    1. `onRequest`: The server receives an HTTP request and routes it to a valid endpoint.
+    2. `preParsing` happens before the evaluation of the request's body payload
+    3. `preValidation` runs before applying **JSON Schema validation** to the request's parts.
+    4. `preHandler` executes before the endpoint handler.
+    5. `preSerialization` takes action before the response payload transformation to a String, Buffer or a Stream in order to be sent to the client.
+    6. `onError` is execute only if an error happens during the request lifecycle
+    7. `onSend` is the last change to manipulate the response payload before sending it to the client.
+    8. `onResponse` runs after HTTP request has been served.
+
+
+### Application instance methods
+- `app.route` adds a new endpoint to the server
+- `app.register(plugin)` adds plugins to the server instance
+- `app.ready` loads all the applications without listening to the HTTP request
+- `app.listen` starts the server and loads the application
+- `app.close` turns off the server and starts the closing flow
+- `app.inject` loads the server until is reaches the ready status and submits a mock HTTP request
+
+The various ways to defined a route
+```javascript
+// most verbose way
+app.route({
+    url: "/hello",
+    method: "GET",
+    handler: async (req, res) => res.send("world")
+})
+
+// shorthand ways
+app.get("/hello", [options], async (req, res) => {
+    res.send("world")
+})
+```
+
+::: {.callout-warning title="Arrow Function Handlers"} 
+> Using an arrow function will prevent you from getting the function context. Without the context, you don't have the possibility to use the `this` keyword to access the application instance. 
+
+```javascript
+// with function declaration 
+app.get("/function-context", async function handler(req, res) {
+  res.send({ helloFrom: this.server.address() });
+});
+// ➜ curl -s http://localhost:3000/function-context | jq
+// {
+//   "helloFrom": {
+//     "address": "::1",
+//     "family": "IPv6",
+//     "port": 3000
+//   }
+// }
+```
+
+```javascript
+// with arrow function
+fastify.get("/function-context", async (req, res) => {
+  res.send({ helloFrom: this.server.address() });
+});
+// ➜ curl -s http://localhost:3000/function-context | jq
+// {
+//   "statusCode": 500,
+//   "error": "Internal Server Error",
+//   "message": "Cannot read properties of undefined (reading 'server')"
+// }
+```
+
+:::
+
+- Recommended to avoid using the `reply.send()` method as it can only be sent once per handler. If you want to reuse handlers within other handlers it's best to just return the payload directly.
+
+### The `Reply` Object
+
+Main Methods:
+
+- `reply.send(payload)` will send the response to the client, can be a String, JSON object, Buffer, Stream or Error object. Can be replaced by returning the payload in the handler function.
+- `reply.code(number)` will set the status code of the response. 
+- `reply.header(key, value)` will add a response header. 
+- `reply.type(string)` shorthand way to define the `Content-Type`.
+
+- Methods can be chained together `reply.code(201).send('done)`
+
+Fastify "magic":
+
+- `Content-Length` is equal to the length of the output payload unless set manually.
+- `Content-Type` resolves to `text/plain` for strings, `application/json` for JSON objects, `application/octet-stream` for streams and buffers.
+- auto set the status code to `200` for success and `500` for errors
+- Will try calling `payload.toJSON()` if the payload is a `Class` object. 
+
+### Configuration Types
+
+- **Server Options** provide settings for the Fastify framework to start and support your app.
+- **Plugin config** provides all the params to config your plugins
+- **App config** defines your endpoint settings
+
+## Chapter 02: The Plugin System and the Boot Process
+
+My main takeaway from this chapter is everything in Fastify is basically a plugin. Plugins can have infinite nesting and every level of depth will create a new encapsulated context. 
+
+## Chapter 03: Working with Routes
+
+> you might feel overwhelmed by having to understand the functions executed when a request reaches an endpoint...To reduce the stress, Fastify has a couple of debugging outputs and techniques that are helpful to unravel a complex codebase
+>
+>```typescript
+> app.ready()
+>   .then(function started () {
+>       console.log(app.printPlugins())    
+>       console.log(app.printRoutes())    
+>}) 
+>
+>```
+
+-   Honestly I get this feeling of "What the hell is executing?" for any complex backend app I have jumped into. Seems like so many backend frameworks have so much "indirection" it can be hard to understand which cod gets executed when a certain endpoint is hit. 
+
+    Now it's usually for good reason as it promotes DRY code but it makes it hard to follow nonetheless. I use a debug server with breakpoints to understand the life of a request but having these debugging outputs is nice as well.
+
