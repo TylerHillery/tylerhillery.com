@@ -18,6 +18,10 @@ share:
     email: true
     mastodon: true
 categories: [Technical Books, In Progress]
+format:
+  html:
+    mermaid:
+      theme: neutral 
 ---
 
 ------------------------------------------------------------------------
@@ -168,3 +172,83 @@ My main takeaway from this chapter is everything in Fastify is basically a plugi
 
     Now it's usually for good reason as it promotes DRY code but it makes it hard to follow nonetheless. I use a debug server with breakpoints to understand the life of a request but having these debugging outputs is nice as well.
 
+
+## Chapter 04: Exploring Hooks
+::: {style="text-align: center;"}
+
+```{mermaid}
+flowchart LR
+  %% Left Request Phase (top to bottom)
+  subgraph RP1[Request Phase]
+    direction TB
+    onRequest[onRequest]
+    preParsing[preParsing]
+    preValidation[preValidation]
+    preHandler[preHandler]
+
+    onRequest --> preParsing
+    preParsing --> preValidation
+    preValidation --> preHandler
+  end
+
+  %% Middle Route Handler (vertical alignment)
+  routeHandler[Route Handler]
+
+  %% Right Response Phase (top to bottom)
+  subgraph RP2[Request Phase]
+    direction TB
+    preSerialization[preSerialization]
+    onSend[onSend]
+    onResponse[onResponse]
+
+    preSerialization --> onSend
+    onSend --> onResponse
+  end
+
+  %% Main flow
+  RP1 --> routeHandler --> RP2
+
+  %% Dashed borders for phases
+  style RP1 stroke-dasharray: 5 5
+  style RP2 stroke-dasharray: 5 5
+```
+
+```{mermaid}
+flowchart LR
+%% Free-floating Error / Timeout box (top middle)
+subgraph ERR[ ]
+    direction TB
+    onError[onError]
+    onTimeout[onTimeout]
+end
+style ERR stroke-dasharray: 5 5
+```
+:::
+
+- The `preHandler` hook is often the most used hooked by developers, but it shouldn't be. Only use this hook when accessing or manipulating validated body properties.
+- The `preSerialization` hook is not called when the payload argument is of type `string`, `Buffer`, or `null`
+- The `onSend` is the last hook invoked before replying to the client.
+- The `onResponse` is called after reply has already been sent to the client. Therefore you can't change the payload anymore. However, it's useful to do things like collect metrics or external services.
+- The `onError` hook is triggered only when the server sends an error as the payload to the client. It runs after the `customErrorHandler` if provided or after the default one integrated into Fastify. Its primary use is to do additional logging or modify the reply headers. Avoid calling the `reply.send` directly. 
+
+
+::: {.callout-warning title="Return `reply.send` in async hooks"} 
+> Besides throwing an error, there is another way of early exiting from the request phase execution flow at any point. Terminating the chain is just a matter of sending the reply from a hook: this will prevent everything that comes after the current hook from being executed. For example, this can be useful when implementing authentication and authorization logic. 
+>
+> However, there are some quirks when dealing with asynchronous hooks. For example, after calling reply.send to respond from a hook, we need to return the reply object to signal that we are replying from the current hook. The reply-from-hook.cjs example will make everything clear: 
+>
+>```typescript
+app.addHook('preParsing', async (request, reply) => {
+  const authorized = await isAuthorized(request) // [1]
+  if (!authorized) {
+    reply.code(401)
+    reply.send('Unauthorized') //[2]
+    return reply // [3]
+  }
+})
+```
+> We check whether the current user is authorized to access the resource [1]. Then, when the user misses the correct permissions, we reply from the hook directly [2] and return the reply object to signal it [3]. We are sure that the hook chain will stop its execution here, and the user will receive the 'Unauthorized' message.
+
+:::
+
+- Funny enough, this exact issue caused some errors on [Supabase Storage](https://github.com/supabase/storage/pull/833)
