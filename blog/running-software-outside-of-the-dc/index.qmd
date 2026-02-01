@@ -42,7 +42,7 @@ I know the term "edge" can come with some baggage, which is why I intentionally 
 A couple similarities that stood out to me between Chick-fil-A and Home Depot:
 
 - **Eventual consistency**: In store devices can't constantly call back to the cloud, where the durable source of truth lives, because of latency and unreliable networks. Instead, they work off a local dataset that syncs periodically.
-- **The iPhone storage model**: Applications running on these devices behave more like apps on an iPhone in terms of storage. Backups happen periodically, so data loss between syncs is possible. It's more important that the device can restart and recover into a working state versus being highly available and have persistent storage.
+- **The iPhone storage model**: Applications on these devices treat local storage as temporary. Backups happen periodically, so data loss between syncs is possible. What matters is that the device can restart, reprovision, and get back to a working state quickly because the apps aren't relying on local state.
 
 What really intrigues me about this style of infrastructure is that both the hardware and software are accessible enough that I can build something very similar in my own homelab.
 
