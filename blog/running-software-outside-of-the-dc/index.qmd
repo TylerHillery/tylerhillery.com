@@ -1,0 +1,71 @@
+---
+title: "Running Software Outside of The Data Center"
+description: ""
+author: "Tyler Hillery"
+date: "2026-02-01"
+categories: []
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/running-software-outside-of-the-dc"
+  description: ""
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+---
+
+This weekend's rabbit hole was a wild one. Lately, I've been poking around the mini PC market: the Lenovo Tiny series, HP Minis, and Dell Micros. You can usually find these on Facebook Marketplace or eBay for cheap. I recently picked up three HP ProDesk 600 G1 Minis for $100 total. Each one came with an Intel i5-4590T, 8GB of DDR3 RAM, and a 250GB SSD.
+
+The specs are dated, but they're still perfect for hands-on learning with Linux, Docker, and Kubernetes. They're also very serviceable. It often takes just one screw to open the enclosure and get to the hardware.
+
+I first came across these mini PCs through [Project MINI Rack](https://mini-rack.jeffgeerling.com/) by Jeff Geerling. Instead of the traditional 19" server racks you see in data centers, there's been a push toward 10" racks that are great for homelabs and portable network setups. These mini PCs are a great fit for that form factor, especially if you have access to a 3D printer and can print your own shelves.
+
+Here's what mine looks like:
+
+![](../../assets/images/mini-rack.jpg){width=50% fig-align="center"}
+
+It's not just me getting interested in these. There's been a growing movement in the tech community around self-hosting and moving away from cloud providers because of cost. Mini PCs are a great way to learn those skills.
+
+One recent example I saw was how [DHH was able to run Rails World campfire chat on a Beelink EQR5 out of his closet](https://x.com/dhh/status/2016599019997290815). I'm not here to say "Cloud is bad, owning your own hardware is better". Like most things, it depends on what you're building. 
+
+For me this whole homelab, Linux, self-hosting journey is primarily educational. It's hard to really understand the value cloud providers add through all their services and abstractions on top of a basic VPS if you've never done it the hard way yourself.
+
+While digging into mini PC content, I came across this video: [TinyMiniMicro Home Lab Revolution Introduction](https://www.youtube.com/watch?v=bx4_QCX_khU). It mentioned how [Chick-fil-A uses Intel NUC devices in their restaurants to host Kubernetes](https://medium.com/chick-fil-atech/enterprise-restaurant-compute-f5e2fd63d20f). That led me to a KubeCon talk, [Renovating Edge Infrastructure at The Home Depot](https://www.youtube.com/watch?v=p5Vca4BoiJw), which describes a very similar architecture.
+
+I know the term "edge" can come with some baggage, which is why I intentionally didn't use it in the blog title. To me, "edge" just means compute that doesn't live in a traditional data center.
+
+A couple similarities that stood out to me between Chick-fil-A and Home Depot:
+
+- **Eventual consistency**: In store devices can't constantly call back to the cloud, where the durable source of truth lives, because of latency and unreliable networks. Instead, they work off a local dataset that syncs periodically.
+- **The iPhone storage model**: Applications running on these devices behave more like apps on an iPhone in terms of storage. Backups happen periodically, so data loss between syncs is possible. It's more important that the device can restart and recover into a working state versus being highly available and have persistent storage.
+
+What really intrigues me about this style of infrastructure is that both the hardware and software are accessible enough that I can build something very similar in my own homelab.
+
+Now that I have my mini rack put together, I've been looking for projects that lean toward Platform, Infrastructure, and Site Reliability work. That's the direction I want to take my career, and building my own edge infrastructure platform at home feels like a good way to learn. More blog posts to come on this.
+
+One thing I've been thinking about after going down this rabbit hole was this [blog post](https://edgemonsters.dev/blog/edge-is-not-the-cloud/) title I came across:
+
+> The Edge is not the cloud: Stop pretending they are the same thing.
+
+And a point called out in the Home Depot talk:
+
+> "There are tons of storage solutions for Kubernetes. I almost need a sandbox up here on top of the stage. There are tons of storage solutions for Kube, but they're all designed for not edge."
+>
+> To prove the difficulty of the problem, TenBrink recounted conversations with vendors from KubeCon: "Oh, what cloud are you running in?" TenBrink's response: "I'm not. I'm running on my own boxes. We're not for you."
+
+It got me wondering: why can't the edge be the cloud?
+
+What if someone took the same philosophy Oxide did with their rack scale computer that provides API driven elastic infrastructure that you own and packaged it into a device that could be dropped into a local Chick-fil-A?
+
+Something to think about.
+
+If you are looking to learn more I recommend checking out the following resources:
+
+- [Edge Monsters Blog](https://edgemonsters.dev/blogs/)
+- [brianchambers.substack.com](https://brianchambers.substack.com/)
+- [chick-fil-atech blog](https://medium.com/chick-fil-atech)
