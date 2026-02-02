@@ -2,7 +2,7 @@
 title: "Accelerating Server-Side Development With Fastify"
 description: "My notes & review of [Accelerating Server-Side Development With Fastify](https://a.co/d/i0dPwdt) by Manuel Spigolon & Matteo Collina & Maksim Sinik" 
 author: "Tyler Hillery"
-date: "2026-01-26"
+date: "2026-02-01"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 format:
   html:
     mermaid:
@@ -252,3 +252,11 @@ app.addHook('preParsing', async (request, reply) => {
 :::
 
 - Funny enough, this exact issue caused some errors on [Supabase Storage](https://github.com/supabase/storage/pull/833)
+
+## Chapter 5: Exploring Validation and Serialization
+
+- Fastify applies the HTTP request part's validation after executing the `preValidation` hooks and before the `preHandler` hooks.
+
+# Summary
+
+I found this book to be helpful insight into how Fastify. Would recommend for anyone looking to learn more about Fastify. My only critique is I wish all examples were updated to use TypeScript and ESM syntax. 
