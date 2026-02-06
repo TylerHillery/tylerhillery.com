@@ -1,0 +1,110 @@
+---
+title: "Using AI to Contribute to Open Source"
+description: ""
+author: "Tyler Hillery"
+date: "2026-02-06"
+categories: []
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/using-ai-to-contribute-to-open-source"
+  description: ""
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+---
+
+I used AI to add a feature to [mise](https://mise.jdx.dev/), an open source tool (written in Rust) that manages installations of other tools. 
+
+I'm still coming to terms with this experience. I have never programed in Rust and I would be lying if I said I fully understood the code that it generated. I just wrote a [post](/blog/link-blog-the-future-of-software-engineering-is-sre) where I called out how many notable projects such as [Ghostty](https://x.com/mitchellh/status/2014433315261124760), [Node.js](https://nodejs.org/en/blog/announcements/hackerone-signal-requirement), [curl](https://github.com/curl/curl/pull/20312), [tldraw](https://github.com/tldraw/tldraw/issues/7695) have limited or shut down external contributions after being overwhelmed with AI slop PRs. 
+
+{{< tweet mitchellh 2018458123632283679 >}}
+
+I did not want to be one of those people. At the end of the day it's my name being attached to the PR and I take full responsibility for the code. 
+
+On the flip side, I have seen how AI can help. The same project, Ghostty, shows the benefits of AI and how it enables users who don't know anything about the underlying technology contribute high quality issue reports.
+
+{{< tweet mitchellh 2006114026191769924 >}}
+
+A very similar Ghostty example (though a different person) was actually discussed by David Crespo on the Oxide and Friends podcast: [Engineering Rigor in the LLM Age](https://oxide-and-friends.transistor.fm/episodes/engineering-rigor-in-the-llm-age/transcript#t=32m13s).
+
+I resonated with many of the things David said: 
+
+> And I so that was what really unsettled me was that this was an area where I really knew nothing and just using my sort of, like, sense of what sounds like it makes sense to validate that I wasn't gonna be posting AI slop on the ghosty GitHub, I was able to come to, you know, three real, bug reports without really putting myself putting very much into the process.
+
+> I didn't know enough about how Ghostty worked or how Zig worked to Yeah. To really evaluate. So I was nervous, but I was, you know, upfront with a lot of humility of, like, I'm really not sure about this, but I but it sounds so good that I cannot hold it back.
+
+How can I be more like these contributors and use AI to produce high quality work? 
+
+I think it really boils down transparency. Be transparent with your use of AI, what you don't know and show that you put some honest effort in. You can't just generate AI slop and toss it over. 
+
+Here's what my experience looked like going from question to merged PR.
+
+In mise, you can run the `mise list` to show all tools mise "knows about", buy many of the tools don't display their source files unless you're in the directory where that source config is located. For example:
+
+```
+Tool        Version           Source                      Requested 
+aws-vault   7.2.0            
+bun         1.3.0             ~/.config/mise/config.toml  latest
+kubectl     1.34.0           
+```
+but I want to do something like `mise list --all-sources`
+
+```
+Tool        Version           Source                                Requested 
+aws-vault   7.2.0             ~/code/work/infrastructure/mise.toml  latest
+bun         1.3.0             ~/.config/mise/config.toml            latest
+                              ~/code/work/infrastructure/mise.toml 
+kubectl     1.34.0            ~/code/work/infrastructure/mise.toml  1.34.0
+```
+
+This would allow me to see all sources for each tool across all my config files. I wanted this so I can see if there are some projects I can get rid of to clean up the amount of tools I have installed.
+
+Mise has great docs on their [contributing guidelines](https://mise.jdx.dev/contributing.html). Before submitting a PR, they ask contributors to first open a discussion or mention the idea in their Discord.
+
+I read all the docs on Mise and scanned the existing discussions to see if mise already allowed this. I couldn't find anything so I opened a [discussion](https://github.com/jdx/mise/discussions/7810) asking if this was something currently possible, if not, if they would be open to adding this feature.
+
+I [followed up](https://github.com/jdx/mise/discussions/7810#discussioncomment-15700363) with a screenshare of my fork of mise that added the feature to demo what I was looking for. The code was entirely AI generated and I wasn't too concerned with the correctness at this point as I simply wanted to demo the feature.
+
+I used opencode with GPT-5.2 Codex, you can see all my prompts [here](https://opncd.ai/share/TViPRIxP). I was very transparent with my use of AI when sharing the screenshare and even linked my session in the discussion.
+
+I got a reply back from the maintainer "seems fine to me" which felt like a green light to open a PR.
+
+This part was tough for me though because as I said I don't know Rust, I have zero confidence if the code is "right" and was torn about opening a PR. Having code out there with my name on it that I don't fully understand is unsettling.
+
+I scoured the contributing guidelines over and over to make sure my change was properly tested, documentation was updated, the PR title was correct and so on. I ran the tests several times to make sure they were passing. I had several different AI agents review the code locally to make sure everything look good.
+
+I opened the PR and noticed a few tests were failing and got some AI code review that I quickly addressed with a follow up commit. All CI was now passing. Now, all I had to do was wait.
+
+To my surprise I woke up the next morning to [this](https://github.com/jdx/mise/pull/8027):
+
+![](../../assets/images/mise-release-screenshot.png){width=75% fig-align="center"}
+
+The PR was merged and has been added to the next release of mise. 
+
+My first reaction was, is this fair? Why should I be added as a contributor when AI did all the work? I was simply the "idea guy". Is this how the future of software development is going to be?
+
+It's still unsettling to know there is code out there with my name attached to it that I don't fully understand. The maintainer's approval gives me some assurance that this code isn't entirely AI slop as I assumed it wouldn't have been merged otherwise. 
+
+I wanted to share this experience in hopes to promote more high quality AI generated PRs to open source repos. Remember it's your name being attached to those PRs, your reputation on the line. Do you want to be known as the person who slings AI slop all over? "But Claude wrote it..." "ChatGPT told me..." is not an excuse. Take some responsibility.
+
+::: {.callout-warning title="AI use in writing"} 
+I used AI to help with some parts of this blog post. Below are my exact prompts and you can view the chat session [here](https://chatgpt.com/share/6986013c-3df4-8004-ad9d-a058006c8054)
+
+> how can I add a transition here to go from talking about AI being used in open source contributions to actualy diving into the feature I waslooking for in mise:
+>
+>How can I be more like David here and use AI for good? I think it really boils down transparency. Be transparent that you're outside of your expertise and show that you put some honest effort into this work. 
+>
+>You can't just generate AI slop and toss it over.
+>
+>In mise, you can run the `mise list` to show all tools mise "knows about", buy many of the tools don't display their source files unless I'm in the directory where that source config is located. For example:
+
+> the wording is off here, can you help with the flow?
+> The first thing they call out is, before submitting a PR they want you to create a discussion or mention it in their Discord. 
+:::
+
