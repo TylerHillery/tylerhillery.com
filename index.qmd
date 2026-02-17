@@ -25,7 +25,7 @@ about:
 ---
 
 ### **About Me**
-Currently working at [Supabase](https://supabase.com/) as a Data & Storage Engineer.
+Currently working as a Software Engineer at [Supabase](https://supabase.com/) on the Storage team. 
 
 Co-organizer of [Madison Systems](https://madisonsystems.xyz) meetup, a community run meetup focused on system internals (compilers, databases, operating systems, etc.).
 
