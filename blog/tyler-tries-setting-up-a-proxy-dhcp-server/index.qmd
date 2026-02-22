@@ -1,0 +1,102 @@
+---
+title: "Tyler Tries Setting Up A Proxy DHCP Server"
+description: ""
+author: "Tyler Hillery"
+date: "2026-02-22"
+categories: []
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/tyler-tries-setting-up-a-proxy-dhcp"
+  description: ""
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: false 
+format:
+  html:
+    mermaid:
+      theme: default 
+---
+
+I'm setting up my homelab and one of my goals is [zero-touch provisioning](https://en.wikipedia.org/wiki/Zero-touch_provisioning), plug in a machine and have it install itself over the network.
+
+One common way to do that is [PXE booting](https://en.wikipedia.org/wiki/Preboot_Execution_Environment). Instead of booting from a USB stick, a client asks the network where to boot from.
+
+PXE booting usually involves two protocols:
+
+- [Dynamic Host Configuration Protocol (DHCP)](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol) for network settings and boot metadata
+- [Trivial File Transfer Protocol (TFTP)](https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol) for downloading early boot files
+
+At home, my TP-Link Deco router (`192.168.68.1`) is the main DHCP server. It hands out IP addresses, gateway, DNS, and lease info. The issue is my Deco does not expose DHCP options for PXE boot settings.
+
+So I used [dnsmasq](https://en.wikipedia.org/wiki/Dnsmasq) on another host (`192.168.68.57`) as a ProxyDHCP server. In this setup dnsmasq only supplies PXE boot details (boot file + next server) while my router supplies the rest.
+
+## Capture normal DHCP
+
+I started by looking at a normal DHCP exchange in [Wireshark](https://www.wireshark.org/).
+
+![](../../assets/videos/wireshark-dhcp-demo.mp4){fig-align="center"}
+
+I selected `Wi-Fi: en0`, applied a `dhcp` filter, then forced a lease renew from my Mac:
+
+```bash
+sudo ipconfig set en0 dhcp
+```
+
+That produced the standard DHCP flow:
+
+```{mermaid}
+sequenceDiagram
+  participant Client
+  participant DHCP_Server as DHCP Server (192.168.68.1)
+  Client->>DHCP_Server: Discover (0.0.0.0 -> 255.255.255.255)
+  DHCP_Server-->>Client: Offer (IP lease proposal)
+  Client->>DHCP_Server: Request (accept offer)
+  DHCP_Server-->>Client: ACK (lease confirmed)
+```
+
+Quick notes that helped me:
+
+- `0.0.0.0` as source means the client does not have an IP yet
+- `255.255.255.255` is limited broadcast (inside the local broadcast domain)
+
+Here are screenshots of the normal DHCP Offer:
+
+![](../../assets/images/dhcp-offer.png){fig-align="center" width=85%}
+
+## Capture ProxyDHCP
+
+My dnsmasq host (`buck`) runs on `192.168.68.57` and only proxies PXE info.
+
+I won't go into the details of setting up dnsmasq for proxy DHCP, since I simply followed this video and recommend you do the same: [PXE with Proxy DHCP](https://youtu.be/ew_JhL6PTrM?si=iG74dJcc4X2u_0Xl)
+
+I captured the PXE attempt but running the following in on my dnsmasq host.
+
+```bash
+sudo tcpdump -i eno1 -w /tmp/proxydhcp-demo.pcap '(port 67 or port 68 or port 69 or port 4011)'
+```
+
+When I opened the capture in Wireshark, you can see the PXE details in the DHCP offer:
+
+![](../../assets/images/dhcp-proxy-offer.png){fig-align="center" width=90%}
+
+## Proxmox Caveat
+
+For testing I was using a Proxmox VM but the Proxmox VM firmware identified itself as [iPXE](https://ipxe.org/). I could see valid ProxyDHCP offers from dnsmasq, but the VM did not always auto-follow them to TFTP.
+
+To keep moving, I manually chained from the iPXE prompt:
+
+```ipxe
+dhcp
+chain tftp://192.168.68.57/boot.ipxe
+```
+
+That successfully fetched `pxelinux.0` and proved the server-side setup was working.
+
+Funny enough, for my mini PCs I plan on doing the exact opposite, since they only support standard PXE. I’ll be using PXE to load iPXE first, and then letting iPXE handle the rest of the boot chain.
