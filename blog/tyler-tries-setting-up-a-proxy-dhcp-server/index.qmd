@@ -35,7 +35,7 @@ PXE booting usually involves two protocols:
 
 At home, my TP-Link Deco router (`192.168.68.1`) is the main DHCP server. It hands out IP addresses, gateway, DNS, and lease info. The issue is my Deco does not expose DHCP options for PXE boot settings.
 
-So I used [dnsmasq](https://en.wikipedia.org/wiki/Dnsmasq) on another host (`192.168.68.57`) as a ProxyDHCP server. In this setup dnsmasq only supplies PXE boot details (boot file + next server) while my router supplies the rest.
+So I used [dnsmasq](https://en.wikipedia.org/wiki/Dnsmasq) on another host (`192.168.68.57`) as a Proxy DHCP server. In this setup dnsmasq only supplies PXE boot details (boot file + next server) while my router supplies the rest.
 
 ## Capture normal DHCP
 
@@ -70,7 +70,7 @@ Here are screenshots of the normal DHCP Offer:
 
 ![](../../assets/images/dhcp-offer.png){fig-align="center" width=85%}
 
-## Capture ProxyDHCP
+## Capture Proxy DHCP
 
 My dnsmasq host (`buck`) runs on `192.168.68.57` and only proxies PXE info.
 
@@ -88,7 +88,7 @@ When I opened the capture in Wireshark, you can see the PXE details in the DHCP 
 
 ## Proxmox Caveat
 
-For testing I was using a Proxmox VM but the Proxmox VM firmware identified itself as [iPXE](https://ipxe.org/). I could see valid ProxyDHCP offers from dnsmasq, but the VM did not always auto-follow them to TFTP.
+For testing I was using a Proxmox VM but the Proxmox VM firmware identified itself as [iPXE](https://ipxe.org/). I could see valid Proxy DHCP offers from dnsmasq, but the VM did not always auto-follow them to TFTP.
 
 To keep moving, I manually chained from the iPXE prompt:
 
