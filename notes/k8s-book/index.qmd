@@ -1,0 +1,25 @@
+---
+title: "The Kubernetes Book"
+description: "My notes & review of [The Kubernetes Book](https://a.co/d/0ge0ZnYN) by Nigel Poulton" 
+author: "Tyler Hillery"
+date: "2026-03-02"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/k8s-book"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
