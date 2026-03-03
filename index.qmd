@@ -27,9 +27,9 @@ about:
 ### **About Me**
 Currently working as a Software Engineer at [Supabase](https://supabase.com/) on the Storage team. 
 
-Co-organizer of [Madison Systems](https://madisonsystems.xyz) meetup, a community run meetup focused on system internals (compilers, databases, operating systems, etc.).
+Co-organizer of [Madison Systems](https://madisonsystems.xyz) meetup, a community run meetup focused on system internals (databases, networking, operating systems, compilers, etc.).
 
-Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction. My interests span backend services, infrastructure, data systems, networking, debugging, testing, observability and product. 
+Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction. My main interests are in database systems, how services communicate over the network and the observability tooling that helps debug and reason about these systems in production.
 
 Driven by curiosity, grounded in gratitude.
 
@@ -43,7 +43,19 @@ Early in my career, I worked in various data related roles, leveraging my financ
 
 Over time, I became more drawn to the bigger picture of how software is built and operated to deliver real value to users. That curiosity has pulled me deeper into software engineering, where I can work closer to the product, tackle technically challenging problems, and more easily see the impact of my contributions. 
 
-Today, I'm focused on growing as a software engineer, combining my broad curiosity and pragmatic mindset to build and operate the systems that great products depend on.
+I mentioned above my main interests which boil down to three main areas:
+
+- How data is stored
+- How data is moved
+- How systems are observed and debugged
+
+I gravitate towards the first two because no matter the size of the application, whether it's running on a $5 VPS or inside a Kubernetes cluster, almost every request touches two critical components: the database and network.
+
+Regardless of framework (Rails, FastAPI, Express), it's common to place a reverse proxy in front of the application to handle TLS, routing, and load balancing. At its core, most software are systems communicating with other systems over APIs. The network is the layer that makes this communication possible.
+
+Now this data that gets moved often needs to be stored. That's where databases come in. Databases give you durability and consistency, and they deal with the complexity of concurrent access so you don't have to.
+
+And to truly understand these systems, I need the tooling to observe and debug them. This tooling fascinates me too because at its core, it's about the ability to understand what's really happening.
 
 Outside of tech:
 
