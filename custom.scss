@@ -128,10 +128,16 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;70
   }
 }
 
-// code 
+// code
 
 code{
     color: $red;
+}
+
+// diff additions
+pre.diff span.va {
+  color: #22b24c;
+  background-color: #e6ffec;
 }
 
 // links a tag 
