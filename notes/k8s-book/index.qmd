@@ -172,23 +172,35 @@ Two ways to execute commands inside containers
 
 # CLI cheat sheet
 
-- `kubectl config view` to view you kubeconfig
-- `kubectl config get-contexts` to see all contexts
-- `kubectl config use-context <context>` to set context
-- `kubectl config current-context` to see current context 
-- `kubectl get nodes` to list all nodes in cluster
-- `kubectl get pods` to list all pods
-    - `<pod> -o yaml` provides the details of specific pod
-- `kubectl explain pods --recursive` shows complete list of Pod attributes
-- `kubectl explain < attribute e.g. pod.spec.restartPolicy>` to drill into specific pod attributes
-- `kubectl apply -f pod.yml` to deploy resources
-- `kubectl describe` gives formatted overview of an object
+## kubectl
+
+- `kubectl config`
+    - `view` to view you kubeconfig
+    - `get-contexts` to see all contexts
+    - `use-context <context>` to set context
+    - `current-context` to see current context
+- `kubectl get`
+    - `nodes` to list all nodes in cluster
+    - `pods` to list all pods
+        - `<pod> -o yaml` provides the details of specific pod
+- `kubectl explain`
+    - `pods --recursive` shows complete list of Pod attributes
+    - `<attribute e.g. pod.spec.restartPolicy>` to drill into specific pod attributes
+- `kubectl apply`
+    - `-f pod.yml` to deploy resources
+- `kubectl describe`
     - `pod <pod>` to get overview of a pod
-- `kubectl logs <pod>` to get logs
+- `kubectl logs`
+    - `<pod>` to get logs
     - `--container <container>` to specify the container for multi-container pods (use the describe command to find container names)
-- `kubectl exec` to execute commands inside running containers 
+- `kubectl exec`
     - `<pod> -- ps` example command
     - `-it` for connect your local shell to container's shell
 - `kubectl edit` allows you to edit a live Pod object
-- `kubectl delete` deletes a resources
+- `kubectl delete`
     - `pod <pod> <pod>` deletes pods
+
+## kind (Kubernetes in Docker)
+
+- `kind create cluster --name book --config kind-3node.yaml` create kind cluster
+- `kind delete cluster --name book` delete a kind cluster 
