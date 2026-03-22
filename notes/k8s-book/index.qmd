@@ -110,4 +110,85 @@ You can run applications on control plane nodes as well which is common for deve
 - Because pods are immutable and the only will way to update them is by deleting the current one and adding a new one this causes *IP churn* and it can be hard for clients to reliable connect to individual pods. This is where *Services* come in, as they provide a stable DNS name, IP address , network port and load balance requests to the pod(s) behind it.
 
 
-# Chapter 3: Getting Kubernetes
+## Chapter 3: Getting Kubernetes
+
+> Your kubeconifg file is called **config** and lives in your home directory's hidden `.kube` folder. It defines:
+>
+> - Clusters
+> - Users (credentials)
+> - Contexts
+> - Current context
+> 
+> The **clusters** section is a list of known Kubernetes clusters, the **users** section is a list of user credentials, and the **contexts** section is where you match clusters and credentials.
+
+- Basic chapter that walks you through setting up K8s locally and on Linode.
+
+## Chapter 4: Working with Pods
+
+- While pods can have multiple containers it appears to me pods are the smallest unit you operate at e.g. deploying, terminating, scaling, updating all happen at the pod level.
+
+> Pods abstract the workload details. This means you can run containers, VMs, serverless functions and Wasm apps inside Pods, and Kubernetes doesn't know the difference.
+
+- ❓ I don't get this, I thought pods had to a OCI compliant image?
+
+> Containers and Wasm apps work with standard Pods, standard workload controllers, and standard runtimes. However, serverless functions and VMs need a bit of help. Serverless functions run in standard Pods but require apps like [Knative](https://knative.dev/) to extend the Kubernetes API with customer resources and controllers. VMs are similar and need apps like [KubeVirt](https://kubevirt.io/) to extend the API. VM workloads run in a *VirtualMachineInstance (VMI)* rather than a Pod.
+
+- Question answered right in the next paragraph 😁
+
+> Pods run one or more containers, and all containers in the same pod share the pod's *execution environment*. This includes:
+> 
+> - Shared filesystem and volumes (**mnt** namespace)
+> - Shared network stack (**net** namespace)
+> - Shared memory (**IPC** namespace)
+> - Shared process tree (**pid** namespace)
+> - Shared hostname (**uts** ) namespace 
+
+> *nodes* are host servers that can be physical servers, VMs, or cloud instances. *Pods* wrap containers and execute on *nodes*
+
+> Kubernetes schedules all containers in the same Po to the same cluster node. Despite this you should only put containers in the same Pod if they **need** to share resources... If your only requirement is to schedule to workloads to the same node you can use one of the following options:
+>
+> - nodeSelectors
+> - Affinity and anti-affinity
+> - Topology spread constraints
+> - Resource requests and resource limits
+
+- Resource requests and resource limits tell the scheduler how much CPU and memory a pod needs.
+- Restart policy is at the container level and doesn't require creating and deleting a new pod. Pods never get restarted.
+- ❓ I don't understand what a *workload resource* is versus a *controller*
+
+> Every Kubernetes clusters runs a *pod network* and automatically connects all Pods to it. It's usually a flat Layer-2 overlay network that spans all cluster nodes and allows every Pod to talk directly to every other pod.
+>
+> Your *pod network* is implemented by a third-party plugin that interfaces with Kubernetes via the *Container Network Interface (CNI)*. 
+
+> *Init containers* are a special type of container defined in the Kubernetes API. You run them in the same Pod as application containers, but Kubernetes guarantees they'll start and complete _before_ the main app container starts. It also guarantees they'll only run once.
+
+> *Sidecar container* adds functionality to an application without having to add it to the application container. Examples include scrape logs, monitor & sync remote content, broker connections, munge data, and encrypt network traffic.
+
+Two ways to execute commands inside containers
+- **Remote command execution** lets you send commands to a container from you local shell 
+- **Exec session** connects your local shell to the container's shell
+
+- Containers `HOSTNAME` will match the name of the pod
+
+# CLI cheat sheet
+
+- `kubectl config view` to view you kubeconfig
+- `kubectl config get-contexts` to see all contexts
+- `kubectl config use-context <context>` to set context
+- `kubectl config current-context` to see current context 
+- `kubectl get nodes` to list all nodes in cluster
+- `kubectl get pods` to list all pods
+    - `<pod> -o yaml` provides the details of specific pod
+- `kubectl explain pods --recursive` shows complete list of Pod attributes
+- `kubectl explain < attribute e.g. pod.spec.restartPolicy>` to drill into specific pod attributes
+- `kubectl apply -f pod.yml` to deploy resources
+- `kubectl describe` gives formatted overview of an object
+    - `pod <pod>` to get overview of a pod
+- `kubectl logs <pod>` to get logs
+    - `--container <container>` to specify the container for multi-container pods (use the describe command to find container names)
+- `kubectl exec` to execute commands inside running containers 
+    - `<pod> -- ps` example command
+    - `-it` for connect your local shell to container's shell
+- `kubectl edit` allows you to edit a live Pod object
+- `kubectl delete` deletes a resources
+    - `pod <pod> <pod>` deletes pods
