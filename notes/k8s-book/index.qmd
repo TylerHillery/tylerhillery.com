@@ -2,7 +2,7 @@
 title: "The Kubernetes Book"
 description: "My notes & review of [The Kubernetes Book](https://a.co/d/0ge0ZnYN) by Nigel Poulton" 
 author: "Tyler Hillery"
-date: "2026-03-02"
+date: "2026-03-22"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -23,3 +23,91 @@ categories: [Technical Books, In Progress]
 ------------------------------------------------------------------------
 
 # Notes 
+
+## Chapter 1: Kubernetes Primer
+
+- > Kubernetes 1.24 finally remove support for Docker as a runtime as it was bloated and overkill for what Kubernetes needed. Since then, most knew Kubernetes clusters ship with **containerd** as the default runtime. Fortunately, containerd is a stripped-down version of Docker optimized for Kubernetes that fully supports applications containerized by Docker. In fact, Docker, containerd, and Kubernetes all work with images and containers that implement the [Open Container Initiatives (OCI)](https://opencontainers.org/) standards.
+
+    My mental model for OCI before this book was it was a spec for containers and Docker, containerd where implementations of this spec. Couple of questions that I have this is what actually does "Runtime" mean for OCI. I didn't know this initiative had anything to deal with runtime but I was thought it was more about building images. I also wonder how can one implementation of the spec be bloated compared to the other? How can one be better for K8s? Lots of questions I hope this book will clear up later on. 
+
+## Chapter 2: Kubernetes principles of operation
+
+Kubernetes can be both
+
+- A cluster
+- An orchestrator
+
+> Kubernetes cluster is one or more *nodes* providing CPU, memory and other resources for application use. 
+
+The two nodes types:
+
+- ***Control plane nodes*** implement the K8s intelligence and every cluster needs at least one but it's recommended to have 3 or 5 for HA. These nodes must run Linux.
+- ***Worker nodes*** are where you run your applications
+
+You can run applications on control plane nodes as well which is common for development and test environments.
+
+> Kubernetes: Orchestrator system that deploys and manages applications
+
+> The *control plane* is a collection of system services that implement the brains of Kubernetes. It exposes the API, schedules apps, implements self-healing, manages scaling operations, and more. 
+
+> The *API server* is the front end of Kubernetes, and all commands and requests go through it. Even internal control plane services communicate with each other via the API server
+
+> The *cluster store* holds the desired state of all applications and cluster components, and it's the only *stateful* part of the control plane.
+>
+> It's based on the *etcd* distributed database, and most Kubernetes clusters run an etcd replica on every control plane node for HA.
+
+> Kubernetes uses *controllers* to implement most of the cluster intelligence. Each controller runs as a process on the control plane, and some of the more common ones include:
+> 
+> - The Deployment controller
+> - The StatefulSet controller
+> - The ReplicaSet controller
+
+- Mental model, think of controller as thing that ensures the cluster runs what you asked it to run e.g. if you asked for replicas of you app, a controller will ensure 3 are healthy and take actions if they aren't.
+
+- The *controller manager* is what manages the controller, a controller for the controller ha.
+
+> The *scheduler* watches the API server for new work tasks and assigns them to healthy worker nodes by
+> 
+> 1. Watching the API server for new tasks 
+> 2. Identify capable nodes
+> 3. Assign tasks to nodes
+
+- ❓ One thing I am confused about is what is an actual "node" is it a full VM? The book mentions if the cluster has node autoscaling it will trigger autoscaling event if there is a task it can't find a suitable node for. When this new worker node spins up what exactly is spinning up here?
+
+> *Kubelet* is the main Kubernetes agent and handles all communication with the cluster 
+
+- Interesting, every worker node has one or more runtimes for pulling images and managing lifecycle operations such as starting and stopping containers. I would have thought this was a 1:1 mapping
+
+> Each worker node runs *kube-proxy* to implement cluster networking and load balance traffic to tasks running on the node. 
+
+- Got it, so run worker node can have multiple tasks running. Still haven't heard the term "pod" yet, I wonder if "task" and "pod" are equivalent? 
+
+- Lol, the very next sentence just mentions it. Defined as
+
+> For now, think of Pods as a thin wrapper that abstracts different types of tasks so they can on Kubernetes.
+> ...
+> Right now you only need to know two things:
+> 1. Apps need to be wrapped in Pods to run on Kubernetes
+> 2. Pods get wrapped in higher-level controllers for advanced features 
+
+- Based on the image provided in the book it appears you can have one or more containers within a pod. It's almost like pod is a "docker compose lite".
+
+> The important thing to understand is that each layer of wrapping adds something: 
+> 
+> - The container wraps the app and provides dependencies
+> - The Pod wraps the container so it can run on Kubernetes
+
+- ❓ I don't quite get why there was a need to have a "Pod" concept to run on Kubernetes, I thought that was the whole point of containers?
+
+- Another way to think of what the controller does is the reconciliation between the *observed state* and the *desired state* 
+
+- Manifest files in YAML is how you tell K8s what the desired state should look like.  
+
+- Kubernetes does support the imperative model but declarative model is much more popular
+
+- Containers that are within the same pod communicate over `localhost`
+
+- Because pods are immutable and the only will way to update them is by deleting the current one and adding a new one this causes *IP churn* and it can be hard for clients to reliable connect to individual pods. This is where *Services* come in, as they provide a stable DNS name, IP address , network port and load balance requests to the pod(s) behind it.
+
+
+# Chapter 3: Getting Kubernetes
