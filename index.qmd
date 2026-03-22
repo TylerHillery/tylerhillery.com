@@ -43,20 +43,6 @@ Early in my career, I worked in various data related roles, leveraging my financ
 
 Over time, I became more drawn to the bigger picture of how software is built and operated to deliver real value to users. That curiosity has pulled me deeper into software engineering, where I can work closer to the product, tackle technically challenging problems, and more easily see the impact of my contributions. 
 
-I mentioned above my main interests which boil down to three main areas:
-
-- How data is stored
-- How data is moved
-- How systems are observed and debugged
-
-I gravitate towards the first two because no matter the size of the application, whether it's running on a $5 VPS or inside a Kubernetes cluster, almost every request touches two critical components: the database and network.
-
-Regardless of framework (Rails, FastAPI, Express), it's common to place a reverse proxy in front of the application to handle TLS, routing, and load balancing. At its core, most software are systems communicating with other systems over APIs. The network is the layer that makes this communication possible.
-
-Now this data that gets moved often needs to be stored. That's where databases come in. Databases give you durability and consistency, and they deal with the complexity of concurrent access so you don't have to.
-
-And to truly understand these systems, I need the tooling to observe and debug them. This tooling fascinates me too because at its core, it's about the ability to understand what's really happening.
-
 Outside of tech:
 
 - I enjoy weight lifting 🏋️️
