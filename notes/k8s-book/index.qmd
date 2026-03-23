@@ -170,6 +170,75 @@ Two ways to execute commands inside containers
 
 - Containers `HOSTNAME` will match the name of the pod
 
+## Chapter 5: Virtual clusters with Namespaces
+
+> Namespaces are a way of dividing a Kubernetes clusters into multiple *virtual clusters*
+
+- The predefined namespaces are 
+    - **default** where new objects go if no namespace is specified.
+    - **kube-system** where control plane components go such as internal DNS and metrics server.
+    - **kube-public** for objects that need to be readable by anyone.
+    - **kube-node-lease** is used for node heartbeats and managing node leases.
+
+## Chapter 6: Kubernetes Deployments
+
+> Deployments follow the standard kubernetes architecture comprising:
+> 
+> 1. A *resource* which defined objects. Deployment resource exists in the `apps/v1` API and defines all supported attributes and capabilities.
+> 2. A *controller* which manage resources. Deployment controller is a control plane service that watches Deployments and reconciles observed state with desired state
+
+- I'm still a little fuzzy about this "resource" concept. Also, not exactly sure what an "object" is either. I think the most difficult part about learning k8s is all the jargon. My basic mental model for now which might not be correct is a resource is basically any value that can go into the `kind` field in the manifest and an object is a specific record of that type stored in the cluster.
+
+- oh my god, another term "ReplicaSet" which is apparently managed by the Deployment. So the Deployment YAML creates a Deployment, ReplicaSet, and Pods. The Pods are managed by the ReplicaSet, which in turn, is managed by the Deployment. All management is done via the Deployment thought, you never interface with the ReplicaSet or Pods directly.
+
+- The various K8s autoscalers
+    - Horizontal Pod Autoscaler (HPA): adds and removes Pods to meet current demand.
+    - Cluster Autoscaler (CA): adds ands removes cluster nodes so you always have enough to run all scheduled Pods.
+    - Vertical Pod Autoscaler (VPA): increases and decreases the CPU and memory allocated to running Pods to meet current demand. 
+
+- I can't believe how simple it is to do rolling deployments on K8s. It's actually what I wanted for pypacktrends but I did a bunch of bash/docker hacks to spin up new container update Caddy to point to new container name and remove the old one. It works but the K8s models is way cleaner.
+
+## Chapter 7: Kubernetes Services
+
+- Label and Selectors I am also struggling with grokking. Conceptually I know it's a way to name a Resource so that Deployments and Services know what to operate on but something isn't clicking for me.... wait are labels what you put on the pods and selectors are what you put on other resources that operate on pods.
+
+> Whenever you create a Service, Kubernetes automatically creates an associated EndpointSlice to track healthy Pods with matching labels. The *EndpointSlice controller* automatically creates an associated *EndpointSlice object*. Kubernetes then watches the cluster for Pods that match the Service's label selector. Any new Pods matching the select get added to the EndpointSlice, whereas any deleted Pods are removed. Applications send traffic to the Service name, and the applications' container uses the cluster DNS to resolve the name to the Service's IP address. The container then sends the traffic to the Service's IP address, and the Service forwards it to one of the Pods listed in the EndpointSlice.
+
+- Service Types:
+    - *ClusterIP*: most basic and provides reliable endpoint (name, IP, and port) on the internal Pod network. Only accessible from inside the cluster.
+    - *NodePort*: build on top of ClusterIP and allow clients to connect via a port on every cluster node.
+        - Use high-numbered ports between 30,000 - 32,767
+        - Clients need to know the names or IPs of nodes, as well as whether nodes are healthy.
+            - ❓ I thought EndpointSlice controller kept track of healthy nodes?    
+    - *LoadBalancer*: build on top of both and integrate with cloud load balancers for extremely simple access from the internet. It's basically a NodePort Service fronted by a HA load balancer with a publicly resolvable DNS name and a low port number.
+> **Session Affinity** allows you to control session *stickiness* - whether or not client connections always go to the same Pod.
+>
+> **External Traffic Policy** dictates whether traffic hitting the Service will be load balanced across Pods on all cluster nodes or just Pods on the node traffic arrives on.
+
+- ❓ I am struggling with getting LB to work on local kind cluster
+    - Turns out I had to turn on the "Expose services to LAN" setting in OrbStack Kubernetes settings.
+
+## Chapter 8: Gateway API
+
+> Gateway API is the Kubernetes-native solution for routing external traffic to your Kubernetes applications. Gateway API is protocol-aware, already supporting HTTP, HTTPs, and gRPC, with TCP and UDP in the pipeline. It lets your route traffic to multiple applications via a single load balancer and does header matching, weighted traffic splitting, and more.
+
+- ❓ I don't get why do we need the Gateway API if we already have the LoadBalancer Service type?
+
+Every Gateway API implementation installs three things:
+
+- API resources: These include *Gateways* fro provisioning load balancers, *HTTP Routes* for adding routing logic, and *GatewayClasses* for connecting Gateways to controllers.
+- Gateway Controller: Watches for new Gateways and deploys them.
+- GatewayClass: Links Gateways to the right controller.
+
+> Gateways represent cluster entry points for external clients accessing Kubernetes applications.
+
+- So maybe it's different than Service LoadBalancers because it's focus on the cluster level whereas services provide stable DNS, IP, Port for group of Pods???
+- It almost seems like the L4 Cloud LB sits outside of Kubernetes Cluster routing traffic to Cluster Nodes.
+
+> Gateways represent load balancer instances. Every time you deploy a Gateway, you get a new load balancer.
+
+- This has been probably the hardest chapter for me so far. I still confused about how the Gateway Controller, GatewayClass and Gateway all interact.
+
 # CLI cheat sheet
 
 ## kubectl
