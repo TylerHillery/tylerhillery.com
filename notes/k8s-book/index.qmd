@@ -239,6 +239,50 @@ Every Gateway API implementation installs three things:
 
 - This has been probably the hardest chapter for me so far. I still confused about how the Gateway Controller, GatewayClass and Gateway all interact.
 
+## Chapter 9: Service discovery deep dive
+
+- Object names must be unique within a Namespace.
+
+- Pretty straightforward, Kubernetes runs a DNS server, **coredns**, on the control plane and whenever a new service gets added the DNS server gets updated that way other Pods in the Cluster can send requests to the Service name which will in turn get translated to the Service IP address by the DNS server. It's a bit more complicated by that but it's a good high level mental model for now.
+
+## Chpater 10: Kubernetes storage
+
+Core storage related API objects
+- PersistentVolumes (PV): Make external volumes available
+- PersistentVolumeClaims (PVC): If Pod wants to use a PV it needs a PVC to grant it access to a PV
+- StorageClasses (SC): Allow applications to create PVs and backend volumes dynamically
+
+> - Pod needs 50GB volume and requests it via a PersistentVolumeClaim
+> - The PVC asks the StorageClass to create a new PV and associated volume on the AWS backend
+> - The SC makes the call to the AWS backend via the AWS CSI plugin
+> - The CSI plugin creates the 50GB EBS volume on AWS
+> - The CSI plugin reports the creation of the external volume back to the SC
+> - The SC creates the PV and maps it ot the EBS volume back to the SC
+> - The Pod mounts the PV and uses it
+
+- Must have a 1:1 mapping between external volumes and PVs
+
+## Chapter 11: ConfigMap and Secrets
+
+- ConfigMaps (CM) let you store non-sensitive configuration data outside of Pods and inject it at run time.
+- Can inject into the container at runtime with either
+    - Environment Variables, when you create containers
+    - Arguments to the container's startup command, when you create containers
+    - Files in a volume, automatically pushes updates to live containers
+- Kubernetes does nothing to encrypt Secretes in the cluster store or while in file flight. For that you would typically use a Secrets Store CSI Driver for integrating with external vaults and have a service mesh that secures network traffic
+
+## Chapter 12: StatefulSets
+
+- Used to deploy and managed stateful applications in Kubernetes
+- StatefulSets can be compared to Deployments with the following features teh Deployments do not do:
+    - Predictable and persistent Pod names and DNS names
+    - Predictable and persistent volume bindings
+    - Predictable startup and shutdown order
+- First two form the Pod's state and is referred to as the Pod's stick ID.
+- Another key difference from Deployments is StatefulSets create one Pod at a time and wait for it to be running before stating the next whereas Deployments use a ReplicaSet controller to start all Pods at the same time, which can result in race conditions
+- Because StatefulSets already have a persistent pod name and DNS name, they don't need a Service. Instead they use special kind of Service called a headless service, no ClusterIP. Primary purpose of of headless Services is to create DNS SRV records. Clients query DNS for individual Pods and then send queries directly to those Pods instead instead of via the ClusterIP.
+
+
 # CLI cheat sheet
 
 ## kubectl
