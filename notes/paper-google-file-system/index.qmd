@@ -1,0 +1,271 @@
+---
+title: "The Google File System Paper"
+description: "My notes of [The Google File System](https://static.googleusercontent.com/media/research.google.com/en//archive/gfs-sosp2003.pdf) by Sanjay Ghemawat, Howard Gobioff, Shun-Tak Leung. This was for the paper discussion hosted by [Madison Systems](https://luma.com/zfh0lcxf?lm_source=embed)" 
+author: "Tyler Hillery"
+date: "2026-03-27"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/paper-google-file-system"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Papers]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+## Abstract
+
+- Largest cluster of time of the paper was 100s of terabytes of storage across thousands of disks over thousands of machines, and it is concurrently accessed by hundreds of clients.
+
+## 1. Introduction
+
+Key goals:
+
+- Performance
+- Scalability
+- Reliability
+- Availability 
+
+Key assumptions that made basis of design 
+
+- Component failures are the norm rather than the exception.
+
+:::{.callout-note title="Aside"}
+I can see how this is important given how early Google days relied on commodity hardware.
+:::
+- Files are huge by traditional standards, huge being Multi-GB range. 
+    - This has repercussions on such as block size.
+- Most files are mutated by appending new data rather than overwriting data.
+- Fourth, co-designing the applications and the file system API benefits by increasing our flexibility.
+    - Relaxed consistency model
+    - Atomic Append operation so that multiple clients can append concurrently to a file without extra synchronization between them
+
+:::{.callout-important title="Question❓" icon=false}
+Not sure what they mean by co-design the applications 
+:::
+
+:::{.callout-note title="Aside"}
+IMO the term **block** can be overloaded but this blog post [Internals for Interns: Filesystems Introduction](https://internals-for-interns.com/posts/filesystems-introduction/) does a great job explaining some of the terminology. 
+
+Hardware using the term of **sectors** which is the smallest unit the hardware can read or write. 
+
+When you plug in a storage device the OS sees a **block device**, a device that reads and writes fixed-size blocks. 
+
+A **partition** is a a contiguous range of sectors that you can treat as a single unit. 
+
+Once you have a partition you **format** it will a **filesystem**. The most fundamental job of the Filesystem is mapping names to data, you don't want to have to worry about reading sectors 50,000-50,007 you want to read "file.txt". Almost like what DNS does for IP Addresses.
+:::
+
+## 2. Design Overview
+
+### 2.1 Assumptions
+
+:::{.callout-note title="Aside"}
+Most of these were provided in the introduction. Only noting some of the different ones.
+:::
+- Focused on two kinds of reads:
+    - Large streaming reads: individual operations read hundreds of KBs, more commonly 1MB or mote. Success operations from the same client often read a contiguous region of a file.
+    - Small random reads: reads a few KBs at some arbitrary offset. Best to batch and sort small reads to advance steadily through the file vs go back & forth.  
+- High sustained bandwidth is more important than low latency.
+
+### 2.2 Interface 
+
+- Does **not** implement standard API such as POSIX but does provide something similar.
+- Operations it supports:
+    - create
+    - delete
+    - open
+    - close
+    - read
+    - write
+    - snapshot: creates a copy of a file or directory tree at low cost
+    - record append: Allows multiple clients to append data to the same file concurrently while guaranteeing the atomicity of each individual client's append.
+
+:::{.callout-important title="Question❓" icon=false}
+How does it implement this? What if one client reads and then goes to append but the file changes by the time it appends? Will the append be rejected? Is there some sort of optimistic concurrency control primitive being implemented? How does the filesystem handel ordering of appends? First come?
+:::
+
+### 2.3 Architecture
+
+- GFS Cluster components
+    - Single *master*
+    - multiple *chunkservers*
+    - multiple *clients*
+- Each of these is a commodity Linux machine running a user-level server process.
+- Clients and chunkservers can run on the same machine.
+- Files are divided into fixed-size *chunks*.
+- Each chunk is identified by immutable and globally unique 64 bit *chunk handle* assigned by the *master* at the time of chunk creation.
+- Chunkservers store chunks on local disks as Linux files and read or write data specified by a chunk handle and byte range.
+- Each chunk is replicated on multiple chunkservers, which by default is 3 but can be configurable.
+- Master does the following:
+    - maintains all filesystem metadata:
+        - namespace
+        - access control
+        - mappings from file to chunks
+        - which servers have which chunks
+    - chunk lease management
+    - garbage collection of orphan chunks
+    - chunk migration between servers
+    - periodically communicates with each chunkserver to give it instructions and collect state.
+- Neither the client or chunkserver cache file data but clients do cache metadata. Chunkservers don't need to cache file data because they can use Linux's buffer cached.
+
+### 2.4 Single Master
+
+No Notes. The design makes sense, reduce client to master interaction as much as possible.
+
+### 2.5 Chunk Size 
+
+- 64MB Chunk Size.
+
+:::{.callout-note title="Aside"}
+Typical FS block size (ext4) is 4KB so that's 16,000 times larger than normal.
+:::
+- The metadata the master has isn't that large so even for small reads clients can cache the chunk information for multi-TB files.
+- Small files can cause problem if it only takes single chunk to store them. It creates hot spots but this can be avoided by setting a higher replication factor so clients can spread the load across more chunkservers.
+
+### 2.6 Metadata
+
+- All metadata is kept in master's memory?
+
+:::{.callout-important title="Question❓" icon=false}
+Doesn't this limit GFS to the amount of memory you can fit on single machine? I know metadata is small compared to the actual data files but still.
+
+**answer**: My question about was answered shortly after:
+
+> One potential concern for this memory-only approach is that the number of chunks and hence the capacity of the whole system is limited by how much memory the master has. This is not a serious limitation in practice. The master maintains less than 64 bytes of metadata for each 64 MB chunk. Most chunks are full because most files contain many chunks, only the last of which may be partially filled. Similarly, the ﬁle namespace data typically requires less then 64 bytes per ﬁle because it stores ﬁle names compactly using preﬁx compression.
+:::
+- Persistent metadata that is kept persistent by logging mutations to an *operation log* on master's local disk and replicated to remote machine.
+    - namespaces 
+    - file-to-chunk mapping 
+- Volatile metadata:
+    - Chunk location information isn't stored in operation log but instead relies on asking each chunkserver about its chunks at master startup and whenever a chunkserver joins the cluster.
+
+- Master will checkpoint the operation log so it doesn't have to replay the whole thing only the operations since the last checkpoint.
+- To avoid slow down incoming mutations during the checkpoint process, this process happens in a separate thread and can be done in a minute or so for a cluster with a few million files.
+
+### 2.7 Consistency Model
+
+- File creation is atomic.
+
+:::{.callout-note title="Aside"}
+This section was probably the most difficult for me so far. Not sure if I fully understood everything here.
+:::
+
+## 3. System Interactions
+
+### 3.1 Leases and Mutation Order
+
+- The master grants a chunk lease to one of the replicas, which we call the *primary*.
+
+:::{.callout-note title="Aside"}
+This order of writes is not intuitive to me. It says the client pushes the data to all the replicas, then after all replicas have ACK'd then it sends a write request to the primary? Why doesn't it have to send another write request to the primary? Wasn't the point of "pushing the data to all the replicas".
+:::
+
+### 3.2 Data Flow
+
+$$
+\text{Elapsed Time} = \frac{B}{T} + RL
+$$
+
+Where:
+
+- $B$ = bytes to transfer
+- $T$ = network throughput (typically 100 Mbps)
+- $R$ = number of replicas  
+- $L$ = latency between machines (far below 1 ms)
+
+**Example:** With $B = 1 \text{ MB}$, $T = 100 \text{ Mbps}$, and $L < 1 \text{ ms}$, the ideal elapsed time to distribute to all replicas is approximately 80 ms.
+
+### 3.3 Atomic Record Appends
+
+- Traditional write clients specifies the offset at which data is written but concurrent writes to the same region are not serializable. 
+- Record append, client only specifies data no offset, and GFS appends it to the file **at least once**
+
+### 3.4 Snapshot
+
+No notes.
+
+## 4. Master Operation
+
+### 4.1 Namespace Management and Locking
+
+- Does not support hard or symbolic links or way to list all files in a directory.
+- Namespace is a lookup table mapping full pathnames to metadata 
+
+::: {.callout-note title="Aside"}
+Reminds me of object storage semantics, no real "directory" or paths. You have object keys.
+:::
+
+### 4.2 Replica Placement
+
+No notes.
+
+### 4.3 Creation, Re-replication, Rebalancing
+
+No notes.
+
+### 4.4 Garbage Collection
+
+Gist of this section is files are not delete right away but rather "marked" for deletion and get deleted eventually (usually 3 days but this is configurable).
+
+### 4.5 Stale Replica Detection
+
+- Master maintains a chunk version number to distinguish between up-to-date and stale replicas.
+
+
+## 5. Fault Tolerance and Diagnosis
+
+### 5.1 High Availability
+
+No notes.
+
+### 5.2 Data Integrity
+
+- Chunk is broken up into 64KB blocks.
+
+### 5.3 Diagnostic Tools
+
+No notes.
+
+## 6. Measurements
+
+### 6.1 Micro-benchmarks
+
+No notes.
+
+### 6.2 Real World Clusters
+
+No notes.
+
+### 6.3 Workload Breakdown
+
+No notes.
+
+## 7. Experiences
+
+No notes.
+
+## 8. Related Work 
+
+No notes.
+
+## 9. Conclusions
+
+No notes.
+
+# Additional Resources
+- [Spring 2020 MIT 6.824 Distributed Systems Lecture 3: GFS](https://www.youtube.com/watch?v=EpIgvowZr00)
+- [Jordan has no life: Distributed Systems Deep Dives | Google File System (GFS) - It's Ok To Fail](https://www.youtube.com/watch?v=haho0XAFoeY)
+- [Jitesh's Blog: I Built Google File System in Go: One File, Zero Dependencies](https://jitesh117.github.io/blog/google-file-system-in-go/)
+- [Google Cloud's Blog: Colossus under the hood: a peek into Google’s scalable storage system](https://cloud.google.com/blog/products/storage-data-transfer/a-peek-behind-colossus-googles-file-system)
+- [Internals for Interns: Filesystems Introduction](https://internals-for-interns.com/posts/filesystems-introduction/)
