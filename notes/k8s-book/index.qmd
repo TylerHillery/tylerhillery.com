@@ -2,7 +2,7 @@
 title: "The Kubernetes Book"
 description: "My notes & review of [The Kubernetes Book](https://a.co/d/0ge0ZnYN) by Nigel Poulton" 
 author: "Tyler Hillery"
-date: "2026-03-22"
+date: "2026-04-02"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -281,6 +281,28 @@ Core storage related API objects
 - First two form the Pod's state and is referred to as the Pod's stick ID.
 - Another key difference from Deployments is StatefulSets create one Pod at a time and wait for it to be running before stating the next whereas Deployments use a ReplicaSet controller to start all Pods at the same time, which can result in race conditions
 - Because StatefulSets already have a persistent pod name and DNS name, they don't need a Service. Instead they use special kind of Service called a headless service, no ClusterIP. Primary purpose of of headless Services is to create DNS SRV records. Clients query DNS for individual Pods and then send queries directly to those Pods instead instead of via the ClusterIP.
+
+## Chapter 13: API security and RBAC
+
+No notes.
+
+## Chapter 14: The Kubernetes API
+
+- To extend the Kubernetes API you need two main things:
+    - Create your custom **resource**
+    - Write and deploy your customer **controller**
+
+## Chapter 15: Threat modeling Kubernetes
+
+No notes.
+
+## Chapter 16: Real-world Kubernetes security
+
+No notes.
+
+# Review
+
+Get accessible intro into Kubernetes.
 
 
 # CLI cheat sheet
