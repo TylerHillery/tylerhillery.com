@@ -211,9 +211,10 @@ Two ways to execute commands inside containers
         - Clients need to know the names or IPs of nodes, as well as whether nodes are healthy.
             - ❓ I thought EndpointSlice controller kept track of healthy nodes?    
     - *LoadBalancer*: build on top of both and integrate with cloud load balancers for extremely simple access from the internet. It's basically a NodePort Service fronted by a HA load balancer with a publicly resolvable DNS name and a low port number.
-> **Session Affinity** allows you to control session *stickiness* - whether or not client connections always go to the same Pod.
->
-> **External Traffic Policy** dictates whether traffic hitting the Service will be load balanced across Pods on all cluster nodes or just Pods on the node traffic arrives on.
+
+    > **Session Affinity** allows you to control session *stickiness* - whether or not client connections always go to the same Pod.
+    >
+    > **External Traffic Policy** dictates whether traffic hitting the Service will be load balanced across Pods on all cluster nodes or just Pods on the node traffic arrives on.
 
 - ❓ I am struggling with getting LB to work on local kind cluster
     - Turns out I had to turn on the "Expose services to LAN" setting in OrbStack Kubernetes settings.
@@ -247,7 +248,8 @@ Every Gateway API implementation installs three things:
 
 ## Chpater 10: Kubernetes storage
 
-Core storage related API objects
+Core storage related API objects:
+
 - PersistentVolumes (PV): Make external volumes available
 - PersistentVolumeClaims (PVC): If Pod wants to use a PV it needs a PVC to grant it access to a PV
 - StorageClasses (SC): Allow applications to create PVs and backend volumes dynamically
@@ -274,7 +276,7 @@ Core storage related API objects
 ## Chapter 12: StatefulSets
 
 - Used to deploy and managed stateful applications in Kubernetes
-- StatefulSets can be compared to Deployments with the following features teh Deployments do not do:
+- StatefulSets can be compared to Deployments with the following features the Deployments do not do:
     - Predictable and persistent Pod names and DNS names
     - Predictable and persistent volume bindings
     - Predictable startup and shutdown order
@@ -302,7 +304,7 @@ No notes.
 
 # Review
 
-Get accessible intro into Kubernetes.
+Great accessible intro into Kubernetes.
 
 
 # CLI cheat sheet
