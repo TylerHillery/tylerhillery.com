@@ -26,3 +26,16 @@ categories: [Courses, In Progress]
 
 # Notes 
 
+## Lesson: Points, Lines, Rays, and Segments
+
+- A **line** is a straight object that extends forever in **both** directions
+- Using diagrams a **line** is shown with arrows on **both** sides 
+- We can represent a line passing through points $S$ and $T$ as $\overleftrightarrow{ST}$
+- A **ray** is similar to a line but has a staring point and extends infinitely in one direction only.
+- We can represent a ray starting at point $P$ and passing through point $Q$ as $\overrightarrow{ST}$
+- A **segment** is part of aline bounded by two points, called **endpoints**.
+- We can represent a segment with endpoints $A$ and $B$ as $\overline{AB}$
+
+## Lesson: Additive Inverses of Numbers
+
+- Given a number, its **additive inverse** is the number we need to add to get to zero.
