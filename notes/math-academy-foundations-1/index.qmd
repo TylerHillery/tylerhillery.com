@@ -1,0 +1,28 @@
+---
+title: "Math Academy Mathematical Foundations 1"
+description: "My notes [Math Academy Mathematical Foundations 1](https://www.mathacademy.com/courses/mathematical-foundations-i)"
+author: "Tyler Hillery"
+date: "2026-04-05"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/math-academy-foundations-1"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Courses, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Links
+- [Hand Written Notes](https://1drv.ms/p/c/b108287c54af8760/IQAg2mVcOfnuTbeJqLGmofr9AehnUEir94AWCLXhhCS1r-A?e=sRQ6PU)
+
+# Notes 
+
