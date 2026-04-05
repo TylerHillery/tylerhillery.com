@@ -1,0 +1,26 @@
+---
+title: "Learning OpenTelemetry"
+description: "My notes & review of [Learning OpenTelemetry](https://a.co/d/05i77pbK) by Ted Young & Austin Parker" 
+author: "Tyler Hillery"
+date: "2026-04-04"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/learning-otel"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
