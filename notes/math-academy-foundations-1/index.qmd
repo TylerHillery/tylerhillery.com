@@ -39,3 +39,11 @@ categories: [Courses, In Progress]
 ## Lesson: Additive Inverses of Numbers
 
 - Given a number, its **additive inverse** is the number we need to add to get to zero.
+
+## Lesson: The Greatest Common Factor of Two Linear Expressions
+
+- The **greatest common factor** of two numbers is the largest expression that will divide *both* numbers with no remainder.
+
+## Lesson: Multiplying Mixed Numbers by Whole Numbers
+
+- No notes
