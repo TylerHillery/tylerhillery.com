@@ -47,3 +47,22 @@ categories: [Courses, In Progress]
 ## Lesson: Multiplying Mixed Numbers by Whole Numbers
 
 - No notes
+
+## Lesson: Understanding Volume Using Unit Cubes
+
+- **Volume** is the amount of space that an object takes up, measured in **unit cubes**.
+
+## Lesson: Ratio Tables
+
+- No notes
+
+## Lesson: Angles and Measures of Angles
+
+- An **angle** is formed whenever two rays meet at a point.
+- The common point shared by the rays is called the **vertex**, and the rays themselves are called **sides** of the angle
+- Consider the follow angle made of the following rays $\overrightarrow{AB}$ and $\overrightarrow{AC}$, this can be expressed as $\angle{CAB}$ or $\angle{BAC}$ the vertex is always in the middle. It can also be expressed as $\widehat{CAB}$
+- The **measure** of angle is the amount of "turn" from one side of the angle to the other. Angles are measured in **degrees** $^\circ$.
+
+## Lesson: Distance Between Two Points in a Coordinate Plane
+
+- No notes. I am curious though how to calculate the distance when both x,y are different. The problems given were just vertical and horizontal lines.
