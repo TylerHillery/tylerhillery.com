@@ -2,7 +2,7 @@
 title: "Math Academy Mathematical Foundations 1"
 description: "My notes [Math Academy Mathematical Foundations 1](https://www.mathacademy.com/courses/mathematical-foundations-i)"
 author: "Tyler Hillery"
-date: "2026-04-05"
+date: "2026-04-08"
 filters:
     - social-share
 share:
@@ -66,3 +66,20 @@ categories: [Courses, In Progress]
 ## Lesson: Distance Between Two Points in a Coordinate Plane
 
 - No notes. I am curious though how to calculate the distance when both x,y are different. The problems given were just vertical and horizontal lines.
+
+## Lesson: Solving Problems Using Addition and Subtraction of Rational Numbers
+
+- No notes.
+
+## Lesson: Multiplying Mixed Numbers by Fractions
+
+- No notes.
+
+## Lesson: Sums of Angles
+
+- When two angles share a common side, they are called **adjacent** angles.
+- When two angles are adjacent we can add their meseasures to find the larger angle
+
+$$
+m\angle{PST} = m\angle{PSR} + m\angle{RST}
+$$
