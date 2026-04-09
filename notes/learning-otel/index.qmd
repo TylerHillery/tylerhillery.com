@@ -2,7 +2,7 @@
 title: "Learning OpenTelemetry"
 description: "My notes & review of [Learning OpenTelemetry](https://a.co/d/05i77pbK) by Ted Young & Austin Parker" 
 author: "Tyler Hillery"
-date: "2026-04-04"
+date: "2026-04-09"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -24,3 +24,85 @@ categories: [Technical Books, In Progress]
 
 # Notes 
 
+## Chapter 1. The State of Modern Observability
+
+- A *signal* is a particular type of telemetry, various types include: events logs, system metrics, continuous profiling.
+- Each signal consists of two parts:
+    - *instrumentation*: code that emits telemetry data
+    - *transmission system*: for sending the data over the network to an analysis tool
+- *Logs* are text-based messages meant for human consumption that describe the state of a system or service.
+- *Metrics* are compact statistical representations of a system state and resource utilization.
+
+## Chapter 2. Why Use OpenTelemetry?
+
+::: {.callout-note title="Aside" appearance="simple" }
+> It's not uncommon to have to navigate between multiple independent monitoring tools in order to discover why a particular API is slow or why a customer experience is experiencing errors uploading a file
+
+Hear, hear!
+:::
+
+- *Context* is metadata that helps describe the relationship between system operations and telemetry.
+- *Hard context* is a unique, per-request identifier that services in a distributed application can propagate to other services that are part of the same request.
+- *Soft context* is metadata that each telemetry instrument attaches to measurements from the various services and infra that handle the same request. Examples include: Customer ID, hostname.
+- *Signals* are linked to each through hard context, metrics can have *exemplars* append to the.
+
+## Chapter 3. OpenTelemetry Overview
+
+- *White-box* telemetry involves code changes to service or library.
+- *Black-box* telemetry utilizes external agents or libraries to generate telemetry without direct code changes.  
+- A *trace* is a way to model work in a distributed system, you can think of it as a set of log statements that follow a well-defined schema
+- Each trace is a collection of related logs, called *spans*, for a given transaction.
+
+::: {.callout-note title="Aside" appearance="simple" }
+> The difference between structured logs and tracing, though, is that tracing is an incredibly powerful observability signal for request/response transactions, which are prevalent throughout cloud native distributed systems. Traces offer several semantic benefits that make them a valuable observability signal.
+
+I don't agree with this, structured logs can have the exact same amount of information as a trace.
+:::
+
+::: {.callout-note title="Aside" appearance="simple" }
+> Some readers may ask about the role of logs in observability, and it’s a fair question. Traditionally, logging occupies the same “mental space” as tracing in terms of utility, but logs are perceived as being more flexible and easier to use. In OpenTelemetry, there are four main reasons to use logs: 
+> 
+> - To get signals out of services that can’t be traced, such as legacy code, mainframes, and other systems of record 
+> - To correlate infrastructure resources such as managed databases or load balancers with application events 
+> - To understand behavior in a system that isn’t tied to a user request, such as cron jobs or other recurring and on-demand work
+> -To process them into other signals, such as metrics or traces
+
+This was main confusion I have been having with OTel is what is the difference between structured logs and traces? 
+:::
+
+- Three basic types of context in OpenTelemetry
+    - Time
+    - Attributes
+    - Context Object itself
+
+- *Context* is the propagation mechanism that carries execution-scoped values across API boundaries and between logically associated execution units. An *execution unit* is a thread, coroutine, or other sequential code execution construct in a language.
+- *Propagators* are how you send values from on process ot the next.
+- *Semantic Conventions* create a consistent and clear set of metadata that can be applied to telemetry signals.
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+This semantic conventions is not fulling syncing in for me, would be nice to have concrete examples.
+:::
+
+- Every piece of telemetry that's emitted by OpenTelemetry has *attributes* commonly referred to as *fields* or *tags*. They are key value pairs of interesting information.
+- Attributes are not infinite and single piece of telemetry can have no more than 128 unique attributes.
+
+::: {.callout-note title="Aside" appearance="simple" }
+> Second, when adding attributes to metric instruments, you can quickly trigger what’s known as a cardinality explosion when sending them to a time-series database.
+
+I honestly think this is not a big deal anymore. Maybe for metrics and time series it is but with modern columnar databases like ClickHouse I don't see the reason why you'd limit yourself on the amount of attributes you have. I believe this cardinality explosion is only relevant for old school metrics and time series DBs. The book does call this out 
+
+> Spans and logs generally do not suffer from the cardinality explosions we’ve mentioned, and in general, more structured metadata about what one of these signals represents is very good to have! You can ask far more interesting questions
+
+I honestly don't understand why you couldn't represent all of OTel with spans. A span could have a `duration` attributed and then you just query `select avg(duration) from spans` to get p50 response times.
+:::
+
+- *Resources* are a special type of attribute that remains the same for the entire life of the process e.g. server's hostname. Whereas *attributes* can change from one request to the next like customer ID.
+- *Semantic Conventions* are the format for well-known and well-defined set of attribute key and values for example how exceptions and stack traces should be recorded in a span or log.
+
+## Chapter 4. The OpenTelemetry Architecture
+
+- No notes, just ran through the demo they setup and clicked around.
+
+## Chapter 5. Instrumenting Applications
+
+- 
