@@ -106,3 +106,36 @@ $$
 ## Lesson: Simplifying Linear Expressions Containing Fractions
 
 - No Notes.
+
+## Lesson: Multiplying Mixed Numbers
+
+- No Notes.
+
+## Lesson: Acute, Obtuse, and Reflex Angles
+
+- **Acute angle** has a measure between $0^/circ$ and $90^/circ$
+- **Obtuse angle** has a measure between $90^/circ$ and $180^/circ$
+- **Reflex angle** has a measure between $180^/circ$ and $360^/circ$
+
+## Lesson: Graphing Ratios
+
+- No notes.
+
+## Lesson: Polygons
+
+- A chain of straight lines that form a loop is called a **polygon**
+- Line segments are the **sides** for the polygon and the endpoints of the sides are the **vertices**
+
+| Number of Sides | Name          |
+|-----------------|---------------|
+| 3               | Triangle      |
+| 4               | Quadrilateral |
+| 5               | Pentagon      |
+| 6               | Hexagon       |
+| 7               | Heptagon      |
+| 8               | Octagon       |
+| 9               | Nonagon       |
+| 10              | Decagon       |
+
+- Polygon is **simply** if boundary does not intersect otherwise it's **complex**
+- Polygon is **convex** if it has no angles pointing inwards otherwise it's **concave**
