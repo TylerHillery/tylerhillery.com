@@ -2,7 +2,7 @@
 title: "Learning OpenTelemetry"
 description: "My notes & review of [Learning OpenTelemetry](https://a.co/d/05i77pbK) by Ted Young & Austin Parker" 
 author: "Tyler Hillery"
-date: "2026-04-09"
+date: "2026-04-20"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -105,4 +105,16 @@ I honestly don't understand why you couldn't represent all of OTel with spans. A
 
 ## Chapter 5. Instrumenting Applications
 
-- 
+- No notes. 
+
+## Chapter 8. Designing Telemetry Pipelines 
+
+::: {.callout-note title="Aside" appearance="simple" }
+> The [OTel Arrow protocol](https://github.com/open-telemetry/otel-arrow), in beta as we write this, is one example.
+
+Cool to see Arrow used in the OTel ecosystem!
+:::
+
+# Review
+
+Book was okay, it helped clarify some terms which was nice but I thought it could have been condensed down much further.

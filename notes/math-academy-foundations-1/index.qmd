@@ -2,7 +2,7 @@
 title: "Math Academy Mathematical Foundations 1"
 description: "My notes [Math Academy Mathematical Foundations 1](https://www.mathacademy.com/courses/mathematical-foundations-i)"
 author: "Tyler Hillery"
-date: "2026-04-08"
+date: "2026-04-21"
 filters:
     - social-share
 share:
