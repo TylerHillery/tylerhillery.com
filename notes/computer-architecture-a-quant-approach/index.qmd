@@ -1,0 +1,28 @@
+---
+title: "Computer Architecture: A Quantitative Approach"
+description: "My notes & review of [Computer Architecture: A Quantitative Approach](https://a.co/d/0aqV9USl) by John L. Hennessy, David A. Patterson, Christos Kozyrakis"
+author: "Tyler Hillery"
+date: "2026-04-24"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/computer-architecture-a-quant-approach"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+## Chapter 1: Fundamentals of Quantitative Design and Analysis
+
