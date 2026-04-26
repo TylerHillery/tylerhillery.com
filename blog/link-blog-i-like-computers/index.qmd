@@ -1,0 +1,58 @@
+---
+title: "I like computers"
+description: ""
+author: "Tyler Hillery"
+date: "2026-04-26"
+categories: [link blog]
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/link-blog-i-like-computers/"
+  description: ""
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+---
+
+[I am building a cloud](https://crawshaw.io/blog/building-a-cloud)
+
+> I like computers.
+> 
+> In some tech circles, that is an unusual statement. (“In this house, we curse computers!”) I get it, computers can be really frustrating. But I like computers. I always have. It is really fun getting computers to do things. Painful, sure, but the results are worth it. Small microcontrollers are fun, desktops are fun, phones are fun, and servers are fun, whether racked in your basement or in a data center across the world. I like them all.
+
+I couldn't stop thinking about this post from David's blog on why he started [exe.dev](https://exe.dev). In a world with so much hate and negativity, it's nice to see someone so passionate about something. One thing I thoroughly enjoy is listening to people talk about a topic they are passionate about even if it's a subject I'm not. Although in this case, I am. I like computers too.
+
+I am currently rereading this book, [Code: The Hidden Language of Computer Hardware and Software](https://a.co/d/08HWwAup), where the author slowly builds on how computers work from a fundamental level. It starts with two neighborhood kids communicating with flashlights across the street, then moves through Morse code, Boolean logic, relays, vacuum tubes, transistors, and integrated circuits. 
+
+Throughout the book I constantly find myself saying "Wow". It amazes me how we are able to build computers based on this fundamental logic of boolean algebra. From there, we compose this logic into higher level abstractions like half-adders, full-adders etc. Each abstraction stacks on top of the last, so you don't necessarily have to understand how it works if you don't want to. 
+
+It really makes me think about all the technology we take for granted. The fact that I can video call someone across the world and transmit a digital representation of my face and voice in near real time. I constantly wonder: how does any of this work?
+
+::: {.callout-caution appearance="simple"}
+*Project Hail Mary minor spoiler ahead*
+:::
+
+This question reminded me of something. I recently watched Project Hail Mary and enjoyed it so much I listened to the audiobook right after. What impressed the Eridians most about humans? The "thinking machine".
+
+I believe technology represents one of the things that make humans so great, our intelligence. We're not the fastest or strongest species, but we're here because we're the most intelligent. I believe computers are one of the best showcases of that intelligence. The Eridians seem to agree.
+
+This is what attracted me to learn programming ~5 years ago. Being able to manipulate one of humanity's greatest inventions to do whatever I want is so empowering.
+
+One thing that disappoints me when I see discussions online is how many people take all of this amazing work for granted. There's so much complaining: "OOP is bad", "ORMs aren't good", "React sucks," "my laptop doesn't last 24 hours when streaming 4K video."
+
+I don't think there is anything wrong with having opinions or preferences. I prefer chocolate ice cream over vanilla. That doesn't mean vanilla is bad. When I'm feeling crazy, I go with zebra, which is mix of chocolate AND vanilla. 
+
+My point is this, people often state their opinions and preferences as if they're objective truth. They complain about things with little appreciation for how we even got here in the first place.
+
+That doesn't mean we should accept everything as is. If we were all content, nothing would improve. Frustrations are often the starting point for innovation. But how many times have you thought, "I could do that better", then tried it only to run into the same problems and realize why it ended up that way.
+
+I think the difference is how you approach these frustrations. Instead of jumping straight to dismissal, approaching things with curiosity, trying to understand why something works the way it does leads to better outcomes.
+
+With that said, you don't always need a why. I couldn’t tell you why I prefer chocolate over vanilla ice cream. I just do. That's fine, as long as I don't go around claiming chocolate is objectively better than vanilla (which it is).
+
+But in the case of computers, at least now you know why I like them so much.
