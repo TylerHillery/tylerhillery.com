@@ -26,3 +26,73 @@ categories: [Technical Books, In Progress]
 
 ## Chapter 1: Fundamentals of Quantitative Design and Analysis
 
+### 1.1. Introduction
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> The late 1970s saw the emergence of the microprocessor. The ability of the microprocessor to ride the improvements in integrated circuit technology led to a higher rate of performance improvement—roughly 35% growth per year.
+
+What is the official definition of "microprocessor"? Need to clear up my mental model of transistors, integrated circuits and microprocessors
+
+---
+
+**Answer**: After some research here some notes to clear things up
+
+- Transistors in my mind are basically a "switch" they can be on or off. They are switched by applying a voltage. 
+- Multiple transistors can be combined to create logic gates such as AND, OR, NOT, NAND, NOR, XOR, NXOR
+- logic gates can be combined to form high level components such as adders, flip-flops
+- These components can be combined into units such as ALUs, registers which together form a CPU (seems microprocessor and CPU tend to be used interchangeably?)
+- These systems are implemented on a single piece of silicon as an integrated circuit (IC)
+- A wafer is a large circular slice of silicon used to manufacture many chips at once
+- A die is a single rectangular piece cut from the wafer, and typically contains one IC (1:1 mapping)
+- Modern designs may use chiplets, where multiple smaller dies (each an IC or part of one) are combined into a single package
+- A microprocessor is an integrated circuit, but not all integrated circuits are microprocessors. Examples of other ICs: Microcontrollers, Memory ICs (DDR), Amplifiers, Voltage Regulators, Application-Specific Integrated Circuits (ASICs).
+:::
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> First, the virtual elimination of assembly language programming reduced the need for object-code compatibility.
+
+What do they call this "object-code" I thought the term for this was "machine-code"
+:::
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> These changes made it possible to successfully develop a new set of architectures with simpler instructions, called RISC (Reduced Instruction Set Computer) architectures, in the early 1980s. The RISC-based machines focused the attention of designers on two critical performance techniques: the exploitation of instruction-level parallelism (ILP; initially through pipelining and later through multiple instruction issue) and the use of caches (initially in simple forms and later using more sophisticated organizations and optimizations).
+
+What is the difference between RISC and RISC-V? What were the architectures before RISC called?
+:::
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> In 2003, the limits of power due to the end of Dennard scaling and the available instruction-level parallelism slowed uniprocessor performance to 23% per year until 2011, or doubling every 3.5 years.These
+
+What is "Dennard" scaling?
+
+---
+
+**Answer**: This is answered in a few paragraphs later.
+
+> In 1974, Robert Dennard observed that power density was constant for a given area of silicon even as you increased the number of transistors because of smaller dimensions of each transistor. Remarkably, transistors could go faster but use less power. Dennard scaling ended around 2004 because current and voltage couldn’t keep dropping and still maintain the dependability of integrated circuits.
+:::
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> From 2011 to 2015, the annual improvement was less than 12% (doubling every 6 years) in part due to the limits of parallelism of Amdahl’s Law.
+
+What are the limits of parallelism of Amdahl's law?
+
+---
+
+**Answer**: This is answered in a few paragraphs later.
+
+> Amdahl’s Law (Section 1.10) prescribes practical limits to the number of useful cores per chip. If 10% of the task is serial, then the maximum performance benefit from parallelism is 10, no matter how many cores you put on the chip.
+:::
+
+- *Moore's law* was defined in 1965 when Gordon Moore predicted the number of transistors per chip would double every year, which he amended in 1975 to every 2 years. This lasted for 50 years. The main reasons for why it ended were because of
+    - transistors no longer getting much better of the slowing of Moore's Law and the end of Dennard scaling
+    - the unchanging power budgets of microprocessors
+    - the replacement of the single power-hungry processors with several energy-efficient processors
+    - the limits to multiprocessing given Amdahl's Law
+
+- Some look ahead of some of the concepts we were be learning about:
+    - Instruction-Level Parallelism (ILP)
+    - Data-Level Parallelism (DLP) (Is this the same as SIMD?)
+    - Thread-Level Parallelism (TLP)
+    - Request-Level Parallelism (RLP)
+
