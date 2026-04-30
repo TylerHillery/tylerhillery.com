@@ -90,9 +90,38 @@ What are the limits of parallelism of Amdahl's law?
     - the replacement of the single power-hungry processors with several energy-efficient processors
     - the limits to multiprocessing given Amdahl's Law
 
-- Some look ahead of some of the concepts we were be learning about:
-    - Instruction-Level Parallelism (ILP)
-    - Data-Level Parallelism (DLP) (Is this the same as SIMD?)
-    - Thread-Level Parallelism (TLP)
-    - Request-Level Parallelism (RLP)
+### 1.2. Classes of Computers
 
+- *Real-time* performance requirement means a segment of application has absolute maximum execution time. 
+- *Soft real-time* is when the average time for a particular task is constrained as well as the number instances when some maximum is exceeded. 
+
+- Two kinds of parallelism in applications:
+    - *Data-Level Parallelism (DLP)* arises because there many data items that can be operated on at the same time. 
+    - *Task-Level Parallelism (TLP)* arises because tasks of work are created that can operate independently and largely in parallel.
+- Computer hardware can exploit these two kinds of application parallelism in four ways:
+    - *Instruction Level Parallelism (ILP)* exploits DLP at modest levels with compiler help using ideas like pipelining and speculative execution
+    - *Vector architectures, graphic processing units (GPUs)*, and multimedia instruction sets exploit DLP by applying single instruction to a collection of data in parallel
+    - *Thread Level Parallelism (TRP)* exploits either DLP or task-level parallelism in a tightly coupled that allows for interaction between parallel threads
+    - *Request Level Parallelism (RLP)* exploits parallelism among largely decoupled tasks specified by the programmer or the operating system
+- *Single instruction stream, single data stream (SISD)*: Standard sequential computer, but still can exploit ILP using superscalar and speculative execution. 
+- *Single instruction stream, multiple data streams (SIMD)*: The same instruction is executed by multiple processors using data different data streams. SIMD computers exploit DLP by applying the same operations to multiple items of data in parallel.
+- *Multiple instructions steams, multiple data streams (MIMD)*: Each processors fetches its own instructions and operates on its own data, and it targets TLP. MIMD is more flexible than SIMD but it is more expensive. MIMD can also exploit DLP, although the overhead is likely to be higher than SIMD.
+
+### 1.3. Defining Computer Architecture
+
+- *Instruction set architecture (ISA)* refers to the actual programming visible instruction set. Examples include 80x86, ARMv6, and RISC-V.
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> The most popular RISC processors come from ARM (Advanced RISC Machine), which were in 30 billion chips shipped in 2023, or more than 100 times as many chips that shipped with 80x86 processors (often abbreviated x86).
+
+Wow, I had no idea ARM was that more popular than x86. 
+:::
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> Developed 30 years after the first RISC instruction sets, RISC-V inherits its ancestors’ good ideas—a large set of registers, easy-to-pipeline instructions, and a lean set of operations—while avoiding their omissions or mistakes.
+
+I'd be curious to know, why are the above ideas: large set of registers, easy-to-pipeline instructions and lean set of operations considered good? What does it mean to pipeline instructions? 
+:::
+
+- x86 is considered to be a *register-memory* ISA
+- ARMv8 and RISC-V and all ISAs since 1985 are *load-store*
