@@ -46,6 +46,8 @@ What is the official definition of "microprocessor"? Need to clear up my mental 
 - A die is a single rectangular piece cut from the wafer, and typically contains one IC (1:1 mapping)
 - Modern designs may use chiplets, where multiple smaller dies (each an IC or part of one) are combined into a single package
 - A microprocessor is an integrated circuit, but not all integrated circuits are microprocessors. Examples of other ICs: Microcontrollers, Memory ICs (DDR), Amplifiers, Voltage Regulators, Application-Specific Integrated Circuits (ASICs).
+- The term "packaged" means taking the die(s) and putting them together often in an enclosures that can then be placed into a socket (unless there are soldered directly onto the boards).
+- Chiplets are smaller dies that are integrated into a single package instead of one larger die. 
 :::
 
 :::{.callout-important title="Question❓" icon=false appearance="simple"}
@@ -125,3 +127,29 @@ I'd be curious to know, why are the above ideas: large set of registers, easy-to
 
 - x86 is considered to be a *register-memory* ISA
 - ARMv8 and RISC-V and all ISAs since 1985 are *load-store*
+
+### 1.4. Trends in Technology
+
+- Integrated circuit processes are characterized by *feature size*, which is the min size of transistor or wire in either x or y dimension.
+- Transistor counter by sq mm of silicon is determined by the surface area of a transistor, density of transistors increases quadratically with linear decrease in feature size.
+- The shrink in vertical dimension requires a reduction in operating voltage to maintain correct operation and reliability of transistors.
+- While transistors generally improve in performance with decreased feature size, wires in an IC do not. In particular the signal delay for a wire increases in proportion to the product of its resistance and capacitance.
+
+### 1.5. Trends in Power and Energy in ICs
+
+- Sustained power consumption is widely called *thermal design power* (TDP). TDP is neither the peak power nor the actual average.
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> The third factor designers and users should consider is energy and energy efficiency. Recall that power is simply energy per unit time: 1 W = 1 joule per second. Which metric is right for comparing processors: energy or power? In general, energy is always a better metric because it is tied to a specific task and the time required for that task. In particular, the energy to complete a workload is equal to the average power times the execution time for the workload.
+
+This reminded me of a great video, Power is not energy: why the difference matters.
+
+{{< video https://youtu.be/OOK5xkFijPc?si=V7Tv2XQi6XAbCV0Q >}}   
+:::
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> namely, the cost of a mask set. Each step in the integrated circuit process requires a separate mask. Therefore, for modern high-density fabrication processes with up to 10 metal layers, mask costs are about $10 million for 7 nm and $20 million for 5 nm.
+
+Holy shit I had no idea how expensive the R&D is for these chips. The figure they end up showing shows the design cost for the 5nm was $542.2M.
+:::
+
