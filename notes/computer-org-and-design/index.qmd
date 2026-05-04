@@ -1,0 +1,25 @@
+---
+title: "Computer Organization and Design: The Hardware and Software Interface"
+description: "My notes & review of [Computer Organization and Design: The Hardware and Software Interface](https://www.amazon.com/dp/B08TRLDR2Q?ref_=ppx_hzod_title_dt_b_fed_digi_asin_title_351_0_0) by John L. Hennessy, David A. Patterson"
+author: "Tyler Hillery"
+date: "2026-05-04"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/computer-org-and-design"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 

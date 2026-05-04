@@ -2,7 +2,7 @@
 title: "Computer Architecture: A Quantitative Approach"
 description: "My notes & review of [Computer Architecture: A Quantitative Approach](https://a.co/d/0aqV9USl) by John L. Hennessy, David A. Patterson, Christos Kozyrakis"
 author: "Tyler Hillery"
-date: "2026-04-24"
+date: "2026-05-03"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books, On Hold]
 ---
 
 ------------------------------------------------------------------------
@@ -153,3 +153,27 @@ This reminded me of a great video, Power is not energy: why the difference matte
 Holy shit I had no idea how expensive the R&D is for these chips. The figure they end up showing shows the design cost for the 5nm was $542.2M.
 :::
 
+### 1.10. Quantitative Principles of Computer Design
+
+- The basic idea behind pipelining is to overlap instruction execution to reduce the total time to complete an instruction sequence.
+- A program spends 90% of its execution time in only 10% of the code.
+- *Temporal locality* states recently accessed items are likely to be accessed soon.
+- *Spatial locality* says that items whose addresses are near one another tend to be referenced closed together in time.
+- Amdahl's Law states that the performance improvement to be gained from using some faster mode of execution is limited by the fraction of the time the faster mode can be used.
+
+### 1.12. Fallacies and Pitfalls
+- Dennard's scaling was that voltage and current should be proportionally linear dimensions of a transistor. Stated differently, as CMOS tech scaled, circuits could use more transistors and operate at higher frequencies while keeping power consumption constant. Dennard scaling ended 30 years later because threshold voltage and leakage current set a nonscaling baseline for power consumption for each transistor.
+
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> The Sun Microsystems Division of Oracle experienced this pitfall in 2000 with an L2 cache that included parity, but not error correction, in its Sun E3000 to Sun E10000 systems. The SRAMs they used to build the caches had intermittent faults, which parity detected. If the data in the cache were not modified, the processor would simply reread the data from the cache. Because the designers did not protect the cache with ECC (error-correcting code), the operating system had no choice but to report an error to dirty data and crash the program. Field engineers found no problems on inspection in more than 90% of the cases. To reduce the frequency of such errors, Sun modified the Solaris operating system to “scrub” the cache by having a process that proactively wrote dirty data to memory. Because the processor chips did not have enough pins to add ECC, the only hardware option for dirty data was to duplicate the external cache, using the copy without the parity error to correct the error. The pitfall is in detecting faults without providing a mechanism to correct them. These engineers are unlikely to design another computer without ECC on external caches.
+
+I'm pretty sure this was discussed on Oxide and Friends I need to find the episode.
+:::
+
+### 1.13. Concluding Remarks
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> (We expect it to be a review for many readers, including those of our introductory text, Computer Organization and Design: The Hardware/Software Interface.)
+
+Based on this first chapter and this statement I'm going to put this book on hold. I will read Computer Organization and Design first and then come back.
+:::
