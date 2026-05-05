@@ -178,6 +178,19 @@ share:
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Conferences 👥"} 
+- [Hot Chips](https://hotchips.org/)
+- [International Symposium on Computer Architecture (ISCA)](https://iscaconf.org/)
+- [IEEE/ACM International Symposium on Microarchitecture®](https://microarch.org/)
+- [Design Automation Conference (DAD)](https://dac.com/2026)
+- [RISC-V Summit](https://riscv.org/community/risc-v-summits/)
+- [USENIX Symposium on Networked Systems Design and Implementation (NSDI)](https://www.usenix.org/conferences/byname/179)
+- [Operating Systems Design and Implementation (OSDI)](https://www.usenix.org/conferences/byname/179)
+- [Open Compute Project Global Summit](https://www.opencompute.org/summit/global-summit)
+- [Open Source Firmware Conference](https://opensourcefirmware.foundation/events/)
+- [Embedded World](https://embedded-world-na.com/)
+- [Embedded Linux Conference](https://events.linuxfoundation.org/open-source-summit-north-america/)
+- [Embedded Online Conference](https://embeddedonlineconference.com/)
+- [Open Networking And Edge Summit](https://events.linuxfoundation.org/open-networking-edge-summit-europe/)
 - [Open Sauce](https://opensauce.com/)
 - [ALL Things Open](https://allthingsopen.org/)
 - [Open Source Summit](https://events.linuxfoundation.org/open-source-summit-north-america/)
@@ -214,11 +227,13 @@ share:
 # Following 
 
 ::: {.callout-note appearance="minimal" collapse=true title="Newsletters & Blogs 📰"} 
+- [ACM Queue](https://queue.acm.org/)
+- [Chips and Cheese](https://chipsandcheese.com/)
+- [Semianalysis](https://semianalysis.com/)
 - [Adam Leventhal's Personal Blog](https://ahl.dtrace.org/blog/)
 - [Bryan Cantrill's Personal Blog](https://bcantrill.dtrace.org/)
 - [Charity Majors' Personal Blog](https://charity.wtf/)
 - [Register Spill by Thorsten Ball](https://registerspill.thorstenball.com/)
-- [benn.substack by Benn Stancil](https://benn.substack.com)
 - [Simon Willison's Weblog](https://simonwillison.net/)
 - [Phil Eaton's Personal Blog](https://notes.eatonphil.com/)
 - [Erik Bernhardsson's Personal Blog](https://erikbern.com/)
@@ -237,20 +252,10 @@ share:
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Podcasts 🎙️"} 
-- [Developer Voices](https://www.youtube.com/@DeveloperVoices)
-- [Software Huddle](https://www.youtube.com/@SoftwareHuddle)
-- [Syntax](https://www.youtube.com/@syntaxfm)
-- [How About Tomorrow?](https://www.youtube.com/@tomorrowfm)
-- [Software Misadventures ](https://youtube.com/@softwaremisadventures)
-- [devtools-fm](https://www.youtube.com/@devtoolsfm)
-- [Acquired](https://www.acquired.fm/)
-- [Lenny's Podcast](https://www.lennysnewsletter.com/podcast)
-- [localfirst.fm](https://www.localfirst.fm/)
-- [ADSP The Podcast](https://adspthepodcast.com/)
-- [Happy Path Programming](https://podcasters.spotify.com/pod/show/happypathprogramming)
-- [Software Unscripted](https://pod.link/1602572955)
 - [Oxide and Friends](https://oxide.computer/podcasts/oxide-and-friends)
-- [Software Engineering Daily](https://softwareengineeringdaily.com/category/all-episodes/exclusive-content/Podcast/)
+- [Software Unscripted](https://pod.link/1602572955)
+- [Developer Voices](https://www.youtube.com/@DeveloperVoices)
+- [Acquired](https://www.acquired.fm/)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="YouTube Channels 📺"} 
@@ -258,17 +263,10 @@ share:
 - [Supabase](https://www.youtube.com/@Supabase)
 - [Honeypot](https://www.youtube.com/@Honeypotio)
 - [Hussein Nasser](https://www.youtube.com/@hnasr)
-- [Fireship](https://www.youtube.com/@Fireship)
-- [ThePrimeTime](https://www.youtube.com/@ThePrimeTimeagen/videos)
-- [Code Report](https://www.youtube.com/@code_report)
-- [Aaron Francis](https://www.youtube.com/@aarondfrancis)
-- [TigerBeetle](https://www.youtube.com/@tigerbeetledb)
-- [anthonywritescode](https://www.youtube.com/@anthonywritescode)
-- [mCoding](https://www.youtube.com/@mCoding)
 :::
 
 ::: {.callout-note appearance="minimal" collapse=true title="Discord 👾"} 
 - [Software Internals](https://eatonphil.com/discord.html)
-- [Local First Software](https://localfirstweb.dev/)
+- [Oxide and Friends]()
 - [DuckDB](https://discord.duckdb.org/)
 :::
