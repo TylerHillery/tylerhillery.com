@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, On Hold]
+categories: [Technical Books, In Progress]
 ---
 
 ------------------------------------------------------------------------
@@ -171,9 +171,113 @@ Holy shit I had no idea how expensive the R&D is for these chips. The figure the
 I'm pretty sure this was discussed on Oxide and Friends I need to find the episode.
 :::
 
-### 1.13. Concluding Remarks
-:::{.callout-note title="Aside" icon=false appearance="simple"}
-> (We expect it to be a review for many readers, including those of our introductory text, Computer Organization and Design: The Hardware/Software Interface.)
+## Chapter 2: Memory Hierarchy Design
 
-Based on this first chapter and this statement I'm going to put this book on hold. I will read Computer Organization and Design first and then come back.
+### 2.1. Introduction
+
+- Multiple words are called a *block* or *line*
+- Each cache block includes a *tag* to indicate which memory address it corresponds to
+- *set associative* where a *set* is a group of blocks in a cache. The set is chosen by the address of the data $(Block Address) MOD (Number of sets in cache) $ 
+- *n-way set associative* is where there are *n* blocks in a set.
+- *Direct-mapped* cache has just one block per set.
+- *Fully associative* cache has just one set. 
+- Both write strategies, *write-through* and *write-back*, can use a *write buffer* to allow the cache to proceed as soon as the data are placed in the buffer rather than wait for the full latency to write the data into memory. 
+- If the write buffer contains other modified blocks, the addresses can be checked to see if the address of the new data matches the address of a valid write buffer entry. Is so, the new data are combined with that entry. This optimization is called *write merging*.
+- Categorizations of cache misses:
+    - *Compulsory*: The very first access to a block *cannot* be in the cache
+    - *Capacity*: Cache cannot contain all the blocks needed during execution of a program, capacity misses will occur because blocks being discarded and later retrieved.
+    - *Conflict*:
+
+### 2.2. Memory Technology and Optimizations
+
+- Static Random Access Memory (SRAM): used for cache
+- Dynamic Random Access Memory (DRAM): use for main memory
+- Flash: Used for nonvolatile storage
+
+
+
+## Appendix C. Pipelining: Basic and Intermediate Concepts
+
+
+### C.1. Introduction 
+
+- *Pipelining* is an implementation technique whereby multiple instructions are overlapped in execution.
+- Every instruction in this RISC subset can be implemented in, at most, 5 clock cycles. 
+    1. *Instruction fetch cycle* (IF)
+    2. *Instruction decode/register fetch cycle* (ID)
+    3. *Execution/effective address cycle* (EX):
+    4. *Memory access* (MEM):
+    5. *Write-back cycle* (WB):
+
+::: {.list-table header-rows=2}
+Simple RISC pipeline. On each clock cycle, another instruction is fetched and begins its five-cycle execution.
+
+- -
+  - []{colspan=9} **Clock number**
+
+- - **Instruction number**
+  - **1**
+  - **2**
+  - **3**
+  - **4**
+  - **5**
+  - **6**
+  - **7**
+  - **8**
+  - **9**
+
+- - Instruction *i*
+  - IF
+  - ID
+  - EX
+  - MEM
+  - WB
+  -
+  -
+  -
+  -
+
+- - Instruction *i*+1
+  -
+  - IF
+  - ID
+  - EX
+  - MEM
+  - WB
+  -
+  -
+  -
+
+- - Instruction *i*+2
+  -
+  -
+  - IF
+  - ID
+  - EX
+  - MEM
+  - WB
+  -
+  -
+
+- - Instruction *i*+3
+  -
+  -
+  -
+  - IF
+  - ID
+  - EX
+  - MEM
+  - WB
+  -
+
+- - Instruction *i*+4
+  -
+  -
+  -
+  -
+  - IF
+  - ID
+  - EX
+  - MEM
+  - WB
 :::
