@@ -1,0 +1,157 @@
+---
+title: "Why Don't Lowercase Letters Come Right After Uppercase Letters in ASCII?"
+description: ""
+author: "Tyler Hillery"
+date: "2026-05-07"
+categories: []
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/why-dont-lowercase-chars-come-after-upper"
+  description: ""
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+format:
+    html:
+        code-line-numbers: false 
+---
+
+Something finally clicked for me. When looking at an ASCII table, you will notice that after the uppercase `Z`, there are a few other characters before lowercase `a`:
+
+| Decimal | Binary   | Symbol |
+|---------|----------|--------|
+| 88      | 01011000 | X      |
+| 89      | 01011001 | Y      |
+| 90      | 01011010 | Z      |
+| 91      | 01011011 | [      |
+| 92      | 01011100 | \      |
+| 93      | 01011101 | ]      |
+| 94      | 01011110 | ^      |
+| 95      | 01011111 | _      |
+| 96      | 01100000 | \`     |
+| 97      | 01100001 | a      |
+
+It made sense to me that characters are represented by numbers, since numbers are the only thing computers really know how to store and manipulate. So you need some kind of encoding that maps numbers to characters. ASCII was one of the earliest character encoding schemes, but it only used 7 bits, which means it could represent just 128 code points: $2^7$. That is not nearly enough for all the characters humans use, especially once you start considering languages like Chinese, which has tens of thousands of characters.
+
+Nowadays we use Unicode as the standard character set, which has various encodings such as UTF-8 and UTF-16. The nice thing about Unicode is that its first 128 code points are the same as ASCII.
+
+With that context, I always found it strange that the designers of ASCII included 6 characters after uppercase `Z` before starting the lowercase letters. Then it hit me: we have 26 letters in the English alphabet, plus 6 additional characters before lowercase starts: 26 + 6 = 32. If you know anything about computers, powers of 2 tend to stick out. Let’s take a look at the binary representations of some characters compared to their lowercase counterparts.
+
+| Decimal | Binary   | Symbol |
+|---------|----------|--------|
+| 65      | 01000001 | A      |
+| 97      | 01100001 | a      |
+| 66      | 01000010 | B      |
+| 98      | 01100010 | b      |
+| 67      | 01000011 | C      |
+| 99      | 01100011 | c      |
+
+Do you see it? The 5th bit is always flipped when comparing an uppercase letter to its lowercase counterpart. This makes sense when you convert the difference to decimal:
+
+$$
+\begin{flalign*}
+& \begin{array}{ccccccccccccccccc}
+         & 0   &   & 0   &   & 1   &   & 0   &   & 0   &   & 0   &   & 0   &   & 0   &      \\
+\times   & 2^7 &   & 2^6 &   & 2^5 &   & 2^4 &   & 2^3 &   & 2^2 &   & 2^1 &   & 2^0 &      \\ \hline
+         & 0   & + & 0   & + & 32  & + & 0   & + & 0   & + & 0   & + & 0   & + & 0   & = 32 \\
+\end{array} &
+\end{flalign*}
+$$
+
+The number 32! Because of this, you can do some interesting bitwise operations. For example, to convert a character to uppercase, you can do a bitwise AND with the bitwise NOT of 32:
+
+Step 1: Bitwise NOT of 32 to create a mask                                                 
+
+```
+~ 0 0 1 0 0 0 0 0  (32)
+-------------------
+  1 1 0 1 1 1 1 1  (mask)
+```
+
+Step 2: Bitwise AND 'a' with the mask                                                      
+
+```
+  0 1 1 0 0 0 0 1  (97 = 'a')
+& 1 1 0 1 1 1 1 1  (mask)
+-------------------
+  0 1 0 0 0 0 0 1  (65 = 'A')
+```
+
+If you do this with an existing uppercase letter, it stays the same:
+
+```
+  0 1 0 0 0 0 0 1  (65 = 'A')
+& 1 1 0 1 1 1 1 1  (mask)
+-------------------
+  0 1 0 0 0 0 0 1  (65 = 'A')
+```
+
+If you want to lowercase a letter you can do a bitwise OR with 32:
+
+```
+  0 1 0 0 0 0 0 1  (65 = 'A')
+| 0 0 1 0 0 0 0 0  (32)
+-------------------
+  0 1 1 0 0 0 0 1  (97 = 'a')
+```
+
+Once again, doing this with an existing lowercase letter will keep it the same:
+
+```
+  0 1 1 0 0 0 0 1  (97 = 'a')
+| 0 0 1 0 0 0 0 0  (32)
+-------------------
+  0 1 1 0 0 0 0 1  (97 = 'a')
+```
+
+If you want to flip the case you can use a bitwise XOR with 32:
+
+```
+  0 1 1 0 0 0 0 1  (97 = 'a')
+^ 0 0 1 0 0 0 0 0  (32)
+-------------------
+  0 1 0 0 0 0 0 1  (65 = 'A')
+
+  0 1 0 0 0 0 0 1  (65 = 'A')
+^ 0 0 1 0 0 0 0 0  (32)
+-------------------
+  0 1 1 0 0 0 0 1  (97 = 'a')
+```
+
+Last party trick for you, if you want to get the alphabet index you can do a bitwise AND with 31:
+
+```
+  0 1 0 0 0 0 0 1  (65 = 'A')
+& 0 0 0 1 1 1 1 1  (31)
+-------------------
+  0 0 0 0 0 0 0 1  (1)
+
+  0 1 1 1 1 0 1 0  (122 = 'z')
+& 0 0 0 1 1 1 1 1  (31)
+-------------------
+  0 0 0 1 1 0 1 0  (26)
+```
+
+This works because `31` effectively clears the first three bits and keeps only the lower five bits. In ASCII, the lower five bits of letters line up with their alphabet position: `A/a` ends in `00001`, `B/b` ends in `00010`, and so on up to `Z/z`, which ends in `11010`.
+
+Another way to think about it is that, for ASCII character codes, `c & 31` is equivalent to `c % 32`, because `32` is a power of two. Masking with `31`, which is binary `00011111`, keeps only the part of the number “left over” after groups of `32` are removed.
+
+```
+'A' = 65  →  65  % 32 = 1
+'B' = 66  →  66  % 32 = 2
+...
+'Z' = 90  →  90  % 32 = 26
+
+'a' = 97  →  97  % 32 = 1
+'b' = 98  →  98  % 32 = 2
+...
+'z' = 122 →  122 % 32 = 26
+```
+
+Now you know why the designers of ASCII put those extra six characters before proceeding to lowercase.
