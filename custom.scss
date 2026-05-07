@@ -198,3 +198,15 @@ h6,
 .no-anchor {
   font-weight: 700 !important;
 }
+
+// Math blocks — scroll horizontally on small screens instead of overflowing
+.math.display {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+
+  mjx-container {
+    font-size: 100% !important;
+  }
+}
