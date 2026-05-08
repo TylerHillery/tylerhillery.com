@@ -1,6 +1,10 @@
 .vscode/
 /.quarto/
 _site/
+_freeze/
 .venv/
 .DS_store
+.DS_Store
 **/*.quarto_ipynb
+**/*.quarto_ipynb_*
+.python-version
