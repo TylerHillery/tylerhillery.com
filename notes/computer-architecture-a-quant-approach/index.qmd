@@ -281,3 +281,16 @@ Simple RISC pipeline. On each clock cycle, another instruction is fetched and be
   - MEM
   - WB
 :::
+
+
+### 2. My thoughts
+
+My biggest takeaway is there is a fine balance in managing memory hierarchies between L1 all the way to DRAM & Flash. With many different inputs to configure like associativity, block size, write through vs write back, write merging, cache eviction policy. Each input you configure comes with various tradeoffs, example large cache size might improve cache hit ratio but requires more static power. The memory wall is a big deal. CPU performance has greatly outpaced the performance of DRAM and I'll be paying close attention to the high memory bandwidth (HMB) where multiple DRAMs are placed in stacks embedded within the same package as the processor.
+
+I will admit, I still am a bit fuzzy with how DRAM works. The concept of "banks" being access with rows/columns using the *row access strobe* (RAS) and *column access strobe* (CAS) didn't click for me. I'm curious to see what is the actual interface for the CPU to interact with DRAM? It's clear to me the OS creates virtual memory addresses and handles keeping track of how those map to physical addresses with the page table and translation look aside buffer (TLB) which is cache of page table entries.
+
+
+## 3. Instruction-Level Parallelism and Its Exploitation
+
+### 3.1. Introduction
+

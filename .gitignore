@@ -8,3 +8,4 @@ _freeze/
 **/*.quarto_ipynb
 **/*.quarto_ipynb_*
 .python-version
+site_libs/
