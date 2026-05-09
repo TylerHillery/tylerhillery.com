@@ -2,7 +2,7 @@
 title: "Computer Organization and Design: The Hardware and Software Interface"
 description: "My notes & review of [Computer Organization and Design: The Hardware and Software Interface](https://www.amazon.com/dp/B08TRLDR2Q?ref_=ppx_hzod_title_dt_b_fed_digi_asin_title_351_0_0) by John L. Hennessy, David A. Patterson"
 author: "Tyler Hillery"
-date: "2026-05-04"
+date: "2026-05-09"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -23,3 +23,32 @@ categories: [Technical Books, In Progress]
 ------------------------------------------------------------------------
 
 # Notes 
+
+## Preface
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> Our view is that for at least the next decade, most programmers are going to have to understand the hardware/software interface if they want programs to run efficiently on parallel computers.
+
+Couldn't agree more!
+:::
+
+## Chapter 1: Computer Abstractions and Technology
+
+### 1.4. Under the Covers
+- The five classic components of a computer are input, output, memory, datapath, and control, with the last two sometimes combined and called the processor.
+- Access times for DRAM in the 50 nanoseconds range.
+- Access times for flash is in the 5 to 50 microseconds range.
+- Access times for hard disk is in 5 to 20 ms range.
+- Flash memory bits wear out after 100,000 to 1,000,000 writes
+
+### 1.5 Technologies for Building Processors and Memory
+- **Transistor** is an on/off switch controlled by electricity
+
+### 1.6. Performance
+
+- wall clock time, response time, elapsed time all refer to the total time to complete a task
+- CPU time only looks is the time CPU spends computing and does not include time spent time waiting for I/O.
+- Hertz measures cycles per second. If a complete clock clock cycle takes 250 picoseconds then you would get 1/250x10-12 = 4x10^9 or 4GHz
+- The average number of clock cycles each instruction takes to execution is called *clock cycles per instruction* or CPI
+- Instructions per clock cycle (IPC) is the inverse of CPI
+- Clock rate is the inverse of clock cycle time

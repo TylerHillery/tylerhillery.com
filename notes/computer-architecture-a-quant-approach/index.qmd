@@ -2,7 +2,7 @@
 title: "Computer Architecture: A Quantitative Approach"
 description: "My notes & review of [Computer Architecture: A Quantitative Approach](https://a.co/d/0aqV9USl) by John L. Hennessy, David A. Patterson, Christos Kozyrakis"
 author: "Tyler Hillery"
-date: "2026-05-03"
+date: "2026-05-07"
 image: "./cover.jpg"
 filters:
     - social-share
