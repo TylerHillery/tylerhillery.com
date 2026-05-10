@@ -2,7 +2,7 @@
 title: "Computer Organization and Design: The Hardware and Software Interface"
 description: "My notes & review of [Computer Organization and Design: The Hardware and Software Interface](https://www.amazon.com/dp/B08TRLDR2Q?ref_=ppx_hzod_title_dt_b_fed_digi_asin_title_351_0_0) by John L. Hennessy, David A. Patterson"
 author: "Tyler Hillery"
-date: "2026-05-09"
+date: "2026-05-10"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -52,3 +52,17 @@ Couldn't agree more!
 - The average number of clock cycles each instruction takes to execution is called *clock cycles per instruction* or CPI
 - Instructions per clock cycle (IPC) is the inverse of CPI
 - Clock rate is the inverse of clock cycle time
+
+### 1.7. The Power Wall
+
+- CMOS stands for complementary metal oxide semiconductor
+- Current problem with microprocessor improvement is lowering voltage makes the transistors too leaky, like water faucets that cannot be completely shut off. 40% of power consumption in server chips is due to leakage.
+
+### 1.8. The Sea Change: The Switch from Uniprocessors to Multiprocessors
+
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> To reduce confusion between the words processor and microprocessor, companies refer to processors as “cores,” and such microprocessors are generically called multicore microprocessors. Hence, a “quadcore” microprocessor is a chip that contains four processors or four cores.
+
+What makes a "core" a core?
+:::
