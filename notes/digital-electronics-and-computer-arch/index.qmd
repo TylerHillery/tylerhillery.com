@@ -1,0 +1,46 @@
+---
+title: "Digital Electronics & Computer Architecture"
+description: "My notes & review of [Digital Electronics & Computer Architecture](https://pikuma.com/courses/digital-electronics-computer-architecture)"
+author: "Tyler Hillery"
+date: "2026-05-10"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/digital-electronics-and-computer-arch"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Courses, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+## Introduction
+
+- The Ancient Greek work for amber is elektron. Thales of Miletus observed around 600 BC that rubbing amber attracted light objects. 
+- In 1600, English Philosopher William Gilbert was first to coin the term electricitus, behaving like amber, as he recognized this behavior in other materials.
+- In 1746, the Leyden Jar was used to store high-voltage electric charge. In modern terms this is called a **capacitor**.
+
+## Electric Current
+
+- In 1897, Joseph John Thomson discovered the **electron** by showing that cathode rays in a vacuum tube were made of tiny, negatively charged particles much smaller than atoms.
+- **Voltage** is the electric potential difference between two points in a circuit.
+- Electrons flow from negative charge (more electrons than protons) to positive charge (more protons than electrons). This flow is called **current**, flow of electrons from one point to another. We measure current in **amps**.
+- "Holes" move in the opposite direction, positive to negative. This is also called the **Electric Field**, also called **Conventional Current**.
+- The positive end is also called the "attractor" while the negative end is called the "source".
+- The **resistance** makes it difficult for electrons to move, limiting the amount of current that can flow. Measured in **ohms**.
+- Ohm's Law: $I = \frac{V}{R}$  
+  - $I$ = current (amperes)
+  - $V$ = voltage (volts)                                              
+  - $R$ = resistance (ohms)
+
+## Analog Devices
