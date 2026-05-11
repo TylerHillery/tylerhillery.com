@@ -168,7 +168,7 @@ Holy shit I had no idea how expensive the R&D is for these chips. The figure the
 :::{.callout-note title="Aside" icon=false appearance="simple"}
 > The Sun Microsystems Division of Oracle experienced this pitfall in 2000 with an L2 cache that included parity, but not error correction, in its Sun E3000 to Sun E10000 systems. The SRAMs they used to build the caches had intermittent faults, which parity detected. If the data in the cache were not modified, the processor would simply reread the data from the cache. Because the designers did not protect the cache with ECC (error-correcting code), the operating system had no choice but to report an error to dirty data and crash the program. Field engineers found no problems on inspection in more than 90% of the cases. To reduce the frequency of such errors, Sun modified the Solaris operating system to “scrub” the cache by having a process that proactively wrote dirty data to memory. Because the processor chips did not have enough pins to add ECC, the only hardware option for dirty data was to duplicate the external cache, using the copy without the parity error to correct the error. The pitfall is in detecting faults without providing a mechanism to correct them. These engineers are unlikely to design another computer without ECC on external caches.
 
-I'm pretty sure this was discussed on Oxide and Friends I need to find the episode.
+This error is commonly brought up on Oxide and Friends, the best episode for reference is probably: [A Requiem for SPARC with Tom Lyon](https://oxide-and-friends.transistor.fm/episodes/a-requiem-for-sparc-with-tom-lyon-2021-05-10) 
 :::
 
 ## Chapter 2: Memory Hierarchy Design

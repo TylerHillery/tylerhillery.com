@@ -66,3 +66,56 @@ Couldn't agree more!
 
 What makes a "core" a core?
 :::
+
+### 1.11. Historical Perspective and Further Reading
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> Among the technologies incorporated in the Alto were
+
+- a bit-mapped graphics display integrated with a computer (earlier graphics displays acted as terminals, usually connected to larger computers)
+- a mouse, which was invented earlier, but included on every Alto and used extensively in the user interface 
+- a local area network (LAN), which became the precursor to the Ethernet
+-  user interface based on Windows and featuring a WYSIWYG (what you see is what you get) editor and interactive drawing programs
+
+This was discussed on Oxide and Friends: [A Half-Century of Silicon Valley with Randy Shoup](https://oxide-and-friends.transistor.fm/episodes/a-half-century-of-silicon-valley-with-randy-shoup) 
+:::
+
+
+## Chapter 2: Instructions
+
+### 2.1. Introduction
+
+- **Stored-program** is the idea instructions and data of many types can be stored in memory as numbers and thus easy to change.
+
+### 2.2. Operands of the Computer Hardware
+
+- **word** a natural unit of access in a computer, usually a group of 32 bits.
+- data transfer instruction is a command that moves data between memory and registers.
+- *load* is the data transfer instructions that copies data from memory to a register. This is called *load word* in RISC-V
+- The register added to form address is called the *base-register* and the constant is called the *offset*.
+- *store* copies data from register to memory. This is called *store word* in RISC-V.
+- **alignment restriction** is when words must start at address that are multiple of 4 (remember a word is 4 bytes, 32 bites). RISC-V and Intel x86 do *not* have alignment restrictions.
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+Okay so they way I like to think about this base register and addressing is when you see
+
+`A[12] = h + A[8]` is really depends on the data types that are in the array `A`. If `int` for example, that's four bytes so you would need 4 * 8 to get 32. 4 * 12 = 48. If we say `h` has register x21 and base address of `A` is x22 then the assembly code would look like:
+
+```asm
+lw  a5,32(x22)
+add a5,a5,x21
+sw  a4,48(x22)
+```
+
+BUTTTT what if this was a char array? Chars are only 1 bytes not you would get 4 * 1 = 4 and 12 * 1 = 12
+
+```asm
+lw  a5,8(x22)
+add a5,a5,x21
+sw  a4,12(x22)
+```
+:::
+
+- The process of putting less frequently used variables into memory is called *spilling* registers.
+- *add immediate* is a quick add instruction to add one constance operand. This avoids having to call a load.
+- 
