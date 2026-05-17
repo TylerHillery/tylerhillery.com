@@ -43,4 +43,28 @@ categories: [Courses, In Progress]
   - $V$ = voltage (volts)                                              
   - $R$ = resistance (ohms)
 
-## Analog Devices
+## Electric Field
+
+### Units Of Measurements
+- **Watt** (W) measures the rate at which energy is produced, transferred or consumed. Energy is measure in **Joules** (J) so $Watt = J/s$
+- Voltage measures how much energy per unit of charge is available to move electric charges.
+- 1 volt is the pressure that represents of work/energy (**Joules**) needed to move a certain amount of charge **Coulombs** $1V = 1\frac{J}{C}$
+- My mental model of *Coulombs* is like X amount of electrons
+- We can also state the 1 volt as the potential difference across two points of a conductor when a current of **1 ampere(A)** dissipates **1 watt (W)** of power between those points $1V = 1\frac{J}{A}$
+
+## Electromagnetism & Relays
+
+- When electric current runs through a conductor it creates a magnetic field around the wire
+- A changing in magnetic field can **induce** an electric in a conductor (**electromagnetic induction**).
+- Coil shapes have more inductance than a straight shape. More turns of wire means that the coil will generate a greater amount of magnetic field force for a give amount of coil current.
+- This magnetic field can be used to have a small amount of current to create a magnetic field that will attract this arm that can create a connection in another circuit which can be high power. This idea is the basis for **relays**.
+- It's important to understand this above "relay" has two different circuits, which are isolated from each other. The lower power part is sometimes called a "small control signal". This also applies to vacuum tubes and transistors. 
+- DC has a lot of resistance through the wire and loses a lot through the transmission mainly through heat. 
+- AC (alternate) uses transformers to increase the voltage, because we want high voltage low current for transmissions. Then we step down when arriving to homes to make voltage smaller so it's safer.
+- There is HVDC (high voltage DC) now which is more efficient than AC. 
+- **Inductors** store energy in the **magnetic** field when current flows through it. Whereas **capacitors** store energy in the **electric** field
+
+## Diodes & Capacitors
+- $Capacitance (Farads) = Charge / Volts$
+- Polarized (means it matters which side +/-)
+- 
