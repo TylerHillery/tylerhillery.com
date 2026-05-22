@@ -2,7 +2,7 @@
 title: "Computer Architecture: A Quantitative Approach"
 description: "My notes & review of [Computer Architecture: A Quantitative Approach](https://a.co/d/0aqV9USl) by John L. Hennessy, David A. Patterson, Christos Kozyrakis"
 author: "Tyler Hillery"
-date: "2026-05-07"
+date: "2026-05-21"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books, On Hold]
 ---
 
 ------------------------------------------------------------------------
@@ -177,7 +177,7 @@ This error is commonly brought up on Oxide and Friends, the best episode for ref
 
 - Multiple words are called a *block* or *line*
 - Each cache block includes a *tag* to indicate which memory address it corresponds to
-- *set associative* where a *set* is a group of blocks in a cache. The set is chosen by the address of the data $(Block Address) MOD (Number of sets in cache) $ 
+- *set associative* where a *set* is a group of blocks in a cache. The set is chosen by the address of the data $(Block Address) MOD (Number of sets in cache)$ 
 - *n-way set associative* is where there are *n* blocks in a set.
 - *Direct-mapped* cache has just one block per set.
 - *Fully associative* cache has just one set. 
@@ -292,5 +292,6 @@ I will admit, I still am a bit fuzzy with how DRAM works. The concept of "banks"
 
 ## 3. Instruction-Level Parallelism and Its Exploitation
 
-### 3.1. Introduction
+### 3.11. Multithreading
 
+- > A software thread is like a process in that it has state and a current PC, but threads typically share the address space of a single process, allowing a thread to easily access data of other threads within the same process. Multithreading is a hardware technique whereby multiple threads within a process or multiple processes share a processor pipeline without requiring an intervening process switch by the operating system. The ability to switch between

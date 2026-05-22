@@ -2,7 +2,7 @@
 title: "Computer Organization and Design: The Hardware and Software Interface"
 description: "My notes & review of [Computer Organization and Design: The Hardware and Software Interface](https://www.amazon.com/dp/B08TRLDR2Q?ref_=ppx_hzod_title_dt_b_fed_digi_asin_title_351_0_0) by John L. Hennessy, David A. Patterson"
 author: "Tyler Hillery"
-date: "2026-05-10"
+date: "2026-05-22"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -87,7 +87,7 @@ This was discussed on Oxide and Friends: [A Half-Century of Silicon Valley with 
 
 - **Stored-program** is the idea instructions and data of many types can be stored in memory as numbers and thus easy to change.
 
-### 2.2. Operands of the Computer Hardware
+### 2.3. Operands of the Computer Hardware
 
 - **word** a natural unit of access in a computer, usually a group of 32 bits.
 - data transfer instruction is a command that moves data between memory and registers.
@@ -118,4 +118,37 @@ sw  a4,12(x22)
 
 - The process of putting less frequently used variables into memory is called *spilling* registers.
 - *add immediate* is a quick add instruction to add one constance operand. This avoids having to call a load.
-- 
+
+### 2.5 Representing Instrucstions in the Computer
+
+- RISC-V fields:
+    - *opcode*: Basic operation of the instruction (7 bits)
+    - *rd*: The register destination operand. It gets the result of the operation (5 bits)
+    - *funct3*: An additional opcode field. (5 bits)
+    - *rs1*: The first register source operand. (3 bits)
+    - *rs2*: The second register source operand. (5 bits)
+    - *funct7*: An additional opcode field. (7 bits)
+
+### 2.8 Supporting Procedures in Computer Hardware
+
+- **program counter** register holds the address of the current instruction being executed.
+- The stack "grows" from higher addresses to lower address, this means that you push values onto the stack by subtracting from the sp and adding to the sp shrinks the stack, therby popping values off the stack.
+- **frame pointer** is a value denoting the location of the saved registers and local variables for a given procedure.
+
+### 2.12. Translating and Starting a Program
+
+- Dynamically Linked Libaries pay a good deal of overhead the first time a routine is called, but only single indrect branch thereafter.
+
+### 2.17. Real Stuff; ARMv7 (32-bit) Instruction
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> shows the data-addressing modes supported by ARM. Unlike RISC-V, ARM does not reserve a register to contain 0. Although RISC-V has just three simple data-addressing modes (see Figure 2.18), ARM has nine, including fairly complex calculations. For example, ARM has an addressing mode that can shift one register by any amount, add it to the other registers to form the address, and then update one register with this new address.
+
+The conept of addressing modes is not really clicking for me, will need to follow up.
+:::
+
+## Chapter 4: The Processor
+
+### 4.3. Building a Datapath
+
+- **register file** is a structure that consists of a set of registers that can be read and written by supplying a register number to accessed.
