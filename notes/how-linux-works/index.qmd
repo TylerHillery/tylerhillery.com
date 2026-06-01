@@ -1,0 +1,25 @@
+---
+title: "How Linux Works"
+description: "My notes & review of [How Linux Works](https://a.co/d/03QSwcc2) by Brian Ward"
+author: "Tyler Hillery"
+date: "2026-06-02"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/how-linux-works"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 

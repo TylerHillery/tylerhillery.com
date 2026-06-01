@@ -2,7 +2,7 @@
 title: "Digital Electronics & Computer Architecture"
 description: "My notes & review of [Digital Electronics & Computer Architecture](https://pikuma.com/courses/digital-electronics-computer-architecture)"
 author: "Tyler Hillery"
-date: "2026-05-10"
+date: "2026-05-28"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Courses, In Progress]
+categories: [Courses]
 ---
 
 ------------------------------------------------------------------------
@@ -67,4 +67,7 @@ categories: [Courses, In Progress]
 ## Diodes & Capacitors
 - $Capacitance (Farads) = Charge / Volts$
 - Polarized (means it matters which side +/-)
-- 
+
+# Review
+
+Seriously one of the best courses I have taken. Pikuma is one of the best teachers out there. Highly highly recommend this course. It's amazing how the course builds on each of these layers of abstractions from the basics of electrons to relays, vacuum tubes, transistors, logic gates all the way to building your own computer. The course does it in a way where you barely event realize the level of complexity.
