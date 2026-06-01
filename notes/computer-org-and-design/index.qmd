@@ -2,7 +2,7 @@
 title: "Computer Organization and Design: The Hardware and Software Interface"
 description: "My notes & review of [Computer Organization and Design: The Hardware and Software Interface](https://www.amazon.com/dp/B08TRLDR2Q?ref_=ppx_hzod_title_dt_b_fed_digi_asin_title_351_0_0) by John L. Hennessy, David A. Patterson"
 author: "Tyler Hillery"
-date: "2026-05-22"
+date: "2026-06-01"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -144,7 +144,7 @@ sw  a4,12(x22)
 :::{.callout-important title="Question❓" icon=false appearance="simple"}
 > shows the data-addressing modes supported by ARM. Unlike RISC-V, ARM does not reserve a register to contain 0. Although RISC-V has just three simple data-addressing modes (see Figure 2.18), ARM has nine, including fairly complex calculations. For example, ARM has an addressing mode that can shift one register by any amount, add it to the other registers to form the address, and then update one register with this new address.
 
-The conept of addressing modes is not really clicking for me, will need to follow up.
+The concept of addressing modes is not really clicking for me, will need to follow up.
 :::
 
 ## Chapter 4: The Processor
@@ -152,3 +152,50 @@ The conept of addressing modes is not really clicking for me, will need to follo
 ### 4.3. Building a Datapath
 
 - **register file** is a structure that consists of a set of registers that can be read and written by supplying a register number to accessed.
+
+## Chapter 5: Large and Fast: Exploiting Memory Hierarchy
+
+### 5.2. Memory Technologies 
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> The row organization that helps with refresh also helps with performance. To improve performance, DRAMs buffer rows for repeated access. The buffer acts like an SRAM; by changing the address, random bits can be accessed in the buffer until the next row access. This capability improves the access time significantly, since the access time to bits in the row is much faster. Making the chip wider also improves the memory bandwidth of the chip. When the row is in the buffer, it can be transferred by successive addresses at whatever the width of the DRAM is (typically 4, 8, or 16 bits), or by specifying a block transfer and the starting address within the buffer.
+
+I am having a hard time understanding how DRAM works. The concept of "wider" isn't clicking for me. Will need to follow up.
+:::
+
+### 5.7. Virtual Memory
+
+- **page fault** is an event that occurs when an accessed page is not present in main memory.
+- The page table, program counter and registers is what specifies the state of a virtual machine.
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> Because the TLB is a cache, it must have a tag field. If there is no matching entry in the TLB for a page, the page table must be examined.
+
+I am struggling with this concept of CPU tags which are used in the CPU caches. Will need to look into more.
+:::
+
+## Chapter 6. Parallel Processors from Client to Cloud
+
+### 6.4. Hardware Multithreading
+
+- **thread** includes the program counter, register state, and the stack. Threads commonly share a single address space whereas processes don't.
+- **process** includes one or more threads, the address space, and the operating system state. A process switch usually invokes the OS but a thread switch does not.
+- There is fine-grained, coarse-grained and simultaneous multithreading. The differences is when the process decides to switch between threads to execution. Fine-grained is round robin switch on each instruction. Coarse-grained waits for long pauses. And Simultaneous is constantly executing instructions from different threads at the same time.   
+
+### 6.15. Concluding Remarks
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> This sea change will provide many new research and business prospects inside and outside the IT field, and the companies that dominate the DSA era may not be the same ones that dominate it today. After the understanding of underlying hardware trends and how to adapt software to them that you have gained from this book, perhaps you will be one of the innovators who seizes the opportunities certain to appear in the uncertain times ahead. We look forward to benefiting from your inventions!
+
+I couldn't agree more. Exactly why I have been diving deep into the area of computer architecture.
+:::
+
+# Review
+
+:::{.callout-note } 
+*This book was a "fun" read for me. This means I don't worry about doing all the practice problems or force myself to take notes throughout the book. Please keep this in mind when reading my review*.
+:::
+
+After reading three chapters of *Computer Architecture: A Quantitative Approach*, I felt the material was a bit too advanced for me. Based on the recommendations in that book, I switched to *Computer Organization and Design*. I was pleasantly surprised by how readable this textbook was from cover to cover. I know many university textbooks may not be intended to be read this way, but this one was great.
+
+I really enjoyed the structure of the book and felt it was an excellent introductory textbook on computer architecture. The "Fallacies and Pitfalls" and "Historical Perspective" sections at the end of each chapter were some of my favorite parts. This book definitely gets my recommendation for anyone looking to learn more about how computers work.
