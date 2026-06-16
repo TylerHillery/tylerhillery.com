@@ -1,0 +1,175 @@
+---
+title: "Effective C"
+description: "My notes & review of [Effective C](https://a.co/d/07AS8cus) by Robert C. Seacord"
+author: "Tyler Hillery"
+date: "2026-06-16"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/effective-c"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+## Introduction
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> Trust the programmer. The C language assumes you know what you’re doing and lets you. This isn’t always a good thing (for example, if you don’t know what you’re doing).
+
+This got a laugh out of me.
+:::
+
+## Chapter 1. Getting Started With C
+
+- The technical term for `#include` is a **preprocessor directive** which essentially does a copy/paste of that file in that location.
+- **Header** is a source file contains the definitions, function declarations, and constant definitions required by the users of the corresponding source file.
+- `main` function is a defines the entry point for the program.
+- C defines two possible execution environments
+    - *freestanding* may not provide an OS and is typically used in embedded programming.
+- A return from the initial call to the `main` function is equivalent to calling the C standard library `exit` function with the value returned by the `main` function as the argument.
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+> Take care not to pass user-supplied data as part of the first argument to the printf function, because doing so can result in a formatted output security vulnerability (Seacord 2013).
+
+I was not aware of this security vulnerability, why is this unsecure?
+:::
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> Many compilers for embedded systems support only C89/C90.
+
+I found this surprising that embedded systems don't even use C99. 
+:::
+
+- Five kinds of portability issues
+    - **Implementation-Defined Behavior** is a program behavior that's not specified by the C standard and that may produce different results between implementations but has consistent, documented behavior with an implementation. An example is the number of bits in a byte.
+    - **Unspecified Behavior** is program behavior for which the standard provides two or more options but doesn't mandate which option is chosen in any instance. Example is function parameter storage layout.
+    - **Undefined Behavior** is behavior that isn't defined by the C standard. Example signed integer overflow and dereferencing an invalid pointer value. Undefined behaviors are identified in the standard as follows:
+    - **Locale-Specific Behavior** depends on local conventions of nationality, culture and language.
+    - **Common extensions** are widely used in many systems but are not portable to all implementations.
+
+## Chapter 2. Objects, Functions, And Types
+
+No notes, was already pretty familiar with most content in this chapter.
+
+## Chapter 3. Arithmetic Types
+
+- **width** is the number of bits used to represent a value of a given type excluding padding
+- **precision** is the number of bits used to represent values, excluding sign and padding bits
+- There are four kinds of integer constants:
+    - *decimal* e.g. `42`
+    - *octal* e.g. `052`
+    - *hexadecimal* e.g. `0x2A`
+    - *binary* e.g. `0b101010`
+
+## Chapter 4. Expressions and Operators
+
+No notes, was already pretty familiar with most content in this chapter.
+
+## Chapter 5. Control Flow
+
+No notes, was already pretty familiar with most content in this chapter.
+
+## Chapter 6. Dynamically Allocated Memory
+
+- *Memory managers* are libraries that manage the heap fro you by providing implementations of the standard memory management functions.
+- Memory manager runs as part of the client process.
+- Allocations don't go directly to the OS because it's slower and works ony in big chunks of memory, whereas allocators split up those big chunks into little chunks.
+- If `realloc` succeeds in allocating the new object, it calls `free` to deallocate the old object. If the allocation fails, the `realloc` function reatins the old object data at the same address and returns a null pointer.
+
+```c
+// bad, don't do this. If realloc fails p is now a NULL ptr but realloc doesn't 
+// deallocate the storage that p references
+size += 50;
+if ( (p = realloc(p, size)) == NULL) return NULL:
+
+// good, have a temp pointer
+void *p = malloc(100);
+void *temp;
+
+// if realloc fails we still have reference to p and can free it
+if ( (temp = realloc(p, size)) == NULL ) {
+    free(p);
+    return NULL;
+}
+
+// if it succeeds we can just update the pointer because realloc would have
+// free p's original memory for us.
+p = p2;
+```
+
+- Important to note the freeing a nullptr is fine but calling `free` twice, aka a double free, is bad. Freeing doesn't not change the ptr to NULL.
+- Pointers to already freed memory are known as **dangling pointers**. As already mentioned freeing a dangling ptr is a double free and using a ptr that has been freed is a **use-after-free** bug.
+- When computing the size of a `struct` containing flexible array member using the `sizeof` operator, the flexible array member is ignored.
+
+## Chapter 7. Strings
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> A string literal has a non-const array type. Modifying a string literal is undefined behavior and prohibited by the CERT C rule STR30-C, “Do not attempt to modify string literals.” This is because these string literals may be stored in read-only memory, or multiple string literals may share the same memory, resulting in multiple strings being altered if one string is modified.
+
+This trips me up a lot.
+:::
+
+## Chapter 8. Input/Output
+
+- A **Stream** is a uniform abstraction for communicating with file and devices that consume or produce sequential data.
+- **Buffering** is the process of temporarily storing data in memory that's passing between a process and a device or file. 
+- **Flushing** is the process of taking the cached data in memory and writing to disk.
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> Opening a file with append mode causes all subsequent writes to the file to occur at the current end-of-file at the point of buffer flush or actual write, regardless of intervening calls to the `fseek`, `fsetpos`, or `rewind` functions. Incrementing the current end-of-file by the amount of data written is atomic with respect to other threads writing to the same file provided the file was also opened in append mode.
+
+Felt like this detail was important for some reason.
+:::
+
+- `open` establishes a connection between a file identified by a path and a value called a *file descriptor*.
+- The `oflag` parameter to `open` sets the file descriptors *file access modes*. Values for *oflag* are constructed by a bitwise-inclusive OR of a file access mode and any combination of access flags. 
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> The `fscanf` function reads input from the stream pointed to by `stream`, under control of the `format` string that tells the function how many arguments to expect, their type, and how to convert them for assignment 
+
+Can't believe I am just hearing about this function now. This is going to be perfect for Advent of Code problems.
+:::
+
+- TODO: Type of both the `fscanf` and the `fwrite` examples
+
+## Chapter 9. Preprocessor
+                                                                                                                  
+```{mermaid}
+flowchart LR
+    A["1 — Character mapping"]
+    B["2 — Line splicing"]
+    C["3 — Tokenization"]
+    D["4 — Preprocessing"]
+    E["5 — Character-set mapping"]
+    F["6 — String concatenation"]
+    G["7 — Translation"]
+    H["8 — Linkage"]
+                                                                                                                  
+    A --> B --> C --> D --> E --> F --> G --> H                                                                   
+``` 
+
+## Chapter 10. Program Structure
+
+No notes.
+
+# Review
+
+I thought the book was good but not one of my favorite resources. I feel [Beej's Guide to C Programming](https://beej.us/guide/bgc/) is a much better resource. I did learn some things that are not covered by that guide I am not sure it was worth reading the full book for that information.
+
+Don't get me wrong, the book contained great information but for me it didn't read that well. I also was expecting some more advanced topics covered given this was an "Effective C" book and usually "Effective" books are target towards more advanced concepts whereas this was a more of an introductory book on a C.
+
+
+
