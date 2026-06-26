@@ -1,0 +1,29 @@
+---
+title: "Tiny C Projects"
+description: "My notes & review of [Tiny C Projects](https://www.amazon.com/Tiny-C-Projects-Dan-Gookin/dp/1633439828/ref=tmm_pap_swatch_0) by Dan Gookin"
+author: "Tyler Hillery"
+date: "2026-06-26"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/tiny-c-projects"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Tiny C Projects, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
+
+## Overview
+
+[My repo to follow along](https://github.com/TylerHillery/tiny-c-projects)
