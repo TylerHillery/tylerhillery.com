@@ -1,8 +1,8 @@
 ---
 title: "Math Academy Mathematical Foundations 1"
-description: "My notes [Math Academy Mathematical Foundations 1](https://www.mathacademy.com/courses/mathematical-foundations-i)"
+description: "My notes on [Math Academy Mathematical Foundations 1](https://www.mathacademy.com/courses/mathematical-foundations-i)"
 author: "Tyler Hillery"
-date: "2026-04-21"
+date: "2026-06-27"
 filters:
     - social-share
 share:
@@ -16,13 +16,10 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Courses, In Progress]
+categories: [Courses]
 ---
 
 ------------------------------------------------------------------------
-
-# Links
-- [Hand Written Notes](https://1drv.ms/p/c/b108287c54af8760/IQAg2mVcOfnuTbeJqLGmofr9AehnUEir94AWCLXhhCS1r-A?e=sRQ6PU)
 
 # Notes 
 
@@ -139,3 +136,7 @@ $$
 
 - Polygon is **simply** if boundary does not intersect otherwise it's **complex**
 - Polygon is **convex** if it has no angles pointing inwards otherwise it's **concave**
+
+# Update
+
+I found notes not to be helpful for Math. I prefer to just focus on doing problems over and over and over and over again.

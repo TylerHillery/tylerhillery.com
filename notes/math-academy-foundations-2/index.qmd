@@ -1,0 +1,24 @@
+---
+title: "Math Academy Mathematical Foundations 2"
+description: "My notes on [Math Academy Mathematical Foundations2](https://www.mathacademy.com/courses/mathematical-foundations-ii)"
+author: "Tyler Hillery"
+date: "2026-06-27"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/math-academy-foundations-2"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Courses, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes 
