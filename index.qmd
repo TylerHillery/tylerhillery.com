@@ -25,28 +25,26 @@ about:
 ---
 
 ### **About Me**
+Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction all the way to the silicon. My main interests are in hardware/software co-design, computer architecture, operating systems, networking, compilers and the tooling used to understand and debug these systems in production.
+
+Today, I'm focused on growing as a software engineer at the hardware/software boundary, combining my broad curiosity and pragmatic mindset to build and operate the systems that great products depend on.
+
 Currently working as a Software Engineer at [Supabase](https://supabase.com/) on the Storage team. 
 
-Co-organizer of [Madison Systems](https://madisonsystems.xyz) meetup, a community run meetup focused on system internals (databases, networking, operating systems, compilers, etc.).
-
-Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction. My main interests are in database systems, how systems communicate over the network, systems that operate at the hardware-software boundary and the tooling used to understand and debug these systems in production.
+Co-organizer of [Madison Systems](https://madisonsystems.xyz) meetup, a community run meetup focused on system internals.
 
 Driven by curiosity, grounded in gratitude.
 
 ### **Background**
 
-Before tech, I studied finance and started my career in investment operations. After 1.5 years, I realized I was more interested in computers, software, and data.
+I studied finance and started my career in investment operations. After 1.5 years, I realized I was more interested in computers, software, and data.
 
-In 2021, I pivoted into software engineering and began teaching myself programming through books, videos and online courses. My favorite way to learn is by first getting a general high-level understanding of a topic and then diving into building [projects](https://tylerhillery.com/projects).
+In 2021, I began teaching myself programming through books, videos and online courses. My favorite way to learn is by first getting a general high-level understanding of a topic and then diving into building [projects](https://tylerhillery.com/projects).
 
-Early in my career, I worked in various data related roles, leveraging my finance background. While I enjoyed working with data, I often felt removed from the actual product and my impact wasn't as clear. 
+After leaving investment operations, I worked in various data related roles, leveraging my finance background. While I enjoyed working with data, I often felt removed from the actual product and wanted to be closer to the systems and software creating values for users. That desire is what pulled me further into software engineering.
 
-Over time, I became more drawn to the bigger picture of how software is built and operated to deliver real value to users. That curiosity has pulled me deeper into software engineering, where I can work closer to the product, tackle technically challenging problems, and more easily see the impact of my contributions. 
+As I have continued building my computer science foundation as a self-taught software engineer, I have become increasingly interested into how computers work from computer architecture and operating systems to networking and compilers. That curiosity led me to talks from people like [David Patterson](https://www.youtube.com/watch?v=3LVeEjsn8Ts), [Chris Lattner](https://www.youtube.com/watch?v=4HgShra-KnY) and [Bryan Cantrill](https://www.youtube.com/watch?v=nY07zWzhyn4), where I kept encountering a recurring theme that the free performance gains software relied on for decades are slowing down.
 
-Outside of tech:
+The future of computing will require rethinking hardware which may look increasingly specialized and heterogenous. I believe this next era of computing with reward software engineers who understand hardware. 
 
-- I enjoy weight lifting 🏋️️
-- I have a beautiful wife who has a passion for health and fitness 
-- I have a twin brother
-- Grew up in Wisconsin 🧀, spent a couple years in Arizona 🌵, and now back in Wisconsin 
-- I co-authored a paper [Inside the hiring process: how managers assess employability based on grit, the big five, and other factors](https://www.researchgate.net/publication/335182644_Inside_the_hiring_process_how_managers_assess_employability_based_on_grit_the_big_five_and_other_factors)
+That is the kind of engineer I am working to become. Someone who can reason across the hardware/software boundary to build software for the next era of computing.

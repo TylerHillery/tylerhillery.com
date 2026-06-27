@@ -39,6 +39,7 @@ website:
 format:
   html:
     theme: custom.scss
+    link-external-newwindow: true
     toc: true
     toc-location: left
     smooth-scroll: true
