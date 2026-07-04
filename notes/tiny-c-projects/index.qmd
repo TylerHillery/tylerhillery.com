@@ -2,7 +2,7 @@
 title: "Tiny C Projects"
 description: "My notes & review of [Tiny C Projects](https://www.amazon.com/Tiny-C-Projects-Dan-Gookin/dp/1633439828/ref=tmm_pap_swatch_0) by Dan Gookin"
 author: "Tyler Hillery"
-date: "2026-06-26"
+date: "2026-07-03"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Tiny C Projects, In Progress]
+categories: [Tiny C Projects]
 ---
 
 ------------------------------------------------------------------------
@@ -27,3 +27,9 @@ categories: [Tiny C Projects, In Progress]
 ## Overview
 
 [My repo to follow along](https://github.com/TylerHillery/tiny-c-projects)
+
+# Review
+
+I felt this was great way to get more hands on programming experience with C. The author adds in some humor throughout the book, some of the jokes land and some don't but I appreciate the author trying to make the book a more fun read.
+
+If you want to get the most of the book I recommend trying to program the solutions before the author shows their's.
