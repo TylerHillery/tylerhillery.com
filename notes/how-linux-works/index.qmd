@@ -2,7 +2,7 @@
 title: "How Linux Works"
 description: "My notes & review of [How Linux Works](https://a.co/d/03QSwcc2) by Brian Ward"
 author: "Tyler Hillery"
-date: "2026-06-02"
+date: "2026-07-05"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,9 +17,194 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
 
 # Notes 
+
+## Preface
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> Your system shouldn’t be a mystery. You should be able to make your software do what you want it to do without “magic” incantations or rituals. The key to attaining this power lies in understanding the fundamentals of what the software does and how it works, and that’s what this book is all about. You should never have to fight with a computer.
+
+Love this mindset.
+:::
+
+## Chapter 01. The Big Picture
+
+### 1.1 Levels and Layers of Abstraction in a Linux System
+
+- **kernel** is software residing in memory that tells the CPU where to look for its next task. The kernel is the primary interface between the hardware and any running program.
+- **processes** are the running programs the kernel manages, they make up the system's upper level called **user space**.
+- The kernel runs in **kernel mode** and the processes run in **user mode**. Kernel mode has unrestricted access to the processor and main memory.
+- **Kernel space** is a memory area that only the kernel can access
+
+### 1.3 The Kernel
+
+- The kernel is in charge of managing tasks in four general system areas:
+    - **Processes**: responsible for determining which processes are allowed to use the CPU.
+    - **Memory**: needs to keep track of all memory. What is currently allocated, what is shared, what is free.
+    - **Device Drivers**: asks as an interface between hardware and processes.
+    - **System calls and support**: processes normally use system calls to communicate with the kernel.
+- **Process management** describes the starting, pausing, resuming, scheduling and terminating of processes.
+- **Context switch** is the act of one process giving up control of the CPU to another process
+- Typical steps for context switch:
+    1. The CPU interrupts the current process based on an internal timer, switches into kernel mode, and hands control back to the kernel.
+    2. The kernel records the current state of the CPU and memory, which is essential to resuming the process that was just interrupted.
+    3. The kernel performs any tasks that might have come up during the preceding time slice.
+    4. The kernel is now ready to let another process run. The kernel analyzes the list of processes that are ready to run and chooses one.
+    5. The kernel prepares the memory for this new process and then prepares the CPU.
+    6. The kernel tells the CPU how long the time slice for the process will last.
+    7. The kernel switches the CPU into user mode and hands control of the CPU to the process.
+- The kernel must manage memory during a context switch. The follow conditions must hold:
+    - The kernel must have its own private area in memory that user processes can't access.
+    - Each user process needs its own section of memory.
+    - One user process may not access the private memory of another process.
+    - User processes can share memory.
+    - Some memory in user processes can be read-only
+    - The system can use more memory than is physically present by using disk space as auxiliary.
+
+:::{.callout-important title="Question❓" icon=false appearance="simple"}
+Is using disk space as auxiliary what they refer to as "swap"
+:::
+
+- *Memory Management Unit (MMU)* enabled a memory access scheme called **virtual memory** and it's included in modern CPUs.
+- The implementation of the memory address map is called a **page table**.  
+- **System calls (syscalls)** perform specific tasks that a user process alone cannot do well or at well e.g. opening, reading and writing files.
+- `fork()` creates a nearly identical copy of the process who called it.
+- `exec()` the kernel loads and starts the program replacing the current process.
+- All new use processes on Linux system start as a result of `fork()`.
+
+## Chapter 02. Basic Commands and Directory Hierarchy
+
+- **Shell** is a program that runs commands.
+
+## Chapter 03. Devices
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+> Most hard disks attached to current Linux systems correspond to device names with an sd prefix, such as /dev/sda, /dev/sdb, and so on. These devices represent entire disks; the kernel makes separate device files, such as /dev/sda1 and /dev/sda2, for the partitions on a disk. The naming convention requires a little explanation. The sd portion of the name stands for SCSI disk. Small Computer System Interface (SCSI) was originally developed as a hardware and protocol standard for communication between devices such as disks and other peripherals. Although traditional SCSI hardware isn’t used in most modern machines, the SCSI protocol is everywhere due to its adaptability. For example, USB storage devices use it to communicate. The story on SATA (Serial ATA, a common storage bus on PCs) disks is a little more complicated, but the Linux kernel still uses SCSI commands at a certain point when talking to them.
+
+Wasn't of aware this.
+:::
+
+- Linux systems sue the UUID and/or the Logical Volume Manager (LVM) stable disk device mapping when referring to files because disk names can change.
+
+## Chapter 04. Disks and Filesystems
+- **Partitions** are subdivides of the whole disk.
+- The kernel presents each partition as a block device and are defined on a small area of the disk called a **partition table**.
+- Traditional linux systems used **Master Boot Record (MBR)** for the partition table while new systems use the **Globally Unique Identifier Partition Table (GPT)**
+- `parted`, `gparted` and `fdisk` are common partition tools.
+- When reading from a SSD you read in chunks called **pages** (different than memory pages) usually 4,096 or 8,192 bytes. It's important for performance to have *partition alignment* where the partition begin at a multiple of that size.
+- `mkfs` is created to create many kinds of filesystems.
+- *Mounting* is the process of attaching a filesystem to a running system.
+- **proc** mounted on `/proc` has numbered directories inside which refer to the ID of a current process on the system. `/proc/self` represents the current process.
+- **Logical Volume Manager** adds another layer between physical block devices and the filesystem. You select a set of **physical volumes** to include in a **volume group** then you carve **logical volumes** out of the volume group.
+- The **device mapper** driver handles the work of routing a request for a location on the logical volume's block device to the true location on an actual device.
+- user base typically only uses the block I/O for initializing operations such as partitioning, filesystem creation, and swap space creation. In normal use, user space uses only the filesystem support that the kernel provides on top of the block I/O. The kernel also handles the details when dealing with swap space in the virtual memory system.
+- Traditional Unix filesystem has two primary components: a pool of data blocks and a database system that manages teh data pool.  
+- An **inode** is a set of data that describes a particular file including its type, permissions and where in the data pool the file resides. 
+- Inodes are identified by numbers listed in an inode table.
+- Superblock tells you where to find the root inode.
+- **Block bitmap** can tell you which blocks are in use and which are available?
+
+## Chapter 05. How the Linux Kernel Boots
+
+- A simplified view of the boot process looks like this:
+    1. The machine's BIOS or boot firmware loads and runs a boot loader.
+    2. The boot loader finds the kernel image on disk, loads it into memory, and starts it.
+    3. The kernel initializes the devices and drivers.
+    4. The kernel mounts the root filesystem.
+    5. The kernel starts a program called *init* with a process ID of 1. This point is the *user space start*.
+    6. init sets the of the system processes in motion.
+    7. At some point, init starts a process allowing you to log in, usually at the end or near the end of the boot sequence.
+- **systemd** is the most widespread version of init on Linux systems.
+- Use `journalctl` command to view the kernel's boot and runtime diagnostic messages. `-k` for the current boot `-b` for previous boots.
+- When the linux kernel stats it receives a set of text-based *kernel parameters* which can be viewed at `/proc/cmdline` 
+- A **boot loader** program starts before the kernel and init start. Its job is to load the kernel into memory from somewhere on disk and then start the kernel with a set of kernel parameters.
+- Boot loader needs a driver to access the disk, which is either the *Basic Input/Output System (BIOS)* or *Unified Extensible Firmware Interface (UEFI)*
+- Main boot loaders
+    - **Grand Unified Boot Loader (GRUB)**, near universal standard on linux systems
+    - **LILO** one of the first linux boot loaders
+    - **SYSLINUX** can be configured to run form many different kinds of filesystems
+    - **LOADLIN** Boots a kernel from MS-DOS
+    - **systemd-boot** A simple UEFI boot manager.
+    - **coreboot** A high performance replacement for the PC BIOS that can include a kernel.
+
+:::{.callout-note title="Aside" icon=false appearance="simple"}
+There is very cool project based on coreboot called, [oreboot](https://github.com/oreboot/oreboot) which is coreboot without the "c" and rewritten in Rust. I first heard about it on the podcast [On The Metal with Ron Minnich](https://onthemetal.transistor.fm/episodes/episode-3). Starting listening at 1:20:20 for oreboot stuff.
+:::
+
+- > UEFI Boot PC manufacturers and software companies realized that the traditional PC BIOS is severely limited, so they decided to develop a replacement called Extensible Firmware Interface (EFI), which we’ve already discussed a bit in a few places in this chapter. EFI took a while to catch on for most PCs, but today it’s the most common, especially now that Microsoft requires secure boot for Windows. The current standard is Unified EFI (UEFI), which includes features such as a built-in shell and the ability to read partition tables and navigate filesystems. The GPT partitioning scheme is part of the UEFI standard.
+- How GRUB Works
+    1. The PC BIOS or firmware initializes the hardware and searches its boot-order storage devices for boot code.
+    2. Upon finding the boot code, the BIOS/firmware loads and executes it. This is where GRUB begins.
+    3. The GRUB core loads.
+    4. The core initializes. At this point, GRUB can now access disks and filesystems.
+    5. GRUB identifies its boot partition and loads a configuration there. 
+    6. GRUB gives the user a change to change the configuration.
+    7. After a timeout or user action, GRUB executes the configuration. 
+    8. In the course of executing the configuration, GRUB may load additional code (modules) in the boot partition. Some of these modules may be preloaded.
+    9. GRUB executes a boot command to load and execute the kernel as specified by the configuration's linux command.
+
+## Chapter 06. How User Space Starts
+
+- User space starts in roughly this order:
+    1. init
+    2. Essential low-level services, such as udevd and syslogd
+    3. Network configuration
+    4. Mid- and high-services (cron, printing, and so on)
+    5. Login prompts, GUIs, and high-level applications, such as web servers
+- `runit` is popular init on embedded systems and Android.
+- When given the choice to modifying something in `/usr` and `/etc`, always change `/etc`
+- cgroups is a linux kernel feature that allows for finer tracking of a process hierarchy.
+- > Unfortunately, there are so many storage controller drivers that distributions can’t include all of them in their kernels, so many drivers are shipped as loadable modules. But loadable modules are files, and if your kernel doesn’t have a filesystem mounted in the first place, it can’t load the driver modules that it needs. The workaround is to gather a small collection of kernel driver modules along with a few other utilities into an archive. The boot loader loads this archive into memory before running the kernel. Upon start, the kernel reads the contents of the archive into a temporary RAM filesystem (the initramfs), mounts it at /, and performs the user-mode handoff to the init on the initramfs. Then, the utilities included in the initramfs allow the kernel to load the necessary driver modules for the real root filesystem. Finally, the utilities mount the real root filesystem and start the true init.
+
+## Chapter 07. System Configuration: Logging, System Time, Batch Jobs and Users
+
+- Two main reasons syslog still remains
+    - Has well-defined means of aggregating logs across many machines.
+    - Versions of syslog such as rsyslogd are modular and capable of output to many different formats and databases.
+- The basic guideline for what goes in `/etc` are customizable configurations for a single machine, such as user information, network details. General application details, such as distribution defaults for a user interface **don't** belong in `/etc`.
+- When switching to another user, all you're doing is changing your user ID. The two ways to do this:
+    1. The setuid executable
+    2. The `setuid()` family of syscalls
+- Think of the effective user id (euid) as the **actor** and the real user id (ruid) as the **owner**. The ruid defines the user that can interact with the running process.
+
+## Chapter 08. A Closer Look at Processes and Resource Utilization
+
+- The `lsof` command lists open files and the processes using them.
+- The `strace` utility prints all the system calls that a process makes.
+- A **thread** is similar to a process but all threads within a single process share their resources and some memory.
+- The *main thread* is the starting thread that spawns other threads.
+- Threads start faster than processes, and it's more efficient for intercommunicate between threads using shared memory whereas processes have ot use a network connection or pipe.
+- **User Time** the number of seconds the CPU has spent running the program's own code.
+- **System Time** is how much time the kernel spends doing the process's work (e.g. reading files).
+- **Real Time** AKA **elapsed time** is the total time it took to runt he process from start to finish.
+- Subtracting the user and system time from elapsed time can give you a general idea of how long a process spends waiting for external resources e.g. the time spent waiting for a network server to respond to a request would show in elapsed time but no in the user or system time.
+- **Thrashing** is when the kernel is rapidly swapping from memory to and from disk. 
+- **On-demand paging** or **demand paging** is when the kernel loads and allocates pages as a process needs them. Consider the start of a process:
+    - The kernel loads the beginning of the program's instruction code into memory pages.
+    - The kernel may allocate some working-memory pages to the new process.
+    - As the process runs, it might reach a point where the next instruction in its code isn't in any of the pages. This kernel takes over, loads the pages into memory, and lets program resume.
+    - If the program requires more working memory the kernel handles it by finding free pages.
+- If a memory page isn't ready when a process wants to use it, the process triggers a **page fault**, then the kernel takes control of the CPU.
+- **Minor page fault** occurs when the desired page is actually in main memory, but the MMU doesn't know where it is. 
+- **Major page fault** occurs when the desired memory page isn't in main memory at all, which means the kernel must load it from disk or some other slow storage mechanism.
+- The basic idea of a **cgroup** is you can place processes in them and place resource restrictions on that group.
+
+## Chapter 09. Understanding Your Network and Its Configuration
+
+- 4 layers of the *network stack*:
+    - **Application layer**: HTTP, TLS, FTP
+    - **Transport Layer** (aka protocol layer): TCP, UDP, where ports are defined. 
+    - **Network or Internet Layer**: Internet Protocol (IP)
+    - **Physical Layer**: How to send data over physical medium such as ethernet or modem.
+- **Classless Inter-Domain Routing (CIDR) Notation** is the most common form to represent a subnet such as 10.23.2.0/24 which just means the first 24 bits are used to define the network you're on and the other 8 bits identify the host.
+
+# Review
+
+I was very impressed with this book. By far my favorite linux book I have read. I normally read books with two different "mental models" for fun and serious. For fun I don't force myself to read notes, follow along, do problems, fully understand everything etc. whereas serious is the opposite.
+
+This book was a "for fun" read and it didn't disappoint. As you can see I had a bunch of highlights throughout the book even thought it was a "for fun" read. I will say you will probably get the most out of this book if you have linux system to easily type in commands as you go over the topics. It's not required and I actually still got a ton out of this book (although I did go back to experiment with some of the stuff the author goes over). Does a great job explaining how linux works from high level. I can see myself reference back to this book from time to time.
