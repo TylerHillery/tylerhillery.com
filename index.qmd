@@ -26,7 +26,7 @@ about:
 
 ### **About Me**
 
-- Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back layers of abstraction all the way down to the silicon. 
+- Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction.
 - Main interests: hardware/software co-design, computer architecture, operating systems, networking, compilers, and tooling used to understand and debug these systems in production.
 - Currently working as a Software Engineer at [Supabase](https://supabase.com/) on the Storage team. 
 - Co-organizer of [Madison Systems](https://madisonsystems.xyz) meetup, a community run meetup focused on system internals.
