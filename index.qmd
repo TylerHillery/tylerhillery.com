@@ -26,22 +26,20 @@ about:
 
 ### **About Me**
 
-- Lifelong learner passionate about understanding the "*how*" and "*why*" behind software by peeling back the layers of abstraction.
-- Main interests: hardware/software co-design, computer architecture, operating systems, networking, compilers, and tooling used to understand and debug these systems in production.
+- Lifelong learner passionate about understanding the *how* and *why* behind software by peeling back layers of abstraction.
+- I'm most interested in understanding computer systems end to end, from computer architecture and operating systems through networking and compilers.
 - Currently working as a Software Engineer at [Supabase](https://supabase.com/) on the Storage team. 
 - Co-organizer of [Madison Systems](https://madisonsystems.xyz) meetup, a community run meetup focused on system internals.
 - Driven by curiosity, grounded in gratitude.
 
 ### **Background**
 
-I studied finance and started my career in investments. After a year and a half, I realized I was more interested in computers, software, and data.
+I studied finance and began my career in investments. After a year and a half, I realized I was more interested in computers, software, and data.
 
-As a result, I began teaching myself programming through books, videos, and online courses. My favorite way to learn is to get a general high-level understanding of a topic and then dive into building [projects](https://tylerhillery.com/projects).
+That realization led me to teach myself programming through books, videos, and online courses. My favorite way to learn is to first develop a high level understanding of a topic and then deepen it by building [projects](https://tylerhillery.com/projects).
 
-I later left investments and worked in various data related roles. While I enjoyed working with data, I often felt removed from the actual product and wanted to be closer to the systems and software creating value for users. This is what lead me further into software engineering.
+I eventually transitioned into data engineering before moving into software engineering. While I enjoyed working with data, I often felt removed from the software creating value for users and wanted to work closer to the systems that power it.
 
-As I have continued building my computer science foundation, I have become increasingly interested in how computers work. This curiosity led me to talks from people like [David Patterson](https://www.youtube.com/watch?v=3LVeEjsn8Ts), [Chris Lattner](https://www.youtube.com/watch?v=4HgShra-KnY) and [Bryan Cantrill](https://www.youtube.com/watch?v=nY07zWzhyn4), where I kept encountering a recurring theme: the hardware driven performance gains software relied on for decades are slowing down.
+Since then, I've been intentionally building a stronger computer science foundation, studying topics like computer architecture, operating systems, networking, and compilers. Along the way, I've become increasingly fascinated by how software maps onto hardware and how decisions at every layer of the stack influence performance, reliability, and scalability.
 
-As a result, hardware is becoming increasingly specialized. Taking full advantage of this new hardware will require software engineers who understand how their code executes. 
-
-That is the kind of engineer I am working to become. Someone who can reason across the hardware/software boundary to build software for the next era of computing.
+Ultimately, I strive to understand why systems behave the way they do, and then make them better.
