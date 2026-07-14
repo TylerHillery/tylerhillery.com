@@ -1,0 +1,82 @@
+---
+title: "Computer Networks"
+description: "My notes & review of [Computer Networks](https://www.pearson.com/en-us/subject-catalog/p/computer-networks/P200000003290) by Andrew S. Tanenbaum, Nick Feamster, and David J. Wetherall"
+author: "Tyler Hillery"
+date: "2026-07-13"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/computer-networks"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+## Introduction
+
+::: {.callout-note title="Aside" icon="false" appearance="simple"}
+> Data center networks face challenges of scale, both for network throughput and for energy usage. One of the main network throughput challenges is the so-called "cross-section bandwidth," which is the data rate that can be delivered between any two servers in the network. Early data-center network designs were based on a simple tree topology, with three layers of switches: access, aggregate, and core; this simple design does not scale wee, and was also to be subject to faults.
+
+I recently read this article from AWS: [The radical network redesign that led AWS to forge a more resilient cloud](https://www.aboutamazon.com/stories/aws-random-graph-theory-data-center-network-design) which talks about a different type of network topology based on random graph theory to build a flat data center network.
+:::
+
+- A **transit network** is used to carry traffic between your **ISP** and **content provider** if they are not directly connected.
+- **Transit networks** typically charge the ISP and content provider for carrying traffic end-to-end.
+- If the network hosting the content and the access network exchange enough traffic, they may decided to interconnect directly.
+- Transit networks are traditionally called **backbone networks** because they have had the role of carrying traffic between two endpoints.
+
+::: {.callout-note title="Aside" icon="false" appearance="simple"}
+I first learned about these transit networks on this podcast: [On The Metal with Kenneth Finnegan](https://onthemetal.transistor.fm/episodes/kenneth-finnegan). It's about someone starting their own internet exchange. I was surprised to hear how he was able to get these big content provided like Netflix to use it but it makes sense when you learn about transit network costs.
+:::
+
+- In a WAN you have the **transmission lines** and the **router**.
+- The network using a **routing algorithm** to decide which path to use
+- Routers use a **forwarding algorithm** to decided where to send a packet next
+- A collection of interconnected networks is called the **internetwork** or **internet**.
+- The **Internet** is one specific internet.
+- A network is comprised of a subnet and its hosts.
+- **Gateway** is the device that makes a connection between two or more networks.
+- The gateway sits on the network layer and router is an example gateway.
+- ISPs connect their traffic at **IXPs (Internet eXchange Points)**
+- Peering IXPs depend on the business relationship between ISPs e.g. a small ISP might pay a larger ISP for internet connectivity to reach distance hosts. In this case, the small ISP is said to pay for **transit**.
+- There are a small handful of **transit providers** that operate backbone networks. These ISPs don't pay for transit and are usually called **tier-1** ISPs.
+- In the past content provides, YouTube/Google, use to have to rely on transit providers for connectivity but nowadays they can often connected directly with other content providers.
+- The common Internet path is directly from your ISP to the content provider.
+- packet-switching vs circuit-switching:
+  - packet: connectionless design, every packet is routed independently of every other packet.
+  - circuit: connection, all words and packets follow the same route.
+- **Flow control** helps from a fast sender swamping a slow receiver with data.
+- **Congestion** is when network is oversubscribed because too many computers want to send too much traffic.
+
+::: {.callout-note title="Aside" icon="false" appearance="simple"}
+> Now all applications require connections, For example, spammers send electronic junk mail to many recipients. Unreliable (meaning not ACK'd) connections service is often called **datagram** service, in analogy with telegram service, which also does not return ACK to the sender.
+
+Ahhhh so that's were the datagram term comes from when talking about UDP
+:::
+
+- A service is formally specified by a set of **primitives** available to user processes to access the service. These are normally system calls in the OS.
+
+- | Primitive    | Meaning                                    |
+  |--------------|--------------------------------------------|
+  | `LISTEN`     | Block waiting for an incoming connection   |
+  | `CONNECT`    | Establish a connection with a waiting peer |
+  | `ACCEPT`     | Accept an incoming connection from a peer  |
+  | `RECEIVE`    | Block waiting for an incoming message      |
+  | `SEND`       | Send a message to the peer                 |
+  | `DISCONNECT` | Terminate a connection                     |
+
+- Service relate to the interface between layers in contrast protocols relate to the packets sent between peer entities on difference machines.
+- **TCP (Transmission Control Protocol)** is a reliable connection-oriented protocol that allows a byte stream originating on one machine to be delivered without error on any other machine in the internet. It segments the incoming byte stream into discrete messages and passes each one on to the internet layer. At the dest, the receiving TCP process reassembles the received messages into the output stream. TCP also handles flow control to make sure fast sender cannot swamp a slow receiver with more messages that it can handle. (TCP is at the L4 of OSI - Transport Layer). 
+- **UDP (User Datagram Protocol)** is an unreliable, connectionless protocol for applications that do not want TCP's sequencing or flow control and wish to provide their own. It can also be used for one-shot, client-server-type request-reply queries and applications in which prompt delivery is more important than accurate delivery.  
