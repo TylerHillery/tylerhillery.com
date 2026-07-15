@@ -113,6 +113,7 @@ Ahhhh so that's were the datagram term comes from when talking about UDP
   - 3 key components: light source, transmission medium, and the detector.
   - Pulse of light indicates a 1 bit and absence is 0.
   - Transmission medium is usually ultra-thin fiber of glass.
+
 ::: {.callout-note title="Aside" icon="false" appearance="simple"}
 > The achievable bandwidth with fiber technology is in excess of 50 Tbps and we are nowhere near reaching these limits
 
