@@ -2,7 +2,7 @@
 title: "Computer Networks"
 description: "My notes & review of [Computer Networks](https://www.pearson.com/en-us/subject-catalog/p/computer-networks/P200000003290) by Andrew S. Tanenbaum, Nick Feamster, and David J. Wetherall"
 author: "Tyler Hillery"
-date: "2026-07-13"
+date: "2026-07-14"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -24,7 +24,7 @@ categories: [Technical Books, In Progress]
 
 # Notes
 
-## Introduction
+## Chapter 01. Introduction
 
 ::: {.callout-note title="Aside" icon="false" appearance="simple"}
 > Data center networks face challenges of scale, both for network throughput and for energy usage. One of the main network throughput challenges is the so-called "cross-section bandwidth," which is the data rate that can be delivered between any two servers in the network. Early data-center network designs were based on a simple tree topology, with three layers of switches: access, aggregate, and core; this simple design does not scale wee, and was also to be subject to faults.
@@ -80,3 +80,41 @@ Ahhhh so that's were the datagram term comes from when talking about UDP
 - Service relate to the interface between layers in contrast protocols relate to the packets sent between peer entities on difference machines.
 - **TCP (Transmission Control Protocol)** is a reliable connection-oriented protocol that allows a byte stream originating on one machine to be delivered without error on any other machine in the internet. It segments the incoming byte stream into discrete messages and passes each one on to the internet layer. At the dest, the receiving TCP process reassembles the received messages into the output stream. TCP also handles flow control to make sure fast sender cannot swamp a slow receiver with more messages that it can handle. (TCP is at the L4 of OSI - Transport Layer). 
 - **UDP (User Datagram Protocol)** is an unreliable, connectionless protocol for applications that do not want TCP's sequencing or flow control and wish to provide their own. It can also be used for one-shot, client-server-type request-reply queries and applications in which prompt delivery is more important than accurate delivery.  
+- The authors don't like the OSI model or the TCP/IP model so they use their own model
+  1. **Physical Layer**: specifies how transmit bits across different kinds of media as electrical or analog singles.
+  2. **Link Layer**: concerned with how to send finite-length messages between directly connected computers. Ethernet and 802.11 (Wifi) are example protocols.
+  3. **Network Layer** deals with how to combine multiple links into networks, and network of networks, into internetworks so we can send packets between distant computers. IP is the main protocol at this layer.
+  4. **Transport Layer** strengthens the delivery guarantees of the network layer. TCP/UDP both live at this layer.
+  5. **Application Layer** HTTP, DNS, FTP, SMTP are common application layer protocols.
+
+## Chapter 02. Physical Layer
+
+- **guided transmission media** is media that rely on physical cable or wire, commonly copper in the form of coaxial cable or twisted pair and fiber optics.
+- **bandwidth** is a measure of the carrying capacity of a medium measured in **Hz** (MHz or GHz).
+- > Never underestimate the bandwidth of a station wagon full of tapes hurtling down the highway
+- **Twisted Pair**
+  - consists of two insulated copper wires, ~1mm thick. 
+  - When wires are twisted waves from different twists cancel out, so the wire radiates less effectively.
+  - Signal is carried as the difference in voltage between two wires in the pair. This provides better immunity to external noise because noise tends to affect the voltage traveling through both wires in the same way, leaving the differential unchanged.
+  - Can be used for analog or digital.
+  - Bandwidth depends on the thickness of the wire and distanced travel but ballpark 100s Mbps for few KM.
+  - Common variety of twisted pairs is called **Category 5e** or **CAT 5e**.
+  - Cat 5e consists of two insulated wire gently twisted together, and 4 pairs are typically grouped in a plastic sheath.
+  - Different LAN standards may uses the pairs differently:
+    - 100-Mbps Ethernet uses two (out of the four) pairs, one pair for each direction.
+    - 1-Gbps Ethernet uses all four pairs in both directions simultaneously, which requires the receiver to factor out the signal that is transmitted.
+- **Full-duplex** links can be used in both direction at the same time.
+- **Half-duplex** links only one way at a time.
+- **Simplex** only allow one direction.
+- **Coaxial Cable**:
+  - Has better shielding and greater bandwidth than unshielded twisted pairs, so it can span longer distances at higher speeds.
+- **Fiber Optics**
+  - used for long-haul transmission and high-speed LANs
+  - 3 key components: light source, transmission medium, and the detector.
+  - Pulse of light indicates a 1 bit and absence is 0.
+  - Transmission medium is usually ultra-thin fiber of glass.
+::: {.callout-note title="Aside" icon="false" appearance="simple"}
+> The achievable bandwidth with fiber technology is in excess of 50 Tbps and we are nowhere near reaching these limits
+
+Wow 😮
+::: 
