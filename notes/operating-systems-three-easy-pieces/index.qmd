@@ -1,0 +1,72 @@
+---
+title: "Operating Systems: Three Easy Pieces"
+description: "My notes & review of [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/) by Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau"
+author: "Tyler Hillery"
+date: "2026-07-16"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/operating-systems-three-easy-pieces"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+## Preface
+
+- The three easy pieces refer to: **virtualization**, **concurrency**, **persistence**
+
+::: {.callout-note title="Aside" appearance="minimal"}
+> Yeats famously said “Education is not the filling of a pail but the lighting of a fire.” He was right but wrong at the same time. You do have  to “fill the pail” a bit, and these notes are certainly here to help with that  part of your education; after all, when you go to interview at Google, and  they ask you a trick question about how to use semaphores, it might be  good to actually know what a semaphore is, right?
+>
+> But Yeats’s larger point is obviously on the mark: the real point of  education is to get you interested in something, to learn something more  about the subject matter on your own and not just what you have to digest  to get a good grade in some class. As one of our fathers (Remzi’s dad,  Vedat Arpaci) used to say, “Learn beyond the classroom”.
+> 
+> We created these notes to spark your interest in operating systems, to  read more about the topic on your own, to talk to your professor about all  the exciting research that is going on in the field, and even to get involved  with that research. It is a great field(!), full of exciting and wonderful  ideas that have shaped computing history in profound and important  ways. And while we understand this fire won’t light for all of you, we  hope it does for many, or even a few. Because once that fire is lit, well,  that is when you truly become capable of doing something great. And  thus the real point of the educational process: to go forth, to study many  new and fascinating topics, to learn, to mature, and most importantly, to  find something that lights a fire for you. 
+
+Love this message.
+:::
+
+## Introduction to Operating Systems
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"} 
+> How does the operating system virtualize resources?
+
+Trying to ahead a bit and this is where I believe the page table, MMU and TLB come into play. Although for other resources (disk) I'm less sure how virtualization occurs.
+
+> the OS does not create a private, virtualized disk for each application. 
+
+Well there you go, it doesn't virtualize disks.
+:::
+
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"} 
+> When there are many concurrently executing threads within the same memory space, how can we build correctly working programs?
+
+I'm guessing this is where mutexes and semaphore would help out. How they're implemented is something I'm not sure about.
+:::
+
+- **Device Driver** is some code in the operating system that knows how to deal with a specific device. (kind of a vague definition)
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"} 
+> How to do we store data persistency? 
+:::
+
+- OS takes physical resources (CPU, memory, disk) and **virtualize** them. It handles **concurrency** issues and it stores files **persistently**
+- Another responsibility of the OS is **protection** between applications. **Isolating** processes from one another is the key to protection. 
+- Operating Systems need to be highly reliable because it runs non-stop and if it fails then all applications running on the system fail.
+- Key difference between a system call and procedure call is that a system call transfers control into the OS while raising the **hardware privilege level**.
+- User applications run in **user mode** which has more restrictions on what you can access (can't access physical memory, initiate I/O request to disk).
+- System call is initiated through a hardware instruction called a **trap** and the hardware transfers the control to a pre-specified **trap handler**.
+- Once the OS is done with the system call is passes control back (out of **kernel mode**) using a **return-from-trap** instruction. 
