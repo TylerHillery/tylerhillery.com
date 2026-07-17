@@ -29,29 +29,28 @@ categories: [Technical Books, In Progress]
 - The three easy pieces refer to: **virtualization**, **concurrency**, **persistence**
 
 ::: {.callout-note title="Aside" appearance="minimal"}
-> Yeats famously said “Education is not the filling of a pail but the lighting of a fire.” He was right but wrong at the same time. You do have  to “fill the pail” a bit, and these notes are certainly here to help with that  part of your education; after all, when you go to interview at Google, and  they ask you a trick question about how to use semaphores, it might be  good to actually know what a semaphore is, right?
+> Yeats famously said “Education is not the filling of a pail but the lighting of a fire.” He was right but wrong at the same time. You do have to “fill the pail” a bit, and these notes are certainly here to help with that part of your education; after all, when you go to interview at Google, and they ask you a trick question about how to use semaphores, it might be good to actually know what a semaphore is, right?
 >
-> But Yeats’s larger point is obviously on the mark: the real point of  education is to get you interested in something, to learn something more  about the subject matter on your own and not just what you have to digest  to get a good grade in some class. As one of our fathers (Remzi’s dad,  Vedat Arpaci) used to say, “Learn beyond the classroom”.
-> 
-> We created these notes to spark your interest in operating systems, to  read more about the topic on your own, to talk to your professor about all  the exciting research that is going on in the field, and even to get involved  with that research. It is a great field(!), full of exciting and wonderful  ideas that have shaped computing history in profound and important  ways. And while we understand this fire won’t light for all of you, we  hope it does for many, or even a few. Because once that fire is lit, well,  that is when you truly become capable of doing something great. And  thus the real point of the educational process: to go forth, to study many  new and fascinating topics, to learn, to mature, and most importantly, to  find something that lights a fire for you. 
+> But Yeats’s larger point is obviously on the mark: the real point of education is to get you interested in something, to learn something more about the subject matter on your own and not just what you have to digest to get a good grade in some class. As one of our fathers (Remzi’s dad, Vedat Arpaci) used to say, “Learn beyond the classroom”.
+>
+> We created these notes to spark your interest in operating systems, to read more about the topic on your own, to talk to your professor about all the exciting research that is going on in the field, and even to get involved with that research. It is a great field(!), full of exciting and wonderful ideas that have shaped computing history in profound and important ways. And while we understand this fire won’t light for all of you, we hope it does for many, or even a few. Because once that fire is lit, well, that is when you truly become capable of doing something great. And thus the real point of the educational process: to go forth, to study many new and fascinating topics, to learn, to mature, and most importantly, to find something that lights a fire for you.
 
 Love this message.
 :::
 
-## Introduction to Operating Systems
+## Chapter 02. Introduction to Operating Systems
 
-::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"} 
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
 > How does the operating system virtualize resources?
 
 Trying to ahead a bit and this is where I believe the page table, MMU and TLB come into play. Although for other resources (disk) I'm less sure how virtualization occurs.
 
-> the OS does not create a private, virtualized disk for each application. 
+> the OS does not create a private, virtualized disk for each application.
 
 Well there you go, it doesn't virtualize disks.
 :::
 
-
-::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"} 
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
 > When there are many concurrently executing threads within the same memory space, how can we build correctly working programs?
 
 I'm guessing this is where mutexes and semaphore would help out. How they're implemented is something I'm not sure about.
@@ -59,14 +58,508 @@ I'm guessing this is where mutexes and semaphore would help out. How they're imp
 
 - **Device Driver** is some code in the operating system that knows how to deal with a specific device. (kind of a vague definition)
 
-::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"} 
-> How to do we store data persistency? 
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How to do we store data persistency?
 :::
 
 - OS takes physical resources (CPU, memory, disk) and **virtualize** them. It handles **concurrency** issues and it stores files **persistently**
-- Another responsibility of the OS is **protection** between applications. **Isolating** processes from one another is the key to protection. 
+- Another responsibility of the OS is **protection** between applications. **Isolating** processes from one another is the key to protection.
 - Operating Systems need to be highly reliable because it runs non-stop and if it fails then all applications running on the system fail.
 - Key difference between a system call and procedure call is that a system call transfers control into the OS while raising the **hardware privilege level**.
 - User applications run in **user mode** which has more restrictions on what you can access (can't access physical memory, initiate I/O request to disk).
 - System call is initiated through a hardware instruction called a **trap** and the hardware transfers the control to a pre-specified **trap handler**.
-- Once the OS is done with the system call is passes control back (out of **kernel mode**) using a **return-from-trap** instruction. 
+- Once the OS is done with the system call is passes control back (out of **kernel mode**) using a **return-from-trap** instruction.
+
+## Chapter 04. The Process
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How to Provide the Illusion Of Many CPUs?
+
+My thoughts: The OS switches which process is running really fast to make it seem like they are all running at once.
+:::
+
+- **process** is a running program
+- The state of a process: memory (address space), registers (including PC, SP), and I/O info (such as open files).
+- **program counter (PC)** (aka instruction pointer (IP)) tells us which instruction of the program to execute next.
+- **stack pointer** and **frame pointer** are used to manage the stack function parameters, local vars, and return addresses.
+- **mechanism** is the answer to a *how* question e.g. *how* does an OS perform a context switch?
+- **policy** is the answer to a *which* question e.g. *which* process should the OS run right now?
+- process can be in three states:
+  - **running**: process is running on a process, executing instructions
+  - **ready**: ready to run but OS has chosen not to run it as this give moment
+  - **blocked**: process has performed some kind of operation that makes it not ready to run until some other event takes place
+- **process list** (aka task list) is used to keep track of the state of each process:
+  - **register context** holds the contents of its registers for stopped processes
+- Each entry is found in a **Process Control Block (PCB)**, an individual structure that stores information of a process aka **process descriptor**.\
+
+### Homework (Simulation)
+
+#### Problem 1
+
+Run `process-run.py` with:
+
+``` bash
+./process-run.py -l 5:100,5:100
+```
+
+What should the CPU utilization be? Why do you know this? Use the `-c` and `-p` flags to check.
+
+**My answer before running it:**
+
+```         
+| Time | PID: 0  | PID: 1  | CPU | IO  |
+|------|---------|---------|-----|-----|
+| 1    | RUN:cpu | READY   | 1   |     |
+| 2    | RUN:cpu | READY   | 1   |     |
+| 3    | RUN:cpu | READY   | 1   |     |
+| 4    | RUN:cpu | READY   | 1   |     |
+| 5    | RUN:cpu | READY   | 1   |     |
+| 6    | DONE    | RUN:cpu | 1   |     |
+| 7    | DONE    | RUN:cpu | 1   |     |
+| 8    | DONE    | RUN:cpu | 1   |     |
+| 9    | DONE    | RUN:cpu | 1   |     |
+| 10   | DONE    | RUN:cpu | 1   |     |
+
+Stats: Total Time 10  
+Stats: CPU Busy   10 (100.00%)  
+Stats: IO Busy    00 (0.00%)  
+```
+
+I know this because it says each process is going to run 5 instructions and 100% of the time the chances are a CPU instruction.
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct
+
+``` bash
+➜  ./process-run.py -l 5:100,5:100 -c -p
+Time        PID: 0        PID: 1           CPU           IOs
+1        RUN:cpu         READY             1          
+2        RUN:cpu         READY             1          
+3        RUN:cpu         READY             1          
+4        RUN:cpu         READY             1          
+5        RUN:cpu         READY             1          
+6           DONE       RUN:cpu             1          
+7           DONE       RUN:cpu             1          
+8           DONE       RUN:cpu             1          
+9           DONE       RUN:cpu             1          
+10          DONE       RUN:cpu             1          
+
+Stats: Total Time 10
+Stats: CPU Busy   10 (100.00%)
+Stats: IO Busy    00 (  0.00%)
+```
+
+</details>
+
+#### Problem 2
+
+Now run `process-run.py` with:
+
+``` bash
+./process-run.py -l 4:100,1:0
+```
+
+These flags specify one process with 4 instructions (all to use the CPU), and one that simply issues an I/O and waits for it to be done. How long does it take to complete both processes? Use -c and -p to find out if you were right.
+
+**My answer before running it:**
+
+```         
+| Time | PID: 0  | PID: 1     | CPU | IO  |
+|------|---------|------------|-----|-----|
+| 1    | RUN:cpu | READY      | 1   |     |
+| 2    | RUN:cpu | READY      | 1   |     |
+| 3    | RUN:cpu | READY      | 1   |     |
+| 4    | RUN:cpu | READY      | 1   |     |
+| 6    | DONE    | RUN:io     | 1   |     |
+| 7    | DONE    | BLOCKED    |     | 1   |
+| 8    | DONE    | BLOCKED    |     | 1   |
+| 9    | DONE    | BLOCKED    |     | 1   |
+| 10   | DONE    | BLOCKED    |     | 1   |
+| 11   | DONE    | BLOCKED    |     | 1   |
+| 12   | DONE    | RUN:io_done| 1   |     |
+
+Stats: Total Time 11
+Stats: CPU Busy    6 (54.54%)  
+Stats: IO Busy     5 (45.45%)  
+```
+
+This is based on the assumption of default I/O length of 5.
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct
+
+``` bash
+➜ ./process-run.py -l 4:100,1:0 -c -p 
+Time        PID: 0        PID: 1           CPU           IOs
+1        RUN:cpu         READY             1          
+2        RUN:cpu         READY             1          
+3        RUN:cpu         READY             1          
+4        RUN:cpu         READY             1          
+5           DONE        RUN:io             1          
+6           DONE       BLOCKED                           1
+7           DONE       BLOCKED                           1
+8           DONE       BLOCKED                           1
+9           DONE       BLOCKED                           1
+10          DONE       BLOCKED                           1
+11*         DONE   RUN:io_done             1          
+
+Stats: Total Time 11
+Stats: CPU Busy 6 (54.55%)
+Stats: IO Busy  5 (45.45%)
+```
+
+</details>
+
+#### Problem 3
+
+Switch the order of the processes: -l 1:0,4:100. What happens now? Does switching the order matter? Why? (As always, use -c and -p to see if you were right)
+
+``` bash
+./process-run.py -l 1:0,4:100 
+```
+
+**My answer before running it:**
+
+```         
+| Time | PID: 0      | PID: 1     | CPU | IO  |
+|------|-------------|------------|-----|-----|
+| 1    | RUN:io      | READY      | 1   |     |
+| 2    | BLOCKED     | RUN:cpu    | 1   |     |
+| 3    | BLOCKED     | RUN:cpu    | 1   |     |
+| 4    | BLOCKED     | RUN:cpu    | 1   |     |
+| 5    | BLOCKED     | RUN:CPU    | 1   |     |
+| 6    | BLOCKED     | DONE       |     | 1   |
+| 7    | run:io_done | BLOCKED    | 1   |     |
+
+Stats: Total Time 7
+Stats: CPU Busy   6 (85.71%)  
+Stats: IO Busy    1 (14.29%)  
+```
+
+I don't feel confident about this but I am basing my answer off the assumption that the OS can switch to another PID while one is blocked. This begs the question can you have IO and CPU executing at the same time?
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ❌ Wrong
+
+``` bash
+➜ ./process-run.py -l 1:0,4:100 -c -p
+Time        PID: 0        PID: 1           CPU           IOs
+1         RUN:io         READY             1          
+2        BLOCKED       RUN:cpu             1             1
+3        BLOCKED       RUN:cpu             1             1
+4        BLOCKED       RUN:cpu             1             1
+5        BLOCKED       RUN:cpu             1             1
+6        BLOCKED          DONE                           1
+7*   RUN:io_done          DONE             1          
+
+Stats: Total Time 7
+Stats: CPU Busy 6 (85.71%)
+Stats: IO Busy  5 (71.43%)
+```
+
+I was wrong and exactly for the reason I expected, you can have IOs and CPUs overlap.
+
+</details>
+
+#### Problem 4
+
+We’ll now explore some of the other flags. One important flag is -S, which determines how the system reacts when a process issues an I/O. With the flag set to SWITCH_ON_END, the system will NOT switch to another process while one is doing I/O, instead waiting until the process is completely finished. What happens when you run the following two processes (-l 1:0,4:100 -c -S SWITCH_ON_END), one doing I/O and the other doing CPU work?
+
+``` bash
+./process-run.py -l 1:0,4:100 -S SWITCH_ON_END
+```
+
+**My answer before running it:**
+
+```         
+| Time | PID: 0      | PID: 1  | CPU | IO  |
+|------|-------------|---------|-----|-----|
+| 01   | RUN:io      | READY   | 1   |     |
+| 02   | BLOCKED     | READY   |     | 1   |
+| 03   | BLOCKED     | READY   |     | 1   |
+| 04   | BLOCKED     | READY   |     | 1   |
+| 05   | BLOCKED     | READY   |     | 1   |
+| 06   | BLOCKED     | READY   |     | 1   |
+| 07   | run:io_done | READY   | 1   |     |
+| 08   | DONE        | RUN:cpu | 1   |     |
+| 09   | DONE        | RUN:cpu | 1   |     |
+| 10   | DONE        | RUN:cpu | 1   |     |
+| 11   | DONE        | RUN:cpu | 1   |     |
+
+Stats: Total Time 11
+Stats: CPU Busy 6 (54.55%)
+Stats: IO Busy  5 (45.45%)
+```
+
+If the CPU can't switch until the IO is done then PID: 1 is just going to be waiting the whole time until PID: 0 is finished. PID: 1 wont start until the IO is done from PID 0.
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct
+
+``` bash
+➜ ./process-run.py -l 1:0,4:100 -S SWITCH_ON_END -c -p
+Time        PID: 0        PID: 1           CPU           IOs
+1         RUN:io         READY             1          
+2        BLOCKED         READY                           1
+3        BLOCKED         READY                           1
+4        BLOCKED         READY                           1
+5        BLOCKED         READY                           1
+6        BLOCKED         READY                           1
+7*   RUN:io_done         READY             1          
+8           DONE       RUN:cpu             1          
+9           DONE       RUN:cpu             1          
+10          DONE       RUN:cpu             1          
+11          DONE       RUN:cpu             1          
+
+Stats: Total Time 11
+Stats: CPU Busy 6 (54.55%)
+Stats: IO Busy  5 (45.45%)
+```
+
+</details>
+
+#### Problem 5
+
+Now, run the same processes, but with the switching behavior set to switch to another process whenever one is WAITING for I/O (-l 1:0,4:100 -c -S SWITCH ON IO). What happens now? Use -c and -p to confirm that you are right.
+
+``` bash
+./process-run.py -l 1:0,4:100 -S SWITCH_ON_IO
+```
+
+**My answer before running it:**
+
+```         
+| Time | PID: 0      | PID: 1  | CPU | IO  |
+|------|-------------|---------|-----|-----|
+| 1    | RUN:io      | READY   | 1   |     |
+| 2    | BLOCKED     | RUN:cpu | 1   | 1   |
+| 3    | BLOCKED     | RUN:cpu | 1   | 1   |
+| 4    | BLOCKED     | RUN:cpu | 1   | 1   |
+| 5    | BLOCKED     | RUN:CPU | 1   | 1   |
+| 6    | BLOCKED     | DONE    |     | 1   |
+| 7    | run:io_done | BLOCKED | 1   |     |
+
+Stats: Total Time 7
+Stats: CPU Busy   6 (85.71%)  
+Stats: IO Busy    5 (71.43%)
+```
+
+I'm pretty sure this is the default behavior so should be the same answer as question 3.
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct 
+
+``` bash
+➜ ./process-run.py -l 1:0,4:100 -S SWITCH_ON_IO -c -p 
+Time        PID: 0        PID: 1           CPU           IOs
+1         RUN:io         READY             1          
+2        BLOCKED       RUN:cpu             1             1
+3        BLOCKED       RUN:cpu             1             1
+4        BLOCKED       RUN:cpu             1             1
+5        BLOCKED       RUN:cpu             1             1
+6        BLOCKED          DONE                           1
+7*   RUN:io_done          DONE             1          
+
+Stats: Total Time 7
+Stats: CPU Busy 6 (85.71%)
+Stats: IO Busy  5 (71.43%)
+```
+
+</details>
+
+#### Problem 6
+
+One other important behavior is what to do when an I/O completes. With -I IO_RUN_LATER, when an I/O completes, the process that issued it is not necessarily run right away; rather, whatever was running at the time keeps running. What happens when you run this combination of processes? Are system resources being effectively utilized?
+
+``` bash
+./process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -I IO_RUN_LATER  -c -p
+```
+
+**My answer before running it:**
+
+```
+| Time | PID: 0      | PID: 1  | PID: 2  | PID: 3  | CPU | IO  |
+|------|-------------|---------|---------|---------|-----|-----|
+| 01   | RUN:io      | READY   | READY   | READY   | 1   |     |
+| 02   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 03   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 04   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 05   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 06   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 07   | READY       | DONE    | RUN:cpu | READY   | 1   |     |
+| 08   | READY       | DONE    | RUN:cpu | READY   | 1   |     |
+| 09   | READY       | DONE    | RUN:cpu | READY   | 1   |     |
+| 10   | READY       | DONE    | RUN:cpu | READY   | 1   |     |
+| 11   | READY       | DONE    | RUN:cpu | READY   | 1   |     |
+| 12   | READY       | DONE    | DONE    | RUN:cpu | 1   |     |
+| 13   | READY       | DONE    | DONE    | RUN:cpu | 1   |     |
+| 14   | READY       | DONE    | DONE    | RUN:cpu | 1   |     |
+| 15   | READY       | DONE    | DONE    | RUN:cpu | 1   |     |
+| 16   | READY       | DONE    | DONE    | RUN:cpu | 1   |     |
+| 17   | run:io_done | DONE    | DONE    | DONE    | 1   |     |
+| 18   | run:io      | DONE    | DONE    | DONE    | 1   |     |
+| 19   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 20   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 21   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 22   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 23   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 24   | run:io_done | DONE    | DONE    | DONE    | 1   |     |
+| 25   | run:io      | DONE    | DONE    | DONE    | 1   |     |
+| 26   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 27   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 28   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 29   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 30   | BLOCKED     | DONE    | DONE    | DONE    |     | 1   |
+| 31   | run:io_done | DONE    | DONE    | DONE    | 1   |     |
+
+Stats: Total Time 31
+Stats: CPU Busy   21 ( 67.74%)  
+Stats: IO Busy    15 ( 48.39%)
+```
+
+No, the system resources are not being used effectively. You would have been better off letting the IO complete at 07 instead of continue on with CPU instructions from PID 2, PID 3.
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct 
+
+``` bash
+➜ ./process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -I IO_RUN_LATER  -c -p
+Time        PID: 0        PID: 1        PID: 2        PID: 3           CPU           IOs
+  1         RUN:io         READY         READY         READY             1          
+  2        BLOCKED       RUN:cpu         READY         READY             1             1
+  3        BLOCKED       RUN:cpu         READY         READY             1             1
+  4        BLOCKED       RUN:cpu         READY         READY             1             1
+  5        BLOCKED       RUN:cpu         READY         READY             1             1
+  6        BLOCKED       RUN:cpu         READY         READY             1             1
+  7*         READY          DONE       RUN:cpu         READY             1          
+  8          READY          DONE       RUN:cpu         READY             1          
+  9          READY          DONE       RUN:cpu         READY             1          
+ 10          READY          DONE       RUN:cpu         READY             1          
+ 11          READY          DONE       RUN:cpu         READY             1          
+ 12          READY          DONE          DONE       RUN:cpu             1          
+ 13          READY          DONE          DONE       RUN:cpu             1          
+ 14          READY          DONE          DONE       RUN:cpu             1          
+ 15          READY          DONE          DONE       RUN:cpu             1          
+ 16          READY          DONE          DONE       RUN:cpu             1          
+ 17    RUN:io_done          DONE          DONE          DONE             1          
+ 18         RUN:io          DONE          DONE          DONE             1          
+ 19        BLOCKED          DONE          DONE          DONE                           1
+ 20        BLOCKED          DONE          DONE          DONE                           1
+ 21        BLOCKED          DONE          DONE          DONE                           1
+ 22        BLOCKED          DONE          DONE          DONE                           1
+ 23        BLOCKED          DONE          DONE          DONE                           1
+ 24*   RUN:io_done          DONE          DONE          DONE             1          
+ 25         RUN:io          DONE          DONE          DONE             1          
+ 26        BLOCKED          DONE          DONE          DONE                           1
+ 27        BLOCKED          DONE          DONE          DONE                           1
+ 28        BLOCKED          DONE          DONE          DONE                           1
+ 29        BLOCKED          DONE          DONE          DONE                           1
+ 30        BLOCKED          DONE          DONE          DONE                           1
+ 31*   RUN:io_done          DONE          DONE          DONE             1          
+
+Stats: Total Time 31
+Stats: CPU Busy 21 (67.74%)
+Stats: IO Busy  15 (48.39%)
+```
+
+</details>
+
+#### Problem 7
+
+Now run the same processes, but with -I IO RUN_IMMEDIATE set,  which immediately runs the process that issued the I/O. How does  this behavior differ? Why might running a process that just completed an I/O again be a good idea? 
+
+``` bash
+./process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -I IO_RUN_IMMEDIATE  -c -p
+```
+
+**My answer before running it:**
+
+```
+| Time | PID: 0      | PID: 1  | PID: 2  | PID: 3  | CPU | IO  |
+|------|-------------|---------|---------|---------|-----|-----|
+| 01   | RUN:io      | READY   | READY   | READY   | 1   |     |
+| 02   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 03   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 04   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 05   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 06   | BLOCKED     | RUN:cpu | READY   | READY   | 1   | 1   |
+| 07   | run:io_done | DONE    | READY   | READY   | 1   |     |
+| 08   | run:io      | DONE    | READY   | READY   | 1   |     |
+| 09   | BLOCKED     | DONE    | RUN:cpu | READY   | 1   | 1   |
+| 10   | BLOCKED     | DONE    | RUN:cpu | READY   | 1   | 1   |
+| 11   | BLOCKED     | DONE    | RUN:cpu | READY   | 1   | 1   |
+| 12   | BLOCKED     | DONE    | RUN:cpu | READY   | 1   | 1   |
+| 13   | BLOCKED     | DONE    | RUN:cpu | READY   | 1   | 1   |
+| 14   | run:io_done | DONE    | DONE    | READY   | 1   |     |
+| 15   | run:io      | DONE    | DONE    | READY   | 1   |     |
+| 16   | BLOCKED     | DONE    | DONE    | RUN:cpu | 1   | 1   |
+| 17   | BLOCKED     | DONE    | DONE    | RUN:cpu | 1   | 1   |
+| 18   | BLOCKED     | DONE    | DONE    | RUN:cpu | 1   | 1   |
+| 19   | BLOCKED     | DONE    | DONE    | RUN:cpu | 1   | 1   |
+| 20   | BLOCKED     | DONE    | DONE    | RUN:cpu | 1   | 1   |
+| 21   | run:io_done | DONE    | DONE    | DONE    | 1   |     |
+
+Stats: Total Time 21
+Stats: CPU Busy   21 (100.00%)  
+Stats: IO Busy    15 ( 71.43%)
+```
+
+It's a good idea to let a process complete IO because it's likely they will issue you another IO command and while IO is happening other processes can do CPU work. 
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct 
+
+``` bash
+➜ ./process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -I IO_RUN_IMMEDIATE -c -p
+Time        PID: 0        PID: 1        PID: 2        PID: 3           CPU           IOs
+  1         RUN:io         READY         READY         READY             1          
+  2        BLOCKED       RUN:cpu         READY         READY             1             1
+  3        BLOCKED       RUN:cpu         READY         READY             1             1
+  4        BLOCKED       RUN:cpu         READY         READY             1             1
+  5        BLOCKED       RUN:cpu         READY         READY             1             1
+  6        BLOCKED       RUN:cpu         READY         READY             1             1
+  7*   RUN:io_done          DONE         READY         READY             1          
+  8         RUN:io          DONE         READY         READY             1          
+  9        BLOCKED          DONE       RUN:cpu         READY             1             1
+ 10        BLOCKED          DONE       RUN:cpu         READY             1             1
+ 11        BLOCKED          DONE       RUN:cpu         READY             1             1
+ 12        BLOCKED          DONE       RUN:cpu         READY             1             1
+ 13        BLOCKED          DONE       RUN:cpu         READY             1             1
+ 14*   RUN:io_done          DONE          DONE         READY             1          
+ 15         RUN:io          DONE          DONE         READY             1          
+ 16        BLOCKED          DONE          DONE       RUN:cpu             1             1
+ 17        BLOCKED          DONE          DONE       RUN:cpu             1             1
+ 18        BLOCKED          DONE          DONE       RUN:cpu             1             1
+ 19        BLOCKED          DONE          DONE       RUN:cpu             1             1
+ 20        BLOCKED          DONE          DONE       RUN:cpu             1             1
+ 21*   RUN:io_done          DONE          DONE          DONE             1          
+
+Stats: Total Time 21
+Stats: CPU Busy 21 (100.00%)
+Stats: IO Busy  15 (71.43%)
+```
+
+</details>
+
+## Chapter 05. The Process API
