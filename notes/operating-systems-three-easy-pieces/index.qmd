@@ -563,3 +563,297 @@ Stats: IO Busy  15 (71.43%)
 </details>
 
 ## Chapter 05. The Process API
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> What interfaces should the OS present for process creation and control?
+:::
+
+- `fork()` creates an almost exact copy of the parent process. 
+- `exec()` replaces the existing program with the new program.
+- The separation of `fork()` and exec()` is hat enables building a UNIX shell as it lets the shell run code *after* the call to `fork()` but *before* the call to `exec()`.
+- `kill()` is used to send **signals** to a process e.g. CTRL+C = `SIGINT` (interrupt), CTRL+Z `SIGTSTP` (stop)
+- `signal()` is used to "catch" various signals.
+
+### Homework (Simulation)
+
+#### Problem 1
+
+Run:
+
+```bash
+./fork.py -s 10 
+                           Process Tree:
+                               a
+Action: a forks b
+Process Tree?
+Action: a forks c
+Process Tree?
+Action: c EXITS
+Process Tree?
+Action: a forks d
+Process Tree?
+Action: a forks e
+Process Tree?
+```
+
+and see which actions are taken. Can you  predict what the process tree looks like at each step? Use the -c  flag to check your answers. Try some different random seeds (-s)  or add more actions (-a) to get the hang of it. 
+
+
+**My answer before running it:**
+
+```
+# a forks b
+a    
+└── b
+# a forks c     
+a    
+├── b
+└── c
+# c EXITS     
+a    
+└── b
+# a forks d
+a    
+├── b
+└── d
+# a forks e
+a    
+├── b
+├── d
+└── e
+```
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct 
+
+``` bash
+➜ ./fork.py -s 10 -c
+                           Process Tree:
+                               a
+
+Action: a forks b
+                               a
+                               └── b
+Action: a forks c
+                               a
+                               ├── b
+                               └── c
+Action: c EXITS
+                               a
+                               └── b
+Action: a forks d
+                               a
+                               ├── b
+                               └── d
+Action: a forks e
+                               a
+                               ├── b
+                               ├── d
+                               └── e
+```
+
+</details>
+
+#### Problem 2
+
+One control the simulator gives you is the `fork_percentage`, controlled by the `-f` flag. The higher it is, the more likely the next  action is a fork; the lower it is, the more likely the action is an  exit. Run the simulator with a large number of actions (e.g., `-a  100`) and vary the `fork_percentage` from `0.1` to `0.9`. What do you  think the resulting final process trees will look like as the percentage changes? Check your answer with `-c`. 
+
+**My answer before running it:**
+
+Well, if fork percentage is higher then you are likely going to have more processes running then if it was lower.
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct 
+
+Yes, as fork percentage was increased the number of processes at the end were far greater. The depth of the process tree was also a lot of deeper.
+
+</details>
+
+
+#### Problem 3
+
+Now, switch the output by using the -t flag (e.g., run ./fork.py  -t). Given a set of process trees, can you tell which actions were  taken? 
+
+```bash
+➜ ./fork.py -s 2 -t 
+                           Process Tree:
+                               a
+
+Action?
+                               a
+                               └── b
+Action?
+                               a
+Action?
+                               a
+                               └── c
+Action?
+                               a
+                               └── c
+                                   └── d
+Action?
+                               a
+                               ├── c
+                               │   └── d
+                               └── e
+```
+
+**My answer before running it:**
+
+```
+1. a forks b
+2. b EXITS
+3. a forks c
+4. c forks d
+5. a forks e
+```
+
+<details>
+<summary>Solution</summary>
+
+**Result:** ✅ Correct 
+
+```
+                           Process Tree:
+                               a
+
+Action: a forks b
+                               a
+                               └── b
+Action: b EXITS
+                               a
+Action: a forks c
+                               a
+                               └── c
+Action: c forks d
+                               a
+                               └── c
+                                   └── d
+Action: a forks e
+                               a
+                               ├── c
+                               │   └── d
+                               └── e
+```
+
+</details>
+
+#### Problem 4
+
+One interesting thing to note is what happens when a child exits;  what happens to its children in the process tree? To study this, let’s  create a specific example: `./fork.py -A a+b,b+c,c+d,c+e,c-`.  This example has process ’a’ create ’b’, which in turn creates ’c’,  which then creates ’d’ and ’e’. However, then, ’c’ exits. What do  you think the process tree should like after the exit? What if you  use the -R flag? Learn more about what happens to orphaned processes on your own to add more context. 
+
+
+**My answer before running it:**
+
+I assume that if a process exits, then all of its children will exit as well.
+
+<details>
+<summary>Solution</summary>
+
+**Result:** ❌ Wrong
+
+The children become direct children of the root process. Did not expect this. Even if the children where reparented, I would have thought they would go to the grandparent process not the root process.
+
+```
+➜ ./fork.py -A a+b,b+c,c+d,c+e,c-. -c
+                           Process Tree:
+                               a
+
+Action: a forks b
+                               a
+                               └── b
+Action: b forks c
+                               a
+                               └── b
+                                   └── c
+Action: c forks d
+                               a
+                               └── b
+                                   └── c
+                                       └── d
+Action: c forks e
+                               a
+                               └── b
+                                   └── c
+                                       ├── d
+                                       └── e
+Action: c EXITS
+                               a
+                               ├── b
+                               ├── d
+                               └── e
+```
+
+</details>
+
+
+#### Problem 5
+
+One last flag to explore is the -F flag, which skips intermediate  steps and only asks to fill in the final process tree. Run ./fork.py  -F and see if you can write down the final tree by looking at the  series of actions generated. Use different random seeds to try this a  few times. 
+
+```bash
+➜ ./fork.py -F -s 1
+                           Process Tree:
+                               a
+
+Action: a forks b
+Action: a forks c
+Action: c forks d
+Action: a forks e
+Action: c EXITS
+```
+
+**My answer before running it:**
+
+```
+a
+├── b
+├── e
+└── d
+```
+
+unclear if the order matters here but I put d at the bottom as it should get reparented to a after c exists.
+
+<details>
+<summary>Solution</summary>
+
+**Result:** ✅ Correct 
+
+```
+➜ ./fork.py -F -s 1 -c
+                        Final Process Tree:
+                               a
+                               ├── b
+                               ├── e
+                               └── d
+```
+
+</details>
+
+#### Problem 6
+
+Finally, use both -t and -F together. This shows the final process  tree, but then asks you to fill in the actions that took place. By looking at the tree, can you determine the exact actions that took place?  In which cases can you tell? In which can’t you tell? Try some different random seeds to delve into this question. 
+
+**My answer before running it:**
+
+I think you can only tell if one process forks another but it you can't really guarantee the order of when that happens. For example, the prior problem we saw c fork d and then a fork e and then c exits but looking at the process tree there is nothing that would tell you that c existed and d was actually created before e. It would even appear as if a forked d but that's also not the case. So you know there was forking but I don't think you can deduce what order and which process it was forked from.
+
+<details>
+<summary>Solution</summary>
+
+Don't know the answer to to this one.
+
+</details>
+
+### Homework (Code)
+
+You can view my solutions to coding homework assignments [here](https://github.com/TylerHillery/ostep-homework).
+
+## Chapter 06. Limited Direct Execution
+
