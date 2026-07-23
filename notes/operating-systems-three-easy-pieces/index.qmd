@@ -920,3 +920,223 @@ You can view my solutions to coding homework assignments [here](https://github.c
 - There are two types of register saves/restores that happen during a context switch (when timer interrupt occurs).
     1. the *user registers* of the running process are saved by the *hardware* using the kernel stack of that process.
     2. The OS switches to the other process, the *kernel registers* are saved by the *software* but this time into memory in the process structure of the process.
+
+## Chapter 07. Scheduling: Introduction
+
+- **Turnaround time** of a job is defined at the time at which the job completes minus the time at which the job arrived in the system.
+- **convoy effect** is when a number of short potential consumers get queued by a heavy weight resources. This is the downside of FIFO based policy as if you have three jobs, one that takes a really long and that long one runs first the other two are stuck waiting until that job finishes.
+- **shortest job first** is a scheduling principle where the perceived turnaround time matters. A good example of this is a grocery store with "ten-items-or-less" lines to ensure shoppers with only a few things don't get stuck behind a family with a ton of stuff.
+ 
+::: {.callout-important title="Question❓" appearance="minimal"}
+How do you know how long something is going to take before you run it though? I don't see how you can employ a SJF policy if you don't have metrics on how long a program typically runs for.
+:::
+
+- Preemptive (where you don't have to run a job until completion) + SJT is known as **Shortest Time-to-Completion First (STCF)** or **Preemptive Shortest Job First (PSJF)**
+- **Response Time** defined ast the time from when the job arrives in a system to the first time it is scheduled.
+- **Round-Robin** runs a job for a **time slice** (sometimes called a **scheduling quantum**) and then switches in the next job in the run queue.
+- **Amortization** is used in systems where there is a fixed cost of some operation. By incurring the loss less often the total cost to the system is reduce e.g. if a time slice is 10ms and a context switch cost is 1ms, 10% of the time is spent context switching but if we want to *amortize* this cost we can increase the time slice to 100ms and then it would reduce to 1% of the time.
+- There are other costs associated with a context switch besides saving and restore registers such as CPU caches, TLBs, branch predictors.
+- In general Response Time and Turnaround time are at odds with each other. Round robin with a very short time slice is great for response time because it's constantly switching between jobs and it will be relatively short time from when your job arrives to when it's first scheduled. But for turnaround time it's awful because you are effectively stretching out each job as long as it can by only running it for short bit before moving to the next.
+
+### Homework (Simulation)
+
+#### Problem 1
+
+Compute the response time and turnaround time when running three jobs of length 200 with the SJF and FIFO schedulers.
+
+``` bash
+./scheduler.py -p FIFO -l 200,200,200
+```
+
+**My answer before running it:**
+
+- SJF:
+    - turnaround time would be (200 + 400 + 600) / 3 = 400
+    - response time would be (0 + 200 + 400) / 3 = 200
+- Should be the same for FIFO because all the jobs are the same length
+
+<details>
+
+<summary>Solution</summary>
+
+**Result:** ✅ Correct
+
+``` bash
+homework/cpu-sched git:(master) ✗ 
+➜ ./scheduler.py -p SJF -l 200,200,200 -c
+Execution trace:
+  [ time   0 ] Run job 0 for 200.00 secs ( DONE at 200.00 )
+  [ time 200 ] Run job 1 for 200.00 secs ( DONE at 400.00 )
+  [ time 400 ] Run job 2 for 200.00 secs ( DONE at 600.00 )
+
+Final statistics:
+  Job   0 -- Response: 0.00  Turnaround 200.00  Wait 0.00
+  Job   1 -- Response: 200.00  Turnaround 400.00  Wait 200.00
+  Job   2 -- Response: 400.00  Turnaround 600.00  Wait 400.00
+
+  Average -- Response: 200.00  Turnaround 400.00  Wait 200.00
+```
+
+```bash
+➜ ./scheduler.py -p FIFO -l 200,200,200 -c
+Execution trace:
+  [ time   0 ] Run job 0 for 200.00 secs ( DONE at 200.00 )
+  [ time 200 ] Run job 1 for 200.00 secs ( DONE at 400.00 )
+  [ time 400 ] Run job 2 for 200.00 secs ( DONE at 600.00 )
+
+Final statistics:
+  Job   0 -- Response: 0.00  Turnaround 200.00  Wait 0.00
+  Job   1 -- Response: 200.00  Turnaround 400.00  Wait 200.00
+  Job   2 -- Response: 400.00  Turnaround 600.00  Wait 400.00
+
+  Average -- Response: 200.00  Turnaround 400.00  Wait 200.00
+```
+
+</details>
+
+#### Problem 2
+
+Now do the same but with jobs of different lengths: 100, 200, and  300. 
+
+```bash
+./scheduler.py -p FIFO -l 100,200,300
+```
+
+**My answer before running it:**
+
+- FIFO
+    - Turnaround Time: (100 + 300 + 600) / 3 = 333.33
+    - Response Time: (0 + 100 + 300) / 3 = 133.33
+- Once again, SJF is the same because the jobs are already ordered as shortest time first. 
+
+
+<details>
+<summary>Solution</summary>
+
+**Result:** ✅ Correct
+
+```bash
+➜ ./scheduler.py -p FIFO -l 100,200,300 -c
+Execution trace:
+  [ time   0 ] Run job 0 for 100.00 secs ( DONE at 100.00 )
+  [ time 100 ] Run job 1 for 200.00 secs ( DONE at 300.00 )
+  [ time 300 ] Run job 2 for 300.00 secs ( DONE at 600.00 )
+
+Final statistics:
+  Job   0 -- Response: 0.00  Turnaround 100.00  Wait 0.00
+  Job   1 -- Response: 100.00  Turnaround 300.00  Wait 100.00
+  Job   2 -- Response: 300.00  Turnaround 600.00  Wait 300.00
+
+  Average -- Response: 133.33  Turnaround 333.33  Wait 133.33
+```
+
+```bash
+➜ ./scheduler.py -p SJF -l 100,200,300 -c
+Execution trace:
+  [ time   0 ] Run job 0 for 100.00 secs ( DONE at 100.00 )
+  [ time 100 ] Run job 1 for 200.00 secs ( DONE at 300.00 )
+  [ time 300 ] Run job 2 for 300.00 secs ( DONE at 600.00 )
+
+Final statistics:
+  Job   0 -- Response: 0.00  Turnaround 100.00  Wait 0.00
+  Job   1 -- Response: 100.00  Turnaround 300.00  Wait 100.00
+  Job   2 -- Response: 300.00  Turnaround 600.00  Wait 300.00
+
+  Average -- Response: 133.33  Turnaround 333.33  Wait 133.33
+```
+
+</details>
+
+
+#### Problem 3
+
+Now do the same but also with RR scheduler and a time-slice of 1.
+
+```bash
+./scheduler.py -l 100,200,300 -p RR -q 1 -c
+```
+
+**My solution**
+
+- Turnaround time: I actually don't know how to compute this easily. If Job 1 takes 100 seconds but it has to weight an additional 2 second before running again it's going to be 300? Then with Job 2 same thing but once job 1 finishes it only has to weight 1 second. So (300, 200) 500? And job 3 same as job 2 with additional 100 seconds so 600? so (300 + 500 + 600) / 3 = 466.666
+- Response time: (0, 1, 2) / 3 = 1
+
+<details>
+<summary>Solution</summary>
+
+**Result:** ✅ Correct (close enough, I off by one on both job 1 and 2)
+
+
+```bash
+Final statistics:
+  Job   0 -- Response: 0.00  Turnaround 298.00  Wait 198.00
+  Job   1 -- Response: 1.00  Turnaround 499.00  Wait 299.00
+  Job   2 -- Response: 2.00  Turnaround 600.00  Wait 300.00
+
+  Average -- Response: 1.00  Turnaround 465.67  Wait 265.67
+```
+
+</details>
+
+
+#### Problem 4
+
+For what types of workloads does SJF deliver the same turnaround times as FIFO? 
+
+**My solution**
+
+When the workloads have jobs of the same length or if the jobs with the shortest duration happen to arrive first.
+
+<details>
+<summary>Solution</summary>
+
+**Result:** No solution found 
+
+</details>
+
+#### Problem 5
+
+For what types of workloads and quantum lengths does SJF deliver the same response times as RR? 
+
+**My solution**
+
+I don't know, when the time slice and the job length are the same? 
+
+<details>
+<summary>Solution</summary>
+
+**Result:** No solution found 
+
+</details>
+
+#### Problem 6
+
+What happens to response time with SJF as job lengths increase?
+
+**My solution**
+
+Response times would get longer.
+
+<details>
+<summary>Solution</summary>
+
+**Result:** No solution found 
+
+</details>
+
+#### Problem 7
+
+What happens to response time with RR as quantum lengths increase?
+
+**My solution**
+
+Response times would get long because the second job that runs will be the min of the first job length and the quantum length. This keeps applying for all subsequent jobs. So if you keep increasing the length then it's going to increase the response times for all subsequent jobs assuming the job length is large tan the quantum length.
+
+<details>
+<summary>Solution</summary>
+
+**Result:** No solution found 
+
+</details>
+
+## Chapter 08. Scheduling: The Multi-Level Feedback Queue
