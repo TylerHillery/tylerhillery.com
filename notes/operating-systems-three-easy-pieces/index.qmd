@@ -857,3 +857,66 @@ You can view my solutions to coding homework assignments [here](https://github.c
 
 ## Chapter 06. Limited Direct Execution
 
+- Direction Execution Protocol (Without Limits) 
+    - OS:
+        1. Create entry for process list
+        2. Allocate memory for program
+        3. Load program into memory
+        4. Set up stack with argc/argv
+        5. Clear registers
+        6. Execute **call** main()
+    - Program:
+        7. Run main()
+        8. Execute **return** from main
+    - OS:
+        9. Free memory of process
+        10. Remove from process list
+- While systems calls look just like procedure calls, the one thing that separates them from other normal functions is the trap instruction. When executing a system call you execution a procedure call into the C library. The library uses an agreed-upon calling convention with the kernel to put the arguments and syc call number in well-known locations (e.g. on the stack, or in specific registers), and executes the trap instruction. The code in the library after the trap unpacks  return values and returns control to the program that issued the system call.
+- The hardware needs to save enough of the caller's registers in order to be able to return correctly when the OS issues the return-from-trap instruction. On x86 the the processor will push the PC, flags, and few other registers onto a per-process **kernel stack**
+- The kernel uses a **trap table**, setup a boot time, to know which code to run inside the OS. The calling process can't specify an address to jump to as it would allow programs to jump anywhere into the kernel.
+- Limited Direct Execution:
+    - OS @ Boot:
+        1. Initialize trap table
+            - Hardware remembers address of syscall handler
+    - OS @ Run:
+        2. Create entry for process list
+        3. Allocate memory for program
+        4. Load program into memory
+        5. Set up stack with argc/argv
+        6. Fill kernel stack with reg/PC
+        7. **return-from-trap**
+    - Hardware:
+        8. restore regs (from kernel stack)
+        9. move to user mode
+        10. jump to main
+    - Program (User mode):
+        11. Run `main()`
+        12. ...
+        13. Call system call
+        14. **trap** into OS
+    - Hardware:
+        15. Save regs (to kernel stack)
+        16. Move to kernel mode
+        17. Jump to trap handler
+    - OS @ Run:
+        18. Handle Trap
+        19. Do work of syscall
+        20. **return-from-trap**
+    - Hardware:
+        21. restore regs (from kernel stack)
+        22. move to user mode
+        23. jump to PC after trap
+    - Program (User mode):
+        24. ...
+        25. return from main 
+        26. **trap** via `exit()`
+    - OS @ Run:
+        27. Free memory of process
+        28. Remove from process list
+- **Cooperative approach** to timesharing is where the OS *trusts* the process of the system to behave reasonably and if they run too long they will give up the CPU so that OS can decide to run some other task. This is usually done by making **system call** there is also a explicit **yield** system call which does nothing except transfer control to the OS.
+- **Non-cooperative** approach uses teh dies of a **timer interrupt** to raise an interrupt every so many milliseconds, when raises the the currently running process is halted and a pre-configured **trap handler** in the OS runs.
+- Once the OS regains control a decision must be made, which process should I run next? This decision is made by the **scheduler**.
+- If the OS decides to switch processes the OS executes a low-level piece of code which we refer to as a **context switch**.
+- There are two types of register saves/restores that happen during a context switch (when timer interrupt occurs).
+    1. the *user registers* of the running process are saved by the *hardware* using the kernel stack of that process.
+    2. The OS switches to the other process, the *kernel registers* are saved by the *software* but this time into memory in the process structure of the process.
