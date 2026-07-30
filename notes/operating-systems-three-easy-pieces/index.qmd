@@ -1140,3 +1140,13 @@ Response times would get long because the second job that runs will be the min o
 </details>
 
 ## Chapter 08. Scheduling: The Multi-Level Feedback Queue
+
+- MFLQ *varies* the priority of a job based on its *observed behavior* e.g. a job repeatedly relinquishes the CPU while waiting for input from the keyboard, MLFQ will keep its priority high, as this is how an interactive process might behave. If the jobs uses the CPU intensively for long periods of time, MLFQ will reduce its priority and tries to *learn* about processes as the run and uses the *history* of the job to predict its *future* behavior.
+- Job's **allotment** is the amount of time a job can spend at a give priority level before the scheduler reduces its priority. 
+- It first **assumes** a job might be a short job.
+- **starvation** can occur when you have "too many"" interactive jobs in the system, they will combine to consume *all* CPU time, and long running jobs will *never* receive any CPU time.
+- **game the scheduler** is where a user rewrites their program to giving you more than a fair share of the resource e.g. before allotment is used you can issue I/O operation to stay in high priority queue and get an allotment refresh.
+- One way to avoid starvation is to periodically boost the priority of all the jobs in the system.
+- Another way is to not have have the allotment reset after I/O
+
+## Chapter 09. Scheduling: Proportional Share
