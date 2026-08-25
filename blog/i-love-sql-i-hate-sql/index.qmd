@@ -1,0 +1,286 @@
+---
+title: "I love SQL; I Hate SQL"
+description: ""
+author: "Tyler Hillery"
+date: "2026-08-25"
+categories: []
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/i-love-sql-i-hate-sql"
+  description: ""
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+format:
+    html:
+        code-line-numbers: false 
+---
+
+SQL. You either love it or you hate it.
+
+I fall in the love camp. My introduction into coding was through SQL. Everyone has their native language they think in and mine is SQL.
+
+While I love SQL I also recognize its flaws. For one, the language hasn't really been innovated on until recently by DuckDB, with its [friendly SQL](https://duckdb.org/docs/current/sql/dialect/friendly_sql), [friendlier SQL](https://duckdb.org/2022/05/04/friendlier-sql) and [even friendlier SQL](https://duckdb.org/2023/08/23/even-friendlier-sql). The problem with all these amazing SQL features is they are isolated to DuckDB.
+
+::: {.callout-note}
+That might be a little harsh, as DuckDB isn't the only place where innovation around SQL is happening:
+
+- [A Critique of Modern SQL And A Proposal Towards A Simple and Expressive Query Language](https://www.cidrdb.org/cidr2024/papers/p48-neumann.pdf)
+- [SQL Has Problems. We Can Fix Them. Pipe Syntax In SQL](https://research.google/pubs/sql-has-problems-we-can-fix-them-pipe-syntax-in-sql/)
+- [SQL Or Death? Seminar Series](https://www.youtube.com/playlist?list=PLSE8ODhjZXjbpOIrZheFWxkYG8HD87xW1)
+- [PRQL](https://prql-lang.org/)
+- [Malloy](https://github.com/malloydata/malloy)
+:::
+
+And it's not just databases. Think about all the programming languages that have built their own ORMs/Query Builders to deal with SQL. 
+
+You might think I don't like ORMs as someone who loves SQL but au contraire. I recognize the benefits of these libraries. The major one is type safety. If you model your tables as types in your programming language you can get errors at compile time or in your LSP telling you "hey dummy this column doesn't exist" without ever having to connect to your database and run your query.
+
+The problems with these approaches to improving SQL:
+
+1. They are tied to a specific database or programming language.
+2. Many of these improvements are only focused on the query side of SQL and ignore DDL (create, drop, alter), DML (insert, update, delete) commands.
+
+SQL can be improved but it needs to be able to evolve independently of the database engine.
+
+SQL itself is a strongly typed language. Go ahead, try summing a text column and see what happens. There is a whole class of bugs that can be caught at compile time. TypeScript set the precedent for how a typed transpiled language can help and be successful, and there should be a language that does the same for SQL.
+
+Now I know what you're going to say: "[I don't want to learn your garbage query language](https://erikbern.com/2018/08/30/i-dont-want-to-learn-your-garbage-query-language.html
+)"
+
+But I encourage you to keep an open mind as this isn't a real language, but rather an exploration of what a typed superset of SQL could look like.
+
+::: {.callout-note}
+Throughout this post I use the term "relation" to mean a set of rows that all share the same columns, like the result of a query or the contents of a table. I am not using it to claim the data is "relational" in the relational-database sense.
+:::
+
+
+## What I'd change
+
+### Ordering of queries
+
+`from` should have to come first when you write a query. How are you supposed to know what columns are available to select from if you haven't brought any tables into scope?
+
+```sql
+from table
+select col_a
+```
+
+`table` here is like an array of structs, and `from` is what brings this variable into scope of the query. Once the table is in scope, you know which columns can be selected from.
+
+
+### Better column alias
+
+What's wrong with this query?
+
+```sql
+select
+  first_name,
+  last_name,
+  concat(first_name, " " , last_name) as full_name
+```
+
+When reading a query my mind wants to know what columns are being returned, but with `as` that information is added at the end. Each column is its own function context, so let's treat it as such:
+
+```sql
+select 
+  first_name,
+  last_name,
+  full_name = concat(first_name, " " , last_name) 
+```
+
+
+If you find yourself writing the same SQL over and over again, you can define a function for it.
+
+```sql
+fn normalize_string(s: string) {
+  return s.to_lower().strip()
+}
+
+select
+  normalized_string_column = normalize_string(my_string_column)
+```
+
+I also threw a little something special in there: [function chaining via the dot operator](https://duckdb.org/docs/lts/sql/functions/overview). Columns are values with a type, so methods should be able to operate on them just like any other typed value. It also means you read left to right instead of inside out, `col.to_lower().strip()` instead of `strip(to_lower(col))`.
+
+### `where` `having` `qualify` are all the same thing
+
+What do all three of these clauses have in common? They are filtering the relation in your query. The only difference is the type of column they are filtering on: is it a normal column, an aggregated column, or a window function.
+
+Who cares? Let the compiler figure that out.
+
+```sql
+  from
+    orders
+  filter
+    region = 'AMER'
+  select
+    region,
+    revenue = sum(revenue)
+  filter
+    revenue >= 100
+```
+
+Same story for `qualify`, which filters on a window function:
+
+```sql
+  from
+    orders
+  select
+    region,
+    revenue,
+    rank = row_number() over (partition by region order by revenue desc)
+  filter
+    rank <= 3
+```
+
+### Group by
+
+While we are on the topic, why do we have to specify what we group by when using an aggregate function? You're not allowed to select a column anyways if it's not grouped. "But Tyler, we have `group by all`." Yes, `group by all` is great, but I can do you one better: `group`.
+
+```sql
+  from
+    orders
+  group
+    region,
+    revenue = sum(revenue)
+```
+
+Let's get rid of it completely! I still believe it's important to not collapse this into `select` because it visually signals this command can change the grain of the relation.
+
+### Types
+
+A declarative schema would be the source that derives all the type information.
+
+```sql
+table users {
+  id: int
+  email: string | null                -- nullable
+}
+
+from 
+  users
+select
+  id_upper = upper(id),               -- error: upper() expects a string, got int
+  email = coalesce(email, 'unknown')  -- string, coalesce resolves the null case
+```
+
+Here's roughly what your editor could tell you about those last two lines, without ever running the query:
+
+```
+  id_upper = upper(id),
+             ~~~~~~~~~
+             error: upper() expects string, got int
+
+  email = coalesce(email, 'unknown')
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~
+          string
+```
+
+A sophisticated enough compiler could even infer the grain of a query based on primary keys, foreign keys, uniqueness constraints, and limits.
+
+```sql
+table orders {
+  id: int primary key
+  customer_id: int
+}
+
+table customers {
+  id: int primary key
+  name: string
+}
+
+from orders
+join customers on orders.customer_id = customers.id
+filter orders.id = 123
+```
+
+Because `orders.id` is filtered against a primary key, the compiler can infer this query returns at most one row.
+
+### Metaprogramming
+
+[dbt](https://docs.getdbt.com/docs/build/jinja-macros) was the first I'm aware of to bring metaprogramming capabilities to SQL. The problem is I don't want to write Jinja+SQL. I want what [zig](https://ziglang.org/documentation/master/#comptime) and [mojo](https://docs.modular.com/mojo/manual/parameters/) have. I want my comptime programming to be first class and the same language. Here is an example of `describe`, a function popular in DataFrame libraries that returns summary statistics for every numeric column, written in this made up language:
+
+```sql
+comptime fn describe(t: table) {
+  for column in t.columns {
+    if column.type == int or column.type == decimal {
+      f"{column.name}_min" = min(column),
+      f"{column.name}_max" = max(column),
+      f"{column.name}_avg" = avg(column),
+    }
+  }
+}
+```
+
+No need to hand write three lines per column. The compiler already knows every column and its type at compile time, so it can generate this for you. Notice `describe` doesn't include `group` itself; it just produces the column list. That's on purpose: it means the caller decides how to group it:
+
+```sql
+query order_summary() {
+  from orders
+  group describe(orders)
+}
+
+query order_summary_by_region() {
+  from orders
+  group
+    region,
+    describe(orders)
+}
+```
+
+### Target
+
+Now you might be thinking this is all great but how are you going to get all databases to run this made up language? Ideally it would be awesome if there was some agreed upon IR for databases and some work has been done with [Substrait](https://substrait.io/), but it's going to take a long time to get there. So in the meantime the compiler backends would be various SQL dialects. 
+
+### Runtime
+
+While I want to bring a bunch of nice modern programming features to SQL, it's important to recognize SQL is a DSL. It's not meant to be run on its own. Queries are primarily issued by programming languages connecting to databases. 
+
+The compiler could generate client code in any programming language that would give you typed functions you can call.
+
+[sqlc](https://sqlc.dev/) has already figured this out.
+
+```sql
+query get_user_by_id(id: int) {
+  from users
+  filter id = id
+}
+
+query deactivate_user(id: int) {
+  update users
+  filter id = id
+  set active = false
+}
+```
+
+which could generate something like this in TypeScript (or your language of choosing):
+
+```typescript
+async function getUserById(id: number): Promise<User | null> {
+  const rows = await db.query('SELECT id, name, email FROM users WHERE id = $1', [id])
+  return rows[0] ?? null
+}
+
+async function deactivateUser(id: number): Promise<void> {
+  await db.query('UPDATE users SET active = false WHERE id = $1', [id])
+}
+```
+
+::: {.callout-warning}
+It's important that parameters like this avoid [SQL injection](https://en.wikipedia.org/wiki/SQL_injection) by always being sent to the database as bound parameters.
+::: 
+
+A language like this could then add a bunch of nice features on top. Since you're already declaring all your tables, it could generate schema migrations for you. You could add linters that check queries against specific rules (e.g. flagging a query that filters on a non-indexed column), a testing framework, the whole nine yards.
+
+SQL has its flaws, and I believe they can be fixed by a new language.
+
+The title of this post was inspired by *I Love Go; I Hate Go*[^1].
+
+[^1]: [I Love Go; I Hate Go](https://ahl.dtrace.org/2016/08/02/i-love-go-i-hate-go/)
