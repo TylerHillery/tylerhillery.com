@@ -2,7 +2,7 @@
 title: "Writing Doesn't Have to be Linear"
 description: ""
 author: "Tyler Hillery"
-date: "2026-04-26"
+date: "2026-09-02"
 categories: []
 filters:
   - social-share
@@ -17,23 +17,27 @@ share:
   linkedin: true
   email: true
   mastodon: true
-draft: true 
+draft: false 
 ---
 
 ------------------------------------------------------------------------
 
-English was my least favorite subject through school. Probably because it was my worst subject. I really struggled with writing.
+English was my least favorite subject throughout school. Probably because it was my worst subject. I really struggled with writing (I still do). For a while, I didn’t care to put in the time to get better because I felt Math and Science were much more important.
 
-One day I heard someone describe writing as nothing more than thinking. Once I heard that, something clicked for me
+Then one day I heard someone describe writing as nothing more than thinking, which completely changed my perspective.
 
-The funny part is I always thought I was a good thinker. My mind just loves to think and noodle on topics. I have been known to be called "spacey" because of this. Yet, I had a hard communicating those ideas to others. All these half baked ideas in my head were just that, half baked. Communicating those ideas in a way that can be understood by others is how those half baked ideas become fully baked.
+The funny part is, I always thought I was a good thinker. My mind loves to think and noodle on topics. The problem was I couldn't communicate these thoughts to others. All these half-baked thoughts in my head were just that, half-baked. Communicating in a way that can be understood by others is how half-baked thoughts become fully baked.
 
-The main thing I struggled with in writing is I felt it needed to be done left to right, introduction to conclusion. This rigid straight line path. This was a major pain point for me. Then in one of my college writing classes I we used this concept of a "rough rough first draft". This is the draft that no one but you and your god see. In this draft you can do whatever you want. I think of my rough rough first draft much more like a canvas then a piece of paper.
+I end up writing most my blog posts because I have these thoughts brewing in my head, and I need to get them out for my sanity. In many ways, writing is therapeutic for me.
 
-I end up writing most my blog posts because of I have these thoughts brewing in my head and I need to get them out for my sanity. In many ways writing is therapeutic for me.
+When I started taking writing more seriously, I found I struggled the most with [blank page syndrome](https://www.globesoup.net/writing-blog/blank-page-syndrome-how-to-beat-it). This stemmed from me thinking writing always had to be done left to right, introduction to conclusion. Then, in one of my college writing classes, I was introduced to this concept of a "rough rough first draft". This is the draft that only you see. In this draft, you can do whatever you want.
 
-When I do this I couldn't care less about left to right, introduction or conclusion. I just write whatever is on my mind. Sometimes I will write the same thing phrased three different times. I will write one paragraph not knowing where it will end up.
+::: {.callout-note }
+I tried researching this concept of a "rough rough" first draft and I believe the more common phrase for this type of draft is [Shifty First Drafts](https://wrd.as.uky.edu/sites/default/files/1-Shitty%20First%20Drafts.pdf)
+:::
 
-Then when I get done writing everything I wanted I read it over. At this point it's much more like fitting puzzle pieces together then it is writing. Now puzzles are something I can get behind. I mind loves working with puzzles.
+When I write my rough rough first draft,I couldn't care less about writing left to right, introduction to conclusion, or even grammar for that matter. I just write whatever is on my mind. Sometimes I will write the same thing phrased three different ways. I will write one paragraph not knowing where it will end up. In many ways I feel like [Hal](https://youtu.be/EILskqqoHyk?si=pS4hs9tbbAzs-hzM), from Malcolm In The Middle, slapping paint on a canvas just to see what sticks.
 
-So if writing is something you struggled with because you felt it has to be this very linear process, use this as friendly reminder it doesn't have to be.
+When I get done writing everything I read it over. At this point it's much more like fitting puzzle pieces together than it is writing. Now puzzles are something I can get behind. 
+
+So if writing is something you struggled with because you felt it has to be this very linear process, use this as a friendly reminder that it doesn't have to be. Don't be afraid to write that rough rough first draft. If you are still having a hard time writing anything, write about why you're struggling!
