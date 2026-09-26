@@ -1150,3 +1150,18 @@ Response times would get long because the second job that runs will be the min o
 - Another way is to not have have the allotment reset after I/O
 
 ## Chapter 09. Scheduling: Proportional Share
+
+- **proportional-share** scheduler must guarantee that each job obtain a certain percentage of CPU time.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we design a scheduler to share the CPU in a proportional manner? What are the key mechanisms for doing so? How effective are they? 
+:::
+
+- So far the lottery scheduler is pretty straight forward, processes get N tickets which equate to their probability of winning the time slice when the lottery is held (N / Total Tickets). They key component that makes lottery scheduler so effective is the randomness. Not much state is needed to run the lottery so as long as generating a random number is fast then it will perform well. The main thing to be concerned about is the law of large numbers, the lottery needs to be held enough for the expected probabilities to be close to the real probabilities. They are some other interesting features of the lottery process as well, like ticket sharing where one process can give their tickets to another to increase their probability of winning the lottery. Otherwise it's pretty straight forward.
+- Stride scheduling doesn't use randomness, I will need to reread the examples a few times because the math aint mathing for me. The main reason why you would want to still use lottery scheduling is there is no global sate for lottery like there is for stride scheduling and this is important when you want to incorporate new processes in a sensible manner.
+- Wow, so Linux uses the **Completely Fair Scheduler** (CFS) and it's interesting to see from a study of Google datacenters, scheduling accounts for 5% of overall datacenter CPU time. 
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
+
