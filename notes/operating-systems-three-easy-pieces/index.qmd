@@ -1165,3 +1165,32 @@ Response times would get long because the second job that runs will be the min o
 ### Homework (Simulation)
 :::
 
+## Chapter 10. Multiprocessor Scheduling (Advanced) 
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How should the OS schedule jobs on multiple CPUs? What new problems arise? Do the same old techniques work, or are new ideas required? 
+:::
+
+- **cache coherence** is the problem where one core may read a value from main memory and update it but it only gets updated in that core's cache so when another core reads this value and it goes to main memory it will get the old value.
+- **cache affinity** it's often advantageous to run the same program on the same CPU core as it builds up a bit of state in the caches.
+- most basic approach is **single queue multiprocessor scheduling** or **SQMS**.
+    - Pros
+        - easy to build
+        - load balances well
+    - Cons
+        - Doesn't scale
+        - Cache affinity
+- **multi-queue multiprocessor scheduling** or **MQMS** 
+    - Pros
+        - Scales
+        - Handles Cache affinity
+    - Cons
+        - Load balancing 
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
+
+## Chapter 13. The Abstraction: Address Space
+
+- 
