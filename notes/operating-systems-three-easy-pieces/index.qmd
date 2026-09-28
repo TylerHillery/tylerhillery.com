@@ -1193,4 +1193,15 @@ Response times would get long because the second job that runs will be the min o
 
 ## Chapter 13. The Abstraction: Address Space
 
-- 
+- Seems like much of the need for memory virtualization stems from wanting the ability to have multiple processes running on the same machine.
+- **stack** is used to keep track of where it is in the function call chain as well as to allocate local variables and pass parameters and return values to and from routines.
+- **heap** is used for dynamically-allocated, user-managed memory like you use get using `malloc()`.
+- Typically address space is organized where the code segment is first and then the heap and the stack is at the end. The heap grows positively while the stack grows negatively. Stack overflow can happen when you run out of free memory space. Commonly this shows up in very long recursive calls if tail call optimization isn't being used because every recursive call keeps pushing more and more stuff onto the stack.
+
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Code)
+:::
+
+## Chapter 14. Interlude: Memory API
+
