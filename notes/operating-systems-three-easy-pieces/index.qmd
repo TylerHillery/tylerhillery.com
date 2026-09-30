@@ -1205,3 +1205,35 @@ Response times would get long because the second job that runs will be the min o
 
 ## Chapter 14. Interlude: Memory API
 
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> In UNIX/C programs, understanding how to allocate and manage memory is critical in building robust and reliable software. What interfaces are commonly used? What mistakes should be avoided? 
+:::
+
+- **stack** allocations and deallocations are managed *implicitly* by the compiler for you, for this reason it sometimes referred called **automatic** memory.
+- For long lived memory the **heap** is used.
+- The example brings up a good point `int *x = (int *) malloc(sizeof(int));` `x` still has to pushed onto the stack which is the space for the ptr (virtual address space for the memory for the int).
+- `malloc()` is the main interface UNIX/C give you to manually allocate memory.
+- `size_t` is something that I still fully don't grasp. I always have to remind myself what it means.
+- Wait `NULL` isn't a real value in C but just a macro? `#define NULL 0`? TIL.
+- Good reminder that `sizeof()` is an operator as it evaluates at compile time not runtime.
+- This example always trips me up
+
+```c
+int *x = malloc(10 * sizeof(int));  
+printf("%d\n", sizeof(x));             // will be the size of a ptr
+
+int *x = malloc(10 * sizeof(int));  
+printf("%d\n", sizeof(x));             // will the the size of 10 ints 
+```
+
+- `free()` is how you deallocate memory
+- **brk** is a sys call that changes the location of the end of the heap.
+- `malloc()` and `free()` are no sys calls but are more like library calls. The implementation of these functions are what's actually doing the system calls. (I also assume this is what's referred to as the memory allocator?).
+- `mmap()` is another way to obtain memory from the OS called an **anonymous** memory region which is a region not associated with any particular file but rather **swap space**.  
+- `calloc()` and `realloc()` are a couple of nice helpers as well.
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (code)
+:::
+
+## Chapter 15. Mechanism: Address Translation
