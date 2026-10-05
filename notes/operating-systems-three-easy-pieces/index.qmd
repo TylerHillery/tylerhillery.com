@@ -1237,3 +1237,18 @@ printf("%d\n", sizeof(x));             // will the the size of 10 ints
 :::
 
 ## Chapter 15. Mechanism: Address Translation
+
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we build an efficient virtualization of memory? How do we provide the flexibility needed by applications? HOw do we maintain control over which memory locations on an application can access, and thus ensure that application memory accesses are properly restricted? How do we do all of this efficiently? 
+:::
+
+- **hardware-based** address translation is where the hardware transforms each memory access (fetch, load, store) changing the **virtual** address provided by the instruction to a **physical** address.
+- In many ways, what the OS does for virtualizing memory to give the programs it's own private memory address reminds me of partition disks (with some minor differences) but they both generalize to the program not knowing actual size of the physical space they are just given this section and they are free to do what they want with that section.
+- The base and bounds registers are hardware structures kept on the chip (one pair per CPU) and commonly referred to as the **memory management unit (MMU)**.
+- **free list** is a data structure that is used to keep track of which parts of free memory are not in use, which is a list of ranges of the physical memory which are currently not in use.
+- OS must *save and restore* the base and bounds pair when it switches between processes, this gets saved to the **process structure** or **process control block**. 
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
