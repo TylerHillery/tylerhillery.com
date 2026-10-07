@@ -1252,3 +1252,36 @@ printf("%d\n", sizeof(x));             // will the the size of 10 ints
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Simulation)
 :::
+
+## Chapter 16. Segmentation
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How do we support a large address space with a lot of free space between the stack and the heap? 
+:::
+
+- Interesting, so the term **segmentation fault** comes from the fact that the code, stack and heap all get their base and bounds pair and are stored independently in their own *segment*. The fault occurs when trying to access an address that lives outside of the segment.
+- **External fragmentation** occurs when the physical memory becomes full of little holes of free space, making it difficult to allocate new segments.
+- One solution to external fragmentation is **compaction** by rearranging the segments to get rid of the little holes but this is expensive.
+- There are also a bunch of algorithms for free-list management such as **best-fit**, **worst-fit**, **first-fit** and **buddy algorithm**.
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
+
+## Chapter 17. Free-Space Management
+
+- Free space management becomes tricky when dealing with variable sized units like you get from `malloc()` and `free()`.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How should free space be managed, when satisfying variable-sized requests? What strategies can be used to minimized fragmentation? What are the time and space overheads of alternate approaches?
+:::
+
+- **Splitting** occurs when the request amount memory is smaller than the smallest region available. In that case the memory allocator will split the free region subtracting only the amount of memory it needs. 
+- **Coalescing** is like the opposite, when a memory region gets freed, instead of adding a new node to the free list it will merge the memory region with any existing memory region if it's continuous.  
+- `sbrk` is a system call to grow the heap.
+- **Segregated Lists** is a technique used to maintain a separate list just to manage objects of the same size. A popular implementation of this is the **slab allocator** and there is a great talk here about the allocator: [Down memory lane: Two decades with the slab allocator -- Bryan Cantrill](https://www.youtube.com/watch?v=IznEq2Uf2xk).
+- The **Binary Buddy Allocator** is an interesting technique that deals with free memory as spaces of 2^N. Then it wil keep diving the bigger space into a smaller space until it's the smallest it can be to fulfill the request memory size. Because it only does with powers of 2 this technique does have **internal fragmentation** where it can give out more memory then the process needed. The benefit here is it's really easy to coalesce the spaces back up because it's really easy to find the "buddy" of a block. Each address of each buddy pair only differs by a single bit (the benefit of only using power of 2) which bit is determined by the level of the buddy tree. 
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
