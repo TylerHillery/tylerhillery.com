@@ -1285,3 +1285,33 @@ printf("%d\n", sizeof(x));             // will the the size of 10 ints
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Simulation)
 :::
+
+## Chapter 18. Paging: Introduction
+
+- **Paging** is about chopping up space into *fixed-sized* pieces.
+- Each fixed sized unit is called a **page**.
+- **page frames** in physical memory are an array of fixed-sized slots.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we virtualize memory with pages, so as to avoid problems of segmentation? What are the basic techniques? How do we make those techniques work well, with minimal space and time overheads?
+:::
+
+- **Page table** is a per process data structure that records the address translation for each of the virtual pages to the physical memory each page resides.
+- Two components make up the virtual address, the **virtual page number** and the **offset**
+- Offset stays the same during translations because it just tells us which byte **within** the page we want. 
+- A basic data structure you can use for the **page table** is a **linear page table** which is just an array. The OS *indexes* the array by virtual page number and looks up the page-table entry (PTE) in order to find the desired physical frame number (PFN). 
+
+::: {.callout-important title="❓" appearance="minimal"}
+What's the difference between the page table and page table entry, is the page table just a collection of all the entries? e.g. a row vs a table.
+:::
+
+- **protection bits** indicate if the page can be read from, written to or executed from.
+- **present bit** indicates if the page is in physical memory or on disk.
+- **dirty bit** indicates if the page has been modified since it was brought into memory.
+- **reference bit** is used to track if page has been accessed, and useful when determining which pages are popular. 
+- **page-table base register** contains the physical address of the starting location of the page table.
+- The main benefit of paging is enabling sparse use of virtual address spaces whereas segmentation requires a continuous unit.
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
