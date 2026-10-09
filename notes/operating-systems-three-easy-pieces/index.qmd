@@ -1343,3 +1343,21 @@ What's the difference between the page table and page table entry, is the page t
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Measurement)
 :::
+
+## Chapter 20. Paging: Smaller Tables
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> Simple array-based pages tables (usually called linear page tables) are too big, taking up far too much memory. How can we make page tables smaller? What are the key ideas? What inefficiencies arise as a result of these new data structures?
+:::
+
+- **Multi-level page table** turns a linear page table into a tree like structure.
+- **page directory** is a data structure used to tell you where a page of the page table is. It's a two level table, one entry per page of the page table which consist of **page directory entires**.
+- Trade off is on a TLB miss, it now requires two loads from memory to get the right translation.
+    1. One for the page directory
+    2. One for the PTE itself
+  compared to the one load with the linear page table.
+- **Inverted page table** keeps a single page table that has an entry for each **physical page** of the system. The entry shows which process is using this page, and which virtual page of that process maps this physical page.
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Measurement)
+:::
