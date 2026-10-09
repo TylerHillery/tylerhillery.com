@@ -1315,3 +1315,31 @@ What's the difference between the page table and page table entry, is the page t
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Simulation)
 :::
+
+## Chapter 19. Paging: Faster Translations (TLBs)
+
+- Because paging requires a large amount of mapping information and this information is stored in physical memory, paging requires an extra memory lookup for each virtual address. Going to memory for translation information before every instruction fetch or explicit load or store is prohibitively slow.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we speed up address translation, and generally avoid the extra memory reference that paging seems to require? What hardware support is required? What OS involvement is needed? 
+:::
+
+- **translation-lookaside buffer** or **TLBU** is part of the chip's **memory-management unit (MMU)** and is a hardware cache of popular virtual-to-physical address translations.
+- What happens on a TLB Miss?
+    - in **CISC** days the hardware would handle the miss entirely by using a **page-table base register** e.g. Intel x86 uses a fixed **multi-level page table**
+    - **RISC** uses a **software-managed TLB**, hardware raises and exception and jumps to a **trap handler**.
+- **Fully associative** TLB means that any given translation can be anywhere in the TLB. 
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> When context-switching between processes, the translations in the TLB for the last process are not meaningful to the about-to-be-run process. What should the hardware or OS do in order to solve this problem? 
+:::
+
+- TLB is only valid for the currently running process but it can have a **address space identifier (ASID)** that helps in distinguish which **PID** the TLB entry belongs to.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> Which TLB entry should be replaced when we add a new TLB entry? The goal, of course, being to minimize the **mise rate** (or increase **hit rate**) and thus improve performance. 
+:::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Measurement)
+:::
