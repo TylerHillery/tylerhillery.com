@@ -1361,3 +1361,19 @@ What's the difference between the page table and page table entry, is the page t
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Measurement)
 :::
+
+## Chapter 21. Beyond Physical Memory: Mechanisms
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can the OS make use of larger, slower device to transparently provide the illusion of a large virtual address space?
+:::
+
+- **swap space** allows pages to be stored on disk versus main memory
+- **present bit** is used in the page table entry to determine if the page is present in physical memory.
+- **page fault** is accessing a page that is not in physical memory. OS **page-fault handler** is what runs to handle the page fault. 
+- If memory is full the OS may need to **page out** one or more pages to make room. The process of picking a page to kick out is known as the **page-replacement policy**
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Measurement)
+:::
+
