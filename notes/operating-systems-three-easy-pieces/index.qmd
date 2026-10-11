@@ -1377,3 +1377,24 @@ What's the difference between the page table and page table entry, is the page t
 ### Homework (Measurement)
 :::
 
+## Chapter 22. Beyond Physical Memory: Policies
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can the OS decide which page (or pages) to evict from memory? This decision is made by the replacement policy of the system, which usually follow some general principles but also includes certain tweaks to avoid corner-case behaviors 
+:::
+
+- LRU is expensive to implement because each *page access* a data structure needs to b updated to move the page to the front of the list.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> Given that it will be expensive to implement perfect LRU, can we approximate it in some way, and still obtain the desired behavior? 
+:::
+
+- Approximating the LRU can be done with the help from hardware support in the form of a **use bit** also referred to as a **reference bit**.
+- If a page has been modified while in memory it is considered **dirty**, if it is **dirty** it must be written to disk to evict it
+- OS has to decide when to bring a page to memory, to commonly used techniques are **demand paging**, bring the page into memory when access or **prefetching**, bring the page ahead of time.
+- OS can group writes to disk which is called **clustering** and **grouping**.
+- When memory is oversubscribed where the set of running processes simply exceeds the available memory the system will constantly be paging, this is commonly referred to as **thrashing**.
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
