@@ -1398,3 +1398,19 @@ What's the difference between the page table and page table entry, is the page t
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Simulation)
 :::
+
+## Chapter 23. Complete Virtual Memory Systems
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> What features are needed to realize a complete virtual memory system? How do they improve performance, increase security, or otherwise improve the system? 
+:::
+
+## Chapter 24. Summary Dialogue on Memory Virtualization
+
+No notes.
+
+## Chapter 25. A Dialogue on Concurrency 
+
+No notes.
+
+## Chapter 26. Concurrency: An Introduction
