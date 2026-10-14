@@ -1,0 +1,53 @@
+---
+title: "So You Want To Be A Systems Programmer"
+description: ""
+author: "Tyler Hillery"
+date: "2026-10-14"
+categories: []
+filters:
+  - social-share
+share:
+  permalink: "https://tylerhillery.com/blog/so-you-want-to-be-a-systems-programmer/"
+  description:
+  twitter: true
+  facebook: false
+  reddit: true
+  stumble: false
+  tumblr: false
+  linkedin: true
+  email: true
+  mastodon: true
+draft: true 
+---
+
+------------------------------------------------------------------------
+
+Systems programming, working on the foundation layers of software and hardware, creating the abstractions all other software depends on. Bugs here can tear at your fundamental understanding of how computers work. 
+
+Let's be honest, you're attracted to systems programming because it's hardcore. It's perceived as only the best of the best can work on this software. But if that's why you want to be systems programmer, you're not going to make it.
+
+As Ronnie Coleman once said: "Everybody wants to be a bodybuilder, but nobody wants to lift no heavy-ass weights".
+
+I don't believe you're going to make it as systems programmer if you're doing it to be perceived as hardcore. The idea, the allure, of systems programming is often "cool" but doing the actual work can be brutal. It can be bang your head against the wall for countless hours trying to understand why something isn't working brutal.
+
+You'll often resort to last ditch efforts like you're in severance staring at hex numbers just in hopes the numbers make you feel something as you recite to yourself "my work is mysterious and important."
+
+And you better not do it for the fame or the glory. You will be working on the software that others just expect to work. You will get no empathy when things go wrong because not as many folks will understand the nitty gritty details of the problems you'll have to deal with. 
+
+If you want to be successful systems programmer you got to be doing it for the love of the game. You got to have grit, passion and perseverance over a long period of time. 
+
+Systems programming in a way has this self reinforcing loop for attracting these folks. It's much harder to get started in systems programming when you compare it to something like web development which is a domain that has invested deeply into the developer tooling to make it easier to get started.
+
+Systems programmers instead have their arcane ways of doing things, such as writing patches with a quill on a scroll and sending them in via carrier pigeons. The build process makes you recite the [The Nights Watch](https://www.usenix.org/system/files/1311_05-08_mickens.pdf) by James Mickens by heart just for it to compile properly.
+
+Because of this, systems programming attracts individuals with a high pain tolerance. By the time they get passed the more difficult starting point, they themselves have adapted to the harder ways so there's no point in going back and making it better.
+
+Although, this space is improving. I believe modern languages like Rust, Zig, and Mojo are proving that systems programmers *can* have a nice things which will bring in a new wave of systems programmers.
+
+After you get past the accidental complexity of systems programming the only left is the real complexity. Systems software has been being worked on and hardened for decades so the only problems left are the [zebras](https://www.youtube.com/watch?v=fE2KDzZaxvE).
+
+If your considering systems programming, really ask yourself, why? Are you doing it because of the perception of systems programming? Or are you doing it because you actually find it interesting? Vicky couldn't have said it better:
+
+{{< tweet vboykis 2077521963417801112 >}}
+
+If you do find joy in this work, don't use the excuse that "you're not smart enough" to prevent you from pursing it. That's a cop out. Don't let others tell you that these systems are "solved", there's plenty of work to do. The only thing separating yourself from becoming a systems programmer is lifting the heavy-ass weights.
