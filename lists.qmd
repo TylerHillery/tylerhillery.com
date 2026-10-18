@@ -30,6 +30,8 @@ share:
 # Favorites
 
 ::: {.callout-note appearance="minimal" collapse=true title="Talks 🗣️"} 
+- [ASPLOS Keynote: The Golden Age of Compiler Design in an Era of HW/SW Co-design by Dr. Chris Lattner](https://www.youtube.com/watch?v=4HgShra-KnY)
+- [RailsConf 2021_ Keynote: Bryan Cantrill - Hardware/Software Co-design: The Coming Golden Age](https://youtube.com/watch?v=jSE9fXgiqig&is=jOApZ9PVLd5HuQWi)
 - [PyCon 2014: Discovering Python by David Beazley](https://www.youtube.com/watch?v=RZ4Sn-Y7AP8)
 - [The Summer of Rust](https://youtu.be/YKv_IDN0zCA?si=NfIPPYvK5PPfM9V3)
 - [Bryan Cantrill on Jails and Solaris Zones](https://youtu.be/hgN8pCMLI2U?si=V8LFUTtzLSl3jfcx)
