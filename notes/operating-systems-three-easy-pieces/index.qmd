@@ -1414,3 +1414,19 @@ No notes.
 No notes.
 
 ## Chapter 26. Concurrency: An Introduction
+
+- State of a single thread:
+    - a program counter (PC) to track where the program is fetching instructions from
+    - own private set of registers used for computation
+    - a context switch must occur when switching from one thread to another but the key difference is the **address space stays the same**.
+    - processes saved state to a **process control block** while threads use **thread control blocks**
+    - Each thread gets is own stack
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> What support do we need from the hardware in order to build useful synchronization primitives? What support do we need from the OS? How can we build these primitives correctly and efficiently? How can programs use them to get the desired results? 
+:::
+
+- **Critical section** is a piece of code that accesses a *shared* resource
+- **Race condition** arises if multiple threads of execution enter the critical section at roughly the same time; both attempt to update the shared data structure.
+- **Indeterminate** is the opposite of **deterministic**
+- **Mutual Exclusion** primitives gives guarantees that only a single thread ever enters a critical section.
