@@ -1430,3 +1430,16 @@ No notes.
 - **Race condition** arises if multiple threads of execution enter the critical section at roughly the same time; both attempt to update the shared data structure.
 - **Indeterminate** is the opposite of **deterministic**
 - **Mutual Exclusion** primitives gives guarantees that only a single thread ever enters a critical section.
+
+## Chapter 27. Interlude: Thread API
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> What interfaces should the OS present for thread creation and control? How should these interfaces be designed to enable ease of use as well as utility? 
+:::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (code)
+:::
+
+## Chapter 28. Locks
+
