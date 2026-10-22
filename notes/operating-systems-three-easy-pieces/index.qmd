@@ -1464,3 +1464,15 @@ What's the data structure used to build the queue for the Lock with queues? If y
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Simulation)
 :::
+
+## Chapter 29. Lock-based Concurrent Data Structures
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> When given a particular data structure, how should we add locks to it, in order to make it work correctly? Further, how do we add locks such that the data structure yields high performance, enabling many threads to access the structure at once, i.e., concurrently? 
+:::
+
+- **hand-over-hand** locking aka **lock coupling** is a technique used for concurrent linked lists data structures that uses a lock per node of the list instead of a global one for the entire list.
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (code)
+:::
