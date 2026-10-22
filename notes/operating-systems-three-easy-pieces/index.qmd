@@ -1443,3 +1443,24 @@ No notes.
 
 ## Chapter 28. Locks
 
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we build an efferent lock? Efficient locks provide mutual exclusion at low cost, and also might attain a few other properties we discuss below. What hardware support is needed? What OS support?
+:::
+
+- I understand the purpose of locks but really struggling understanding how lock implementations work like the spin lock using test-and-set
+- **Test-and-set**, **Compare-and-swap**, **load-linked** & **store-conditional**, **fetch-and-add** 
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we develop a lock that doesn't needlessly waste time spinning on the CPU?
+:::
+
+- Instead of spinning the thread can give up control using `yield()`.
+- A thread can be in one of three states: **running**, **ready**, **blocked**. Calling `yield()` moves the thread from **running** to **ready**
+
+::: {.callout-important title="❓ Question" appearance="minimal"}
+What's the data structure used to build the queue for the Lock with queues? If you have multiple threads trying to enqueue to acquire the lock what happens when two threads do this at the the same time?
+:::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
