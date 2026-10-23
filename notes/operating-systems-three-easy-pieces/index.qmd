@@ -1476,3 +1476,17 @@ What's the data structure used to build the queue for the Lock with queues? If y
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (code)
 :::
+
+## Chapter 30. Condition Variables
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> In multi-threaded programs, it is often useful for a thread to wait for some condition to become true before proceeding. The simple approach, of just spinning until the condition becomes true, is grossly inefficient and wastes GPU cycles, and in some cases, can be incorrect. Thus, how should a thread wait for a condition?  
+:::
+
+- **condition variable** is an explicit queue that threads can put themselves on when some state of execution (i.e. some **condition**) is not as desired (by **waiting** on the condition); some other thread, when it changes said state, can then wake one (or more) of these waiting threads and thus allow them to continue (by **signaling** on the condition). 
+- **producer/consumer** aka **bounded buffer** problem is when one more producer threads and one or more consumer threads where the producers are generating data items and place them in a buffer and the consumers grab the items from the buffer and consume them in some way. 
+- **pipes** are a good example of bounded buffers e.g. `grep foo file.txt | wc -l`
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (code)
+:::
