@@ -2,7 +2,7 @@
 title: "Computer Networks"
 description: "My notes & review of [Computer Networks](https://www.pearson.com/en-us/subject-catalog/p/computer-networks/P200000003290) by Andrew S. Tanenbaum, Nick Feamster, and David J. Wetherall"
 author: "Tyler Hillery"
-date: "2026-07-14"
+date: "2026-10-24"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -119,3 +119,10 @@ Ahhhh so that's were the datagram term comes from when talking about UDP
 
 Wow 😮
 ::: 
+
+
+# Review
+
+This is was "fun" read for me where I don't really take notes, do any of the homework etc. I will be honest, this was a tough read cover to cover. You can tell it's a university textbook in the way it's written. The book covers a lot of ground and I feel it's meant for professors to pick out the parts they want to teach for their course. I found chapters 2-4 pretty tough read as much of how the lower layers of the network stack went over my head.
+
+Don't get me wrong I still think there is a lot of useful information in this book but reading to cover to cover is tough. I recommend picking out the sections that interested you the most.
