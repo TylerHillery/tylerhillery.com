@@ -1490,3 +1490,29 @@ What's the data structure used to build the queue for the Lock with queues? If y
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (code)
 :::
+
+## Chapter 31. Semaphores
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we use semaphores instead of locks and condition variables? What is the the definition of a semaphore? What is a binary semaphore? Is it straightforward to build a semaphore out of locks and condition variables? To build locks and condition variables out of semaphores?
+:::
+
+- So for the concurrency section has been the hardest for me to grok. At a high level I understand why would need primitives to protect **critical sections** against data races. I understand why you want to ensure you have mutual exclusion which can be implemented with various ways like mutexes, spin locks etc. I understand why you would want to have signaling mechanisms like conditional variables so a thread doesn't have to constantly poll a variable to see if it can proceed to do some work. Semaphores I am a bit fuzzy on but high level I get they can be used to similar things like provide mutual exclusion, ordering/signaling, and throttling. I understand you can implement them with locks and condition variables. I am still not fully understand how these primitives are actually implemented though.
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (code)
+:::
+
+## Chapter 32. Common Concurrency Problems
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> Concurrency bugs tend to come in a variety of common patterns. Knowing which ones to look out for is the first step to writing more robust, correct concurrent code.
+:::
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How should we build systems to prevent, avoid, or at least detect and recover from deadlock? Is this a problem in systems today? 
+:::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (code)
+:::
