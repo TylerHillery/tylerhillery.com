@@ -1516,3 +1516,56 @@ What's the data structure used to build the queue for the Lock with queues? If y
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (code)
 :::
+
+## Chapter 33. Event-based Concurrency (Advanced)
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we build a concurrent server without using threads, and thus retain control over concurrency as well as avoid some of the problems that seem to plague multi-threaded applications? 
+:::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (code)
+:::
+
+## Chapter 36. I/O Devices 
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How should I/O be integrated into systems? What are the general mechanisms? How can we make them efficient?
+:::
+
+- CPU is connected to various components through something called **buses**
+- **Memory Bus** typically the closest to the CPU uses proprietary interconnect
+- **General I/O Bus** for something like GPU may use **PCI**
+- **Peripheral I/O Bus** uses **SCSI**, **SATA**, **USB**
+- This is more of a legacy overview of systems as nowadays there are specialized chisels and faster point-to-point interconnects.
+- **firmware** software withing a hardware device
+
+- **programmed I/O (PIO)** is when the main CPU is involved with the data movement.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can the OS check device status without frequent polling, and thus lower the CPU overhead required to manage the device? 
+:::
+
+- Instead of polling, the OS can put the process to sleep and when the I/O device is done it can raise a hardware interrupt causing the CPU to jump into the os at a predetermined **interrupt service routine (ISR)** aka **interrupt handler**.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> With PIO, the CPU spends too much time moving data to and from devices by hand. How can we offload this work nad thus allow the CPU to be more effectively utilized?
+:::
+
+- **Direct memory access (DMA)** engine is a specific device withing a system that can orchestrate transfers between devices and main memory without much CPU intervention.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How should the hardware communicate with a device? Should there be explicit instructions? Or are there other ways to do it?  
+:::
+
+- **memory mapped I/O** the hardware makes device registers available as if they were memory locations.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we keep most of the OS device-neutral, thus hiding the details of device interactions from major OS subsystems? 
+:::
+
+- **device driver** encapsulates all the specifics of a device inside this driver. 
+
+> Interestingly, because device drivers are needed for any device you  might plug into your system, over time they have come to represent a  huge percentage of kernel code. Studies of the Linux kernel reveal that  over 70% of OS code is found in device drivers [C01]
+
+- Wow, had no idea that much code is related to device drivers
