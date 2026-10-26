@@ -1569,3 +1569,34 @@ What's the data structure used to build the queue for the Lock with queues? If y
 > Interestingly, because device drivers are needed for any device you  might plug into your system, over time they have come to represent a  huge percentage of kernel code. Studies of the Linux kernel reveal that  over 70% of OS code is found in device drivers [C01]
 
 - Wow, had no idea that much code is related to device drivers
+
+## Chapter 37. Hard Disk Drives
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How do modern hard-disk drives store data? What is the interface? How is the data actually laid our and accessed? How does disk scheduling improve performance? 
+:::
+
+- A drive consists of a large number of **sectors** (512-byte blocks). Each sector is number 0 to n -1.
+- Multi-sector operations are allowed by drive manufactory only guarantee that a single 512-byte write is **atomic**.
+- If only a portion of large write completes this is a called a **torn write**. 
+- **platter** circular hard surface which data is stored by inducing magnetic changes.
+- A disk may have one or more platters, each platter has 2 sides which is called a **surface**.
+- Platters are bound together around a **spindle**. 
+- **track** is a centric circle of sectors. A single surface can contain thousands and thousands of tracks.
+- **seek** is what happens when moving the head between difference tracks
+
+$$
+T_{I/O} = T_{seek} + T_{rotation} + T_{transfer}
+$$
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How ca we implement a shortest seek time first (SSTF) like scheduling but avoid starvation? 
+:::
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we implement an algorithm that more closely approximates SJF by taking both seek and rotation into account? 
+:::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
