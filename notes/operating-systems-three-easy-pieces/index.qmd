@@ -1704,3 +1704,30 @@ $$
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Simulation)
 :::
+
+## Chapter 43. Log-structured File Systems
+
+::: {.callout-note title="Aside" appearance="minimal"}
+> All interesting systems are comprised of a few general ideas and a number of details. Sometimes, when you are learning about these systems,  you think to yourself “Oh, I get the general idea; the rest is just details,”  and you use this to only half-learn how things really work. Don’t do this!  Many times, the details are critical. As we’ll see with LFS, the general idea  is easy to understand, but to really build a working system, you have to  think through all of the tricky cases. 
+
+Couldn't agree more.
+:::
+
+- **Log-structured File System** would first buffer all updates in an in-memory **segment**; when the segment is full, is it written to disk in on long, sequential transfer to an unused part of the disk. LFS never over writes existing data but rather *always* writes segments to free locations.
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can a file system transform all writes into sequential writes? For reads, this task is impossible, as the desired block to be read may be anywhere on disk. For writes the file system always has a choice and it is exactly this chose we hope to exploit. 
+:::
+
+- Finding inodes is easy in file systems that keeps all inodes at a a fixed portion of the disk. Given the inode number and the start address, to find an inode you can calculate the exact disk address simply by multiplying the inode number by the size of an inode, and adding that to the start address of the on-disk array;
+- Things can get more complicated if the file system chunks and places the inodes into a group but if you know how big each chunk of inodes is and the start address of each you can do the calculations.
+- LFS is much harder because there is no fixed portion of the disk where the inodes are stored, instead they are scattered through the disk.
+- LFS uses a **level of indirection** between inode numbers and inodes called the **inode map (imap)**.
+
+::: {.callout-important title="❓" appearance="minimal"}
+I don't understand so they use this inode map to find the inodes but yet it stores chunks of the inode map right next to where it is writing all the other new information. Thus you are left with the same problem, how do you find the inode map if it's spread across the disk? The file system must have a fixed and known location on the disk to begin the file lookup so they use a **checkpoint region (CR)**.
+:::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
