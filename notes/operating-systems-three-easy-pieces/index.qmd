@@ -1731,3 +1731,36 @@ I don't understand so they use this inode map to find the inodes but yet it stor
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Simulation)
 :::
+
+## Chapter 44. Flash-based SSDs
+
+- **solid-state storage** devices have no mechanical or moving parts like hard drives but instead are built out of transistors, much like memory and processors.
+- **flash** or **NAND-based flash** is the backing technology that makes SSDs persistent.
+- To write to a given chunk of flash (**flash page**) you first have to erase a bigger chunk (**flash block**) which be expensive and writing too often to a page will cause it to **wear out**. 
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we build a flash-based SSD? How can we handle the expensive nature of erasing? How can we build a device that lasts a long time, given that repeated overwrite will wear the device out? Will the march of progress in technology ever cease? Or cease to amaze? 
+:::
+
+- **single-level cell** (SLC) flash, only a single bit is stored within a transistor.
+- **multi-level cell** (MLC) flash, two bits are encoded into difference levels of a charge.  
+- Flash chips are organized into **banks** or **planes** which contain a large number of cells.
+- A bank is accessed in two difference sized units:
+    - **blocks** (aka **erase blocks**) 
+    - **pages**
+- Each bank there are large number of blocks and with in each block there are large number of pages
+- To write to a page in a block you have to erase the entire block
+- **read** is used to read a page and **erase** and **program** are used in tandem to write.
+- SSDs can access any location uniformly, often this means the device is a **random access** device
+- Pages are a state machine of `INVALID`, `ERASED`, and `VALID`
+- SSD internals contain flash chips, SRAM (volatile memory) useful for caching and buffering of data and mapping tables, control logic or orchestration device
+- One major function of the control logic is to satisfy client reads and writes, turning them into internal flash operations, this is called the **flash translation layer** or **FTL**. 
+- The FTL takes read and write requests on *logical blocks* (OS only knows about block devices) and then turns them into low-level read, erase and program commands on the underlying *physical blocks* and *physical pages*.
+- FTL aims to reduce **write amplification** which is defined as the total write traffic (in bytes) issued to the flash chips by the FTL divided by the total write traffic (in bytes) issued by the client to the SSD.
+- **wear leveling** is the term used to describe ensuring that all blocks wear our at roughly the same time
+- **trim** is introduced as another command that you can call to let the SSD know it's that this logical block is no longer needed. If you don't call trim the OS wont tell the SSD that this data is no longer needed and wont be able to GC it. Hard disk drives don't have this issue because they can update data in place whereas SSDs can't
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
+
