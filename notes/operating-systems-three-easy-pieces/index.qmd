@@ -2,7 +2,7 @@
 title: "Operating Systems: Three Easy Pieces"
 description: "My notes & review of [Operating Systems: Three Easy Pieces](https://pages.cs.wisc.edu/~remzi/OSTEP/) by Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau"
 author: "Tyler Hillery"
-date: "2026-07-16"
+date: "2026-10-27"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -1596,6 +1596,110 @@ $$
 ::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
 > How can we implement an algorithm that more closely approximates SJF by taking both seek and rotation into account? 
 :::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
+
+## Chapter 38. Redundant Arrays of Inexpensive Disks (RAIDs)
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we keep most of the OS device-neutral, thus hiding the details of device interactions from major OS subsystems? 
+:::
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
+
+## Chapter 39. Interlude: Files and Directories
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How should the OS manage a persistent device? What are the APIs? What are the important aspects of the implementation? 
+:::
+
+- **file** is a linear array of bytes
+- **file** has a **low-level** commonly called an **inode number** 
+- **directory** also has a inode number but its contents are a list of (user-readable name, inode number) pairs. 
+- **file descriptor** is an integer, private per process, that is used in UNIX systems to access files. `0` is stdin, `1` is stdout, and `2` is stderr. 
+- An array on the `proc` struct is where it stores all file descriptors for the process and the file descriptor number is used to index into the array which returns a pointer to struct file `struct file *ofile[NOFILE]`.
+- Each process maintains an array of file descriptors, each of which refers to an entry in the system wide **open file table**.  Each entry in this table tracks which underlying file the descriptor refers to, the current offset, and other relevant details such as whether the file is readable or writeable. 
+- For each file a process opens, the OS tracks a "current" offset.
+- `dup()` system call allows you to create a file descriptor that refers to the same underlying file as the existing descriptor.
+- **Memory mapping** is an alternative way to access persistent data in files. The `mmap()` sys call creates a correspondence between byte offsets in a file and virtual addresses in the calling process; the former is called the **backing file** and the latter its **in-memory image**. The process can then access the backing file user CPU instructions (i.e., loads and stores) to the in-memory image. 
+- `rename()` is **atomic** meaning it will be named the old name or new name and not some weird inconsistent state. This is often used by programs where a write is done to `file.txt.tmp` and after written then it will rename it to the actual file name.
+- A hard link creates another name to refer to the same inode number. The inode number will actually keep a reference count of all the files that reference it. This is why when you remove a file you call `unlink()` even when it's the only file.
+- **Symbolic links** on the other hand create an actually file with their own inode number. The file just contains the path to real file. This is needed because hard links are limited in that they can't create one to a directory, you can't hard link to files in other disk partitions (because inode numbers are only unique within a particular file system). 
+- **dangling reference** occurs when you delete the file a symbolic link points to.
+- To make file system you give it a file system type and a disk partition. Then you run `mount()` to takes an existing dir as a target **mount point** and paste a new file system onto the directory tree at that point, this is needed because when a filesystem is created it still needs to be made accessible within the uniform file-system tree. 
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Code)
+:::
+
+## Chapter 40. File System Implementation
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we build a simple file system? What structures are needed on the disk? What do they need to track? How are they accessed?  
+:::
+
+- The **inode** will contain metadata about the file and the associated data blocks where the file is stored.
+- **allocation structures** are used to track which data blocks and inodes are free. You can use something like a **free list**, **bitmap** or **B-tree**. Similar to the lessons we learned on virtual memory chapters.
+- **superblock** is used to contain information about the file system such as how many inodes and data blocks are the file system, where the inode table begins etc.
+- **direct pointers** (disk addresses) is one way inodes refer to data blocks, each pointer refers to on disk block that belongs to the file. This is challenges for really big files e.g. bigger than the block size * # of direct pointers in the inode.
+- **indirect pointer** points to a block that contains more pointers each of which point to user data.
+- **double indirect pointer** same thing but points to a block of indirect pointers.
+- **extents** can be used instead of pointers. An extent is a disk pointer plus a length (in blocks) thus, instead of requiring a pointer for every block of a file all one needs is a pointer and a length to specify the on-disk location of a file.
+- A single extent is limiting, as one may have a trouble finding a contiguous chunk of on-disk free space when allocating a file. 
+- When comparing the two, pointer-based approach are the most flexible but use a large amount of metadata per file. Extent-based approaches are less flexible but more compact; in particular, they work well when there is enough free space on the disk and the files can be laid out contiguously. 
+- This imbalanced tree is referred to as the **multi-level index**.
+- The root inode number must be "well known".
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> Even the simplest of operations like opening, reading or writing a file incurs a huge number of I/O operations, scattered over the disk. What can a file system do to reduce the high costs of doing so many I/Os? 
+:::
+
+- Early file systems introduced a **fixed-size cache** to hold popular blocks.
+- This **static partitioning** of memory can be wasteful; what if the file system doesn't need 10% of memory at a give time? 
+- **Dynamic partition** is used in many modern operating systems where they integrate virtual memory pages and file system pages into a **unified page cache**.
+- **write buffering** occurs by delaying writes so they can **batch** some updates together. The trade off is there can be data loss if the buffered writes aren't written to disk if the system crashes before then.
+- Some applications like databases don't like the tradeoffs of *write buffering* so they can use `fsync()` to force writes to disk. 
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
+
+## Chapter 41. Locality and The Fast File System
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> How can we organize file system data structures so as to improve performance? WHat types of allocation policies do we need on top of those data structures? How do we make the file system "disk aware"?
+:::
+
+- **block groups** are a consecutive portion of the disk's address space.
+
+::: {.callout-caution appearance="default" collapse=false title="TODO"}
+### Homework (Simulation)
+:::
+
+## Chapter 42. Crash Consistency: FSCK and Journaling 
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> The system may crash or lose power between any two writes, and thus the on-disk state may only partially get updated. After the crash, the system boots and wishes to mount the file system again (in order to access files and such). Given that crashes can occur at arbitrary points in time, how do we ensure the file system keeps the on-disk image in a reasonable state? 
+:::
+
+- Problems that can occur:
+    - **Just the updated inode is written to disk**: if we trust the pointer, we will read **garbage** data from the disk. There is also inconsistency because the on disk bit map is saying the data block isn't allocated but the inode is saying it is.
+    - **Just the updated bitmap is written to disk**: Bitmap indicates the data block is allocated but but there is no inode that points to it. If unresolved this can result in a **space leak**
+- Really you have one logical operation that carries out several physical I/Os that you want to be all done **atomically** (update inode, bitmap and data blocks).
+- `fsck` seems like a dumb way to solve this problem, basically says just let the problems exist and periodically run a scanner to check for inconsistencies 
+- **write-ahead logging** (taken from the database world) but it fs world it's called **journaling**. The basic idea is before writing the structures in place, first write down a little note describing what you are about to do.
+- A typical journal log would contain 5 blocks: TxB (transaction start), I[v2] (inode update), B[v2] (bit map update), Db (data block write), TxE (transaction end).
+- Once the journal log is safely on disk, then you can overwrite the old structures in the file system, this process is called **checkpointing**.
+- Write buffering is sometimes also called **immediate reporting**
+- There is a problem with the **journal write** though, you don't want to have to issue each write sequentially but issues aries if you turn five writes into a single sequential write. The disk internally may perform scheduling and complete small prices of the big write in any order. Thus you might get TxB, I[v2], B[v2] and TxE but not Db. This looks like a valid transaction so if system recovers from the log and replies this transaction though the inode is going to be pointing at some garbage data.
+- The middle solution is two issues the write in steps, everything except TxE and then TxE.
+- An even better solution was developed by former UW-Madison grad student, Vijayan Prabhakaran, when writing a transaction to a journal include a checksum of the contents of the journal in the begin and end blocks. This was the entire journal write can be done at once and if a crash occurs the filesystem can recompute the checksum to see if it matches and if it doesn't it can discard the file-system update.
+- The last step is called **free** where at some time later after the **checkpoint**, the file system will mark the transaction free in the journal by updating the journal super block. This is important to prevent the journal from growing indefinitely. 
+- Another issues with this type of journaling is having to write the data block to the disk twice, once during the journal write and once during checkpointing. An alternative method is called **ordered journaling** or **metadata journling** except the data block is not written to the journal. Instead the data block is written to the file system proper right away. This should happen BEFORE the journal write. This ensures that a pointer will never point to garbage and this rule is called "write the pointed-to-object before the object that points to it".
 
 ::: {.callout-caution appearance="default" collapse=false title="TODO"}
 ### Homework (Simulation)
