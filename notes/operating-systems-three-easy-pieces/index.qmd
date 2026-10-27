@@ -17,7 +17,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -1764,3 +1764,14 @@ I don't understand so they use this inode map to find the inodes but yet it stor
 ### Homework (Simulation)
 :::
 
+
+## Chapter 45. Data Integrity and Protection
+
+::: {.callout-important title="❓ Crux of the Problem" appearance="minimal"}
+> HOw should systems ensure that the data written to storage is protected? What techniques are required? How can such techniques be made efferent, with both low space and time overheads?
+:::
+
+
+# Review
+
+Must read.
