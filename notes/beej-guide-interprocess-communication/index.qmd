@@ -1,0 +1,50 @@
+---
+title: "Beej's Guide to Interprocess Communication"
+description: "My notes on [Beej's Guide to Interprocess Communication](https://beej.us/guide/bgipc/) by Beej"
+author: "Tyler Hillery"
+date: "2026-10-27"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/beej-guide-interprocess-communication"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+- [Repo to follow along with code examples](https://github.com/TylerHillery/beejs-guide-ipc)
+
+## Chapter 2. A `fork()` Primer
+
+- A parent process `fork()`'s a child process (the new one) and the child process gets a *copy* of the parents' data.
+- When a process dies it doesn't really go away, but instead a small remnant is waiting around for the parent process to pick up. The remnant contains the return value from the child process. So after a parent process `fork()`s a child process, it must `wait()` or `waitpid()` for that child process to exit. This is what allows all remnants of a child to vanish.
+- The parent can ignore the `SIGCHLD` signal and then it won't have to `wait()`      
+- If a chile process dies and has not been `wait()`ed on, it will show up in `ps` listing as `<defunct>`
+- Oh interesting, so if a the parent dies before it `wait()`s for the child, the child is reparented to the `init` process (`PID 1`).
+- Always ensure your parent process either ignores `SIGCHLD` or `wait()`s for all child it `fork()`s.
+- `wait()` waits for whatever child process exists first, use `waitpid()` if you want to wait for a specific child
+
+## Chapter 3. Signals
+
+- A signal is just a way to interrupt another process.
+- `SIGSTOP` is one signal you can send to stop that process and you can continue with `SIGCONT`.
+- Many signals are predefined and the process has a default signal handler to deal with it.
+- `SIGINT` is the interrupt signal that a process receives when the user hits `CTRL-C`. The default handler causes the process to exit.
+- `SIGKILL` is a signal you **can't** add your own handler for. Same with the `SIGTSTOP`.
+- `SIGTERM` is the default signal that gets sent from the `kill` command
+- `SIGUSR1` and `SIGUSR2` are not reserved and are free to use for whatever.
+- `kill()` is also the name of the sys call used to sends signals
+- `raise()` is another way to raise a signal within the same process
+- `sigaction()` is used to catch signals
+- `write()` is async signal safe while `printf()` is not.
