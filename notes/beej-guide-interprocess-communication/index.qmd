@@ -48,3 +48,9 @@ categories: [Technical Books, In Progress]
 - `raise()` is another way to raise a signal within the same process
 - `sigaction()` is used to catch signals
 - `write()` is async signal safe while `printf()` is not.
+
+## Chapter 4. Signals Part II
+
+- Signals only support an *raised at least once semantics*
+- You can block signals with `sigprocmask()` where nothing will happen until you unblock it
+- Reminder that several methods might fail with `EINTR` which means "interrupted", think Error: INTeRrupted, if a signal occurs when the function is running. Unless you set `SA_RESTART` the function will fail.
