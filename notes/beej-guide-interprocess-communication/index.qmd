@@ -2,7 +2,7 @@
 title: "Beej's Guide to Interprocess Communication"
 description: "My notes on [Beej's Guide to Interprocess Communication](https://beej.us/guide/bgipc/) by Beej"
 author: "Tyler Hillery"
-date: "2026-10-27"
+date: "2026-10-31"
 filters:
     - social-share
 share:
@@ -16,7 +16,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -54,3 +54,12 @@ categories: [Technical Books, In Progress]
 - Signals only support an *raised at least once semantics*
 - You can block signals with `sigprocmask()` where nothing will happen until you unblock it
 - Reminder that several methods might fail with `EINTR` which means "interrupted", think Error: INTeRrupted, if a signal occurs when the function is running. Unless you set `SA_RESTART` the function will fail.
+
+## Chapter 5. Pipes
+
+N/A
+
+## Chapter 6. FIFOs
+
+- A FIFO is sometimes known as a *named pipe*.
+- The downside of regular `pipe()` is only the process that called it (and its children) can read and write to it. With a *named pipe* any process can read and write to it.
