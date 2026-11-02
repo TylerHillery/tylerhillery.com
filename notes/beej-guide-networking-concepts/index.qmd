@@ -1,0 +1,68 @@
+---
+title: "Beej's Guide to Networking Concepts"
+description: "My notes on [Beej's Guide to Networking Concepts](https://beej.us/guide/bgnet0/) by Beej"
+author: "Tyler Hillery"
+date: "2026-10-31"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/beej-guide-networking-concepts"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+- [Repo to follow along with code examples](https://github.com/TylerHillery/beejs-guide-networking-concepts)
+
+## Chapter 2. Networking Overview
+
+No notes
+
+## Chapter 3. Introducing The Sockets API
+
+General steps to connect to another computer:
+
+1. **Ask the OS for a socket**
+2. **Perform a DNS lookup**
+3. **Connect the socket** to the IP address (from the DNS lookup) no a specific port.
+4. **Send data and receive data**
+5. **Close the connection**
+
+Sever listening process steps:
+
+1. **Ask the OS for a socket**
+2. **Bind the socket to a port**
+3. **Listen for incoming connections**
+4. **Accept incoming connections**. The original socket the server made in step 1 is still listening for new connections. When the connection arrives, the OS makes a new socket *specifically for that one connection*. This way the server can handle multiple clients at once.
+5. **Send data and receive data**
+6. **Go back and accept another connection**
+
+## Chapter 4. The Layered Network Model
+
+- Interesting that clients get assigned a port number as well (usually at random) but it makes sense as the server needs a port to send back to.
+- TCP sockets are called *stream sockets*
+- UDP sockets are called *datagram sockets*
+- Remember NAT is the ability to have a translation between private IP addresses and public IP addresses. IPv4 address are limited so you can have one device with public IP address as the "gateway" and all other devices with a private IP address route through this gateway and then gateway will do the NAT translation keeping track of everything
+- **Header** is some data that is prepended by some other data by a particular protocol
+    - **TCP** would include error detection and correction info, source and destination port number
+    - **IP** would include some source and destination IP addresses.
+    - **Ethernet** would include the source and destination MAC addresses.
+- **MAC Address** take the form of `aa:bb:cc:dd:ee:ff`, are 6 bytes long and must be unique on the LAN. When a network adapter is manufactured, it is given a unique MAC address that it keeps for life.
+- *ARP cache* (address resolution protocol) is the lookup done in ethernet layer to find where the destination MAC address is.
+- Ethernet packets are called *ethernet frames*
+
+## Chapter 5. HTTP Client and Server
+
+- `\r\n` used to denote the end of a header
+- `\r\n\r\n` used to denote the end of all the headers
