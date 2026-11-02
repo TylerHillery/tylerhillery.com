@@ -66,3 +66,26 @@ Sever listening process steps:
 
 - `\r\n` used to denote the end of a header
 - `\r\n\r\n` used to denote the end of all the headers
+
+## Chapter 6. The Internet Protocol (IP)
+
+- IP addresses are split up into two parts: *networks* and *hosts*.
+- The individual networks are called *subnets*.
+- **ICMP**: Internet Control Message Protocol, a mechanism for communicating IP nodes to talk about IP control metadata with one another.
+- **IPSec**: Internet Protocol Security, encryption and authentication functionality. Commonly used with VPNs.
+- `ping` uses ICMP "echo request" and "echo response" messages.
+- `traceroute` uses ICMP "time exceeded" messages to find out how packets are being routed.
+- When you connect device to your LAN it will broadcast out a messages asking for an IP, a *Dynamic Host Configuration Protocol* server will be listening for these requests and respond.
+
+
+## Chapter 7. IPv4
+
+- The lowest host is reserved and the highest host is used or broadcast
+- Subnet mask is simply a number than you can do a bitwise and with to get the subnet number (all zeros for the subnet)
+- `127.0.0.1` the computer you are on now often mapped to `localhost`
+- `0.0.0.0` is reserved
+- `255.255.255.255` broadcast for all hosts on a subnet, routers don't forward packets intended for this address. You can also broadcast with will hosts bits set to 1 on any subnet.
+
+## Chapter 8. IPv6
+
+No notes.
