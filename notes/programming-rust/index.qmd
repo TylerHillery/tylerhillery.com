@@ -1,0 +1,32 @@
+---
+title: "Programming Rust, 3rd Edition"
+description: "My notes on [Programming Rust, 3rd Edition](https://www.amazon.com/dp/1098176235) by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall"
+author: "Tyler Hillery"
+date: "2026-11-06"
+image: "./cover.jpg"
+filters:
+    - social-share
+share:
+    permalink: "https://tylerhillery.com/notes/programming-rust"
+    description:
+    twitter: true
+    facebook: false
+    reddit: true
+    stumble: false
+    tumblr: false
+    linkedin: true
+    email: true
+    mastodon: true
+categories: [Technical Books, In Progress]
+---
+
+------------------------------------------------------------------------
+
+# Notes
+
+- [Repo to follow along with code examples](https://github.com/TylerHillery/programming-rust)
+
+## Preface
+
+
+## Chapter 01: Systems Programmers Can Have Nice Things
