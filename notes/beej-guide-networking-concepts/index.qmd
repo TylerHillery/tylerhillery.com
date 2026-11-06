@@ -2,7 +2,7 @@
 title: "Beej's Guide to Networking Concepts"
 description: "My notes on [Beej's Guide to Networking Concepts](https://beej.us/guide/bgnet0/) by Beej"
 author: "Tyler Hillery"
-date: "2026-10-31"
+date: "2026-11-06"
 filters:
     - social-share
 share:
@@ -16,7 +16,7 @@ share:
     linkedin: true
     email: true
     mastodon: true
-categories: [Technical Books, In Progress]
+categories: [Technical Books]
 ---
 
 ------------------------------------------------------------------------
@@ -89,3 +89,7 @@ Sever listening process steps:
 ## Chapter 8. IPv6
 
 No notes.
+
+# Review
+
+Read this as a primer before I tackle [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/) and you can never go wrong with any of Beej's guides. His C programming one is excellent and this one was also great.
