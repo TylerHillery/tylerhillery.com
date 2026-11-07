@@ -28,5 +28,66 @@ categories: [Technical Books, In Progress]
 
 ## Preface
 
+No Notes.
 
 ## Chapter 01: Systems Programmers Can Have Nice Things
+
+No notes.
+
+## Chapter 02: A Tour of Rust
+
+- Man, right off the rip I love how everything is built into `cargo`. No messing around with make files. `cargo new program`, `cargo run`, `cargo clean` love it.
+- `#[test]` is an example of an *attribute*. **Attributes** are an open-ended system for marking functions and other declarations with extra information. They're used to control compiler warnings and code style checks, include code conditionally (like `#ifdef` in C) and tell Rust how to interact with code written in other languages.
+- `assert_eq!` is a macro, `!` character marks macro calls and are "expanded" to Rust code at compile time.
+- A **trait** is a collection of function signatures that types can implement. Any type that implements the `FromStr` trait has a `from_str` method that tries to prase a value of that type from a string.
+
+::: {.callout-note title="Traits Must Be in Scope" style="margin-left: 2em; margin-right: 2em;"}
+A trait must be in scope to use its methods even though you never the trait name anywhere else in the program.
+:::
+
+- What is interesting as well from `u64` is that it's a type that implements a method to conform to the `FromStr` trait. Think of this similar to static methods on classes in traditional OOP.
+
+::: {.callout-note title="Aside" appearance="minimal" style="margin-left: 1.3em;"}
+> The from_str function doesn’t return a u64 directly, but rather a Result value that indicates whether the parse succeeded or failed. A Result value is one of two variants:
+> 
+> - A value written Ok(v), indicating that the parse succeeded and v is the value produced
+> - A value written Err(e), indicating that the parse failed and e is an error value explaining why
+> 
+> Functions that do anything that might fail, such as doing input or output or otherwise interacting with the operating system, can return Result types whose Ok variants carry successful results—the count of bytes transferred, the file opened, and so on—and whose Err variants carry an error code indicating what went wrong. Unlike most modern languages, Rust does not have exceptions: all errors are handled using either Result or panic, as outlined in Chapter 7. 
+
+I have heard people rave about how Rust deals with errors. 
+:::
+
+- `expect()` is a method on the `Result` type where if the result is `Err(e)` it will print a message that includes a description of `e` and exits the program. Otherwise if the result is `Ok(v)` is simply returns `v` itself.
+- `&numbers[1..]` borrows a *reference* to the vector's elements from the second onward. `*m` *dereferences* `m`, yielding the value it refers to. Since `numbers` owns the vector, Rust automatically frees it when `numbers` goes out fo scope at the end of `main`.
+
+::: {.callout-note title="Aside" appearance="minimal" style="margin-left: 1.3em;"}
+I have heard about "fighting the borrow checker" in Rust. This smaller example still isn't quite clear to me how ownership works in Rust but I know it's core to how Rust enforces memory safety. Looking forward to Chapters 4 and 5 where the authors will go into more details.
+:::
+
+- `||` is Rust *closure* expression. A closure is a value that can be called as if it were a function.
+- I think my biggest takeaway so from Rust is that it takes the unspoken rules and general guidelines from C & C++ and makes those rules explicit and enforced by the compiler so the programmers intent on how to use something is enforced. 
+- Okay Rust enums were tripping me up at first because I was treating `None` as a specific Rust keyword but it's a *variant* in the `Option<T>` which is a generic enum type takes in a type T and returns either `None` or `Some(T)`. Now `Some` was confusing to me because wonder why can't I just do `None` or `T` thinking in terms of TypeScript unions like null | T. This wasn't the right way to think of about it. Instead it's more like a TypeScript discriminated union e.g.
+
+    ```typescript
+    type Option<T> {
+        | { kind: "None"}
+        | { kind: "Some"; value: T};
+    }
+    ```
+    
+    This made it click for me.
+
+- The *unit* type for Rust `()` is akin to `void` in C
+- ahhhhh so `?` is just syntax sugar for 
+
+    ```rust
+    let output = match File::create(filename) {
+        Ok(f) => f,
+        Err(e) => {
+            return Err(e);
+        }
+    };
+    // you can just do
+    let output = File::create(filename)?;
+    ```
