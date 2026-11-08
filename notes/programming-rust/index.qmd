@@ -91,3 +91,23 @@ I have heard about "fighting the borrow checker" in Rust. This smaller example s
     // you can just do
     let output = File::create(filename)?;
     ```
+
+## Chapter 03: Fundamental Types
+
+- `usize` and `isize` are analogous to `size_t` and `ptrdiff_t` in C.
+- Rust's `char` type is a Unicode character type, not an integer type, and is quite different from C's `char`. You can use `u8` type for byte values.
+- When indexing into a slice you have to use a `usize` value
+- Array's lengths are fixed at compile time. `[0u8: 1024]` is a one kb buffer filled with zeros.
+- Rust has no notation for an uninitialized array and in general rust ensures that code can never access uninitialized memory.
+- The benefit of arrays (given their limitations) is they are efficient: small arrays can be stored on the stack or inside a struct without allocating more heap memory.
+- For lists with variable length use a vector.
+- Vector's contain three values:
+    1. A pointer to a heap-allocated buffer
+    2. number of elements that buffer has the capacity to store
+    3. number of elements that is actually contains now (its length)
+- When the buffer has reached capacity adding another element to the vector entails allocating a larger buffer, copying the present contents into it, updating the vector's pointer and capacity to describe the new buffer and freeing the old one.
+- `Vec::with_capacity` allows you specific the capacity at creation time.
+- `Vec` is an ordinary type defined in Rust and is not built into the language.
+- A slice written `[T]` without specifying the length, is a region of an array or vector.
+- Slices are always passed by reference.
+- A slice reference is a *fat pointer*: a two-word value comprising a pointer to the slice's first element and the number of elements in the slice.
