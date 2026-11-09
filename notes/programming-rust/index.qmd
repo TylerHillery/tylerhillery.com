@@ -111,3 +111,5 @@ I have heard about "fighting the borrow checker" in Rust. This smaller example s
 - A slice written `[T]` without specifying the length, is a region of an array or vector.
 - Slices are always passed by reference.
 - A slice reference is a *fat pointer*: a two-word value comprising a pointer to the slice's first element and the number of elements in the slice.
+
+## Chapter 04: Ownership nd Moves
