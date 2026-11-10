@@ -112,4 +112,25 @@ I have heard about "fighting the borrow checker" in Rust. This smaller example s
 - Slices are always passed by reference.
 - A slice reference is a *fat pointer*: a two-word value comprising a pointer to the slice's first element and the number of elements in the slice.
 
-## Chapter 04: Ownership nd Moves
+## Chapter 04: Ownership and Moves
+
+- This is nice convenient method:
+
+    ```rust
+    let first_name = composers[0].name.take();
+    // same as 
+    let first_name = std::mem:replace(&mut composers[0].name, None);
+
+- Wow, it's surprising to me hear that when you move ownership the original owner variable is actually uninitialized.
+- For user defined types like `enum` or `structs` you have to implement the `Copy` and `Clone` traits for the value to be copied instead of moved. If you type only includes values that are already copyable you can use the `#[derive(Copy, Clone)]` attribute where the compiler will generate the Rust code for you to implement this traits.
+
+## Chapter 05: References
+
+- Very interesting to see how Rust handles refs and derefs for you. I can traverse refs of refs of refs all the way to the value without making you deref. Works for comparison operators and struct field access.
+- If you do want to compare if two refs actually point to the same memory address you can use `std::ptr::eq()`
+- Key Rust ref rules:
+    - can never be `null`
+    - you can't use any variable until it's been initialized
+    - can't convert integers to references e.g. zero into a reference (outside of `unsafe` code) 
+    - In many places where a nullptr was traditional used Rust recommends using `Option<&T>`
+- 
