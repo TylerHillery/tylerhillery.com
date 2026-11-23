@@ -2,7 +2,7 @@
 title: "Programming Rust, 3rd Edition"
 description: "My notes on [Programming Rust, 3rd Edition](https://www.amazon.com/dp/1098176235) by Jim Blandy, Jason Orendorff, and Leonora F. S. Tindall"
 author: "Tyler Hillery"
-date: "2026-11-06"
+date: "2026-11-23"
 image: "./cover.jpg"
 filters:
     - social-share
@@ -133,4 +133,8 @@ I have heard about "fighting the borrow checker" in Rust. This smaller example s
     - you can't use any variable until it's been initialized
     - can't convert integers to references e.g. zero into a reference (outside of `unsafe` code) 
     - In many places where a nullptr was traditional used Rust recommends using `Option<&T>`
-- 
+
+## Chapter 08: Crates And Modules
+
+- A constant is a bit like C/C++ `#define` where the value is compiled into your code every place it's used.
+- A static is a variable that's set up before your program starts running, has a single location in memory and lasts until it exits.
